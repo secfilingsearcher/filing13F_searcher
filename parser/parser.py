@@ -10,16 +10,17 @@ text = getter.text
 
 company_name = []
 
-print(text)
+# print(re.findall('</a>(?!.+</a>)\s*(\w.+)', text, flags=0))
 
-for filing_name in re.findall('</a>(?!.+</a>)\s*(\w.+)', text, flags=0):
-    company_url = re.findall('(?<=<a href=")(.*)(?=">13F-HR</a>)', text, flags=0)
-    # https: // www.sec.gov / Archives / edgar / data / 1532842 / 00015
-    # 80642 - 21 - 000
-    # 956 - index.html
-    # filing_url2 = unicodedata2.normalize('NFC', filing_url)
-    # print(filing_url2)
-    print(filing_name)
+# company_list = re.search('</strong><hr>.*<hr></pre>', text, re.DOTALL)
+# grouped = company_list.group(0)
+# print(str(grouped))
+#
+
+for company_info in re.findall('(?<=03-03-2021)(.*)', text, flags=0):
+    filing_name = re.search('</a>(?!.+</a>)\s*(\w.+)', company_info)
+    company_url = re.search('(?<=<a href=")(.*)(?=">13F-HR</a>)', company_info)
     print(company_url)
+    print(filing_name)
 
 

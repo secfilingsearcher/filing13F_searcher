@@ -28,6 +28,8 @@ for child in root:
 df = pd.DataFrame(data)
 df.columns = cols
 
+
+
 company_name_cycle = cycle(['insert_company_name+here'])
 first_column = 0
 df.insert(loc=first_column, column='Company Name', value=[next(company_name_cycle) for df_column in range(len(df))])
