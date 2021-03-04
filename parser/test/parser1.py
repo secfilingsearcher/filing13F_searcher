@@ -11,5 +11,5 @@ text = getter.text
 for filing_name in re.findall('</a>(?!.+</a>)\s*(\w.+)', text, flags=0):
     print(filing_name)
 
-for filing_name in re.findall('</a>(?!.+</a>)\s*(\w.+)', text, flags=0):
+for filing_name in re.findall('(?<=<a href=")(.*)(?=">13F-HR</a>)', text, flags=0):
     print(filing_name)
