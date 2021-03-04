@@ -2,6 +2,7 @@ import requests
 from xml.etree import ElementTree
 import re
 import pandas as pd
+from itertools import cycle
 
 
 url = 'https://www.sec.gov/Archives/edgar/data/1846943/000108514621001043/infotable.xml'
@@ -24,7 +25,11 @@ for child in root:
                 data_sub_list.append(sub_child.text)
         data.append(data_sub_list)
 
-company_name = ""
-
 df = pd.DataFrame(data)
 df.columns = cols
+
+company_name_cycle = cycle(['insert_company_name+here'])
+first_column = 0
+df.insert(loc=first_column, column='Company Name', value=[next(company_name_cycle) for df_column in range(len(df))])
+
+print(df)
