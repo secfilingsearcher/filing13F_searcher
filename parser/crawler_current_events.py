@@ -23,9 +23,9 @@ def crawl_page():
         # grab link 1 + 2
         partial_infotable_xml_url = re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f_hr, flags=0)
         if partial_infotable_xml_url:
-            full_infotable_xml_url = front_sec_url + partial_infotable_xml_url[0]
+            full_primary_doc_xml_url = front_sec_url + partial_infotable_xml_url[0]
             full_infotable_xml_url = front_sec_url + partial_infotable_xml_url[-1]
-            primary_doc_xml_list.append(full_infotable_xml_url)
+            primary_doc_xml_list.append(full_primary_doc_xml_url)
             infotable_xml_list.append(full_infotable_xml_url)
         else:
             raise TypeError("Can't find URL on current webpage")
@@ -34,11 +34,11 @@ def crawl_page():
 def main():
     crawl_page()
     # create for loop and use one row function to cik
-    primary_doc_parser(primary_doc_xml_list[0])
-    # print(primary_doc_xml_list[0])
-    # print(infotable_xml_list[0])
+    # primary_doc_parser(primary_doc_xml_list[0])
+    # primary_doc_parser('https://www.sec.gov/Archives/edgar/data/1532842/000158064221000956/primary_doc.xml')
 
     # create for loop and use infotable function to get database
+    # print(infotable_xml_list[0])
 
 
 
@@ -47,8 +47,6 @@ if __name__ == "__main__":
 
 
 
-
-print()
 print("check")
 print(edgar_13f_filing_detail_url_list)
 print(primary_doc_xml_list)
