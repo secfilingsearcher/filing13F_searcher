@@ -26,7 +26,7 @@ def crawl_page():
             primary_doc_xml_list.append(full_infotable_xml_url)
             infotable_xml_list.append(full_infotable_xml_url)
         else:
-            raise TypeError("Can't find URL on Page")
+            raise TypeError("Can't find URL on current webpage")
 
 
 def main():
