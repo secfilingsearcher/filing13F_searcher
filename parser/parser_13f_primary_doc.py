@@ -20,5 +20,3 @@ def primary_doc_parser(primary_doc_xml):
                                      namespaces):
         print(company_name.text)
 
-
-# primary_doc_parser('https://www.sec.gov/Archives/edgar/data/1532842/000158064221000956/primary_doc.xml')

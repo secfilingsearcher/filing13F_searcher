@@ -12,8 +12,8 @@ def infotable_parser(infotable_xml):
     root = ElementTree.XML(text)
 
     data = []
-    cols = ["nameOfIssuer", "titleOfClass", "cusip", "value", "sshPrnamt", "sshPrnamtType", "investmentDiscretion",
-            "votingAuthority Sole", "votingAuthority Shared", "votingAuthority None"]
+    # cols = ["nameOfIssuer", "titleOfClass", "cusip", "value", "sshPrnamt", "sshPrnamtType", "investmentDiscretion",
+    #         "votingAuthority Sole", "votingAuthority Shared", "votingAuthority None"]
 
     for child in root:
         for child in root:
@@ -27,10 +27,12 @@ def infotable_parser(infotable_xml):
             data.append(data_sub_list)
 
     df = pd.DataFrame(data)
-    df.columns = cols
+    # df.columns = cols
+    #
+    # cycle_cik_for_column = cycle(['insert_cik+here'])
+    # first_column = 0
+    # df.insert(loc=first_column, column='CIK', value=[next(cycle_cik_for_column) for df_column in range(len(df))])
 
-    cycle_cik_for_column = cycle(['insert_cik+here'])
-    first_column = 0
-    df.insert(loc=first_column, column='CIK', value=[next(cycle_cik_for_column) for df_column in range(len(df))])
+    print(df)
 
-    # print(df)
+# infotable_parser('https://www.sec.gov/Archives/edgar/data/1601086/000091957421002178/infotable.xml')

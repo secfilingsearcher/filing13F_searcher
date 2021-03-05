@@ -1,14 +1,8 @@
 import requests
 import re
-from parser_13f_infotable import infotable_parser
-from parser_13f_primary_doc import primary_doc_parser
-
-edgar_13f_filing_detail_url_list = []
-primary_doc_xml_list = []
-infotable_xml_list = []
 
 
-def crawl_page():
+def crawl_page(edgar_13f_filing_detail_url_list, primary_doc_xml_list, infotable_xml_list):
     url_edgar_current_events = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=6&q3=13F'
     getter = requests.get(url_edgar_current_events)
     text_edgar_current_events = getter.text
@@ -31,23 +25,3 @@ def crawl_page():
             raise TypeError("Can't find URL on current webpage")
 
 
-def main():
-    crawl_page()
-    # create for loop and use one row function to cik
-    # primary_doc_parser(primary_doc_xml_list[0])
-    # primary_doc_parser('https://www.sec.gov/Archives/edgar/data/1532842/000158064221000956/primary_doc.xml')
-
-    # create for loop and use infotable function to get database
-    # print(infotable_xml_list[0])
-
-
-
-if __name__ == "__main__":
-    main()
-
-
-
-print("check")
-print(edgar_13f_filing_detail_url_list)
-print(primary_doc_xml_list)
-print(infotable_xml_list)

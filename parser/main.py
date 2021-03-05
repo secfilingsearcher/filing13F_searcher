@@ -6,23 +6,21 @@ edgar_13f_list = []
 primary_doc_list = []
 infotable_list = []
 
+
 def main():
     crawl_page(edgar_13f_list, primary_doc_list, infotable_list)
+    # create for loop and use one row function to get cik
+    for primary_doc in primary_doc_list:
+        primary_doc_parser(primary_doc)
+    # create for loop and use infotable function to get database
+    for infotable in infotable_list:
+        infotable_parser(infotable)
 
 
-#     crawl_page(edgar_13f_list, primary_doc_list, infotable_list)
-#     # create for loop and use one row function to get cik
-#     for primary_doc in primary_doc_list:
-#         primary_doc_parser(primary_doc)
-#     # create for loop and use infotable function to get database
-#     for infotable in infotable_list:
-#         infotable_parser(infotable)
-#
-#
+if __name__ == "__main__":
+    main()
+
 # print("check")
 # print(edgar_13f_list)
 # print(primary_doc_list)
 # print(infotable_list)
-
-if __name__ == "__main__":
-    main()
