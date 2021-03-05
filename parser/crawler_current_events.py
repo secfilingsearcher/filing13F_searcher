@@ -1,5 +1,7 @@
 import requests
 import re
+from parser_13f_infotable import infotable_parser
+from parser_13f_primary_doc import primary_doc_parser
 
 edgar_13f_filing_detail_url_list = []
 primary_doc_xml_list = []
@@ -32,6 +34,7 @@ def crawl_page():
 def main():
     crawl_page()
     # create for loop and use one row function to cik
+    primary_doc_parser(primary_doc_xml_list[0])
     # print(primary_doc_xml_list[0])
     # print(infotable_xml_list[0])
 
