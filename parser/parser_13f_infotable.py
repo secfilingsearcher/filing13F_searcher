@@ -4,7 +4,6 @@ import re
 import pandas as pd
 from itertools import cycle
 
-
 url = 'https://www.sec.gov/Archives/edgar/data/1846943/000108514621001043/infotable.xml'
 getter = requests.get(url)
 text = getter.text
