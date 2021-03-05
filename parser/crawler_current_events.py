@@ -31,10 +31,19 @@ def crawl_page():
 
 def main():
     crawl_page()
+    # create for loop and use one row function to cik
+    # print(primary_doc_xml_list[0])
+    # print(infotable_xml_list[0])
+
+    # create for loop and use infotable function to get database
+
 
 
 if __name__ == "__main__":
     main()
+
+
+
 
 print()
 print("check")
