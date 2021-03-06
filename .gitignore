@@ -37,7 +37,7 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit exclude / coverage reports
 htmlcov/
 .tox/
 .nox/
@@ -131,5 +131,5 @@ dmypy.json
 #pycharm files
 .idea/
 
-# test files
-parser/test
+# exclude files
+exclude

@@ -32,7 +32,7 @@ def infotable_parser(infotable_xml):
     # cycle_cik_for_column = cycle(['insert_cik+here'])
     # first_column = 0
     # df.insert(loc=first_column, column='CIK', value=[next(cycle_cik_for_column) for df_column in range(len(df))])
-
+    print(data)
     print(df)
 
 # infotable_parser('https://www.sec.gov/Archives/edgar/data/1601086/000091957421002178/infotable.xml')

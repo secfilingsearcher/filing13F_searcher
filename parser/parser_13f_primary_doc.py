@@ -9,6 +9,7 @@ def primary_doc_parser(primary_doc_xml):
     root = ElementTree.XML(text)
 
     # grab CIK & company name
+    # TODO; dynamically create namespaces
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
 

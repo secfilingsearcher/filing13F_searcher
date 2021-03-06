@@ -6,6 +6,7 @@ edgar_13f_list = []
 primary_doc_list = []
 infotable_list = []
 
+# TODO; make function with no arg that returns lists that can be used outside
 
 def main():
     crawl_page(edgar_13f_list, primary_doc_list, infotable_list)
