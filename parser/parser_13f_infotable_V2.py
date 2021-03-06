@@ -29,7 +29,8 @@ def infotable_parser(infotable_xml, dataframe):
 
     for infoTable in root.findall('{*}infoTable'):
         nameOfIssuer = infoTable.find('{*}nameOfIssuer')
-        nameOfIssuer_list.append(nameOfIssuer.text)
+        if nameOfIssuer is not None:
+            nameOfIssuer_list.append(nameOfIssuer.text)
 
         titleOfClass = infoTable.find('{*}titleOfClass')
         titleOfClass_list.append(titleOfClass.text)
@@ -48,14 +49,14 @@ def infotable_parser(infotable_xml, dataframe):
             sshPrnamtType_list.append(sshPrnamtType.text)
 
         putCall = infoTable.find('{*}putCall')
-        if putCall:
+        if putCall is not None:
             nameOfIssuer_list.append(nameOfIssuer.text)
 
         investmentDiscretion = infoTable.find('{*}investmentDiscretion')
         investmentDiscretion_list.append(investmentDiscretion.text)
 
         otherManager = infoTable.find('{*}otherManager')
-        if otherManager:
+        if otherManager is not None:
             otherManager_list.append(otherManager.text)
 
         for votingAuthority in infoTable.findall('{*}votingAuthority'):
@@ -88,5 +89,5 @@ def infotable_parser(infotable_xml, dataframe):
 df = pd.DataFrame()
 infotable_parser('https://www.sec.gov/Archives/edgar/data/1846943/000108514621001043/infotable.xml', df)
 
-# pd.set_option('display.max_columns', None)
+pd.set_option('display.max_columns', None)
 print(df.head(2))
