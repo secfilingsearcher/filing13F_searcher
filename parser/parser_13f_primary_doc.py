@@ -16,10 +16,11 @@ def primary_doc_parser(primary_doc_xml):
     for cik in root.findall('original:headerData/original:filerInfo/original:filer/original:credentials/original:cik',
                             namespaces):
         print(cik.text)
+        # return cik.text
 
     for company_name in root.findall('original:formData/original:coverPage/original:filingManager/original:name',
                                      namespaces):
         print(company_name.text)
+       # return company_name.text
 
-       return company_name.text, cik.text
-
+    # TODO; return cik and company name
