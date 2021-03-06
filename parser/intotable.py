@@ -11,7 +11,7 @@ def infotable_parser(infotable_xml, dataframe):
     text = getter.text
     root = ElementTree.XML(text)
 
-    new_cols = ['nameOfIssuer','titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType', 'putcall', 'investmentDiscretion', 'othermanager', 'votingAuthority Sole', 'votingAuthority Shared', 'votingAuthority None']
+    new_cols = ['nameOfIssuer','titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType', 'putCall', 'investmentDiscretion', 'otherManager', 'votingAuthority Sole', 'votingAuthority Shared', 'votingAuthority None']
     dataframe[new_cols] = None
 
     nameOfIssuer_list = []
