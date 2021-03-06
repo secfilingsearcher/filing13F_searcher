@@ -21,3 +21,5 @@ def primary_doc_parser(primary_doc_xml):
                                      namespaces):
         print(company_name.text)
 
+       return company_name.text, cik.text
+

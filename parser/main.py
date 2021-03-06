@@ -1,6 +1,6 @@
 from crawler_current_events import crawl_page
 from parser_13f_primary_doc import primary_doc_parser
-from parser_13f_infotable import infotable_parser
+from infotable import infotable_parser
 
 edgar_13f_list = []
 primary_doc_list = []
