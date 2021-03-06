@@ -81,30 +81,30 @@ def infotable_parser(infotable_xml, dataframe):
             if votingAuthority_None is not None:
                 votingAuthority_None_list.append(votingAuthority_None.text)
 
-    if nameOfIssuer_list:
-        dataframe['nameOfIssuer'] = nameOfIssuer_list
-    if titleOfClass_list:
-        dataframe['titleOfClass'] = titleOfClass_list
-    if cusip_list:
-        dataframe['cusip'] = cusip_list
-    if value_list:
-        dataframe['value'] = value_list
-    if sshPrnamt_list:
-        dataframe['sshPrnamt'] = sshPrnamt_list
-    if sshPrnamtType_list:
-        dataframe['sshPrnamtType'] = sshPrnamtType_list
-    if putCall_list:
-        dataframe['putCall'] = putCall_list
-    if investmentDiscretion_list:
-        dataframe['investmentDiscretion'] = investmentDiscretion_list
-    if otherManager_list:
-        dataframe['otherManager'] = otherManager_list
-    if votingAuthority_Sole_list:
-        dataframe['votingAuthority_Sole'] = votingAuthority_Sole_list
-    if votingAuthority_Shared_list:
-        dataframe['votingAuthority_Shared'] = votingAuthority_Shared_list
-    if votingAuthority_None_list:
-        dataframe['votingAuthority_None'] = votingAuthority_None_list
+    # if nameOfIssuer_list:
+    #     dataframe['nameOfIssuer'] = nameOfIssuer_list
+    # if titleOfClass_list:
+    #     dataframe['titleOfClass'] = titleOfClass_list
+    # if cusip_list:
+    #     dataframe['cusip'] = cusip_list
+    # if value_list:
+    #     dataframe['value'] = value_list
+    # if sshPrnamt_list:
+    #     dataframe['sshPrnamt'] = sshPrnamt_list
+    # if sshPrnamtType_list:
+    #     dataframe['sshPrnamtType'] = sshPrnamtType_list
+    # if putCall_list:
+    #     dataframe['putCall'] = putCall_list
+    # if investmentDiscretion_list:
+    #     dataframe['investmentDiscretion'] = investmentDiscretion_list
+    # if otherManager_list:
+    #     dataframe['otherManager'] = otherManager_list
+    # if votingAuthority_Sole_list:
+    #     dataframe['votingAuthority_Sole'] = votingAuthority_Sole_list
+    # if votingAuthority_Shared_list:
+    #     dataframe['votingAuthority_Shared'] = votingAuthority_Shared_list
+    # if votingAuthority_None_list:
+    #     dataframe['votingAuthority_None'] = votingAuthority_None_list
 
 # df = pd.DataFrame()
 # infotable_parser('https://www.sec.gov/Archives/edgar/data/1846943/000108514621001043/infotable.xml', df)
