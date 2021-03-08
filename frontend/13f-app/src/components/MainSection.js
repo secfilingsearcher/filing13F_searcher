@@ -5,12 +5,14 @@ import './MainSection.css';
 
 function MainSection() {
     return (
-        <div className='main-container'>
-            <h1>COMPANY FINANCIAL HOLDINGS</h1>
-            <p>Search 13 Filings by Company Name and Date</p>
-
-            
-        </div>
+        <>
+            <div className='main-container'>
+                <h1>COMPANY FINANCIAL HOLDINGS</h1>
+                <p>Search 13F Filings by Company Name and Date</p>
+                <Button buttonStyle='btn--outline' buttonSize='btn--large'>SEARCH</Button>     
+            </div>
+                     
+        </>
     )
 }
  
