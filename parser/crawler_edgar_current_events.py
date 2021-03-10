@@ -15,6 +15,7 @@ def get_13f_filing_detail_urls_in_list(edgar_current_events_text, edgar_13f_fili
         edgar_13f_filing_detail_url_list.append(full_13f_filing_detail_url)
     return edgar_13f_filing_detail_url_list
 
+
 def get_primary_doc_and_infotable_urls(edgar_13f_filing_detail_text):
     suffix_all_xml_urls = re.findall('(?<=<a href=")(.*)(?=">.*.xml)', edgar_13f_filing_detail_text, flags=0)
     return suffix_all_xml_urls
