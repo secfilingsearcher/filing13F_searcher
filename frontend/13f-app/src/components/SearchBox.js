@@ -28,7 +28,7 @@ export default class App extends Component {
   render() {
     return (
       <ReactSearchBox
-        placeholder="Placeholder"
+        placeholder="Company Name"
         value="Doe"
         data={this.data}
         callback={record => console.log(record)}
