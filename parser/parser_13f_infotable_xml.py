@@ -5,17 +5,23 @@ import pandas as pd
 from itertools import cycle
 
 
-def infotable_parser(infotable_xml, dataframe):
+def grab_infotable_doc_root(infotable_xml):
     url = infotable_xml
     getter = requests.get(url)
     text = getter.text
     root = ElementTree.XML(text)
+    return root
 
+
+def initialize_dataframe(dataframe):
     new_cols = ['nameOfIssuer', 'titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType', 'putCall',
                 'investmentDiscretion', 'otherManager', 'votingAuthority_Sole', 'votingAuthority_Shared',
                 'votingAuthority_None']
     dataframe[new_cols] = None
+    return dataframe
 
+
+def fill_dataframe(root, dataframe):
     nameOfIssuer_list = []
     titleOfClass_list = []
     cusip_list = []
@@ -57,14 +63,13 @@ def infotable_parser(infotable_xml, dataframe):
 
         putCall = info.find('{*}putCall')
         if putCall is not None:
-            nameOfIssuer_list.append(nameOfIssuer.text)
+            putCall_list.append(putCall.text)
 
         investmentDiscretion = info.find('{*}investmentDiscretion')
         if investmentDiscretion is not None:
             investmentDiscretion_list.append(investmentDiscretion.text)
 
         otherManager = info.find('{*}otherManager')
-
         if otherManager is not None:
             otherManager_list.append(otherManager.text)
 
@@ -81,31 +86,34 @@ def infotable_parser(infotable_xml, dataframe):
             if votingAuthority_None is not None:
                 votingAuthority_None_list.append(votingAuthority_None.text)
 
-    # if nameOfIssuer_list:
-    #     dataframe['nameOfIssuer'] = nameOfIssuer_list
-    # if titleOfClass_list:
-    #     dataframe['titleOfClass'] = titleOfClass_list
-    # if cusip_list:
-    #     dataframe['cusip'] = cusip_list
-    # if value_list:
-    #     dataframe['value'] = value_list
-    # if sshPrnamt_list:
-    #     dataframe['sshPrnamt'] = sshPrnamt_list
-    # if sshPrnamtType_list:
-    #     dataframe['sshPrnamtType'] = sshPrnamtType_list
-    # if putCall_list:
-    #     dataframe['putCall'] = putCall_list
-    # if investmentDiscretion_list:
-    #     dataframe['investmentDiscretion'] = investmentDiscretion_list
-    # if otherManager_list:
-    #     dataframe['otherManager'] = otherManager_list
-    # if votingAuthority_Sole_list:
-    #     dataframe['votingAuthority_Sole'] = votingAuthority_Sole_list
-    # if votingAuthority_Shared_list:
-    #     dataframe['votingAuthority_Shared'] = votingAuthority_Shared_list
-    # if votingAuthority_None_list:
-    #     dataframe['votingAuthority_None'] = votingAuthority_None_list
+    if nameOfIssuer_list:
+        dataframe['nameOfIssuer'] = nameOfIssuer_list
+    if titleOfClass_list:
+        dataframe['titleOfClass'] = titleOfClass_list
+    if cusip_list:
+        dataframe['cusip'] = cusip_list
+    if value_list:
+        dataframe['value'] = value_list
+    if sshPrnamt_list:
+        dataframe['sshPrnamt'] = sshPrnamt_list
+    if sshPrnamtType_list:
+        dataframe['sshPrnamtType'] = sshPrnamtType_list
+    if putCall_list:
+        dataframe['putCall'] = putCall_list
+    if investmentDiscretion_list:
+        dataframe['investmentDiscretion'] = investmentDiscretion_list
+    if otherManager_list:
+        dataframe['otherManager'] = otherManager_list
+    if votingAuthority_Sole_list:
+        dataframe['votingAuthority_Sole'] = votingAuthority_Sole_list
+    if votingAuthority_Shared_list:
+        dataframe['votingAuthority_Shared'] = votingAuthority_Shared_list
+    if votingAuthority_None_list:
+        dataframe['votingAuthority_None'] = votingAuthority_None_list
 
-# df = pd.DataFrame()
-# infotable_parser('https://www.sec.gov/Archives/edgar/data/1846943/000108514621001043/infotable.xml', df)
-# print(df.head(2))
+
+root = grab_infotable_doc_root('https://www.sec.gov/Archives/edgar/data/1846943/000108514621001043/infotable.xml')
+df = pd.DataFrame()
+initialize_dataframe(df)
+fill_dataframe(root, df)
+print(df.head(2))
