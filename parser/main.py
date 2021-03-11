@@ -6,9 +6,7 @@ from crawler_edgar_current_events import get_infotable_xml_url
 from parser_13f_primary_doc_xml import grab_primary_doc_root
 from parser_13f_primary_doc_xml import grab_primary_doc_cik
 from parser_13f_primary_doc_xml import grab_primary_doc_company_name
-from parser_13f_infotable_xml import grab_infotable_doc_root
-from parser_13f_infotable_xml import initialize_dataframe_with_columns
-from parser_13f_infotable_xml import fill_dataframe
+from parser_13f_infotable_xml import grab_infotable
 
 
 def main():
@@ -26,10 +24,10 @@ def main():
         company_name = grab_primary_doc_company_name(root)
         print(cik, company_name)
 
-        infotable_root = grab_infotable_doc_root(infotable_xml_url)
-        df = initialize_dataframe_with_columns()
-        fill_dataframe(infotable_root, df)
-        # send to sql alchemy
+        df = grab_infotable(infotable_xml_url)
+        df.insert(loc=0, column='id', value=cik)
+        print(df.head())
+        #TODO: send to sql alchemy
 
 
 if __name__ == "__main__":
