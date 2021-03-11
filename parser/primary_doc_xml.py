@@ -1,5 +1,5 @@
-import requests
 from xml.etree import ElementTree
+import requests
 
 
 def grab_primary_doc_root(primary_doc_xml):
@@ -13,7 +13,8 @@ def grab_primary_doc_cik(primary_doc_root):
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
     for cik in primary_doc_root.findall(
-            'original:headerData/original:filerInfo/original:filer/original:credentials/original:cik',
+            'original:headerData/original:filerInfo/'
+            'original:filer/original:credentials/original:cik',
             namespaces):
         return cik.text
 
