@@ -23,7 +23,7 @@ function Navbar() {
          <nav className="navbar">
              <div className="navbar-container">
                 <Link to="/" className="navbar-logo">
-                    13F <i className="fab fa-typo3" />
+                    13F   <i class="fas fa-file-archive"></i>
                 </Link>
                 <div className="menu-icon" onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
