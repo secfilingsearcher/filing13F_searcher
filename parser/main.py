@@ -24,9 +24,9 @@ def main():
         company_name = grab_primary_doc_company_name(root)
         print(cik, company_name)
 
-        df = grab_infotable(infotable_xml_url)
-        df.insert(loc=0, column='id', value=cik)
-        print(df.head())
+        df_infotable = grab_infotable(infotable_xml_url)
+        df_infotable.insert(loc=0, column='id', value=cik)
+        print(df_infotable.head())
         #TODO: send to sql alchemy
 
 

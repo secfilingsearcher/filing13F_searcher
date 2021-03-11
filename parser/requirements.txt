@@ -1,4 +1,3 @@
 requests
 sqlalchemy
-re
-unicodedata2
+pandas
