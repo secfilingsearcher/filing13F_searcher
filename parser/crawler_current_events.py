@@ -1,5 +1,6 @@
-import requests
+"""module docstring"""
 import re
+import requests
 
 
 def grab_text(url):
@@ -24,13 +25,11 @@ def get_primary_doc_xml_url(suffix_xml_urls):
     base_sec_url = "https://www.sec.gov"
     if suffix_xml_urls:
         return base_sec_url + suffix_xml_urls[0]
-    else:
-        raise TypeError("Can't find URL on current webpage")
+    raise TypeError("Can't find URL on current webpage")
 
 
 def get_infotable_xml_url(partial_xml_url):
     base_sec_url = "https://www.sec.gov"
     if partial_xml_url:
         return base_sec_url + partial_xml_url[-1]
-    else:
-        raise TypeError("Can't find URL on current webpage")
+    raise TypeError("Can't find URL on current webpage")
