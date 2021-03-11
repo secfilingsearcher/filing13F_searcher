@@ -29,7 +29,7 @@ export default class App extends Component {
     return (
       <ReactSearchBox
         placeholder="Company Name"
-        value="Doe"
+        value=""
         data={this.data}
         callback={record => console.log(record)}
       />

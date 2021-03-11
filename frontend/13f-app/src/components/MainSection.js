@@ -4,6 +4,8 @@ import { Button } from './Button';
 import SearchBox from './SearchBox';
 import './MainSection.css';
 
+const divStyle = { float: 'left', padding: '20px', margin: '20px'}
+
 function MainSection() {
     return (
         <>
@@ -11,7 +13,10 @@ function MainSection() {
                 <h1>COMPANY FINANCIAL HOLDINGS</h1>
                 <p>Search 13F Filings by Company Name and Date</p>
                 <SearchBox />
-                <input type='date'/>
+                <div style={divStyle}>
+                <input type='date' className='date'></input>
+                <input type='date' className='date'></input>
+                </div>
                 <Button buttonStyle='btn--outline' buttonSize='btn--large'>SEARCH</Button>     
             </div>
                      
