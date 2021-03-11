@@ -1,0 +1,4 @@
+requests
+sqlalchemy
+re
+unicodedata2
