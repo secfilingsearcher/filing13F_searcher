@@ -13,12 +13,23 @@ def create_and_insert_to_database(db):
     #            " sshPrnamt, sshPrnamtType, putCall, investmentDiscretion,"
     #            " otherManager, votingAuthority_Sole,"
     #            " votingAuthority_Shared, votingAuthority_None)")
-    db.execute("CREATE TABLE IF NOT EXISTS dl5 (name text, "
+    db.execute("CREATE TABLE IF NOT EXISTS infotable1 (name text, "
                "id_name int, "
                "id_name int, "               
                "13f_id int PRIMARY KEY)")
 
-    db.execute("INSERT INTO dl5 (id, name)"
+    db.execute("CREATE TABLE IF NOT EXISTS primary1 (name text, "
+               "id_name int, "
+               "id_name int, "               
+               "13f_id int PRIMARY KEY)")
+
+    db.execute("INSERT INTO infotable1 (id, name)"
+               "VALUES (3, 'susan'), "
+               "(5, 'delores')"
+               "ON CONFLICT (id) DO NOTHING;"
+               )
+
+    db.execute("INSERT INTO primary1 (id, name)"
                "VALUES (3, 'susan'), "
                "(5, 'delores')"
                "ON CONFLICT (id) DO NOTHING;"
