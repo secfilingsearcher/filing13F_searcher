@@ -15,7 +15,9 @@ def main():
     url_edgar_current_events = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=6&q3=13F'
     text_edgar_current_events = grab_text(url_edgar_current_events)
     filing_detail_urls = get_13f_filing_detail_urls(text_edgar_current_events)
+
     for filing_detail_url in filing_detail_urls:
+
         filing_detail_text = grab_text(filing_detail_url)
         xml_links = get_primary_doc_and_infotable_urls(filing_detail_text)
         primary_doc_xml_url = get_primary_doc_xml_url(xml_links)
