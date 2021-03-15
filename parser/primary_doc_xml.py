@@ -40,3 +40,4 @@ def grab_primary_doc_accepted_filing_date(primary_doc_root):
             'original:formData/original:signatureBlock/original:signatureDate',
             namespaces):
         return accepted_filing_date.text
+

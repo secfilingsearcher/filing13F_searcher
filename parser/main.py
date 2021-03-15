@@ -30,6 +30,7 @@ def main():
         accepted_filing_date = grab_primary_doc_accepted_filing_date(root)
         print(cik, company_name, accepted_filing_date)
 
+
         df_infotable = grab_infotable(infotable_xml_url)
         df_infotable.insert(loc=0, column='cik_id', value=cik)
         print(df_infotable.head())
