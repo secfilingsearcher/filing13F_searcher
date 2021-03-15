@@ -30,3 +30,12 @@ def grab_primary_doc_company_name(primary_doc_root):
             'original:formData/original:coverPage/original:filingManager/original:name',
             namespaces):
         return company_name.text
+
+def grab_primary_doc_accepted_filing_date(primary_doc_root):
+    """function docstring"""
+    namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
+                  'ns1': 'http://www.sec.gov/edgar/common'}
+    for accepted_filing_date in primary_doc_root.findall(
+            'original:formData/original:signatureBlock/original:signatureDate',
+            namespaces):
+        return accepted_filing_date.text

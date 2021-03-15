@@ -8,7 +8,7 @@ from primary_doc_xml import grab_primary_doc_root
 from primary_doc_xml import grab_primary_doc_cik
 from primary_doc_xml import grab_primary_doc_company_name
 from infotable_xml import grab_infotable
-
+from database_connection import *
 
 def main():
     """function docstring"""
@@ -29,9 +29,10 @@ def main():
         print(cik, company_name)
 
         df_infotable = grab_infotable(infotable_xml_url)
-        df_infotable.insert(loc=0, column='id', value=cik)
+        df_infotable.insert(loc=0, column='cik_id', value=cik)
         print(df_infotable.head())
-        #TODO: send to sql alchemy
+
+
 
 
 if __name__ == "__main__":
