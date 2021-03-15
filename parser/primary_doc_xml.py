@@ -31,6 +31,7 @@ def grab_primary_doc_company_name(primary_doc_root):
             namespaces):
         return company_name.text
 
+
 def grab_primary_doc_accepted_filing_date(primary_doc_root):
     """function docstring"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',

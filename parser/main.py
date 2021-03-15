@@ -7,6 +7,7 @@ from crawler_current_events import get_infotable_xml_url
 from primary_doc_xml import grab_primary_doc_root
 from primary_doc_xml import grab_primary_doc_cik
 from primary_doc_xml import grab_primary_doc_company_name
+from primary_doc_xml import grab_primary_doc_accepted_filing_date
 from infotable_xml import grab_infotable
 from database_connection import *
 
@@ -26,7 +27,8 @@ def main():
         root = grab_primary_doc_root(primary_doc_xml_url)
         cik = grab_primary_doc_cik(root)
         company_name = grab_primary_doc_company_name(root)
-        print(cik, company_name)
+        accepted_filing_date = grab_primary_doc_accepted_filing_date(root)
+        print(cik, company_name, accepted_filing_date)
 
         df_infotable = grab_infotable(infotable_xml_url)
         df_infotable.insert(loc=0, column='cik_id', value=cik)
