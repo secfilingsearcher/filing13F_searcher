@@ -25,8 +25,11 @@ def get_primary_doc_and_infotable_urls(text_13f):
 
 
 def extract_sec_accession_no(text_13f):
-    return re.findall('(?<=Accession <acronym title="Number">No.</acronym></strong> )'
-                      '(.*)', text_13f)
+    accession_no_str = re.search('(?<=Accession <acronym title="Number">No.</acronym></strong> )'
+                                 '(.*)', text_13f).group(0)
+    accession_no_removed_dashes = accession_no_str.replace('-', '')
+    accession_no = int(accession_no_removed_dashes)
+    return accession_no
 
 
 def get_primary_doc_xml_url(suffix_xml_urls):

@@ -19,6 +19,7 @@ def main():
     for filing_detail_url in filing_detail_urls:
         filing_detail_text = grab_text(filing_detail_url)
         sec_accession_no = extract_sec_accession_no(filing_detail_text)
+        # print(filing_detail_text)
         print(sec_accession_no)
         xml_links = get_primary_doc_and_infotable_urls(filing_detail_text)
         primary_doc_xml_url = get_primary_doc_xml_url(xml_links)
