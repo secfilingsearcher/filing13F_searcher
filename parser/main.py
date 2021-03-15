@@ -19,8 +19,6 @@ def main():
     for filing_detail_url in filing_detail_urls:
         filing_detail_text = grab_text(filing_detail_url)
         sec_accession_no = extract_sec_accession_no(filing_detail_text)
-        # print(filing_detail_text)
-        print(sec_accession_no)
         xml_links = get_primary_doc_and_infotable_urls(filing_detail_text)
         primary_doc_xml_url = get_primary_doc_xml_url(xml_links)
         infotable_xml_url = get_infotable_xml_url(xml_links)
@@ -32,6 +30,7 @@ def main():
 
         df_infotable = grab_infotable(infotable_xml_url)
         df_infotable.insert(loc=0, column='id', value=cik)
+        df_infotable.insert(loc=1, column='accession_no', value=sec_accession_no)
         print(df_infotable.head())
         #TODO: send to sql alchemy
 
