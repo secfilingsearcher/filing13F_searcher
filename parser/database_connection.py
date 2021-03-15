@@ -9,31 +9,39 @@ def connect_to_database():
 
 def create_and_insert_to_database(db):
     # Create
-    # db.execute("CREATE TABLE IF NOT EXISTS films1 (cik_id, nameOfIssuer, titleOfClass, cusip, value,"
-    #            " sshPrnamt, sshPrnamtType, putCall, investmentDiscretion,"
-    #            " otherManager, votingAuthority_Sole,"
-    #            " votingAuthority_Shared, votingAuthority_None)")
-    db.execute("CREATE TABLE IF NOT EXISTS infotable1 (name text, "
-               "id_name int, "
-               "id_name int, "               
-               "13f_id int PRIMARY KEY)")
-
-    db.execute("CREATE TABLE IF NOT EXISTS primary1 (name text, "
-               "id_name int, "
-               "id_name int, "               
-               "13f_id int PRIMARY KEY)")
-
-    db.execute("INSERT INTO infotable1 (id, name)"
-               "VALUES (3, 'susan'), "
-               "(5, 'delores')"
-               "ON CONFLICT (id) DO NOTHING;"
+    db.execute("CREATE TABLE IF NOT EXISTS infotable_test1 (accession_no int PRIMARY KEY, "
+               "cik int, "
+               "nameOfIssuer text, "
+               "titleOfClass text, "
+               "cusip text, "
+               "value text, "
+               "sshPrnamt text, "
+               "sshPrnamtType text, "
+               "putCall text, "
+               "investmentDiscretion text, "
+               "otherManager text, "
+               "votingAuthority_Sole text, "
+               "votingAuthority_Shared text, "
+               "votingAuthority_None text) "
                )
 
-    db.execute("INSERT INTO primary1 (id, name)"
-               "VALUES (3, 'susan'), "
-               "(5, 'delores')"
-               "ON CONFLICT (id) DO NOTHING;"
+    db.execute("CREATE TABLE IF NOT EXISTS primary_doc_test1 (cik int PRIMARY KEY, "
+               "company_name int, "
+               "filing_date date) "
                )
+
+    # db.execute("INSERT INTO infotable_test1 (id, name)"
+    #            "VALUES (3, 'susan'), "
+    #            "(5, 'delores')"
+    #            "ON CONFLICT (id) DO NOTHING;"
+    #            )
+    #
+    # db.execute("INSERT INTO primary1 (id, name)"
+    #            "VALUES (3, 'susan'), "
+    #            "(5, 'delores')"
+    #            "ON CONFLICT (id) DO NOTHING;"
+    #            )
+
 
 def update_database(db):
     # Update
