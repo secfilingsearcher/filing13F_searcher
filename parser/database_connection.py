@@ -4,8 +4,7 @@ import pandas as pd
 
 
 def connect_to_database():
-    engine = create_engine(os.environ.get('DB_CONNECTION_STRING'))
-    return engine
+    return create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
 
 
 def create_table(engine):
@@ -32,32 +31,20 @@ def create_table(engine):
                    )
 
 
-def insert_in_table(engine, df):
+def insert_in_infotable_table(engine, df):
     df.to_sql('infotable_test3', engine)
 
+
+def insert_in_primary_table(engine, df):
     engine.execute("INSERT INTO primary_doc_test1 (cik, company_name)"
                    "VALUES (3, 'susan'), "
-                   "(5, 'delores')"
                    "ON CONFLICT (cik) DO NOTHING;"
                    )
 
 
 def update_database(engine):
-    # Update
     engine.execute("UPDATE films SET title='Some2016Film' WHERE year='2016'")
-
-
-def read_database(engine):
-    # Read
-    result_set = engine.execute("SELECT * FROM films")
-    for r in result_set:
-        print(r)
 
 
 engine1 = connect_to_database()
 create_table(engine1)
-
-# first grab data
-# then format
-# then use sql alchemy
-# send to database
