@@ -9,14 +9,20 @@ def connect_to_database():
 
 def create_and_insert_to_database(db):
     # Create
-    db.execute("CREATE TABLE IF NOT EXISTS films (title text, director text, year text)")
-    db.execute("INSERT INTO films (title, director, year) "
-               "VALUES ('Doctor Strange', 'Scott Derrickson', '2016')")
+    # db.execute("CREATE TABLE IF NOT EXISTS films1 (cik_id, nameOfIssuer, titleOfClass, cusip, value,"
+    #            " sshPrnamt, sshPrnamtType, putCall, investmentDiscretion,"
+    #            " otherManager, votingAuthority_Sole,"
+    #            " votingAuthority_Shared, votingAuthority_None)")
+    db.execute("CREATE TABLE IF NOT EXISTS dl5 (name text, "
+               "id_name int, "
+               "id_name int, "               
+               "13f_id int PRIMARY KEY)")
 
-    db.execute("CREATE TABLE IF NOT EXISTS films (cik_id, nameOfIssuer, titleOfClass, cusip, value,"
-               " sshPrnamt, sshPrnamtType, putCall, investmentDiscretion,"
-               " otherManager, votingAuthority_Sole,"
-               " votingAuthority_Shared, votingAuthority_None)")
+    db.execute("INSERT INTO dl5 (id, name)"
+               "VALUES (3, 'susan'), "
+               "(5, 'delores')"
+               "ON CONFLICT (id) DO NOTHING;"
+               )
 
 def update_database(db):
     # Update
@@ -29,6 +35,9 @@ def read_database(db):
     for r in result_set:
         print(r)
 
+
+db1 = connect_to_database()
+create_and_insert_to_database(db1)
 
 # first grab data
 # then format
