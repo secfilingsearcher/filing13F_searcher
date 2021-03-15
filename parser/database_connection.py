@@ -1,62 +1,61 @@
 from sqlalchemy import create_engine
 import os
+import pandas as pd
 
 
 def connect_to_database():
-    db = create_engine(os.environ.get('DB_CONNECTION_STRING'))
-    return db
+    engine = create_engine(os.environ.get('DB_CONNECTION_STRING'))
+    return engine
 
 
-def create_and_insert_to_database(db):
+def create_table(engine):
     # Create
-    db.execute("CREATE TABLE IF NOT EXISTS infotable_test1 (accession_no int PRIMARY KEY, "
-               "cik int, "
-               "nameOfIssuer text, "
-               "titleOfClass text, "
-               "cusip text, "
-               "value text, "
-               "sshPrnamt text, "
-               "sshPrnamtType text, "
-               "putCall text, "
-               "investmentDiscretion text, "
-               "otherManager text, "
-               "votingAuthority_Sole text, "
-               "votingAuthority_Shared text, "
-               "votingAuthority_None text) "
-               )
+    engine.execute("CREATE TABLE IF NOT EXISTS infotable_test3 (accession_no int PRIMARY KEY, "
+                   "cik int, "
+                   "nameOfIssuer text, "
+                   "titleOfClass text, "
+                   "cusip text, "
+                   "value money, "
+                   "sshPrnamt int, "
+                   "sshPrnamtType text, "
+                   "putCall text, "
+                   "investmentDiscretion text, "
+                   "otherManager text, "
+                   "votingAuthority_Sole int, "
+                   "votingAuthority_Shared int, "
+                   "votingAuthority_None int) "
+                   )
 
-    db.execute("CREATE TABLE IF NOT EXISTS primary_doc_test1 (cik int PRIMARY KEY, "
-               "company_name int, "
-               "filing_date date) "
-               )
-
-    # db.execute("INSERT INTO infotable_test1 (id, name)"
-    #            "VALUES (3, 'susan'), "
-    #            "(5, 'delores')"
-    #            "ON CONFLICT (id) DO NOTHING;"
-    #            )
-    #
-    # db.execute("INSERT INTO primary1 (id, name)"
-    #            "VALUES (3, 'susan'), "
-    #            "(5, 'delores')"
-    #            "ON CONFLICT (id) DO NOTHING;"
-    #            )
+    engine.execute("CREATE TABLE IF NOT EXISTS primary_doc_test1 (cik int PRIMARY KEY, "
+                   "company_name int, "
+                   "filing_date date) "
+                   )
 
 
-def update_database(db):
+def insert_in_table(engine, df):
+    df.to_sql('infotable_test3', engine)
+
+    engine.execute("INSERT INTO primary_doc_test1 (cik, company_name)"
+                   "VALUES (3, 'susan'), "
+                   "(5, 'delores')"
+                   "ON CONFLICT (cik) DO NOTHING;"
+                   )
+
+
+def update_database(engine):
     # Update
-    db.execute("UPDATE films SET title='Some2016Film' WHERE year='2016'")
+    engine.execute("UPDATE films SET title='Some2016Film' WHERE year='2016'")
 
 
-def read_database(db):
+def read_database(engine):
     # Read
-    result_set = db.execute("SELECT * FROM films")
+    result_set = engine.execute("SELECT * FROM films")
     for r in result_set:
         print(r)
 
 
-db1 = connect_to_database()
-create_and_insert_to_database(db1)
+engine1 = connect_to_database()
+create_table(engine1)
 
 # first grab data
 # then format
