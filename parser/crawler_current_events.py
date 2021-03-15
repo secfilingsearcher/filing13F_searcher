@@ -24,6 +24,10 @@ def get_primary_doc_and_infotable_urls(text_13f):
     return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f)
 
 
+def extract_sec_accession_no(text_13f):
+    pass
+
+
 def get_primary_doc_xml_url(suffix_xml_urls):
     """function docstring"""
     base_sec_url = "https://www.sec.gov"
