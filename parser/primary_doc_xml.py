@@ -1,10 +1,10 @@
-"""primary doc module docstring"""
+"""This file contains functions that parse primary_doc.xml"""
 from xml.etree import ElementTree
 import requests
 
 
 def grab_primary_doc_root(primary_doc_xml):
-    """function docstring"""
+    """Grabs the root of the primary_doc.xml file"""
     getter = requests.get(primary_doc_xml)
     text = getter.text
     primary_doc_root = ElementTree.XML(text)
@@ -12,7 +12,7 @@ def grab_primary_doc_root(primary_doc_xml):
 
 
 def grab_primary_doc_cik(primary_doc_root):
-    """function docstring"""
+    """Returns the cik from the cik tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
     for cik in primary_doc_root.findall(
@@ -23,7 +23,7 @@ def grab_primary_doc_cik(primary_doc_root):
 
 
 def grab_primary_doc_company_name(primary_doc_root):
-    """function docstring"""
+    """Returns the company name from the name tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
     for company_name in primary_doc_root.findall(
