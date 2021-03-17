@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import { Button } from './Button';
-import SearchBox from './SearchBox';
+import { SearchBox } from './SearchBox';
 import './MainSection.css';
 
 const divStyle = { float: 'left', padding: '20px', margin: '20px'};
