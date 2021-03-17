@@ -1,5 +1,6 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, String, Numeric
 import os
+from sqlalchemy.ext.declarative import declarative_base
 import pandas as pd
 
 
@@ -7,28 +8,50 @@ def connect_to_database():
     return create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
 
 
-def create_table(engine):
-    # Create
-    engine.execute("CREATE TABLE IF NOT EXISTS infotable_test3 (accession_no int PRIMARY KEY, "
-                   "cik int, "
-                   "nameOfIssuer text, "
-                   "titleOfClass text, "
-                   "cusip text, "
-                   "value money, "
-                   "sshPrnamt int, "
-                   "sshPrnamtType text, "
-                   "putCall text, "
-                   "investmentDiscretion text, "
-                   "otherManager text, "
-                   "votingAuthority_Sole int, "
-                   "votingAuthority_Shared int, "
-                   "votingAuthority_None int) "
-                   )
+Base = declarative_base()
 
-    engine.execute("CREATE TABLE IF NOT EXISTS primary_doc_test1 (cik int PRIMARY KEY, "
-                   "company_name int, "
-                   "filing_date date) "
-                   )
+
+class Infotable(Base):
+    __tablename__ = 'infotable'
+    id = Column(Integer, primary_key=True)
+    accession_no = Column(String)
+    cik = Column(String)
+    nameOfIssuer = Column(String)
+    titleOfClass = Column(String)
+    cusip = Column(String)
+    value = Column(Numeric)
+    sshPrnamt = Column(Integer)
+    sshPrnamtType = Column(String)
+    putCall = Column(String)
+    investmentDiscretion = Column(String)
+    otherManager = Column(String)
+    votingAuthority_Sole = Column(Integer)
+    votingAuthority_Shared = Column(Integer)
+    votingAuthority_None = Column(Integer)
+
+    def __repr__(self):
+        return "<User(accession_no='%i', cik='%s', nameOfIssuer='%s', " \
+               "titleOfClass='%s', cusip='%s', value='%s', " \
+               "sshPrnamt='%i', sshPrnamtType='%i', putCall='%i', " \
+               "investmentDiscretion='%i', otherManager='%i', votingAuthority_Sole='%i', "\
+               "votingAuthority_Shared='%i', votingAuthority_None='%i')>" % (
+            self.accession_no, self.cik, self.nameOfIssuer,
+            self.titleOfClass, self.cusip, self.value,
+            self.sshPrnamt, self.sshPrnamtType, self.putCall,
+            self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
+            self.votingAuthority_Shared, self.votingAuthority_None)
+
+
+class Primary_doc(Base):
+    __tablename__ = 'primary_doc'
+    id = Column(Integer, primary_key=True)
+    cik = Column(String(50))
+    filing_date = Column(String(50))
+    company_name = Column(String(50))
+
+    def __repr__(self):
+        return "<User(cik='%s', filing_date='%s', company_name='%s')>" % (
+            self.cik, self.filing_date, self.company_name)
 
 
 def insert_in_infotable_table(engine, df):
@@ -36,7 +59,7 @@ def insert_in_infotable_table(engine, df):
 
 
 def insert_in_primary_table(engine, df):
-    engine.execute("INSERT INTO primary_doc_test1 (cik, company_name)"
+    engine.execute("INSERT INTO primary_doc_test1 (cik, cik)"
                    "VALUES (3, 'susan'), "
                    "ON CONFLICT (cik) DO NOTHING;"
                    )
