@@ -1,5 +1,4 @@
-from sqlalchemy import func, select, MetaData, Table, \
-    create_engine
+from sqlalchemy import func, select, MetaData, Table
 
 
 def primary_doc_checker(engine):
