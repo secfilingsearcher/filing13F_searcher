@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactSearchBox from 'react-search-box'
 
-export default class SearchBox extends Component {
+class SearchBox extends Component {
   data = [
     {
       key: 'john',
