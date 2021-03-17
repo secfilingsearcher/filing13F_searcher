@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactSearchBox from 'react-search-box'
 
-export default class App extends Component {
+export default class SearchBox extends Component {
   data = [
     {
       key: 'john',
@@ -28,11 +28,14 @@ export default class App extends Component {
   render() {
     return (
       <ReactSearchBox
-        placeholder="Placeholder"
-        value="Doe"
+        placeholder="Company Name"
+        value=""
         data={this.data}
         callback={record => console.log(record)}
       />
     )
   }
 }
+
+
+export default SearchBox
