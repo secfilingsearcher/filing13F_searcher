@@ -2,6 +2,16 @@ from sqlalchemy import func, select, MetaData, Table, \
     create_engine
 
 
+def primary_doc_checker(engine):
+    if count_duplicate_primary(engine):
+        remove_duplicate_primary(engine)
+
+
+def infotable_checker(engine):
+    if count_duplicate_infotable(engine):
+        remove_duplicate_infotable(engine)
+
+
 def count_duplicate_infotable(engine):
     infotable = Table('infotable', MetaData(), autoload=True, autoload_with=engine)
     statement = select(
@@ -37,6 +47,8 @@ def count_duplicate_infotable(engine):
         .having(func.count() > 1)
     print(str(statement))
     print(engine.execute(statement).fetchall())
+    return engine.execute(statement).fetchall()
+
 
 
 def count_duplicate_primary(engine):
@@ -49,6 +61,8 @@ def count_duplicate_primary(engine):
         .having(func.count() > 1)
     print(str(statement))
     print(engine.execute(statement).fetchall())
+    return engine.execute(statement).fetchall()
+
 
 
 def remove_duplicate_infotable(engine):
@@ -74,6 +88,8 @@ def remove_duplicate_infotable(engine):
                                     ))
     print(str(statement))
     print(engine.execute(statement).fetchall())
+    return engine.execute(statement).fetchall()
+
 
 
 def remove_duplicate_primary(engine):
@@ -85,4 +101,8 @@ def remove_duplicate_primary(engine):
                                       primary_doc.columns.company_name)))
     print(str(statement))
     print(engine.execute(statement).fetchall())
+    return engine.execute(statement).fetchall()
+
+
+
 
