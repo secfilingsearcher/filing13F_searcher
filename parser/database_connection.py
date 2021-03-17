@@ -1,30 +1,26 @@
 from sqlalchemy import create_engine, Column, Integer, String, Numeric
 import os
 from sqlalchemy.ext.declarative import declarative_base
-import pandas as pd
 
 
-def connect_to_database():
-    return create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
-
-
+engine = create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
 Base = declarative_base()
 
 
 class Infotable(Base):
     __tablename__ = 'infotable'
     id = Column(Integer, primary_key=True)
-    accession_no = Column(String)
-    cik = Column(String)
-    nameOfIssuer = Column(String)
-    titleOfClass = Column(String)
-    cusip = Column(String)
+    accession_no = Column(String(50))
+    cik = Column(String(50))
+    nameOfIssuer = Column(String(50))
+    titleOfClass = Column(String(50))
+    cusip = Column(String(50))
     value = Column(Numeric)
     sshPrnamt = Column(Integer)
-    sshPrnamtType = Column(String)
-    putCall = Column(String)
-    investmentDiscretion = Column(String)
-    otherManager = Column(String)
+    sshPrnamtType = Column(String(50))
+    putCall = Column(String(50))
+    investmentDiscretion = Column(String(50))
+    otherManager = Column(String(50))
     votingAuthority_Sole = Column(Integer)
     votingAuthority_Shared = Column(Integer)
     votingAuthority_None = Column(Integer)
@@ -33,13 +29,13 @@ class Infotable(Base):
         return "<User(accession_no='%i', cik='%s', nameOfIssuer='%s', " \
                "titleOfClass='%s', cusip='%s', value='%s', " \
                "sshPrnamt='%i', sshPrnamtType='%i', putCall='%i', " \
-               "investmentDiscretion='%i', otherManager='%i', votingAuthority_Sole='%i', "\
+               "investmentDiscretion='%i', otherManager='%i', votingAuthority_Sole='%i', " \
                "votingAuthority_Shared='%i', votingAuthority_None='%i')>" % (
-            self.accession_no, self.cik, self.nameOfIssuer,
-            self.titleOfClass, self.cusip, self.value,
-            self.sshPrnamt, self.sshPrnamtType, self.putCall,
-            self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
-            self.votingAuthority_Shared, self.votingAuthority_None)
+                   self.accession_no, self.cik, self.nameOfIssuer,
+                   self.titleOfClass, self.cusip, self.value,
+                   self.sshPrnamt, self.sshPrnamtType, self.putCall,
+                   self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
+                   self.votingAuthority_Shared, self.votingAuthority_None)
 
 
 class Primary_doc(Base):
@@ -52,6 +48,9 @@ class Primary_doc(Base):
     def __repr__(self):
         return "<User(cik='%s', filing_date='%s', company_name='%s')>" % (
             self.cik, self.filing_date, self.company_name)
+
+
+Base.metadata.create_all(engine)
 
 
 def insert_in_infotable_table(engine, df):
@@ -67,7 +66,3 @@ def insert_in_primary_table(engine, df):
 
 def update_database(engine):
     engine.execute("UPDATE films SET title='Some2016Film' WHERE year='2016'")
-
-
-engine1 = connect_to_database()
-create_table(engine1)
