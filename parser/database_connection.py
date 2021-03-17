@@ -1,9 +1,10 @@
-from sqlalchemy import create_engine, Column, Integer, String, Numeric
+from sqlalchemy import create_engine, Column, Integer, String, Numeric, Date
 import os
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import pandas as pd
 
-
-engine = create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
+engine_ = create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
 Base = declarative_base()
 
 
@@ -38,31 +39,27 @@ class Infotable(Base):
                    self.votingAuthority_Shared, self.votingAuthority_None)
 
 
-class Primary_doc(Base):
+class PrimaryDoc(Base):
     __tablename__ = 'primary_doc'
     id = Column(Integer, primary_key=True)
     cik = Column(String(50))
-    filing_date = Column(String(50))
     company_name = Column(String(50))
+    filing_date = Column(Date)
 
     def __repr__(self):
         return "<User(cik='%s', filing_date='%s', company_name='%s')>" % (
             self.cik, self.filing_date, self.company_name)
 
 
-Base.metadata.create_all(engine)
+Base.metadata.create_all(engine_)
+Session = sessionmaker(bind=engine_)
+session = Session()
 
 
-def insert_in_infotable_table(engine, df):
-    df.to_sql('infotable_test3', engine)
+def insert_in_infotable_table(engine, df: pd.DataFrame):
+    df.to_sql(name='infotable', con=engine, if_exists="fail")
 
 
-def insert_in_primary_table(engine, df):
-    engine.execute("INSERT INTO primary_doc_test1 (cik, cik)"
-                   "VALUES (3, 'susan'), "
-                   "ON CONFLICT (cik) DO NOTHING;"
-                   )
-
-
-def update_database(engine):
-    engine.execute("UPDATE films SET title='Some2016Film' WHERE year='2016'")
+def insert_in_primary_table(cik, company_name, filing_date):
+    session.add(PrimaryDoc(cik=cik, company_name=company_name, filing_date=filing_date))
+    session.commit()
