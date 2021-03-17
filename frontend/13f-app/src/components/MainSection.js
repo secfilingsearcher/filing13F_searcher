@@ -5,7 +5,8 @@ import SearchBox from './SearchBox';
 import './MainSection.css';
 
 const divStyle = { float: 'left', padding: '20px', margin: '20px'};
-const today = new Date();
+const date = new Date();
+const today = date.toISOString().substr(0, 10);
 
 
 function MainSection() {
