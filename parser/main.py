@@ -1,3 +1,4 @@
+"""This file returns the cik, company name, and infotable data"""
 from crawler_current_events import grab_text
 from crawler_current_events import get_13f_filing_detail_urls
 from crawler_current_events import get_primary_doc_and_infotable_urls
@@ -10,6 +11,7 @@ from infotable_xml import grab_infotable
 
 
 def main():
+    """This function returns the cik, company name, and infotable data"""
     url_edgar_current_events = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=6&q3=13F'
     text_edgar_current_events = grab_text(url_edgar_current_events)
     filing_detail_urls = get_13f_filing_detail_urls(text_edgar_current_events)
