@@ -3,7 +3,7 @@ import re
 import requests
 
 
-def grab_text(url):
+def get_text(url):
     """Returns the html and text from the url"""
     getter = requests.get(url)
     full_text = getter.text

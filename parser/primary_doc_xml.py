@@ -3,15 +3,15 @@ from xml.etree import ElementTree
 import requests
 
 
-def grab_primary_doc_root(primary_doc_xml):
-    """Grabs the root of the primary_doc.xml file"""
+def get_primary_doc_root(primary_doc_xml):
+    """Gets the root of the primary_doc.xml file"""
     getter = requests.get(primary_doc_xml)
     text = getter.text
     primary_doc_root = ElementTree.XML(text)
     return primary_doc_root
 
 
-def grab_primary_doc_cik(primary_doc_root):
+def get_primary_doc_cik(primary_doc_root):
     """Returns the cik from the cik tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
@@ -22,7 +22,7 @@ def grab_primary_doc_cik(primary_doc_root):
         return cik.text
 
 
-def grab_primary_doc_company_name(primary_doc_root):
+def get_primary_doc_company_name(primary_doc_root):
     """Returns the company name from the name tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
@@ -32,7 +32,7 @@ def grab_primary_doc_company_name(primary_doc_root):
         return company_name.text
 
 
-def grab_primary_doc_accepted_filing_date(primary_doc_root):
+def get_primary_doc_accepted_filing_date(primary_doc_root):
     """function docstring"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
