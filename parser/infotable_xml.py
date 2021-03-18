@@ -4,9 +4,9 @@ import requests
 import pandas as pd
 
 
-def grab_infotable(infotable_xml_url):
+def get_infotable(infotable_xml_url):
     """Extracts the data from infotable.xml"""
-    infotable_root = grab_infotable_doc_root(infotable_xml_url)
+    infotable_root = get_infotable_doc_root(infotable_xml_url)
     columns = ['nameOfIssuer', 'titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType',
                'putCall', 'investmentDiscretion', 'otherManager', 'votingAuthority_Sole',
                'votingAuthority_Shared', 'votingAuthority_None']
@@ -32,8 +32,8 @@ def grab_infotable(infotable_xml_url):
     return pd.DataFrame(data, columns=columns)
 
 
-def grab_infotable_doc_root(infotable_xml):
-    """Grabs the root of the infotable.xml file"""
+def get_infotable_doc_root(infotable_xml):
+    """Gets the root of the infotable.xml file"""
     url = infotable_xml
     getter = requests.get(url)
     text = getter.text
@@ -47,4 +47,3 @@ def get_xml_text(dom, xpath):
     if node is not None:
         return node.text
     return None
-
