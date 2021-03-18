@@ -19,6 +19,16 @@ def get_13f_filing_detail_urls(edgar_current_events_text):
     return url_list
 
 
+def extract_sec_accession_no(text_13f):
+    """Returns the sec accession number from the 13f filing detail page"""
+    accession_no_str = re \
+        .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)', text_13f) \
+        .group(0)
+    accession_no_removed_dashes = accession_no_str.replace('-', '')
+    accession_no = int(accession_no_removed_dashes)
+    return accession_no
+
+
 def get_primary_doc_and_infotable_urls(text_13f):
     """Returns the primary_doc.xml and infotable.xml base urls"""
     return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f)

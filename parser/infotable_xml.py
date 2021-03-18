@@ -47,4 +47,3 @@ def get_xml_text(dom, xpath):
     if node is not None:
         return node.text
     return None
-
