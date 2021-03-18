@@ -33,7 +33,7 @@ def get_primary_doc_company_name(primary_doc_root):
 
 
 def get_primary_doc_accepted_filing_date(primary_doc_root):
-    """function docstring"""
+    """Returns the filing date from the signatureDate tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
     for accepted_filing_date in primary_doc_root.findall(
