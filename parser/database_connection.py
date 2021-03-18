@@ -59,12 +59,12 @@ Session = sessionmaker(bind=engine_)
 session = Session()
 
 
+def insert_in_primary_table(id, cik, company_name, filing_date):
+    """docstring"""
+    session.add(PrimaryDoc(id=id, cik=cik, company_name=company_name, filing_date=filing_date))
+    session.commit()
+
+
 def insert_in_infotable_table(engine, df: pd.DataFrame):
     """docstring"""
     df.to_sql(name='infotable', con=engine, if_exists="fail")
-
-
-def insert_in_primary_table(cik, company_name, filing_date):
-    """docstring"""
-    session.add(PrimaryDoc(cik=cik, company_name=company_name, filing_date=filing_date))
-    session.commit()
