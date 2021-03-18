@@ -29,8 +29,8 @@ def get_infotable(infotable_xml_url):
         ]
 
         data.append(row)
-        primary_key = primary_key_generator(data)
-        data.insert(0, primary_key)
+        infotable_primary_key = primary_key_generator(data)
+        data.insert(0, infotable_primary_key)
     return pd.DataFrame(data, columns=columns)
 
 

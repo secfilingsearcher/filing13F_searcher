@@ -30,7 +30,10 @@ def main():
         cik = get_primary_doc_cik(root)
         company_name = get_primary_doc_company_name(root)
         filing_date = get_primary_doc_accepted_filing_date(root)
-        print(cik, company_name, filing_date)
+        primary_doc_list = [cik, company_name, filing_date]
+        primary_doc_primary_key = primary_key_generator(primary_doc_list)
+        primary_doc_list.insert(0, primary_doc_primary_key)
+        print(primary_doc_list)
 
         df_infotable = get_infotable(infotable_xml_url)
         df_infotable.insert(loc=0, column='accession_no', value=sec_accession_no)
