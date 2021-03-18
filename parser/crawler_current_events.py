@@ -19,7 +19,7 @@ def get_13f_filing_detail_urls(edgar_current_events_text):
     return url_list
 
 
-def extract_sec_accession_no(text_13f):
+def get_sec_accession_no(text_13f):
     """Returns the sec accession number from the 13f filing detail page"""
     accession_no_str = re \
         .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)', text_13f) \

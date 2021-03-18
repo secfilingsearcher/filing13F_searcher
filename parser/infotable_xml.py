@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def get_infotable(infotable_xml_url):
-    """Extracts the data from infotable.xml"""
+    """Gets the data from infotable.xml"""
     infotable_root = get_infotable_doc_root(infotable_xml_url)
     columns = ['nameOfIssuer', 'titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType',
                'putCall', 'investmentDiscretion', 'otherManager', 'votingAuthority_Sole',
@@ -33,7 +33,7 @@ def get_infotable(infotable_xml_url):
 
 
 def get_infotable_doc_root(infotable_xml):
-    """Grabs the root of the infotable.xml file"""
+    """Gets the root of the infotable.xml file"""
     url = infotable_xml
     getter = requests.get(url)
     text = getter.text
