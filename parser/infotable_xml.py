@@ -1,12 +1,12 @@
-"""infotable docstring"""
+"""This file contains functions that parse infotable.xml"""
 from xml.etree import ElementTree
 import requests
 import pandas as pd
 
 
-def grab_infotable(infotable_xml_url):
-    """grab_infotable docstring"""
-    infotable_root = grab_infotable_doc_root(infotable_xml_url)
+def get_infotable(infotable_xml_url):
+    """Gets the data from infotable.xml"""
+    infotable_root = get_infotable_doc_root(infotable_xml_url)
     columns = ['nameOfIssuer', 'titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType',
                'putCall', 'investmentDiscretion', 'otherManager', 'votingAuthority_Sole',
                'votingAuthority_Shared', 'votingAuthority_None']
@@ -32,18 +32,18 @@ def grab_infotable(infotable_xml_url):
     return pd.DataFrame(data, columns=columns)
 
 
-def get_xml_text(dom, xpath):
-    """function docstring"""
-    node = dom.find(xpath)
-    if node is not None:
-        return node.text
-    return None
-
-
-def grab_infotable_doc_root(infotable_xml):
-    """function docstring"""
+def get_infotable_doc_root(infotable_xml):
+    """Gets the root of the infotable.xml file"""
     url = infotable_xml
     getter = requests.get(url)
     text = getter.text
     infotable_root = ElementTree.XML(text)
     return infotable_root
+
+
+def get_xml_text(dom, xpath):
+    """Returns the text from the xml tag on an xml file"""
+    node = dom.find(xpath)
+    if node is not None:
+        return node.text
+    return None
