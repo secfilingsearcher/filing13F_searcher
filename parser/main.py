@@ -10,6 +10,7 @@ from primary_doc_xml import get_primary_doc_root
 from primary_doc_xml import get_primary_doc_cik
 from primary_doc_xml import get_primary_doc_company_name
 from primary_doc_xml import get_primary_doc_accepted_filing_date
+from primary_key_generator import primary_key_generator
 
 
 def main():
@@ -32,8 +33,8 @@ def main():
         print(cik, company_name, filing_date)
 
         df_infotable = get_infotable(infotable_xml_url)
-        df_infotable.insert(loc=0, column='cik_id', value=cik)
-        df_infotable.insert(loc=1, column='accession_no', value=sec_accession_no)
+        df_infotable.insert(loc=0, column='accession_no', value=sec_accession_no)
+        df_infotable.insert(loc=1, column='cik_id', value=cik)
         df_infotable.insert(loc=2, column='filing_date', value=filing_date)
         print(df_infotable.head())
 
