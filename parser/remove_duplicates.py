@@ -1,17 +1,21 @@
+"""docstring"""
 from sqlalchemy import func, select, MetaData, Table
 
 
 def primary_doc_checker(engine):
+    """docstring"""
     if count_duplicate_primary(engine):
         remove_duplicate_primary(engine)
 
 
 def infotable_checker(engine):
+    """docstring"""
     if count_duplicate_infotable(engine):
         remove_duplicate_infotable(engine)
 
 
 def count_duplicate_infotable(engine):
+    """docstring"""
     infotable = Table('infotable', MetaData(), autoload=True, autoload_with=engine)
     statement = select(
         [infotable.columns.accession_no,
@@ -49,8 +53,8 @@ def count_duplicate_infotable(engine):
     return engine.execute(statement).fetchall()
 
 
-
 def count_duplicate_primary(engine):
+    """docstring"""
     primary_doc = Table('primary_doc', MetaData(), autoload=True, autoload_with=engine)
     statement = select(
         [primary_doc.columns.cik, primary_doc.columns.filing_date, primary_doc.columns.company_name,
@@ -63,8 +67,8 @@ def count_duplicate_primary(engine):
     return engine.execute(statement).fetchall()
 
 
-
 def remove_duplicate_infotable(engine):
+    """docstring"""
     infotable = Table('infotable', MetaData(), autoload=True, autoload_with=engine)
     statement = infotable.delete() \
         .where(
@@ -90,18 +94,15 @@ def remove_duplicate_infotable(engine):
     return engine.execute(statement).fetchall()
 
 
-
 def remove_duplicate_primary(engine):
+    """docstring"""
     primary_doc = Table('primary_doc', MetaData(), autoload=True, autoload_with=engine)
     statement = primary_doc.delete() \
-        .where(primary_doc.columns.id.notin_(
-            select([func.max(primary_doc.columns.id).label('MaxRecordID')]).select_from(
-                primary_doc).group_by(primary_doc.columns.cik, primary_doc.columns.filing_date,
-                                      primary_doc.columns.company_name)))
+        .where(primary_doc.columns.id
+               .notin_(select([func.max(primary_doc.columns.id)
+                              .label('MaxRecordID')]).select_from(primary_doc)
+                       .group_by(primary_doc.columns.cik, primary_doc.columns.filing_date,
+                                 primary_doc.columns.company_name)))
     print(str(statement))
     print(engine.execute(statement).fetchall())
     return engine.execute(statement).fetchall()
-
-
-
-

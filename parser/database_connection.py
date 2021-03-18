@@ -1,3 +1,4 @@
+"""docstring"""
 from sqlalchemy import create_engine, Column, Integer, String, Numeric, Date
 import os
 from sqlalchemy.ext.declarative import declarative_base
@@ -9,6 +10,7 @@ Base = declarative_base()
 
 
 class Infotable(Base):
+    """docstring"""
     __tablename__ = 'infotable'
     id = Column(Integer, primary_key=True)
     accession_no = Column(String(50))
@@ -40,6 +42,7 @@ class Infotable(Base):
 
 
 class PrimaryDoc(Base):
+    """docstring"""
     __tablename__ = 'primary_doc'
     id = Column(Integer, primary_key=True)
     cik = Column(String(50))
@@ -57,9 +60,11 @@ session = Session()
 
 
 def insert_in_infotable_table(engine, df: pd.DataFrame):
+    """docstring"""
     df.to_sql(name='infotable', con=engine, if_exists="fail")
 
 
 def insert_in_primary_table(cik, company_name, filing_date):
+    """docstring"""
     session.add(PrimaryDoc(cik=cik, company_name=company_name, filing_date=filing_date))
     session.commit()
