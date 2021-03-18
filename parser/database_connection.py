@@ -18,6 +18,7 @@ def create_and_insert_to_database(db):
                " otherManager, votingAuthority_Sole,"
                " votingAuthority_Shared, votingAuthority_None)")
 
+
 def update_database(db):
     # Update
     db.execute("UPDATE films SET title='Some2016Film' WHERE year='2016'")
@@ -28,7 +29,6 @@ def read_database(db):
     result_set = db.execute("SELECT * FROM films")
     for r in result_set:
         print(r)
-
 
 # first grab data
 # then format
