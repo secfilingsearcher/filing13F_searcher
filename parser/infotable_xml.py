@@ -2,6 +2,7 @@
 from xml.etree import ElementTree
 import requests
 import pandas as pd
+from primary_key_generator import primary_key_generator
 
 
 def get_infotable(infotable_xml_url):
@@ -12,7 +13,6 @@ def get_infotable(infotable_xml_url):
                'votingAuthority_Shared', 'votingAuthority_None']
     data = []
     for info in infotable_root.findall('{*}infoTable'):
-        # pylint: disable=R0914
         row = [
             get_xml_text(info, '{*}nameOfIssuer'),
             get_xml_text(info, '{*}titleOfClass'),
@@ -29,6 +29,8 @@ def get_infotable(infotable_xml_url):
         ]
 
         data.append(row)
+        primary_key = primary_key_generator(data)
+        data.insert(0, primary_key)
     return pd.DataFrame(data, columns=columns)
 
 
