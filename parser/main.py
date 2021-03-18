@@ -9,7 +9,6 @@ from primary_doc_xml import grab_primary_doc_cik
 from primary_doc_xml import grab_primary_doc_company_name
 from primary_doc_xml import grab_primary_doc_accepted_filing_date
 from infotable_xml import grab_infotable
-from database_connection import *
 
 
 def main():
