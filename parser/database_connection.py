@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import pandas as pd
 
-engine_ = create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
+engine = create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
 Base = declarative_base()
 
 
@@ -57,6 +57,7 @@ class PrimaryDoc(Base):
 Base.metadata.create_all(engine_)
 Session = sessionmaker(bind=engine_)
 session = Session()
+
 
 
 def insert_in_primary_table(id, cik, company_name, filing_date):

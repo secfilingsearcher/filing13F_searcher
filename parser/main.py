@@ -1,11 +1,15 @@
 """This file returns the cik, company name, and infotable data"""
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from crawler_current_events import get_text
 from crawler_current_events import get_13f_filing_detail_urls
 from crawler_current_events import get_sec_accession_no
 from crawler_current_events import get_primary_doc_and_infotable_urls
 from crawler_current_events import get_primary_doc_xml_url
 from crawler_current_events import get_infotable_xml_url
-from database_connection import insert_in_infotable_table, insert_in_primary_table
+from database_connection import insert_in_infotable_table, insert_in_primary_table, Infotable, \
+    PrimaryDoc
 from infotable_xml import get_infotable
 from primary_doc_xml import get_primary_doc_root
 from primary_doc_xml import get_primary_doc_cik
@@ -32,14 +36,23 @@ def main():
         company_name = get_primary_doc_company_name(root)
         filing_date = get_primary_doc_accepted_filing_date(root)
         primary_doc_primary_key = primary_key_generator([cik, company_name, filing_date])
-        insert_in_primary_table(primary_doc_primary_key, cik, company_name, filing_date)
-        print(primary_doc_primary_key, cik, company_name, filing_date)
 
         df_infotable = get_infotable(infotable_xml_url)
         df_infotable.insert(loc=0, column='accession_no', value=sec_accession_no)
         df_infotable.insert(loc=1, column='cik_id', value=cik)
         df_infotable.insert(loc=2, column='filing_date', value=filing_date)
-        insert_in_infotable_table(df_infotable)
+
+        engine = create_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
+        Base = declarative_base()
+        Infotable()
+        PrimaryDoc()
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+
+        insert_in_primary_table(primary_doc_primary_key, cik, company_name, filing_date)
+        print(primary_doc_primary_key, cik, company_name, filing_date)
+        insert_in_infotable_table(df_infotable, engine)
         print(df_infotable.head())
 
 
