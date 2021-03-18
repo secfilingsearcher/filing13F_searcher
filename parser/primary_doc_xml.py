@@ -3,7 +3,7 @@ from xml.etree import ElementTree
 import requests
 
 
-def grab_primary_doc_root(primary_doc_xml):
+def get_primary_doc_root(primary_doc_xml):
     """Grabs the root of the primary_doc.xml file"""
     getter = requests.get(primary_doc_xml)
     text = getter.text
@@ -11,7 +11,7 @@ def grab_primary_doc_root(primary_doc_xml):
     return primary_doc_root
 
 
-def grab_primary_doc_cik(primary_doc_root):
+def get_primary_doc_cik(primary_doc_root):
     """Returns the cik from the cik tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
@@ -22,7 +22,7 @@ def grab_primary_doc_cik(primary_doc_root):
         return cik.text
 
 
-def grab_primary_doc_company_name(primary_doc_root):
+def get_primary_doc_company_name(primary_doc_root):
     """Returns the company name from the name tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
