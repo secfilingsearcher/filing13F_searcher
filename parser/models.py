@@ -1,3 +1,4 @@
+"""docstring"""
 from sqlalchemy import Column, Integer, String, Numeric, Date
 from sqlalchemy.ext.declarative import declarative_base
 
