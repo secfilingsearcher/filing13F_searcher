@@ -1,16 +1,10 @@
 """This file returns the cik, company name, and infotable data"""
-from crawler_current_events import get_text
-from crawler_current_events import get_13f_filing_detail_urls
-from crawler_current_events import get_sec_accession_no
-from crawler_current_events import get_primary_doc_and_infotable_urls
-from crawler_current_events import get_primary_doc_xml_url
-from crawler_current_events import get_infotable_xml_url
-from database_connection import insert_in_infotable_table, insert_in_primary_table, engine, session
+from crawler_current_events import get_text, get_13f_filing_detail_urls, get_sec_accession_no, \
+    get_primary_doc_and_infotable_urls, get_primary_doc_xml_url, get_infotable_xml_url
+from database_connection import insert_in_infotable_table, insert_in_primary_table, engine
 from infotable_xml import get_infotable
-from primary_doc_xml import get_primary_doc_root
-from primary_doc_xml import get_primary_doc_cik
-from primary_doc_xml import get_primary_doc_company_name
-from primary_doc_xml import get_primary_doc_accepted_filing_date
+from primary_doc_xml import get_primary_doc_root, get_primary_doc_cik,  \
+    get_primary_doc_company_name, get_primary_doc_accepted_filing_date
 from primary_key_generator import primary_key_generator
 
 
