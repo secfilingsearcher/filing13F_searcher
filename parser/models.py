@@ -1,4 +1,4 @@
-"""docstring"""
+"""Create table models for database"""
 from sqlalchemy import Column, Integer, String, Numeric, Date
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -6,7 +6,7 @@ Base = declarative_base()
 
 
 class Infotable(Base):
-    """docstring"""
+    """Define Infotable Table"""
     __tablename__ = 'infotable'
     id = Column(Integer, primary_key=True)
     accession_no = Column(String(50))
@@ -38,7 +38,7 @@ class Infotable(Base):
 
 
 class PrimaryDoc(Base):
-    """docstring"""
+    """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
     id = Column(Integer, primary_key=True)
     cik = Column(String(50))

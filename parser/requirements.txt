@@ -2,3 +2,4 @@ requests
 sqlalchemy
 pandas
 psycopg2
+hashlib
