@@ -8,7 +8,7 @@ Base = declarative_base()
 class Infotable(Base):
     """Define Infotable Table"""
     __tablename__ = 'infotable'
-    id = Column(Integer, primary_key=True)
+    id = Column(String, primary_key=True)
     accession_no = Column(String(50))
     cik = Column(String(50))
     nameOfIssuer = Column(String(50))
@@ -40,7 +40,7 @@ class Infotable(Base):
 class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
-    id = Column(Integer, primary_key=True)
+    id = Column(String, primary_key=True)
     cik = Column(String(50))
     company_name = Column(String(50))
     filing_date = Column(Date)
