@@ -8,7 +8,7 @@ from primary_key_generator import primary_key_generator
 def get_infotable(infotable_xml_url):
     """Gets the data from infotable.xml"""
     infotable_root = get_infotable_doc_root(infotable_xml_url)
-    columns = ['nameOfIssuer', 'titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType',
+    columns = ['primary_key', 'nameOfIssuer', 'titleOfClass', 'cusip', 'value', 'sshPrnamt', 'sshPrnamtType',
                'putCall', 'investmentDiscretion', 'otherManager', 'votingAuthority_Sole',
                'votingAuthority_Shared', 'votingAuthority_None']
     data = []
@@ -27,10 +27,9 @@ def get_infotable(infotable_xml_url):
             get_xml_text(info, '{*}votingAuthority/{*}Shared'),
             get_xml_text(info, '{*}votingAuthority/{*}None')
         ]
-
+        infotable_primary_key = primary_key_generator(row)
+        row.insert(0, infotable_primary_key)
         data.append(row)
-        infotable_primary_key = primary_key_generator(data)
-        data.insert(0, infotable_primary_key)
     return pd.DataFrame(data, columns=columns)
 
 
