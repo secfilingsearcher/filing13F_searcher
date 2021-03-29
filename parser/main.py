@@ -36,7 +36,7 @@ def main():
 
         insert_in_primary_table(primary_doc_primary_key, cik, company_name, filing_date)
         print(primary_doc_primary_key, cik, company_name, filing_date)
-        insert_in_infotable_table(df_infotable, engine)
+        insert_in_infotable_table(df_infotable)
         print(df_infotable.head())
 
 

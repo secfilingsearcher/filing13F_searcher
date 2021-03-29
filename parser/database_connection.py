@@ -15,6 +15,6 @@ def insert_in_primary_table(id, cik, company_name, filing_date):
     session.commit()
 
 
-def insert_in_infotable_table(engine, df: pd.DataFrame):
+def insert_in_infotable_table(df: pd.DataFrame):
     """Insert dataframe in infotable table"""
     df.to_sql(name='infotable', con=engine, if_exists="fail")

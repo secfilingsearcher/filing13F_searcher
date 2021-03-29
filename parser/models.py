@@ -40,7 +40,7 @@ class Infotable(Base):
 class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
-    id = Column(String, primary_key=True)
+    id = Column(String(50), primary_key=True)
     cik = Column(String(50))
     company_name = Column(String(50))
     filing_date = Column(Date)
