@@ -11,9 +11,10 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-def insert_in_database_primary_table(id, cik, company_name, filing_date):
+def insert_in_database_primary_table(primary_key_id, cik, company_name, filing_date):
     """Insert list in primary_doc table"""
-    session.add(PrimaryDoc(id=id, cik=cik, company_name=company_name, filing_date=filing_date))
+    session.add(PrimaryDoc(id=primary_key_id, cik=cik,
+                           company_name=company_name, filing_date=filing_date))
     session.commit()
 
 

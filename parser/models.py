@@ -25,11 +25,11 @@ class Infotable(Base):
     votingAuthority_None = Column(Integer)
 
     def __repr__(self):
-        return "<User(accession_no='%i', cik='%s', nameOfIssuer='%s', " \
+        return "<User(accession_no='%s', cik='%s', nameOfIssuer='%s', " \
                "titleOfClass='%s', cusip='%s', value='%s', " \
-               "sshPrnamt='%i', sshPrnamtType='%i', putCall='%i', " \
-               "investmentDiscretion='%i', otherManager='%i', votingAuthority_Sole='%i', " \
-               "votingAuthority_Shared='%i', votingAuthority_None='%i')>" % (
+               "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
+               "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
+               "votingAuthority_Shared='%s', votingAuthority_None='%s')>" % (
                    self.accession_no, self.cik, self.nameOfIssuer,
                    self.titleOfClass, self.cusip, self.value,
                    self.sshPrnamt, self.sshPrnamtType, self.putCall,
@@ -48,4 +48,3 @@ class PrimaryDoc(Base):
     def __repr__(self):
         return "<User(cik='%s', filing_date='%s', company_name='%s')>" % (
             self.cik, self.filing_date, self.company_name)
-
