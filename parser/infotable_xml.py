@@ -2,7 +2,9 @@
 from xml.etree import ElementTree
 import requests
 import pandas as pd
-from primary_key_generator import primary_key_generator
+
+from models import Infotable
+from primary_key_generator import primary_key_generator_primary_doc
 
 
 def get_infotable(infotable_xml_url):
@@ -13,24 +15,24 @@ def get_infotable(infotable_xml_url):
                'votingAuthority_Shared', 'votingAuthority_None']
     data = []
     for info in infotable_root.findall('{*}infoTable'):
-        row = [
-            get_xml_text(info, '{*}nameOfIssuer'),
-            get_xml_text(info, '{*}titleOfClass'),
-            get_xml_text(info, '{*}cusip'),
-            get_xml_text(info, '{*}value'),
-            get_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamt'),
-            get_xml_text(info, '{*}sshPrnamtType'),
-            get_xml_text(info, '{*}putCall'),
-            get_xml_text(info, '{*}investmentDiscretion'),
-            get_xml_text(info, '{*}otherManager'),
-            get_xml_text(info, '{*}votingAuthority/{*}Sole'),
-            get_xml_text(info, '{*}votingAuthority/{*}Shared'),
-            get_xml_text(info, '{*}votingAuthority/{*}None')
-        ]
-        infotable_primary_key = primary_key_generator(row)
-        row.insert(0, infotable_primary_key)
-        data.append(row)
-    return pd.DataFrame(data, columns=columns)
+        infotable_row = Infotable(
+            nameOfIssuer=get_xml_text(info, '{*}nameOfIssuer'),
+            titleOfClass=get_xml_text(info, '{*}titleOfClass'),
+            cusip=get_xml_text(info, '{*}cusip'),
+            value=get_xml_text(info, '{*}value'),
+            sshPrnamt=get_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamt'),
+            sshPrnamtType=get_xml_text(info, '{*}sshPrnamtType'),
+            putCall=get_xml_text(info, '{*}putCall'),
+            investmentDiscretion=get_xml_text(info, '{*}investmentDiscretion'),
+            otherManager=get_xml_text(info, '{*}otherManager'),
+            votingAuthority_Sole=get_xml_text(info, '{*}votingAuthority/{*}Sole'),
+            votingAuthority_Shared=get_xml_text(info, '{*}votingAuthority/{*}Shared'),
+            votingAuthority_None=get_xml_text(info, '{*}votingAuthority/{*}None')
+        )
+        infotable_primary_key = primary_key_generator_primary_doc(infotable_row)
+        infotable_row.id = infotable_primary_key
+        data.append(infotable_row)
+    return data
 
 
 def get_infotable_doc_root(infotable_xml):

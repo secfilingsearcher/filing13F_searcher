@@ -5,7 +5,7 @@ from database_connection import insert_in_infotable_table, insert_in_primary_tab
 from infotable_xml import get_infotable
 from primary_doc_xml import get_primary_doc_root, get_primary_doc_cik,  \
     get_primary_doc_company_name, get_primary_doc_accepted_filing_date
-from primary_key_generator import primary_key_generator
+from primary_key_generator import primary_key_generator_primary_doc
 
 
 def main():
@@ -27,17 +27,14 @@ def main():
         cik = get_primary_doc_cik(root)
         company_name = get_primary_doc_company_name(root)
         filing_date = get_primary_doc_accepted_filing_date(root)
-        primary_doc_primary_key = primary_key_generator([cik, company_name, filing_date])
-
-        df_infotable = get_infotable(infotable_xml_url)
-        df_infotable.insert(loc=0, column='accession_no', value=sec_accession_no)
-        df_infotable.insert(loc=1, column='cik_id', value=cik)
-        df_infotable.insert(loc=2, column='filing_date', value=filing_date)
-
+        primary_doc_primary_key = primary_key_generator_primary_doc([cik, company_name, filing_date])
         insert_in_primary_table(primary_doc_primary_key, cik, company_name, filing_date)
-        print(primary_doc_primary_key, cik, company_name, filing_date)
-        insert_in_infotable_table(df_infotable)
-        print(df_infotable.head())
+
+        # df_infotable = get_infotable(infotable_xml_url)
+        # df_infotable.insert(loc=0, column='accession_no', value=sec_accession_no)
+        # df_infotable.insert(loc=1, column='cik_id', value=cik)
+        # insert_in_infotable_table(df_infotable)
+        # print(df_infotable.head())
 
 
 if __name__ == "__main__":
