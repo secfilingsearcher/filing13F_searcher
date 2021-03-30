@@ -11,7 +11,7 @@ session = Session()
 
 def insert_in_primary_table(id, cik, company_name, filing_date):
     """Insert list in primary_doc table"""
-    session.add(PrimaryDoc(id=id, cik=cik, company_name=company_name, filing_date=filing_date))
+    session.merge(PrimaryDoc(id=id, cik=cik, company_name=company_name, filing_date=filing_date))
     session.commit()
 
 
