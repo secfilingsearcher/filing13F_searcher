@@ -2,14 +2,17 @@
 from xml.etree import ElementTree
 import requests
 from models import Infotable
+from primary_key_generator import pk_generator_for_infotable
 
 
-def get_infotable(infotable_xml_url):
+def get_infotable(infotable_xml_url, accession_no_value, cik_value):
     """Gets the data from infotable.xml"""
     infotable_root = get_infotable_doc_root(infotable_xml_url)
     data = []
     for info in infotable_root.findall('{*}infoTable'):
         infotable_row = Infotable(
+            accession_no=accession_no_value,
+            cik=cik_value,
             nameOfIssuer=get_xml_text(info, '{*}nameOfIssuer'),
             titleOfClass=get_xml_text(info, '{*}titleOfClass'),
             cusip=get_xml_text(info, '{*}cusip'),
@@ -23,6 +26,8 @@ def get_infotable(infotable_xml_url):
             votingAuthority_Shared=get_xml_text(info, '{*}votingAuthority/{*}Shared'),
             votingAuthority_None=get_xml_text(info, '{*}votingAuthority/{*}None')
         )
+        infotable_primary_key = pk_generator_for_infotable(infotable_row)
+        infotable_row.id = infotable_primary_key
         data.append(infotable_row)
     return data
 
