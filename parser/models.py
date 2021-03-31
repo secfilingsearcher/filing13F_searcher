@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
+# pylint: disable=too-few-public-methods
 class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
