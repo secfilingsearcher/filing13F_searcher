@@ -14,6 +14,10 @@ def main():
     text_edgar_current_events = get_text(url_edgar_current_events)
     filing_detail_urls = get_13f_filing_detail_urls(text_edgar_current_events)
 
+    if not filing_detail_urls:
+        print("There are no urls on the page")
+        return
+
     for filing_detail_url in filing_detail_urls:
         filing_detail_text = get_text(filing_detail_url)
         sec_accession_no = get_sec_accession_no(filing_detail_text)
