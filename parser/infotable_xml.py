@@ -5,7 +5,7 @@ from models import Infotable
 
 
 def get_infotable(infotable_xml_url, accession_no_value, cik_value):
-    """Gets the data from infotable.xml and instantiates an object"""
+    """Gets the data from infotable.xml and returns the data as a list of infotable objects"""
     infotable_root = get_infotable_doc_root(infotable_xml_url)
     data = []
     for info in infotable_root.findall('{*}infoTable'):
@@ -25,7 +25,7 @@ def get_infotable(infotable_xml_url, accession_no_value, cik_value):
             votingAuthority_Shared=get_xml_text(info, '{*}votingAuthority/{*}Shared'),
             votingAuthority_None=get_xml_text(info, '{*}votingAuthority/{*}None')
         )
-        infotable_row.row_id = infotable_row.create_pk_for_infotable()
+        infotable_row.row_id = infotable_row.create_primary_key()
         data.append(infotable_row)
     return data
 

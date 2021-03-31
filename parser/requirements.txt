@@ -1,4 +1,3 @@
 requests
 sqlalchemy
-pandas
 psycopg2

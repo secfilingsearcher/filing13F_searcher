@@ -11,7 +11,6 @@ def get_primary_doc(accession_no_value, cik_value, company_name, filing_date):
                      cik_no=cik_value,
                      company_name=company_name,
                      filing_date=filing_date)
-    row.row_id = row.create_pk_for_primary_doc()
     return row
 
 
@@ -24,12 +23,12 @@ def get_primary_doc_root(primary_doc_xml):
 
 
 def get_primary_doc_cik(primary_doc_root):
-    """Returns the cik_value from the cik_value tag on the primary_doc.xml file"""
+    """Returns the cik from the cik tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
     for cik in primary_doc_root.findall(
             'original:headerData/original:filerInfo/'
-            'original:filer/original:credentials/original:cik_value',
+            'original:filer/original:credentials/original:cik',
             namespaces):
         return cik.text
 

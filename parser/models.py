@@ -1,7 +1,8 @@
 """Create table models for database"""
 import hashlib
-from sqlalchemy import Column, Integer, String, Numeric, Date
+from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -14,24 +15,18 @@ class PrimaryDoc(Base):
     cik_no = Column(String(50))
     company_name = Column(String(50))
     filing_date = Column(Date)
+    infotable_rows = relationship("Infotable")
 
     def __repr__(self):
-        return "<User(accession_no='%s', cik_value='%s', filing_date='%s', company_name='%s')>" % (
+        return "<User(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date, self.company_name)
-
-    def create_pk_for_primary_doc(self):
-        """Uses hash to generate Primary Key based on original row data for primary doc table"""
-        row = [self.cik_no, self.company_name, self.filing_date]
-        full_str = ''.join(str(cell) for cell in row)
-        result = hashlib.md5(full_str.encode())
-        return result.hexdigest()
 
 
 class Infotable(Base):
     """Define Infotable Table"""
     __tablename__ = 'infotable'
     row_id = Column(String, primary_key=True)
-    accession_no = Column(String(50))
+    accession_no = Column(String(50), ForeignKey('primary_doc.accession_no'))
     cik_no = Column(String(50))
     nameOfIssuer = Column(String(50))
     titleOfClass = Column(String(50))
@@ -47,7 +42,7 @@ class Infotable(Base):
     votingAuthority_None = Column(Integer)
 
     def __repr__(self):
-        return "<User(accession_no='%s', cik_value='%s', nameOfIssuer='%s', " \
+        return "<User(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
                "titleOfClass='%s', cusip='%s', value='%s', " \
                "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
                "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
@@ -58,7 +53,7 @@ class Infotable(Base):
             self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
             self.votingAuthority_Shared, self.votingAuthority_None)
 
-    def create_pk_for_infotable(self):
+    def create_primary_key(self):
         """Uses hash to generate Primary Key based on original row data for infotable table"""
         infotable_row_list = [self.accession_no,
                               self.cik_no,
