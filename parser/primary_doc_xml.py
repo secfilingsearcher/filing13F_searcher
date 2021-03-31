@@ -4,10 +4,11 @@ import requests
 from models import PrimaryDoc
 
 
-def get_primary_doc(cik, company_name, filing_date):
+def get_primary_doc(accession_no_value, cik_value, company_name, filing_date):
     """Gets the data input as parameter from primary_doc.xml and 13f filing webpage
     and instantiates an object"""
-    row = PrimaryDoc(cik=cik,
+    row = PrimaryDoc(accession_no=accession_no_value,
+                     cik_no=cik_value,
                      company_name=company_name,
                      filing_date=filing_date)
     row.row_id = row.create_pk_for_primary_doc()
@@ -23,12 +24,12 @@ def get_primary_doc_root(primary_doc_xml):
 
 
 def get_primary_doc_cik(primary_doc_root):
-    """Returns the cik from the cik tag on the primary_doc.xml file"""
+    """Returns the cik_value from the cik_value tag on the primary_doc.xml file"""
     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                   'ns1': 'http://www.sec.gov/edgar/common'}
     for cik in primary_doc_root.findall(
             'original:headerData/original:filerInfo/'
-            'original:filer/original:credentials/original:cik',
+            'original:filer/original:credentials/original:cik_value',
             namespaces):
         return cik.text
 

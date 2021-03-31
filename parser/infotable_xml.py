@@ -11,7 +11,7 @@ def get_infotable(infotable_xml_url, accession_no_value, cik_value):
     for info in infotable_root.findall('{*}infoTable'):
         infotable_row = Infotable(
             accession_no=accession_no_value,
-            cik=cik_value,
+            cik_no=cik_value,
             nameOfIssuer=get_xml_text(info, '{*}nameOfIssuer'),
             titleOfClass=get_xml_text(info, '{*}titleOfClass'),
             cusip=get_xml_text(info, '{*}cusip'),

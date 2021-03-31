@@ -10,17 +10,18 @@ class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
     row_id = Column(String(50), primary_key=True)
-    cik = Column(String(50))
+    accession_no = Column(String(50))
+    cik_no = Column(String(50))
     company_name = Column(String(50))
     filing_date = Column(Date)
 
     def __repr__(self):
-        return "<User(cik='%s', filing_date='%s', company_name='%s')>" % (
-            self.cik, self.filing_date, self.company_name)
+        return "<User(accession_no='%s', cik_value='%s', filing_date='%s', company_name='%s')>" % (
+            self.accession_no, self.cik_no, self.filing_date, self.company_name)
 
     def create_pk_for_primary_doc(self):
         """Uses hash to generate Primary Key based on original row data for primary doc table"""
-        row = [self.cik, self.company_name, self.filing_date]
+        row = [self.cik_no, self.company_name, self.filing_date]
         full_str = ''.join(str(cell) for cell in row)
         result = hashlib.md5(full_str.encode())
         return result.hexdigest()
@@ -31,7 +32,7 @@ class Infotable(Base):
     __tablename__ = 'infotable'
     row_id = Column(String, primary_key=True)
     accession_no = Column(String(50))
-    cik = Column(String(50))
+    cik_no = Column(String(50))
     nameOfIssuer = Column(String(50))
     titleOfClass = Column(String(50))
     cusip = Column(String(50))
@@ -46,21 +47,21 @@ class Infotable(Base):
     votingAuthority_None = Column(Integer)
 
     def __repr__(self):
-        return "<User(accession_no='%s', cik='%s', nameOfIssuer='%s', " \
+        return "<User(accession_no='%s', cik_value='%s', nameOfIssuer='%s', " \
                "titleOfClass='%s', cusip='%s', value='%s', " \
                "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
                "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
                "votingAuthority_Shared='%s', votingAuthority_None='%s')>" % (
-                   self.accession_no, self.cik, self.nameOfIssuer,
-                   self.titleOfClass, self.cusip, self.value,
-                   self.sshPrnamt, self.sshPrnamtType, self.putCall,
-                   self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
-                   self.votingAuthority_Shared, self.votingAuthority_None)
+            self.accession_no, self.cik_no, self.nameOfIssuer,
+            self.titleOfClass, self.cusip, self.value,
+            self.sshPrnamt, self.sshPrnamtType, self.putCall,
+            self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
+            self.votingAuthority_Shared, self.votingAuthority_None)
 
     def create_pk_for_infotable(self):
         """Uses hash to generate Primary Key based on original row data for infotable table"""
         infotable_row_list = [self.accession_no,
-                              self.cik,
+                              self.cik_no,
                               self.nameOfIssuer,
                               self.titleOfClass,
                               self.titleOfClass,
