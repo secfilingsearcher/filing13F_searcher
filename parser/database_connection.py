@@ -1,9 +1,7 @@
 """Create database connection"""
 import os
 from typing import List
-
 from sqlalchemy.orm import sessionmaker
-from models import PrimaryDoc
 from orm import get_engine
 
 engine = get_engine(os.environ.get('DB_CONNECTION_STRING'), echo=True)
@@ -11,14 +9,16 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-def insert_in_database_primary_table(primary_key_id, cik, company_name, filing_date):
-    """Insert list in primary_doc table"""
-    session.add(PrimaryDoc(id=primary_key_id, cik=cik,
-                           company_name=company_name, filing_date=filing_date))
-    session.commit()
+def add_to_session_primary_table(row):
+    """Add primary_doc rows to session"""
+    session.add(row)
 
 
-def insert_in_database_infotable_table(infotable_table: List):
-    """Insert dataframe in infotable table"""
+def add_to_session_infotable_table(infotable_table: List):
+    """Add infotable rows to session"""
     session.add_all(infotable_table)
+
+
+def commit_to_database():
+    """Commit rows to database"""
     session.commit()

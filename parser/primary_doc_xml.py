@@ -1,6 +1,17 @@
 """This file contains functions that parse primary_doc.xml"""
 from xml.etree import ElementTree
 import requests
+from models import PrimaryDoc
+
+
+def get_primary_doc(cik, company_name, filing_date):
+    """Gets the data input as parameter from primary_doc.xml and 13f filing webpage
+    and instantiates an object"""
+    row = PrimaryDoc(cik=cik,
+                     company_name=company_name,
+                     filing_date=filing_date)
+    row.row_id = row.pk_generator_for_primary_doc()
+    return row
 
 
 def get_primary_doc_root(primary_doc_xml):
