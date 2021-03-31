@@ -9,7 +9,7 @@ from primary_doc_xml import get_primary_doc_root, get_primary_doc_cik, \
 
 def main():
     """This function returns the cik_value, company name, and infotable data"""
-    url_edgar_current_events = 'https://www.sec.gov/cgi-bin/current?q1=1&q2=0&q3=13f'
+    url_edgar_current_events = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=6&q3=13F'
     text_edgar_current_events = get_text(url_edgar_current_events)
     filing_detail_urls = get_13f_filing_detail_urls(text_edgar_current_events)
 
