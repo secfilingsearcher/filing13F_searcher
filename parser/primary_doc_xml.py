@@ -10,7 +10,7 @@ def get_primary_doc(cik, company_name, filing_date):
     row = PrimaryDoc(cik=cik,
                      company_name=company_name,
                      filing_date=filing_date)
-    row.row_id = row.pk_generator_for_primary_doc()
+    row.row_id = row.create_pk_for_primary_doc()
     return row
 
 

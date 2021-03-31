@@ -18,7 +18,7 @@ class PrimaryDoc(Base):
         return "<User(cik='%s', filing_date='%s', company_name='%s')>" % (
             self.cik, self.filing_date, self.company_name)
 
-    def pk_generator_for_primary_doc(self):
+    def create_pk_for_primary_doc(self):
         """Uses hash to generate Primary Key based on original row data for primary doc table"""
         row = [self.cik, self.company_name, self.filing_date]
         full_str = ''.join(str(cell) for cell in row)
@@ -57,7 +57,7 @@ class Infotable(Base):
                    self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
                    self.votingAuthority_Shared, self.votingAuthority_None)
 
-    def pk_generator_for_infotable(self):
+    def create_pk_for_infotable(self):
         """Uses hash to generate Primary Key based on original row data for infotable table"""
         infotable_row_list = [self.accession_no,
                               self.cik,
