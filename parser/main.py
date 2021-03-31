@@ -20,6 +20,7 @@ def main():
 
     if not filing_detail_urls:
         print("There are no urls on the page")
+        return
 
     for filing_detail_url in filing_detail_urls:
         filing_detail_text = get_text(filing_detail_url)
