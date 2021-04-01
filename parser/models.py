@@ -11,8 +11,7 @@ Base = declarative_base()
 class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
-    row_id = Column(String(50), primary_key=True)
-    accession_no = Column(String(50))
+    accession_no = Column(String(50), primary_key=True)
     cik_no = Column(String(50))
     company_name = Column(String(50))
     filing_date = Column(Date)
