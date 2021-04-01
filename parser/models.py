@@ -11,9 +11,9 @@ Base = declarative_base()
 class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
-    accession_no = Column(String(50), primary_key=True)
-    cik_no = Column(String(50))
-    company_name = Column(String(50))
+    accession_no = Column(String, primary_key=True)
+    cik_no = Column(String)
+    company_name = Column(String)
     filing_date = Column(Date)
     infotable_rows = relationship("Infotable")
 
@@ -25,18 +25,18 @@ class PrimaryDoc(Base):
 class Infotable(Base):
     """Define Infotable Table"""
     __tablename__ = 'infotable'
-    row_id = Column(String(70), primary_key=True)
-    accession_no = Column(String(70), ForeignKey('primary_doc.accession_no'))
-    cik_no = Column(String(70))
-    nameOfIssuer = Column(String(70))
-    titleOfClass = Column(String(70))
-    cusip = Column(String(70))
+    row_id = Column(String, primary_key=True)
+    accession_no = Column(String, ForeignKey('primary_doc.accession_no'))
+    cik_no = Column(String)
+    nameOfIssuer = Column(String)
+    titleOfClass = Column(String)
+    cusip = Column(String)
     value = Column(Numeric)
     sshPrnamt = Column(Integer)
-    sshPrnamtType = Column(String(70))
-    putCall = Column(String(70))
-    investmentDiscretion = Column(String(70))
-    otherManager = Column(String(70))
+    sshPrnamtType = Column(String)
+    putCall = Column(String)
+    investmentDiscretion = Column(String)
+    otherManager = Column(String)
     votingAuthority_Sole = Column(Integer)
     votingAuthority_Shared = Column(Integer)
     votingAuthority_None = Column(Integer)
