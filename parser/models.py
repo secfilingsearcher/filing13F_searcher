@@ -11,10 +11,9 @@ Base = declarative_base()
 class PrimaryDoc(Base):
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
-    row_id = Column(String(50), primary_key=True)
-    accession_no = Column(String(50))
-    cik_no = Column(String(50))
-    company_name = Column(String(50))
+    accession_no = Column(String, primary_key=True)
+    cik_no = Column(String)
+    company_name = Column(String)
     filing_date = Column(Date)
     infotable_rows = relationship("Infotable")
 
@@ -27,17 +26,17 @@ class Infotable(Base):
     """Define Infotable Table"""
     __tablename__ = 'infotable'
     row_id = Column(String, primary_key=True)
-    accession_no = Column(String(50), ForeignKey('primary_doc.accession_no'))
-    cik_no = Column(String(50))
-    nameOfIssuer = Column(String(50))
-    titleOfClass = Column(String(50))
-    cusip = Column(String(50))
+    accession_no = Column(String, ForeignKey('primary_doc.accession_no'))
+    cik_no = Column(String)
+    nameOfIssuer = Column(String)
+    titleOfClass = Column(String)
+    cusip = Column(String)
     value = Column(Numeric)
     sshPrnamt = Column(Integer)
-    sshPrnamtType = Column(String(50))
-    putCall = Column(String(50))
-    investmentDiscretion = Column(String(50))
-    otherManager = Column(String(50))
+    sshPrnamtType = Column(String)
+    putCall = Column(String)
+    investmentDiscretion = Column(String)
+    otherManager = Column(String)
     votingAuthority_Sole = Column(Integer)
     votingAuthority_Shared = Column(Integer)
     votingAuthority_None = Column(Integer)
@@ -48,11 +47,11 @@ class Infotable(Base):
                "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
                "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
                "votingAuthority_Shared='%s', votingAuthority_None='%s')>" % (
-            self.accession_no, self.cik_no, self.nameOfIssuer,
-            self.titleOfClass, self.cusip, self.value,
-            self.sshPrnamt, self.sshPrnamtType, self.putCall,
-            self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
-            self.votingAuthority_Shared, self.votingAuthority_None)
+                   self.accession_no, self.cik_no, self.nameOfIssuer,
+                   self.titleOfClass, self.cusip, self.value,
+                   self.sshPrnamt, self.sshPrnamtType, self.putCall,
+                   self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
+                   self.votingAuthority_Shared, self.votingAuthority_None)
 
     def create_primary_key(self):
         """Uses hash to generate Primary Key based on original row data for infotable table"""
