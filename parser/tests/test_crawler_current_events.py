@@ -2,7 +2,7 @@
 # pylint: disable=missing-function-docstring
 """docstring"""
 import pytest
-from crawler_current_events import get_13f_filing_detail_urls
+from crawler_current_events import get_13f_filing_detail_urls, get_sec_accession_no
 
 
 @pytest.fixture
@@ -13,7 +13,7 @@ def current_events_text():
 
 @pytest.fixture
 def filing_detail_text():
-    myfile = open("fixtures/edgar_current_events.html", "rt")
+    myfile = open("fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "rt")
     return myfile.read()
 
 
@@ -25,5 +25,6 @@ def test_get_13f_filing_detail_urls(current_events_text):
         'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html']
 
 
-def get_sec_accession_no(filing_detail_text):
-    pass
+def test_get_sec_accession_no(filing_detail_text):
+    assert get_sec_accession_no(filing_detail_text) == []
+
