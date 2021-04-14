@@ -1,7 +1,7 @@
 """Create table models for database"""
 import hashlib
 from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from web_backend.database import Base
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()

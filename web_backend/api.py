@@ -1,23 +1,31 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from models import *
+from database import db_session, init_db
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'DB_CONNECTION_STRING'
 
-db = SQLAlchemy(app)
 
-@app.route('/<company_id>')
+@app.before_first_request
+def setup_db():
+    init_db()
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
+
+@app.route('/company/<company_id>')
 def get_company(id):
     pass
 
 
-@app.route('/<company_id>/filings')
+@app.route('/company/<company_id>/filings')
 def get_filings(id):
     pass
 
 
-@app.route('filings/<filing_id>')
+@app.route('/filings/<filing_id>')
 def get_filing(id):
     pass
 
