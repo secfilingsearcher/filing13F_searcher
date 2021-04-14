@@ -1,14 +1,20 @@
 """Create table models for database"""
 import hashlib
-from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
-from web_backend.database import Base
-from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+from database import Base
+from dataclasses import dataclass
+from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 # pylint: disable=too-few-public-methods
+@dataclass
 class PrimaryDoc(Base):
+    accession_no: str
+    cik_no: str
+    company_name: str
+    filing_date: Date
+
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
     accession_no = Column(String, primary_key=True)

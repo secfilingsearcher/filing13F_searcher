@@ -1,5 +1,6 @@
-from flask import Flask
+from flask import Flask, jsonify
 from database import db_session, init_db
+from models import PrimaryDoc, Infotable
 
 
 app = Flask(__name__)
@@ -13,6 +14,12 @@ def setup_db():
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
+
+
+@app.route('/')
+def index():
+    primary_docs = PrimaryDoc.query.all()
+    return jsonify(primary_docs)
 
 
 @app.route('/company/<company_id>')
