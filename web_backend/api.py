@@ -23,8 +23,9 @@ def index():
 
 
 @app.route('/company/<company_id>')
-def get_company(id):
-    pass
+def get_company(company_id):
+    primary_doc = PrimaryDoc.query.filter(PrimaryDoc.company_name.like(f"{company_id}%"))
+    return jsonify(list(primary_doc))
 
 
 @app.route('/company/<company_id>/filings')
