@@ -1,51 +1,49 @@
 """Create table models for database"""
 import hashlib
 
-from database import Base
 from dataclasses import dataclass
-from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
 from sqlalchemy.orm import relationship
+from filingapi import db
 
 
-# pylint: disable=too-few-public-methods
 @dataclass
-class PrimaryDoc(Base):
+class PrimaryDoc(db.Model):
     accession_no: str
     cik_no: str
     company_name: str
-    filing_date: Date
+    filing_date: db.Date
 
     """Define PrimaryDoc Table"""
     __tablename__ = 'primary_doc'
-    accession_no = Column(String, primary_key=True)
-    cik_no = Column(String)
-    company_name = Column(String)
-    filing_date = Column(Date)
-    infotable_rows = relationship("Infotable")
+    accession_no = db.Column(db.String, primary_key=True)
+    cik_no = db.Column(db.String)
+    company_name = db.Column(db.String)
+    filing_date = db.Column(db.Date)
+    infotable_rows = db.relationship("Infotable")
 
     def __repr__(self):
         return "<User(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date, self.company_name)
 
 
-class Infotable(Base):
+class Infotable(db.Model):
     """Define Infotable Table"""
     __tablename__ = 'infotable'
-    row_id = Column(String, primary_key=True)
-    accession_no = Column(String, ForeignKey('primary_doc.accession_no'))
-    cik_no = Column(String)
-    nameOfIssuer = Column(String)
-    titleOfClass = Column(String)
-    cusip = Column(String)
-    value = Column(Numeric)
-    sshPrnamt = Column(Integer)
-    sshPrnamtType = Column(String)
-    putCall = Column(String)
-    investmentDiscretion = Column(String)
-    otherManager = Column(String)
-    votingAuthority_Sole = Column(Integer)
-    votingAuthority_Shared = Column(Integer)
-    votingAuthority_None = Column(Integer)
+    row_id = db.Column(db.String, primary_key=True)
+    accession_no = db.Column(db.String, db.ForeignKey('primary_doc.accession_no'))
+    cik_no = db.Column(db.String)
+    nameOfIssuer = db.Column(db.String)
+    titleOfClass = db.Column(db.String)
+    cusip = db.Column(db.String)
+    value = db.Column(db.Numeric)
+    sshPrnamt = db.Column(db.Integer)
+    sshPrnamtType = db.Column(db.String)
+    putCall = db.Column(db.String)
+    investmentDiscretion = db.Column(db.String)
+    otherManager = db.Column(db.String)
+    votingAuthority_Sole = db.Column(db.Integer)
+    votingAuthority_Shared = db.Column(db.Integer)
+    votingAuthority_None = db.Column(db.Integer)
 
     def __repr__(self):
         return "<User(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
