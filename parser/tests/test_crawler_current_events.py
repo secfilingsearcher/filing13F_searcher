@@ -1,20 +1,21 @@
 # pylint: disable=redefined-outer-name
 # pylint: disable=missing-function-docstring
-"""docstring"""
+# pylint: disable=import-error
+"""This file contains tests for crawler_current_events"""
 import pytest
 from crawler_current_events import get_13f_filing_detail_urls, get_sec_accession_no
 
 
 @pytest.fixture
 def current_events_text():
-    myfile = open("fixtures/edgar_current_events.html", "rt")
-    return myfile.read()
+    my_file = open("fixtures/edgar_current_events.html", "rt")
+    return my_file.read()
 
 
 @pytest.fixture
 def filing_detail_text():
-    myfile = open("fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "rt")
-    return myfile.read()
+    my_file = open("fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "rt")
+    return my_file.read()
 
 
 def test_get_13f_filing_detail_urls(current_events_text):
@@ -27,4 +28,3 @@ def test_get_13f_filing_detail_urls(current_events_text):
 
 def test_get_sec_accession_no(filing_detail_text):
     assert get_sec_accession_no(filing_detail_text) == []
-
