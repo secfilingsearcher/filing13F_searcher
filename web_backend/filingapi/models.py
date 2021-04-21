@@ -2,31 +2,16 @@
 import hashlib
 
 from dataclasses import dataclass
-from sqlalchemy.orm import relationship
 from filingapi import db
 
-
 @dataclass
-class PrimaryDoc(db.Model):
+class Infotable(db.Model):
+    row_id: str
     accession_no: str
     cik_no: str
-    company_name: str
-    filing_date: db.Date
+    nameOfIssuer: str
+    titleOfClass: str
 
-    """Define PrimaryDoc Table"""
-    __tablename__ = 'primary_doc'
-    accession_no = db.Column(db.String, primary_key=True)
-    cik_no = db.Column(db.String)
-    company_name = db.Column(db.String)
-    filing_date = db.Column(db.Date)
-    infotable_rows = db.relationship("Infotable")
-
-    def __repr__(self):
-        return "<User(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
-            self.accession_no, self.cik_no, self.filing_date, self.company_name)
-
-
-class Infotable(db.Model):
     """Define Infotable Table"""
     __tablename__ = 'infotable'
     row_id = db.Column(db.String, primary_key=True)
@@ -78,3 +63,26 @@ class Infotable(db.Model):
         full_str = ''.join(str(cell) for cell in infotable_row_list)
         result = hashlib.md5(full_str.encode())
         return result.hexdigest()
+
+
+@dataclass
+class PrimaryDoc(db.Model):
+    accession_no: str
+    cik_no: str
+    company_name: str
+    filing_date: db.Date
+    infotable_rows: Infotable
+
+    """Define PrimaryDoc Table"""
+    __tablename__ = 'primary_doc'
+    accession_no = db.Column(db.String, primary_key=True)
+    cik_no = db.Column(db.String)
+    company_name = db.Column(db.String)
+    filing_date = db.Column(db.Date)
+    infotable_rows = db.relationship("Infotable")
+
+    def __repr__(self):
+        return "<User(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
+            self.accession_no, self.cik_no, self.filing_date, self.company_name)
+
+
