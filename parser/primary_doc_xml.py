@@ -1,6 +1,6 @@
 """This file contains functions that parse primary_doc.xml"""
 from xml.etree import ElementTree
-import requests
+from crawler_current_events import get_text
 from models import PrimaryDoc
 
 
@@ -16,8 +16,7 @@ def get_primary_doc(accession_no_value, cik_value, company_name, filing_date):
 
 def get_primary_doc_root(primary_doc_xml):
     """Gets the root of the primary_doc.xml file"""
-    getter = requests.get(primary_doc_xml)
-    text = getter.text
+    text = get_text(primary_doc_xml)
     primary_doc_root = ElementTree.XML(text)
     return primary_doc_root
 

@@ -1,12 +1,17 @@
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
 import re
+import time
 import requests
 
 
 def get_text(url):
     """Returns the html and text from the url"""
-    getter = requests.get(url)
-    full_text = getter.text
+    response = requests.get(
+        url,
+        headers={"user-agent": "filing_13f_searcher"}
+    )
+    time.sleep(1)
+    full_text = response.text
     return full_text
 
 
