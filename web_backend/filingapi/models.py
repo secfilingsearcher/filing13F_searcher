@@ -17,8 +17,8 @@ class Infotable(db.Model):
     row_id = db.Column(db.String, primary_key=True)
     accession_no = db.Column(db.String, db.ForeignKey('primary_doc.accession_no'))
     cik_no = db.Column(db.String)
-    nameOfIssuer = db.Column(db.String)
-    titleOfClass = db.Column(db.String)
+    name_of_issuer = db.Column(db.String)
+    title_of_class = db.Column(db.String)
     cusip = db.Column(db.String)
     value = db.Column(db.Numeric)
     sshPrnamt = db.Column(db.Integer)
@@ -84,5 +84,4 @@ class PrimaryDoc(db.Model):
     def __repr__(self):
         return "<PrimaryDoc(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date, self.company_name)
-
 
