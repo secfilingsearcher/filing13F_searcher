@@ -21,14 +21,14 @@ class Infotable(db.Model):
     title_of_class = db.Column(db.String)
     cusip = db.Column(db.String)
     value = db.Column(db.Numeric)
-    sshPrnamt = db.Column(db.Integer)
-    sshPrnamtType = db.Column(db.String)
-    putCall = db.Column(db.String)
-    investmentDiscretion = db.Column(db.String)
-    otherManager = db.Column(db.String)
-    votingAuthority_Sole = db.Column(db.Integer)
-    votingAuthority_Shared = db.Column(db.Integer)
-    votingAuthority_None = db.Column(db.Integer)
+    ssh_prnamt = db.Column(db.Integer)
+    ssh_prnamt_type = db.Column(db.String)
+    put_call = db.Column(db.String)
+    investment_discretion = db.Column(db.String)
+    other_manager = db.Column(db.String)
+    voting_authority_sole = db.Column(db.Integer)
+    voting_authority_shared = db.Column(db.Integer)
+    voting_authority_none = db.Column(db.Integer)
 
     def __repr__(self):
         return "<Infotable(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
@@ -84,4 +84,3 @@ class PrimaryDoc(db.Model):
     def __repr__(self):
         return "<PrimaryDoc(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date, self.company_name)
-
