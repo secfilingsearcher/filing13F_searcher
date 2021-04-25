@@ -31,7 +31,7 @@ class Infotable(db.Model):
     votingAuthority_None = db.Column(db.Integer)
 
     def __repr__(self):
-        return "<User(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
+        return "<Infotable(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
                "titleOfClass='%s', cusip='%s', value='%s', " \
                "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
                "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
@@ -82,7 +82,7 @@ class PrimaryDoc(db.Model):
     infotable_rows = db.relationship("Infotable")
 
     def __repr__(self):
-        return "<User(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
+        return "<PrimaryDoc(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date, self.company_name)
 
 
