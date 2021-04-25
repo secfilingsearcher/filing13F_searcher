@@ -20,7 +20,7 @@ jobs:
     - name: Install parser
       run: |
         pip install -r parser/requirements.txt
-    - name: Install parser
+    - name: Install web_backend
       run: |
         cd web_backend
         python setup.py install || echo no web_backend found
