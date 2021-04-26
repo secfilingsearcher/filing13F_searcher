@@ -40,3 +40,8 @@ def test_get_primary_doc_xml_url(filing_detail_text):
 
 def test_get_infotable_xml_url(filing_detail_text):
     assert get_sec_accession_no(filing_detail_text) == []
+
+
+def test_get_sec_accession_no(filing_detail_text):
+    assert get_sec_accession_no(filing_detail_text) == []
+
