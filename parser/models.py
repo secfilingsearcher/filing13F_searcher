@@ -64,9 +64,9 @@ class Data13f(Base):
                    self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
                    self.votingAuthority_Shared, self.votingAuthority_None)
 
-    def create_infotable_primary_key(self):
+    def create_filing_13f_primary_key(self):
         """Uses hash to generate Primary Key based on original row data for infotable table"""
-        infotable_row_list = [self.accession_no,
+        filing_13f_row_list = [self.accession_no,
                               self.cik_no,
                               self.nameOfIssuer,
                               self.titleOfClass,
@@ -82,6 +82,6 @@ class Data13f(Base):
                               self.votingAuthority_Shared,
                               self.votingAuthority_None
                               ]
-        full_str = ''.join(str(cell) for cell in infotable_row_list)
+        full_str = ''.join(str(cell) for cell in filing_13f_row_list)
         result = hashlib.md5(full_str.encode())
         return result.hexdigest()
