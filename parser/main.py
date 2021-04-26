@@ -28,11 +28,11 @@ def main():
         cik = get_primary_doc_cik(root)
         company_name = get_primary_doc_company_name(root)
         filing_date = get_primary_doc_accepted_filing_date(root)
-        primary_doc_row = get_primary_doc(accession_no, cik, company_name, filing_date)
-        session.add(primary_doc_row)
+        filing_13f_row = get_primary_doc(accession_no, cik, company_name, filing_date)
+        session.add(filing_13f_row)
 
-        infotable_table = get_infotable(infotable_xml_url, accession_no, cik)
-        session.add_all(infotable_table)
+        data_13f_table = get_infotable(infotable_xml_url, accession_no, cik)
+        session.add_all(data_13f_table)
 
         session.commit()
 
