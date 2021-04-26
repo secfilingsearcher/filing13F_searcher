@@ -1,16 +1,16 @@
 """This file contains functions that parse primary_doc.xml"""
 from xml.etree import ElementTree
 from crawler_current_events import get_text
-from models import PrimaryDoc
+from models import Filing13f
 
 
 def get_primary_doc(accession_no_value, cik_value, company_name, filing_date):
     """Gets the data input as parameter from primary_doc.xml and 13f filing webpage
     and instantiates an object"""
-    row = PrimaryDoc(accession_no=accession_no_value,
-                     cik_no=cik_value,
-                     company_name=company_name,
-                     filing_date=filing_date)
+    row = Filing13f(accession_no=accession_no_value,
+                    cik_no=cik_value,
+                    company_name=company_name,
+                    filing_date=filing_date)
     return row
 
 
