@@ -27,7 +27,7 @@ def filing_detail_text():
 
 
 def test_get_sec_accession_no(filing_detail_text):
-    assert get_sec_accession_no(filing_detail_text) == []
+    assert get_sec_accession_no(filing_detail_text) == '0000909012-21-000060'
 
 
 def test_get_primary_doc_and_infotable_urls(filing_detail_text):
