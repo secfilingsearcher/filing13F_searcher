@@ -1,5 +1,6 @@
+# pylint: disable=import-error
 """This file contains the main method"""
-from crawler_current_events import get_text, get_13f_filing_detail_urls, get_sec_accession_no, \
+from crawler_current_events import get_text, parse_13f_filing_detail_urls, parse_sec_accession_no, \
     parse_primary_doc_and_infotable_urls, parse_primary_doc_xml_url, parse_infotable_xml_url
 from database_connection import session
 from data_13f import data_13f_row
@@ -7,12 +8,13 @@ from filing_13f import parse_primary_doc_root, parse_primary_doc_cik, \
     parse_primary_doc_company_name, parse_primary_doc_accepted_filing_date
 from models import EdgarFiling, Company
 
+URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
+
 
 def main():
     """This function returns the cik, company name, and infotable data"""
-    url_edgar_current_events = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
-    text_edgar_current_events = get_text(url_edgar_current_events)
-    filing_detail_urls = get_13f_filing_detail_urls(text_edgar_current_events)
+    text_edgar_current_events = get_text(URL_EDGAR_CURRENT_EVENTS)
+    filing_detail_urls = parse_13f_filing_detail_urls(text_edgar_current_events)
 
     if not filing_detail_urls:
         print("There are no urls on the page")
@@ -20,7 +22,7 @@ def main():
 
     for filing_detail_url in filing_detail_urls:
         filing_detail_text = get_text(filing_detail_url)
-        accession_no = get_sec_accession_no(filing_detail_text)
+        accession_no = parse_sec_accession_no(filing_detail_text)
         xml_links = parse_primary_doc_and_infotable_urls(filing_detail_text)
         primary_doc_xml_url = parse_primary_doc_xml_url(xml_links)
         infotable_xml_url = parse_infotable_xml_url(xml_links)

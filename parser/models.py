@@ -13,7 +13,7 @@ class Company(Base):
     __tablename__ = 'company'
     cik_no = Column(String, primary_key=True)
     company_name = Column(String)
-    cik_numbers = relationship("Filing13f")
+    cik_numbers = relationship("EdgarFiling")
 
     def __repr__(self):
         return "<Company(cik_no='%s', company_name='%s')>" % (
@@ -21,7 +21,7 @@ class Company(Base):
 
 
 class EdgarFiling(Base):
-    """Define Filing13f Table"""
+    """Define EdgarFiling Table"""
     __tablename__ = 'edgar_filing'
     accession_no = Column(String, primary_key=True)
     cik_no = Column(String, ForeignKey('company.cik_no'))
