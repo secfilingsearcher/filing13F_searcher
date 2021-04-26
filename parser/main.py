@@ -2,8 +2,8 @@
 from crawler_current_events import get_text, get_13f_filing_detail_urls, get_sec_accession_no, \
     get_primary_doc_and_infotable_urls, get_primary_doc_xml_url, get_infotable_xml_url
 from database_connection import session
-from infotable_xml import get_infotable
-from primary_doc_xml import get_primary_doc_root, get_primary_doc_cik, \
+from data_13f import get_infotable
+from filing_13f import get_primary_doc_root, get_primary_doc_cik, \
     get_primary_doc_company_name, get_primary_doc_accepted_filing_date, get_primary_doc
 
 
