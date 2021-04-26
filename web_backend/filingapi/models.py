@@ -2,7 +2,7 @@
 import hashlib
 
 from dataclasses import dataclass
-from filingapi import db
+from web_backend.filingapi import db
 
 @dataclass
 class Infotable(db.Model):
