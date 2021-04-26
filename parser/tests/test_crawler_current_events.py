@@ -5,6 +5,9 @@
 import pytest
 from crawler_current_events import get_13f_filing_detail_urls, get_sec_accession_no
 
+from parser.crawler_current_events import get_infotable_xml_url, get_primary_doc_xml_url, \
+    get_primary_doc_and_infotable_urls
+
 
 @pytest.fixture
 def current_events_text():
@@ -31,12 +34,12 @@ def test_get_sec_accession_no(filing_detail_text):
 
 
 def test_get_primary_doc_and_infotable_urls(filing_detail_text):
-    assert get_sec_accession_no(filing_detail_text) == []
+    assert get_primary_doc_and_infotable_urls(filing_detail_text) == []
 
 
 def test_get_primary_doc_xml_url(filing_detail_text):
-    assert get_sec_accession_no(filing_detail_text) == []
+    assert get_primary_doc_xml_url(filing_detail_text) == []
 
 
 def test_get_infotable_xml_url(filing_detail_text):
-    assert get_sec_accession_no(filing_detail_text) == []
+    assert get_infotable_xml_url(filing_detail_text) == []
