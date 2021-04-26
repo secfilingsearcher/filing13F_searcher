@@ -18,15 +18,11 @@ def get_company(company_id):
 
 @company.route('/company/<company_id>/filings')
 def get_filings(company_id):
-   filings = Infotable.query.filter(Infotable.cik_no == company_id)
-   return jsonify(list(filings))
+    filings = Infotable.query.filter(Infotable.cik_no == company_id)
+    return jsonify(list(filings))
 
 
 @company.route('/filings/<filing_id>')
 def get_filing(filing_id):
     filing = Infotable.query.filter(Infotable.row_id == filing_id).first()
     return jsonify(filing)
-
-
-
-

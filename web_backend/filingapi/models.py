@@ -6,13 +6,15 @@ from filingapi import db
 
 @dataclass
 class Infotable(db.Model):
+    """Table class that show filing data"""
+    # pylint: disable=too-many-instance-attributes
+
     row_id: str
     accession_no: str
     cik_no: str
-    nameOfIssuer: str
-    titleOfClass: str
+    name_of_issuer: str
+    title_of_class: str
 
-    """Define Infotable Table"""
     __tablename__ = 'infotable'
     row_id = db.Column(db.String, primary_key=True)
     accession_no = db.Column(db.String, db.ForeignKey('primary_doc.accession_no'))
@@ -67,6 +69,7 @@ class Infotable(db.Model):
 
 @dataclass
 class PrimaryDoc(db.Model):
+    """Main document displaying company data"""
     accession_no: str
     cik_no: str
     company_name: str
@@ -82,5 +85,5 @@ class PrimaryDoc(db.Model):
     infotable_rows = db.relationship("Infotable")
 
     def __repr__(self):
-        return "<PrimaryDoc(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" % (
-            self.accession_no, self.cik_no, self.filing_date, self.company_name)
+        return "<PrimaryDoc(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" \
+               % (self.accession_no, self.cik_no, self.filing_date, self.company_name)

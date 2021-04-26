@@ -1,3 +1,4 @@
+"""This is the setup module."""
 import setuptools
 
 with open('requirements.txt') as f:
@@ -13,4 +14,3 @@ setuptools.setup(
     python_requires=">=3.6",
     install_requires=INSTALL_REQUIRES
 )
-
