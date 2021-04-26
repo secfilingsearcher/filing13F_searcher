@@ -2,7 +2,7 @@
 import hashlib
 
 from dataclasses import dataclass
-from web_backend.filingapi import db
+from web_backend.filingapi.database import db
 
 @dataclass
 class Infotable(db.Model):
@@ -38,29 +38,29 @@ class Infotable(db.Model):
                "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
                "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
                "votingAuthority_Shared='%s', votingAuthority_None='%s')>" % (
-                   self.accession_no, self.cik_no, self.nameOfIssuer,
-                   self.titleOfClass, self.cusip, self.value,
+                   self.accession_no, self.cik_no, self.name_of_issuer,
+                   self.title_of_class, self.cusip, self.value,
                    self.sshPrnamt, self.sshPrnamtType, self.putCall,
-                   self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
-                   self.votingAuthority_Shared, self.votingAuthority_None)
+                   self.investment_discretion, self.other_manager, self.voting_authority_sole,
+                   self.voting_authority_shared, self.voting_authority_none)
 
     def create_primary_key(self):
         """Uses hash to generate Primary Key based on original row data for infotable table"""
         infotable_row_list = [self.accession_no,
                               self.cik_no,
-                              self.nameOfIssuer,
-                              self.titleOfClass,
-                              self.titleOfClass,
+                              self.name_of_issuer,
+                              self.title_of_class,
+                              self.title_of_class,
                               self.cusip,
                               self.value,
-                              self.sshPrnamt,
-                              self.sshPrnamtType,
-                              self.putCall,
-                              self.investmentDiscretion,
-                              self.otherManager,
-                              self.votingAuthority_Sole,
-                              self.votingAuthority_Shared,
-                              self.votingAuthority_None
+                              self.ssh_prnamt,
+                              self.ssh_prnamt_type,
+                              self.put_call,
+                              self.investment_discretion,
+                              self.other_manager,
+                              self.voting_authority_sole,
+                              self.voting_authority_shared,
+                              self.voting_authority_none
                               ]
         full_str = ''.join(str(cell) for cell in infotable_row_list)
         result = hashlib.md5(full_str.encode())
