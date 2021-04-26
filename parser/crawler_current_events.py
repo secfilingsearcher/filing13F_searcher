@@ -26,12 +26,9 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
 
 def parse_sec_accession_no(text_13f):
     """Returns the sec accession number from the 13f filing detail page"""
-    accession_no_str = re \
+    return re \
         .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)', text_13f) \
         .group(0)
-    accession_no_removed_dashes = accession_no_str.replace('-', '')
-    accession_no = int(accession_no_removed_dashes)
-    return accession_no
 
 
 def parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
