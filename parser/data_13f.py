@@ -4,7 +4,7 @@ from crawler_current_events import get_text
 from models import Data13f
 
 
-def get_data_13f_row(infotable_xml_url, accession_no_value, cik_value):
+def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
     """Gets the data from infotable.xml and returns the data as a list of infotable objects"""
     infotable_root = get_infotable_doc_root(infotable_xml_url)
     data = []

@@ -2,10 +2,10 @@
 from crawler_current_events import get_text, get_13f_filing_detail_urls, get_sec_accession_no, \
     parse_primary_doc_and_infotable_urls, parse_primary_doc_xml_url, parse_infotable_xml_url
 from database_connection import session
-from data_13f import get_data_13f_row
+from data_13f import data_13f_row
 from filing_13f import parse_primary_doc_root, parse_primary_doc_cik, \
     parse_primary_doc_company_name, parse_primary_doc_accepted_filing_date
-from models import EdgarFiling
+from models import EdgarFiling, Company
 
 
 def main():
@@ -29,14 +29,17 @@ def main():
         cik = parse_primary_doc_cik(root)
         company_name = parse_primary_doc_company_name(root)
         filing_date = parse_primary_doc_accepted_filing_date(root)
-        filing_13f_row = EdgarFiling(
+        company_row = Company(
+            cik_no=cik,
+            company_name=company_name)
+        edgar_filing_row = EdgarFiling(
             accession_no=accession_no,
             cik_no=cik,
-            company_name=company_name,
             filing_date=filing_date)
-        session.add(filing_13f_row)
+        session.add(company_row)
+        session.add(edgar_filing_row)
 
-        data_13f_table = get_data_13f_row(infotable_xml_url, accession_no, cik)
+        data_13f_table = data_13f_row(infotable_xml_url, accession_no, cik)
         session.add_all(data_13f_table)
 
         session.commit()
