@@ -25,7 +25,7 @@ def get_infotable(infotable_xml_url, accession_no_value, cik_value):
             votingAuthority_Shared=get_xml_text(info, '{*}votingAuthority/{*}Shared'),
             votingAuthority_None=get_xml_text(info, '{*}votingAuthority/{*}None')
         )
-        infotable_row.equity_holdings_id = infotable_row.create_filing_13f_primary_key()
+        infotable_row.equity_holdings_id = infotable_row.create_data_13f_primary_key()
         data.append(infotable_row)
     return data
 
