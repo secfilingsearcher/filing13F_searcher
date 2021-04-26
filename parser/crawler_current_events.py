@@ -34,7 +34,7 @@ def parse_sec_accession_no(text_13f):
     return accession_no
 
 
-def parse_primary_doc_and_infotable_urls(text_13f):
+def parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
     """Returns the primary_doc.xml and infotable.xml base urls"""
     return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
