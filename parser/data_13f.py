@@ -1,7 +1,7 @@
 """This file contains functions that parse infotable.xml"""
 from xml.etree import ElementTree
 from crawler_current_events import get_text
-from models import Infotable
+from models import Data13f
 
 
 def get_infotable(infotable_xml_url, accession_no_value, cik_value):
@@ -9,7 +9,7 @@ def get_infotable(infotable_xml_url, accession_no_value, cik_value):
     infotable_root = get_infotable_doc_root(infotable_xml_url)
     data = []
     for info in infotable_root.findall('{*}infoTable'):
-        infotable_row = Infotable(
+        infotable_row = Data13f(
             accession_no=accession_no_value,
             cik_no=cik_value,
             nameOfIssuer=get_xml_text(info, '{*}nameOfIssuer'),
@@ -25,7 +25,7 @@ def get_infotable(infotable_xml_url, accession_no_value, cik_value):
             votingAuthority_Shared=get_xml_text(info, '{*}votingAuthority/{*}Shared'),
             votingAuthority_None=get_xml_text(info, '{*}votingAuthority/{*}None')
         )
-        infotable_row.row_id = infotable_row.create_primary_key()
+        infotable_row.equity_holdings_id = infotable_row.create_infotable_primary_key()
         data.append(infotable_row)
     return data
 
