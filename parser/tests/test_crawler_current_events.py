@@ -3,10 +3,10 @@
 # pylint: disable=import-error
 """This file contains tests for crawler_current_events"""
 import pytest
-from crawler_current_events import get_13f_filing_detail_urls, get_sec_accession_no
+from crawler_current_events import parse_13f_filing_detail_urls, parse_sec_accession_no
 
-from parser.crawler_current_events import get_infotable_xml_url, get_primary_doc_xml_url, \
-    get_primary_doc_and_infotable_urls
+from crawler_current_events import parse_infotable_xml_url, parse_primary_doc_xml_url, \
+    parse_primary_doc_xml_and_infotable_xml_urls
 
 
 @pytest.fixture
@@ -15,8 +15,8 @@ def current_events_text():
     return my_file.read()
 
 
-def test_get_13f_filing_detail_urls(current_events_text):
-    assert get_13f_filing_detail_urls(current_events_text) == [
+def test_parse_13f_filing_detail_urls(current_events_text):
+    assert parse_13f_filing_detail_urls(current_events_text) == [
         'https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html',
         'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
         'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
@@ -29,17 +29,17 @@ def filing_detail_text():
     return my_file.read()
 
 
-def test_get_sec_accession_no(filing_detail_text):
-    assert get_sec_accession_no(filing_detail_text) == '0000909012-21-000060'
+def test_parse_sec_accession_no(filing_detail_text):
+    assert parse_sec_accession_no(filing_detail_text) == '0000909012-21-000060'
 
 
-def test_get_primary_doc_and_infotable_urls(filing_detail_text):
-    assert get_primary_doc_and_infotable_urls(filing_detail_text) == []
+def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text):
+    assert parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text) == []
 
 
-def test_get_primary_doc_xml_url(filing_detail_text):
-    assert get_primary_doc_xml_url(filing_detail_text) == []
+def test_parse_primary_doc_xml_url(filing_detail_text):
+    assert parse_primary_doc_xml_url(filing_detail_text) == []
 
 
-def test_get_infotable_xml_url(filing_detail_text):
-    assert get_infotable_xml_url(filing_detail_text) == []
+def test_parse_infotable_xml_url(filing_detail_text):
+    assert parse_infotable_xml_url(filing_detail_text) == []
