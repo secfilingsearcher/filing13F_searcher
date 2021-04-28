@@ -10,6 +10,12 @@ from crawler_current_events import parse_infotable_xml_url, parse_primary_doc_xm
 
 
 @pytest.fixture
+def xml_list():
+    return ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
+     '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
+
+
+@pytest.fixture
 def current_events_text():
     my_file = open("fixtures/edgar_current_events.html", "rt")
     return my_file.read()
@@ -34,12 +40,16 @@ def test_parse_sec_accession_no(filing_detail_text):
 
 
 def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text):
-    assert parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text) == []
+    assert parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text) == \
+           ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
+ '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
 
 
-def test_parse_primary_doc_xml_url(filing_detail_text):
-    assert parse_primary_doc_xml_url(filing_detail_text) == []
+def test_parse_primary_doc_xml_url(xml_list):
+    assert parse_primary_doc_xml_url(xml_list) == \
+           'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml'
 
 
-def test_parse_infotable_xml_url(filing_detail_text):
-    assert parse_infotable_xml_url(filing_detail_text) == []
+def test_parse_infotable_xml_url(xml_list):
+    assert parse_infotable_xml_url(xml_list) == \
+           'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml'
