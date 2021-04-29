@@ -3,9 +3,8 @@
 # pylint: disable=import-error
 """This file contains tests for crawler_current_events"""
 import pytest
-from crawler_current_events import parse_13f_filing_detail_urls, parse_sec_accession_no
-
-from crawler_current_events import parse_infotable_xml_url, parse_primary_doc_xml_url, \
+from parser.crawler_current_events import parse_13f_filing_detail_urls, parse_sec_accession_no,\
+    parse_infotable_xml_url, parse_primary_doc_xml_url, \
     parse_primary_doc_xml_and_infotable_xml_urls
 
 
