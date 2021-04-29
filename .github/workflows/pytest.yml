@@ -19,7 +19,7 @@ jobs:
         pip install -r parser/tests/test-requirements.txt
     - name: Install parser
       run: |
-        python setup.py install
+        python parser/setup.py install
     - name: Run tests
       run: |
         cd parser
