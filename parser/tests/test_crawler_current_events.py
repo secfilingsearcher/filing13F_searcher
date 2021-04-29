@@ -17,8 +17,8 @@ def xml_list():
 
 @pytest.fixture
 def current_events_text():
-    my_file = open("fixtures/edgar_current_events.html", "rt")
-    return my_file.read()
+    with open("fixtures/edgar_current_events.html", "rt") as file:
+        return file.read()
 
 
 def test_parse_13f_filing_detail_urls(current_events_text):
@@ -31,8 +31,8 @@ def test_parse_13f_filing_detail_urls(current_events_text):
 
 @pytest.fixture
 def filing_detail_text():
-    my_file = open("fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "rt")
-    return my_file.read()
+    with open("fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "r") as file:
+        return file.read()
 
 
 def test_parse_sec_accession_no(filing_detail_text):
