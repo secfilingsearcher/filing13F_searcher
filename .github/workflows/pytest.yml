@@ -23,4 +23,5 @@ jobs:
         python setup.py install
     - name: Run tests
       run: |
+        cd parser
         python setup.py pytest
