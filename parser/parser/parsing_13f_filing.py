@@ -1,6 +1,6 @@
 """This file contains functions that parse primary_doc.xml"""
 from xml.etree import ElementTree
-from crawler_current_events import get_text
+from parser.crawler_current_events import get_text
 
 
 def parse_primary_doc_root(primary_doc_xml):
