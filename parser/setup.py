@@ -1,6 +1,8 @@
+""""""
 from setuptools import setup, find_packages
 
 def read_req(path):
+    """"""
     with open(path, 'r') as fh:
         array = []
         for line in fh:
