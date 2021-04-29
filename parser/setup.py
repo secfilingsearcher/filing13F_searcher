@@ -1,6 +1,8 @@
+"""This file sets up pytest to be run as a Github Action"""
 from setuptools import setup, find_packages
 
 def read_req(path):
+    """Returns dependencies from requirements.txt"""
     with open(path, 'r') as fh:
         array = []
         for line in fh:
