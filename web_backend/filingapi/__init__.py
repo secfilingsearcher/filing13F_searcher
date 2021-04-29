@@ -1,7 +1,7 @@
 """Flask app initializing code."""
 import os
 from flask import Flask
-from web_backend.filingapi.database import db
+from filingapi.database import db
 
 
 def create_app():
@@ -11,8 +11,6 @@ def create_app():
     db.init_app(app)
 
     # pylint: disable=import-outside-toplevel
-    from web_backend.filingapi.routes import company
+    from filingapi.routes import company
     app.register_blueprint(company)
     return app
-
-

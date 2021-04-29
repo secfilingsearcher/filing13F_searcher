@@ -1,6 +1,6 @@
 """APi for web back-end"""
 from flask import jsonify, Blueprint
-from web_backend.filingapi.models import PrimaryDoc, Infotable
+from filingapi.models import PrimaryDoc, Infotable
 
 company = Blueprint('company', __name__)
 
