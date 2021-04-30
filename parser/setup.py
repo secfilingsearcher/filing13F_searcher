@@ -1,13 +1,12 @@
 """This file sets up pytest to be run as a Github Action"""
 from setuptools import setup, find_packages
 
-def read_req(path):
+
+def read_requirements(path):
     """Returns dependencies from requirements.txt"""
     with open(path, 'r') as file_handle:
-        array = []
-        for line in file_handle:
-            array.append(line)
-        return array
+        return list(file_handle)
+
 
 setup(
     name='filing13F_searcher',
@@ -19,5 +18,5 @@ setup(
     tests_require=[
         'pytest',
     ],
-    install_requires=read_req("requirements.txt")
+    install_requires=read_requirements("requirements.txt")
 )
