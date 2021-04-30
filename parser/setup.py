@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 
 def read_req(path):
     """Returns dependencies from requirements.txt"""
-    with open(path, 'r') as fh:
+    with open(path, 'r') as file_handle:
         array = []
-        for line in fh:
+        for line in file_handle:
             array.append(line)
         return array
 

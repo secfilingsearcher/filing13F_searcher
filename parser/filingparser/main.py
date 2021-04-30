@@ -1,7 +1,8 @@
 # pylint: disable=import-error
 """This file contains the main method"""
-from filingparser.crawler_current_events import get_text, parse_13f_filing_detail_urls, parse_sec_accession_no, \
-    parse_primary_doc_xml_and_infotable_xml_urls, parse_primary_doc_xml_url, parse_infotable_xml_url
+from filingparser.crawler_current_events import get_text, parse_13f_filing_detail_urls, \
+    parse_sec_accession_no, parse_primary_doc_xml_and_infotable_xml_urls, \
+    parse_primary_doc_xml_url, parse_infotable_xml_url
 from filingparser.database_connection import session
 from filingparser.data_13f import data_13f_row
 from filingparser.parsing_13f_filing import parse_primary_doc_root, parse_primary_doc_cik, \
