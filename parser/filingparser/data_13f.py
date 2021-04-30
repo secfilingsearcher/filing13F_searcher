@@ -1,7 +1,7 @@
 """This file contains functions that parse infotable.xml"""
 from xml.etree import ElementTree
-from crawler_current_events import get_text
-from models import Data13f
+from filingparser.crawler_current_events import get_text
+from filingparser.models import Data13f
 
 
 def data_13f_row(infotable_xml_url, accession_no_value, cik_value):

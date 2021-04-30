@@ -2,7 +2,7 @@
 import re
 import time
 import requests
-from parser.errors import CantFindUrlException
+from filingparser.errors import CantFindUrlException
 
 
 def get_text(url):

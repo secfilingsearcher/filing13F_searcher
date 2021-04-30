@@ -12,7 +12,7 @@ def read_req(path):
 setup(
     name='filing13F_searcher',
     version='0.0.1',
-    packages=find_packages(),
+    packages=find_packages('filingparser'),
     setup_requires=[
         'pytest-runner',
     ],
