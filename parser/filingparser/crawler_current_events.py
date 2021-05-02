@@ -2,6 +2,7 @@
 import re
 import time
 import requests
+from filingparser.errors import CantFindUrlException
 
 
 def get_text(url):
@@ -41,7 +42,7 @@ def parse_primary_doc_xml_url(suffix_xml_urls):
     base_sec_url = "https://www.sec.gov"
     if suffix_xml_urls:
         return base_sec_url + suffix_xml_urls[0]
-    raise TypeError("Can't find URL on current webpage")
+    raise CantFindUrlException("primary_doc_xml_url suffix is empty")
 
 
 def parse_infotable_xml_url(partial_xml_url):
@@ -49,4 +50,4 @@ def parse_infotable_xml_url(partial_xml_url):
     base_sec_url = "https://www.sec.gov"
     if partial_xml_url:
         return base_sec_url + partial_xml_url[-1]
-    raise TypeError("Can't find URL on current webpage")
+    raise CantFindUrlException("infotable_xml_url suffix is empty")
