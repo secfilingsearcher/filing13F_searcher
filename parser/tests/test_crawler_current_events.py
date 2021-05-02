@@ -1,3 +1,4 @@
+# pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
 from filingparser.crawler_current_events import parse_13f_filing_detail_urls, \
     parse_sec_accession_no, parse_infotable_xml_url, parse_primary_doc_xml_url, \
@@ -18,7 +19,7 @@ def filing_detail_text():
     with open("tests/fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "r") as file:
         return file.read()
 
-    
+
 @pytest.fixture
 def xml_list():
     """This function creates an fixture with test primary_doc.xml data"""
@@ -33,7 +34,7 @@ def test_parse_13f_filing_detail_urls(current_events_text):
         'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
         'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
         'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html']
-    
+
 
 def test_parse_sec_accession_no(filing_detail_text):
     """This function tests parse_sec_accession_no"""
