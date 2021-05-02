@@ -11,6 +11,6 @@ def create_app():
     db.init_app(app)
 
     # pylint: disable=import-outside-toplevel
-    from filingapi.routes import company
-    app.register_blueprint(company)
+    from filingapi.routes import company_blueprint
+    app.register_blueprint(company_blueprint)
     return app

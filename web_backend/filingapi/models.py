@@ -4,86 +4,89 @@ import hashlib
 from dataclasses import dataclass
 from filingapi.database import db
 
+
+# pylint: disable=too-few-public-methods
 @dataclass
-class Infotable(db.Model):
-    """Table class that show filing data"""
-    # pylint: disable=too-many-instance-attributes
-
-    row_id: str
-    accession_no: str
+class Company(db.Model):
+    """Define CompanyInfo Table"""
     cik_no: str
-    name_of_issuer: str
-    title_of_class: str
+    company_name: str
 
-    __tablename__ = 'infotable'
-    row_id = db.Column(db.String, primary_key=True)
-    accession_no = db.Column(db.String, db.ForeignKey('primary_doc.accession_no'))
-    cik_no = db.Column(db.String)
-    name_of_issuer = db.Column(db.String)
-    title_of_class = db.Column(db.String)
-    cusip = db.Column(db.String)
-    value = db.Column(db.Numeric)
-    ssh_prnamt = db.Column(db.Integer)
-    ssh_prnamt_type = db.Column(db.String)
-    put_call = db.Column(db.String)
-    investment_discretion = db.Column(db.String)
-    other_manager = db.Column(db.String)
-    voting_authority_sole = db.Column(db.Integer)
-    voting_authority_shared = db.Column(db.Integer)
-    voting_authority_none = db.Column(db.Integer)
+    __tablename__ = 'company'
+    cik_no = db.Column(db.String, primary_key=True)
+    company_name = db.Column(db.String)
+    cik_numbers = db.relationship("EdgarFiling")
 
     def __repr__(self):
-        return "<Infotable(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
+        return "<Company(cik_no='%s', company_name='%s')>" % (
+            self.cik_no, self.company_name)
+
+
+@dataclass
+class EdgarFiling(db.Model):
+    """Define EdgarFiling Table"""
+    __tablename__ = 'edgar_filing'
+    accession_no = db.Column(db.String, primary_key=True)
+    cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
+    filing_date = db.Column(db.Date)
+    data_13f_rows = db.relationship("Data13f")
+
+    def __repr__(self):
+        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_date='%s')>" % (
+            self.accession_no, self.cik_no, self.filing_date)
+
+
+@dataclass
+class Data13f(db.Model):
+    """Define Data13f Table"""
+    __tablename__ = 'data_13f'
+    equity_holdings_id = db.Column(db.String, primary_key=True)
+    accession_no = db.Column(db.String, db.ForeignKey('edgar_filing.accession_no'))
+    cik_no = db.Column(db.String)
+    nameOfIssuer = db.Column(db.String)
+    titleOfClass = db.Column(db.String)
+    cusip = db.Column(db.String)
+    value = db.Column(db.Numeric)
+    sshPrnamt = db.Column(db.Integer)
+    sshPrnamtType = db.Column(db.String)
+    putCall = db.Column(db.String)
+    investmentDiscretion = db.Column(db.String)
+    otherManager = db.Column(db.String)
+    votingAuthority_Sole = db.Column(db.Integer)
+    votingAuthority_Shared = db.Column(db.Integer)
+    votingAuthority_None = db.Column(db.Integer)
+
+    def __repr__(self):
+        return "<Data13f(accession_no='%s', cik_no='%s', nameOfIssuer='%s', " \
                "titleOfClass='%s', cusip='%s', value='%s', " \
                "sshPrnamt='%s', sshPrnamtType='%s', putCall='%s', " \
                "investmentDiscretion='%s', otherManager='%s', votingAuthority_Sole='%s', " \
                "votingAuthority_Shared='%s', votingAuthority_None='%s')>" % (
-                   self.accession_no, self.cik_no, self.name_of_issuer,
-                   self.title_of_class, self.cusip, self.value,
+                   self.accession_no, self.cik_no, self.nameOfIssuer,
+                   self.titleOfClass, self.cusip, self.value,
                    self.sshPrnamt, self.sshPrnamtType, self.putCall,
-                   self.investment_discretion, self.other_manager, self.voting_authority_sole,
-                   self.voting_authority_shared, self.voting_authority_none)
+                   self.investmentDiscretion, self.otherManager, self.votingAuthority_Sole,
+                   self.votingAuthority_Shared, self.votingAuthority_None)
 
-    def create_primary_key(self):
-        """Uses hash to generate Primary Key based on original row data for infotable table"""
-        infotable_row_list = [self.accession_no,
+    def create_data_13f_primary_key(self):
+        """Uses hash to generate Primary Key based on original row data for Data13f table"""
+        data_13f_row_list = [self.accession_no,
                               self.cik_no,
-                              self.name_of_issuer,
-                              self.title_of_class,
-                              self.title_of_class,
+                              self.nameOfIssuer,
+                              self.titleOfClass,
+                              self.titleOfClass,
                               self.cusip,
                               self.value,
-                              self.ssh_prnamt,
-                              self.ssh_prnamt_type,
-                              self.put_call,
-                              self.investment_discretion,
-                              self.other_manager,
-                              self.voting_authority_sole,
-                              self.voting_authority_shared,
-                              self.voting_authority_none
+                              self.sshPrnamt,
+                              self.sshPrnamtType,
+                              self.putCall,
+                              self.investmentDiscretion,
+                              self.otherManager,
+                              self.votingAuthority_Sole,
+                              self.votingAuthority_Shared,
+                              self.votingAuthority_None
                               ]
-        full_str = ''.join(str(cell) for cell in infotable_row_list)
+        full_str = ''.join(str(cell) for cell in data_13f_row_list)
         result = hashlib.md5(full_str.encode())
         return result.hexdigest()
 
-
-@dataclass
-class PrimaryDoc(db.Model):
-    """Main document displaying company data"""
-    accession_no: str
-    cik_no: str
-    company_name: str
-    filing_date: db.Date
-    infotable_rows: Infotable
-
-    """Define PrimaryDoc Table"""
-    __tablename__ = 'primary_doc'
-    accession_no = db.Column(db.String, primary_key=True)
-    cik_no = db.Column(db.String)
-    company_name = db.Column(db.String)
-    filing_date = db.Column(db.Date)
-    infotable_rows = db.relationship("Infotable")
-
-    def __repr__(self):
-        return "<PrimaryDoc(accession_no='%s', cik_no='%s', filing_date='%s', company_name='%s')>" \
-               % (self.accession_no, self.cik_no, self.filing_date, self.company_name)
