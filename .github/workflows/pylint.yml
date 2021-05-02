@@ -27,5 +27,4 @@ jobs:
         cd ..
     - name: Analysing the code with pylint
       run: |
-        cd parser
-        pylint parser
+        find . -type f -name *py | xargs pylint
