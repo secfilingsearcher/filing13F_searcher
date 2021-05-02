@@ -21,7 +21,8 @@ jobs:
       run: |
         cd parser
         pip install -r requirements.txt
-        python setup.py install
+        python setup.py develop
+        cd ..
     - name: Install web_backend
       run: |
         cd web_backend
