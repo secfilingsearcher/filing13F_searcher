@@ -19,7 +19,9 @@ jobs:
         pip install pylint pylint_flask_sqlalchemy pylint_flask pytest
     - name: Install filingparser
       run: |
-        pip install -r parser/requirements.txt
+        cd parser
+        pip install -r requirements.txt
+        python setup.py install
     - name: Install web_backend
       run: |
         cd web_backend
