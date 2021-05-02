@@ -89,4 +89,3 @@ class Data13f(db.Model):
         full_str = ''.join(str(cell) for cell in data_13f_row_list)
         result = hashlib.md5(full_str.encode())
         return result.hexdigest()
-
