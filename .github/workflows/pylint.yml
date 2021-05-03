@@ -17,14 +17,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint pylint_flask_sqlalchemy pylint_flask pytest
-    - name: Install filingparser
+    - name: Install edgar_filing_searcher
       run: |
-        pip install -r parser/requirements.txt
-    - name: Install web_backend
-      run: |
-        cd web_backend
-        python setup.py install || echo no web_backend found
+        cd python
+        python setup.py install
         cd ..
     - name: Analysing the code with pylint
       run: |
-        find . -type d \( -name web_backend \) -prune -false -o -name *py | xargs pylint
+        find . -type d \( -name build \) -prune -false -o -name *py | xargs pylint
