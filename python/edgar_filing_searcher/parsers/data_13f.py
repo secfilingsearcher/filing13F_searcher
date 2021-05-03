@@ -19,7 +19,7 @@ def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
             ssh_prnamt=parse_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamt'),
             ssh_prnamt_type=parse_xml_text(info, '{*}sshPrnamtType'),
             put_call=parse_xml_text(info, '{*}putCall'),
-            investmentDiscretion=parse_xml_text(info, '{*}investmentDiscretion'),
+            investment_discretion=parse_xml_text(info, '{*}investmentDiscretion'),
             other_manager=parse_xml_text(info, '{*}otherManager'),
             voting_authority_sole=parse_xml_text(info, '{*}votingAuthority/{*}Sole'),
             voting_authority_shared=parse_xml_text(info, '{*}votingAuthority/{*}Shared'),
