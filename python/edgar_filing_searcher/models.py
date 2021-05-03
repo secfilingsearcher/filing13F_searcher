@@ -1,7 +1,7 @@
 """Create table models for database"""
 import hashlib
 from dataclasses import dataclass
-from edgar_filing_searcher.api.database import db
+from edgar_filing_searcher.database import db
 
 
 # pylint: disable=too-few-public-methods

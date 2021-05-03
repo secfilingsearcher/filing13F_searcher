@@ -7,7 +7,7 @@ from edgar_filing_searcher.parsers.data_13f import data_13f_row
 from edgar_filing_searcher.parsers.parsing_13f_filing import parse_primary_doc_root, parse_primary_doc_cik, \
     parse_primary_doc_company_name, parse_primary_doc_accepted_filing_date
 from edgar_filing_searcher.models import EdgarFiling, Company
-from edgar_filing_searcher.api.database import db
+from edgar_filing_searcher.database import db
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
 

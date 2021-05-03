@@ -1,5 +1,5 @@
 """Initialize Database"""
-from edgar_filing_searcher.api.database import db
+from edgar_filing_searcher.database import db
 from edgar_filing_searcher.api import create_app
 
 
