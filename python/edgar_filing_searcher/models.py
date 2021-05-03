@@ -36,6 +36,7 @@ class EdgarFiling(db.Model):
             self.accession_no, self.cik_no, self.filing_date)
 
 
+# pylint: disable=too-many-instance-attributes
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
