@@ -16,12 +16,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r parser/tests/test-requirements.txt
-    - name: Install filingparser
+        pip install -r python/tests/test-requirements.txt
+    - name: Install edgar_filing_searcher
       run: |
-        cd parser
+        cd python
         python setup.py install
     - name: Run tests
       run: |
-        cd parser
+        cd python
         python setup.py pytest

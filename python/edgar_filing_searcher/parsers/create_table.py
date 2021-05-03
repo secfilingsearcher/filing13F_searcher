@@ -1,7 +1,7 @@
 """Create table in database"""
 import os
-from filingparser.models import Base
-from filingparser.orm import get_engine
+from edgar_filing_searcher.parsers.models import Base
+from edgar_filing_searcher.parsers.orm import get_engine
 
 
 def create_db():
