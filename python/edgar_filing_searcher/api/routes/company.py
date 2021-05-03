@@ -1,6 +1,6 @@
 """APi for web back-end"""
 from flask import jsonify, Blueprint
-from filingapi.models import Company
+from edgar_filing_searcher.models import Company
 
 company_blueprint = Blueprint('company', __name__)
 

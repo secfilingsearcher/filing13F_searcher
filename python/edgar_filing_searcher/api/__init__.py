@@ -1,7 +1,8 @@
 """Flask app initializing code."""
 import os
 from flask import Flask
-from filingapi.database import db
+from edgar_filing_searcher.api.database import db
+from edgar_filing_searcher.api.routes.company import company_blueprint
 
 
 def create_app():
@@ -9,8 +10,5 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
     db.init_app(app)
-
-    # pylint: disable=import-outside-toplevel
-    from filingapi.routes import company_blueprint
     app.register_blueprint(company_blueprint)
     return app

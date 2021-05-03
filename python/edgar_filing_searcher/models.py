@@ -2,7 +2,7 @@
 import hashlib
 
 from dataclasses import dataclass
-from filingapi.database import db
+from edgar_filing_searcher.api.database import db
 
 
 # pylint: disable=too-few-public-methods

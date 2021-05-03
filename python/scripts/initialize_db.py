@@ -1,6 +1,6 @@
 """Initialize Database"""
-from filingapi.database import db
-from filingapi import create_app
+from edgar_filing_searcher.api.database import db
+from edgar_filing_searcher.api import create_app
 
 
 if __name__ == '__main__':
