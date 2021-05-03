@@ -24,4 +24,5 @@ jobs:
         cd ..
     - name: Analysing the code with pylint
       run: |
-        pylint edgar_filing_searcher
+        cd python
+        pylint --load-plugins pylint_flask_sqlalchemy,pylint_flask edgar_filing_searcher
