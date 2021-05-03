@@ -24,4 +24,4 @@ jobs:
         cd ..
     - name: Analysing the code with pylint
       run: |
-        find . -type d \( -name build \) -prune -false -o -name *py | xargs pylint
+        pylint edgar_filing_searcher
