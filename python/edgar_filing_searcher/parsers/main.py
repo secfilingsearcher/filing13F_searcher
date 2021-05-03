@@ -1,7 +1,8 @@
 # pylint: disable=import-error
 """This file contains the main method"""
-from edgar_filing_searcher.parsers.crawler_current_events import get_text, parse_13f_filing_detail_urls, \
-    parse_sec_accession_no, parse_primary_doc_xml_and_infotable_xml_urls, \
+from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
+    parse_13f_filing_detail_urls, parse_sec_accession_no, \
+    parse_primary_doc_xml_and_infotable_xml_urls, \
     parse_primary_doc_xml_url, parse_infotable_xml_url
 from edgar_filing_searcher.parsers.data_13f import data_13f_row
 from edgar_filing_searcher.parsers.parser_context import create_app
