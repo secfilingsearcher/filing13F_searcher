@@ -3,11 +3,11 @@
 from edgar_filing_searcher.parsers.crawler_current_events import get_text, parse_13f_filing_detail_urls, \
     parse_sec_accession_no, parse_primary_doc_xml_and_infotable_xml_urls, \
     parse_primary_doc_xml_url, parse_infotable_xml_url
-from edgar_filing_searcher.parsers.database_connection import session
 from edgar_filing_searcher.parsers.data_13f import data_13f_row
 from edgar_filing_searcher.parsers.parsing_13f_filing import parse_primary_doc_root, parse_primary_doc_cik, \
     parse_primary_doc_company_name, parse_primary_doc_accepted_filing_date
-from edgar_filing_searcher.parsers.models import EdgarFiling, Company
+from edgar_filing_searcher.models import EdgarFiling, Company
+from edgar_filing_searcher.api.database import db
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
 
@@ -39,13 +39,13 @@ def main():
             accession_no=accession_no,
             cik_no=cik,
             filing_date=filing_date)
-        session.add(company_row)
-        session.add(edgar_filing_row)
+        db.session.add(company_row)
+        db.session.add(edgar_filing_row)
 
         data_13f_table = data_13f_row(infotable_xml_url, accession_no, cik)
-        session.add_all(data_13f_table)
+        db.session.add_all(data_13f_table)
 
-        session.commit()
+        db.session.commit()
 
 
 if __name__ == "__main__":

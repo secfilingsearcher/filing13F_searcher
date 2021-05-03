@@ -1,7 +1,7 @@
 """This file contains functions that parse infotable.xml"""
 from xml.etree import ElementTree
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
-from edgar_filing_searcher.parsers.models import Data13f
+from edgar_filing_searcher.models import Data13f
 
 
 def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
@@ -12,18 +12,18 @@ def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
         infotable_row = Data13f(
             accession_no=accession_no_value,
             cik_no=cik_value,
-            nameOfIssuer=parse_xml_text(info, '{*}nameOfIssuer'),
-            titleOfClass=parse_xml_text(info, '{*}titleOfClass'),
+            name_of_issuer=parse_xml_text(info, '{*}nameOfIssuer'),
+            title_of_class=parse_xml_text(info, '{*}titleOfClass'),
             cusip=parse_xml_text(info, '{*}cusip'),
             value=parse_xml_text(info, '{*}value'),
-            sshPrnamt=parse_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamt'),
-            sshPrnamtType=parse_xml_text(info, '{*}sshPrnamtType'),
-            putCall=parse_xml_text(info, '{*}putCall'),
+            ssh_prnamt=parse_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamt'),
+            ssh_prnamt_type=parse_xml_text(info, '{*}sshPrnamtType'),
+            put_call=parse_xml_text(info, '{*}putCall'),
             investmentDiscretion=parse_xml_text(info, '{*}investmentDiscretion'),
-            otherManager=parse_xml_text(info, '{*}otherManager'),
-            votingAuthority_Sole=parse_xml_text(info, '{*}votingAuthority/{*}Sole'),
-            votingAuthority_Shared=parse_xml_text(info, '{*}votingAuthority/{*}Shared'),
-            votingAuthority_None=parse_xml_text(info, '{*}votingAuthority/{*}None')
+            other_manager=parse_xml_text(info, '{*}otherManager'),
+            voting_authority_sole=parse_xml_text(info, '{*}votingAuthority/{*}Sole'),
+            voting_authority_shared=parse_xml_text(info, '{*}votingAuthority/{*}Shared'),
+            voting_authority_none=parse_xml_text(info, '{*}votingAuthority/{*}None')
         )
         infotable_row.equity_holdings_id = infotable_row.create_data_13f_primary_key()
         data.append(infotable_row)
