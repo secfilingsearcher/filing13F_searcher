@@ -1,4 +1,4 @@
-# pylint: disable=import-too-few-public-methods
+# pylint: disable=too-few-public-methods
 """This file create a class Parser"""
 import re
 from xml.etree import ElementTree
