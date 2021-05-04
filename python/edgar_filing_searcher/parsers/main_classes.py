@@ -1,6 +1,6 @@
+"""This file create a class Parser"""
 import re
 from xml.etree import ElementTree
-
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_row
@@ -8,19 +8,20 @@ from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 
 class Parser:
+    """This class Parser parses 13 filings"""
     def __init__(self, filing_detail_url):
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
         self.data_13f = None
-        self._parse(filing_detail_url)
+        self._parse()
 
     @staticmethod
     def _parse_sec_accession_no(text_13f):
         """Returns the sec accession number from the 13f filing detail page"""
         return re \
-            .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)', text_13f) \
-            .group(0)
+            .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
+                    text_13f).group(0)
 
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
@@ -81,7 +82,7 @@ class Parser:
                 namespaces):
             return accepted_filing_date.text
 
-    def _parse(self, filing_detail_url):
+    def _parse(self):
         accession_no = self._parse_sec_accession_no(self.filing_detail_text)
         xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
         primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
