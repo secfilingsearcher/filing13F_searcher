@@ -25,6 +25,10 @@ class Company(db.Model):
 @dataclass
 class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
+    accession_no: str
+    cik_no: str
+    # filing_date:
+
     __tablename__ = 'edgar_filing'
     accession_no = db.Column(db.String, primary_key=True)
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
