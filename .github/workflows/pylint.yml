@@ -25,4 +25,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         cd python
-        pylint --load-plugins pylint_flask_sqlalchemy,pylint_flask edgar_filing_searcher
+        pylint --load-plugins pylint_flask_sqlalchemy,pylint_flask edgar_filing_searcher --rcfile=.pylintrc
