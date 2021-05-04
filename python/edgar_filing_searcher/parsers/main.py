@@ -5,12 +5,12 @@ from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
     parse_primary_doc_xml_and_infotable_xml_urls, \
     parse_primary_doc_xml_url, parse_infotable_xml_url
 from edgar_filing_searcher.parsers.data_13f import data_13f_row
-from edgar_filing_searcher.parsers.parser_context import create_app
 from edgar_filing_searcher.parsers.parsing_13f_filing import parse_primary_doc_root, \
     parse_primary_doc_cik, parse_primary_doc_company_name, \
     parse_primary_doc_accepted_filing_date
 from edgar_filing_searcher.models import EdgarFiling, Company
 from edgar_filing_searcher.database import db
+from python.edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
 
@@ -43,8 +43,7 @@ def main():
             cik_no=cik,
             filing_date=filing_date)
 
-        app = create_app()
-        app.app_context().push()
+        setup_db_connection()
 
         db.session.add(company_row)
         db.session.add(edgar_filing_row)
