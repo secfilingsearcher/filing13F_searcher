@@ -27,7 +27,7 @@ class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
     accession_no: str
     cik_no: str
-    # filing_date: str
+    filing_date: db.Date
 
     __tablename__ = 'edgar_filing'
     accession_no = db.Column(db.String, primary_key=True)
