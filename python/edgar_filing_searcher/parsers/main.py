@@ -1,51 +1,43 @@
 # pylint: disable=import-error
 """This file contains the main method"""
-from edgar_filing_searcher.parsers.crawler_current_events import get_text, parse_13f_filing_detail_urls, \
-    parse_sec_accession_no, parse_primary_doc_xml_and_infotable_xml_urls, \
-    parse_primary_doc_xml_url, parse_infotable_xml_url
-from edgar_filing_searcher.parsers.database_connection import session
-from edgar_filing_searcher.parsers.data_13f import data_13f_row
-from edgar_filing_searcher.parsers.parsing_13f_filing import parse_primary_doc_root, parse_primary_doc_cik, \
-    parse_primary_doc_company_name, parse_primary_doc_accepted_filing_date
-from edgar_filing_searcher.parsers.models import EdgarFiling, Company
+from edgar_filing_searcher.database import db
+from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
+    parse_13f_filing_detail_urls
+from edgar_filing_searcher.parsers.parser_class import Parser
+from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
 
 
+def create_url_list(url_edgar_current_events):
+    """This function creates a list of URLs"""
+    text_edgar_current_events = get_text(url_edgar_current_events)
+    return parse_13f_filing_detail_urls(text_edgar_current_events)
+
+
+def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
+    """This function sends data to the database"""
+    db.session.add(company_row)
+    db.session.add(edgar_filing_row)
+    db.session.add_all(data_13f_table)
+    db.session.commit()
+
+
 def main():
     """This function returns the cik, company name, and infotable data"""
-    text_edgar_current_events = get_text(URL_EDGAR_CURRENT_EVENTS)
-    filing_detail_urls = parse_13f_filing_detail_urls(text_edgar_current_events)
+    filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
 
     if not filing_detail_urls:
         print("There are no urls on the page")
         return
 
     for filing_detail_url in filing_detail_urls:
-        filing_detail_text = get_text(filing_detail_url)
-        accession_no = parse_sec_accession_no(filing_detail_text)
-        xml_links = parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text)
-        primary_doc_xml_url = parse_primary_doc_xml_url(xml_links)
-        infotable_xml_url = parse_infotable_xml_url(xml_links)
-
-        root = parse_primary_doc_root(primary_doc_xml_url)
-        cik = parse_primary_doc_cik(root)
-        company_name = parse_primary_doc_company_name(root)
-        filing_date = parse_primary_doc_accepted_filing_date(root)
-        company_row = Company(
-            cik_no=cik,
-            company_name=company_name)
-        edgar_filing_row = EdgarFiling(
-            accession_no=accession_no,
-            cik_no=cik,
-            filing_date=filing_date)
-        session.add(company_row)
-        session.add(edgar_filing_row)
-
-        data_13f_table = data_13f_row(infotable_xml_url, accession_no, cik)
-        session.add_all(data_13f_table)
-
-        session.commit()
+        setup_db_connection()
+        parser = Parser(filing_detail_url)
+        send_data_to_db(
+            parser.company,
+            parser.edgar_filing,
+            parser.data_13f)
 
 
 if __name__ == "__main__":
