@@ -17,10 +17,11 @@ def main():
 
     for filing_detail_url in filing_detail_urls:
         setup_db_connection()
+        parser = Parser(filing_detail_url)
         send_data_to_db(
-            Parser(filing_detail_url).company,
-            Parser(filing_detail_url).edgar_filing,
-            Parser(filing_detail_url).data_13f)
+            parser.company,
+            parser.edgar_filing,
+            parser.data_13f)
 
 
 if __name__ == "__main__":
