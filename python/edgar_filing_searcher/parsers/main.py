@@ -1,10 +1,25 @@
 # pylint: disable=import-error
 """This file contains the main method"""
-from edgar_filing_searcher.parsers.main_functions import create_url_list, send_data_to_db
+from edgar_filing_searcher.database import db
+from edgar_filing_searcher.parsers.crawler_current_events import get_text, parse_13f_filing_detail_urls
+from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.parsers.main_classes import Parser
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
+
+
+def create_url_list(url_edgar_current_events):
+    """This function creates a list of URLs"""
+    text_edgar_current_events = get_text(url_edgar_current_events)
+    return parse_13f_filing_detail_urls(text_edgar_current_events)
+
+
+def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
+    """This function sends data to the database"""
+    db.session.add(company_row)
+    db.session.add(edgar_filing_row)
+    db.session.add_all(data_13f_table)
+    db.session.commit()
 
 
 def main():
