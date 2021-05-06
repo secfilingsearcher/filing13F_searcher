@@ -4,6 +4,21 @@ from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.models import Data13f
 
 
+def parse_infotable_doc_root(infotable_xml):
+    """Gets the root of the infotable.xml file"""
+    text = get_text(infotable_xml)
+    infotable_root = ElementTree.XML(text)
+    return infotable_root
+
+
+def parse_xml_text(dom, xpath):
+    """Returns the text from the xml tag on an xml file"""
+    node = dom.find(xpath)
+    if node is not None:
+        return node.text
+    return None
+
+
 def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
     """Gets the data from infotable.xml and returns the data as a list of infotable objects"""
     infotable_root = parse_infotable_doc_root(infotable_xml_url)
@@ -28,18 +43,3 @@ def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
         infotable_row.equity_holdings_id = infotable_row.create_data_13f_primary_key()
         data.append(infotable_row)
     return data
-
-
-def parse_infotable_doc_root(infotable_xml):
-    """Gets the root of the infotable.xml file"""
-    text = get_text(infotable_xml)
-    infotable_root = ElementTree.XML(text)
-    return infotable_root
-
-
-def parse_xml_text(dom, xpath):
-    """Returns the text from the xml tag on an xml file"""
-    node = dom.find(xpath)
-    if node is not None:
-        return node.text
-    return None
