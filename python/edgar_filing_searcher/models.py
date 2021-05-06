@@ -1,6 +1,8 @@
 """Create table models for database"""
 import hashlib
 from dataclasses import dataclass
+from datetime import date
+
 from edgar_filing_searcher.database import db
 
 
@@ -24,6 +26,10 @@ class Company(db.Model):
 @dataclass
 class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
+    accession_no: str
+    cik_no: str
+    filing_date: date
+
     __tablename__ = 'edgar_filing'
     accession_no = db.Column(db.String, primary_key=True)
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
@@ -68,24 +74,26 @@ class Data13f(db.Model):
             self.investment_discretion, self.other_manager, self.voting_authority_sole,
             self.voting_authority_shared, self.voting_authority_none)
 
+
     def create_data_13f_primary_key(self):
         """Uses hash to generate Primary Key based on original row data for Data13f table"""
-        data_13f_row_list = [self.accession_no,
-                              self.cik_no,
-                              self.name_of_issuer,
-                              self.title_of_class,
-                              self.title_of_class,
-                              self.cusip,
-                              self.value,
-                              self.ssh_prnamt,
-                              self.ssh_prnamt_type,
-                              self.put_call,
-                              self.investment_discretion,
-                              self.other_manager,
-                              self.voting_authority_sole,
-                              self.voting_authority_shared,
-                              self.voting_authority_none
-                              ]
+        data_13f_row_list = [
+            self.accession_no,
+            self.cik_no,
+            self.name_of_issuer,
+            self.title_of_class,
+            self.title_of_class,
+            self.cusip,
+            self.value,
+            self.ssh_prnamt,
+            self.ssh_prnamt_type,
+            self.put_call,
+            self.investment_discretion,
+            self.other_manager,
+            self.voting_authority_sole,
+            self.voting_authority_shared,
+            self.voting_authority_none
+        ]
         full_str = ''.join(str(cell) for cell in data_13f_row_list)
         result = hashlib.md5(full_str.encode())
         return result.hexdigest()
