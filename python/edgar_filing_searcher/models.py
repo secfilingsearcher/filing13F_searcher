@@ -64,7 +64,7 @@ class Data13f(db.Model):
                "voting_authority_shared='%s', voting_authority_none='%s')>" % (
             self.accession_no, self.cik_no, self.name_of_issuer,
             self.title_of_class, self.cusip, self.value,
-            self.ssh_prnamt, self.ssh_prnamt_type, self.putCall,
+            self.ssh_prnamt, self.ssh_prnamt_type, self.put_call,
             self.investment_discretion, self.other_manager, self.voting_authority_sole,
             self.voting_authority_shared, self.voting_authority_none)
 
