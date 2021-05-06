@@ -11,7 +11,7 @@ class Company(db.Model):
     cik_no: str
     company_name: str
 
-    __tablename__ = 'company'
+    __tablename__ = 'companies'
     cik_no = db.Column(db.String, primary_key=True)
     company_name = db.Column(db.String)
     cik_numbers = db.relationship("EdgarFiling")
@@ -24,9 +24,9 @@ class Company(db.Model):
 @dataclass
 class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
-    __tablename__ = 'edgar_filing'
+    __tablename__ = 'edgar_filings'
     accession_no = db.Column(db.String, primary_key=True)
-    cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
+    cik_no = db.Column(db.String, db.ForeignKey('companies.cik_no'))
     filing_date = db.Column(db.DateTime)
     data_13f_rows = db.relationship("Data13f")
 
@@ -41,7 +41,7 @@ class Data13f(db.Model):
     """Define Data13f Table"""
     __tablename__ = 'data_13f'
     equity_holdings_id = db.Column(db.String, primary_key=True)
-    accession_no = db.Column(db.String, db.ForeignKey('edgar_filing.accession_no'))
+    accession_no = db.Column(db.String, db.ForeignKey('edgar_filings.accession_no'))
     cik_no = db.Column(db.String)
     name_of_issuer = db.Column(db.String)
     title_of_class = db.Column(db.String)
