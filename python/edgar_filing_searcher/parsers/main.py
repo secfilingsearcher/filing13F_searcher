@@ -17,8 +17,8 @@ def create_url_list(url_edgar_current_events):
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     """This function sends data to the database"""
-    db.session.add(company_row)
-    db.session.add(edgar_filing_row)
+    db.session.merge(company_row)
+    db.session.merge(edgar_filing_row)
     db.session.add_all(data_13f_table)
     db.session.commit()
 
