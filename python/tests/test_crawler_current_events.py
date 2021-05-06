@@ -9,14 +9,14 @@ import pytest
 @pytest.fixture
 def current_events_text():
     """This function creates an fixture with test edgar_current_events html data"""
-    with open("tests/fixtures/edgar_current_events.html", "rt") as file:
+    with open("fixtures/EDGAR Current Events.html", "rt") as file:
         return file.read()
 
 
 @pytest.fixture
 def filing_detail_text():
     """This function creates an fixture with test EDGAR filing document html data"""
-    with open("tests/fixtures/EDGAR_Filing_Documents_for_0000909012-21-000060.html", "r") as file:
+    with open("fixtures/EDGAR Filing Documents for 0001852858-21-000001.html", "r") as file:
         return file.read()
 
 
@@ -38,14 +38,14 @@ def test_parse_13f_filing_detail_urls(current_events_text):
 
 def test_parse_sec_accession_no(filing_detail_text):
     """This function tests parse_sec_accession_no"""
-    assert parse_sec_accession_no(filing_detail_text) == '0000909012-21-000060'
+    assert parse_sec_accession_no(filing_detail_text) == '0001852858-21-000001'
 
 
 def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text):
     """This function tests parse_primary_doc_xml_and_infotable_xml_urls"""
     assert parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text) == \
-           ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
- '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
+           ['/Archives/edgar/data/1852858/000185285821000001/primary_doc.xml',
+            '/Archives/edgar/data/1852858/000185285821000001/infotable.xml']
 
 
 def test_parse_primary_doc_xml_url(xml_list):
