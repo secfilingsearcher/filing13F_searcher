@@ -27,8 +27,10 @@ def get_filings(company_id):
     filings = EdgarFiling.query.filter(EdgarFiling.cik_no.like(f"{company_id}%"))
 
     if start_date:
-        filings = filings.filter(EdgarFiling.filing_date >= datetime.strptime(start_date, date_format))
+        filings = filings.filter(
+            EdgarFiling.filing_date >= datetime.strptime(start_date, date_format))
     if end_date:
-        filings = filings.filter(EdgarFiling.filing_date <= datetime.strptime(end_date, date_format))
+        filings = filings.filter(
+            EdgarFiling.filing_date <= datetime.strptime(end_date, date_format))
 
     return jsonify(list(filings))
