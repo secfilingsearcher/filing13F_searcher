@@ -3,7 +3,6 @@ import os
 from flask import Flask
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.api.routes.company import company_blueprint
-from edgar_filing_searcher.api.routes.edgarfiling import filing_blueprint
 
 
 def create_app():
@@ -13,5 +12,4 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     app.register_blueprint(company_blueprint)
-    app.register_blueprint(filing_blueprint)
     return app
