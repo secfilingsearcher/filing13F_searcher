@@ -28,9 +28,11 @@ def get_filings(company_id):
 
     if start_date:
         filings = filings.filter(
-            EdgarFiling.filing_date >= datetime.strptime(start_date, date_format))
+            EdgarFiling.filing_date >= datetime.strptime(start_date, date_format)
+        )
     if end_date:
         filings = filings.filter(
-            EdgarFiling.filing_date <= datetime.strptime(end_date, date_format))
+            EdgarFiling.filing_date <= datetime.strptime(end_date, date_format)
+        )
 
     return jsonify(list(filings))
