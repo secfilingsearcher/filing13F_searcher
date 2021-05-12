@@ -8,7 +8,7 @@ company_blueprint = Blueprint('company', __name__)
 
 @company_blueprint.after_request
 def after_request(response):
-    """Add cross-origin resource sharing"""
+    """Enables cross origin resource sharing"""
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
     return response

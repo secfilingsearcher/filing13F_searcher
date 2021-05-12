@@ -3,6 +3,7 @@ import axios from 'axios'
 
 function Results () {
   const [results, setResults] = useState([])
+
   useEffect(() => {
     axios.get('http://localhost:5000/company/search?q=t')
       .then(res => {
@@ -10,6 +11,7 @@ function Results () {
         setResults(companies)
       })
   }, [])
+
   return (
         <div>
             <table>

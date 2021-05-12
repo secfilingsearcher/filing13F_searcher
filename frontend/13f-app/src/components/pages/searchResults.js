@@ -5,7 +5,6 @@ function SearchResults () {
   return (
         <>
          <Results />
-
         </>
   )
 }
