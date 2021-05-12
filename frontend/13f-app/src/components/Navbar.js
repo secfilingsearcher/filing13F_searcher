@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from './Button';
-import './Navbar.css';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Button } from './Button'
+import './Navbar.css'
 
-function Navbar() {
-    const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true);
-    const handleClick = () => setClick(!click);
-    const closeMobileMenu = () => setClick(false);
+function Navbar () {
+  const [click, setClick] = useState(false)
+  const [button, setButton] = useState(true)
+  const handleClick = () => setClick(!click)
+  const closeMobileMenu = () => setClick(false)
 
-    const showButton = () => {
-        if(window.innerWidth <= 960) {
-            setButton(false);
-        } else {
-            setButton(true);
-        }
-    };
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false)
+    } else {
+      setButton(true)
+    }
+  }
 
-    window.addEventListener('resize', showButton);
-    return (
+  window.addEventListener('resize', showButton)
+  return (
         <>
          <nav className="navbar">
              <div className="navbar-container">
@@ -49,8 +49,8 @@ function Navbar() {
              </div>
          </nav>
         </>
-        
-    )
+
+  )
 }
 
 export default Navbar
