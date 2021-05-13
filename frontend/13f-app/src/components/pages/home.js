@@ -1,13 +1,13 @@
 import React from 'react'
-import '../../App.css';
-import MainSection from '../MainSection';
+import '../../App.css'
+import MainSection from '../MainSection'
 
 function Home () {
-    return (
+  return (
         <>
             <MainSection />
         </>
-    )
+  )
 }
 
-export default Home;
+export default Home
