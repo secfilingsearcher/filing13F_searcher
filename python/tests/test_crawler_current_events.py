@@ -9,14 +9,14 @@ import pytest
 @pytest.fixture
 def current_events_text():
     """This function creates an fixture with test edgar_current_events html data"""
-    with open("tests/fixtures/EDGAR Current Events.html", "rt") as file:
+    with open("tests/fixtures/edgar_current_events.html", "rt") as file:
         return file.read()
 
 
 @pytest.fixture
 def filing_detail_text():
     """This function creates an fixture with test EDGAR filing document html data"""
-    with open("tests/fixtures/EDGAR Filing Documents for 0001852858-21-000001.html", "r") as file:
+    with open("tests/fixtures/edgar_filing_documents_for_0001852858-21-000001.html", "r") as file:
         return file.read()
 
 
