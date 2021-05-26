@@ -17,6 +17,8 @@ function SearchForm () {
   const handleEndDateChange = event => { setSearchEndDate(event.target.value) }
   const handleClick = (e) => console.log(searchName)
 
+  const searchLink = `/search?q=${searchName}&startDate=${searchStartDate}&endDate=${searchEndDate}`
+
   return (
         <>
                 <div style={divStyle}>
@@ -24,7 +26,7 @@ function SearchForm () {
                   <input type='date' className='date' defaultValue={today} value={searchStartDate} onChange={handleStartDateChange}></input>
                   <input type='date' className='date' defaultValue={today} value={searchEndDate} onChange={handleEndDateChange}></input>
                 </div>
-                <Link to="/search"><button className="button" onClick={handleClick} type="submit">SEARCH</button></Link>
+                <Link to={searchLink}><button className="button" onClick={handleClick} type="submit">SEARCH</button></Link>
         </>
   )
 }
