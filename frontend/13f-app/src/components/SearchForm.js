@@ -14,9 +14,8 @@ function SearchForm () {
   const [searchEndDate, setSearchEndDate] = useState(today)
   const handleNameChange = event => { setSearchName(event.target.value) }
   const handleStartDateChange = event => { setSearchStartDate(event.target.value) }
-  const handleEndDateChange = event => { setSearchEndDate(
+  const handleEndDateChange = event => { setSearchEndDate(event.target.value) }
   const searchLink = `/search?q=${searchName}&startDate=${searchStartDate}&endDate=${searchEndDate}`
-
   return (
         <>
               <form>
