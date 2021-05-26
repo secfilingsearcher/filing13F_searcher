@@ -15,7 +15,6 @@ function Results () {
         setResults(companies)
       })
   }, [])
-
   return (
         <div>
             <table>

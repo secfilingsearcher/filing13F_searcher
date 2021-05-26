@@ -14,9 +14,7 @@ function SearchForm () {
   const [searchEndDate, setSearchEndDate] = useState(today)
   const handleNameChange = event => { setSearchName(event.target.value) }
   const handleStartDateChange = event => { setSearchStartDate(event.target.value) }
-  const handleEndDateChange = event => { setSearchEndDate(event.target.value) }
-  const handleClick = (e) => console.log(searchName)
-
+  const handleEndDateChange = event => { setSearchEndDate(
   const searchLink = `/search?q=${searchName}&startDate=${searchStartDate}&endDate=${searchEndDate}`
 
   return (
@@ -24,10 +22,10 @@ function SearchForm () {
               <form>
                 <div style={divStyle}>
                   <input type='text' placeholder='Company Name' className='search' value={searchName} onChange={handleNameChange}></input>
-                  <input type='date' className='date' defaultValue={today} value={searchStartDate} onChange={handleStartDateChange}></input>
-                  <input type='date' className='date' defaultValue={today} value={searchEndDate} onChange={handleEndDateChange}></input>
+                  <input type='date' className='date' value={searchStartDate} onChange={handleStartDateChange}></input>
+                  <input type='date' className='date' value={searchEndDate} onChange={handleEndDateChange}></input>
                 </div>
-                <Link to={searchLink}><button className="button" onClick={handleClick} type="submit">SEARCH</button></Link>
+                <Link to={searchLink}><button className="button" type="submit">SEARCH</button></Link>
               </form>
         </>
   )
