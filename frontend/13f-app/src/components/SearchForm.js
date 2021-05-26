@@ -21,12 +21,14 @@ function SearchForm () {
 
   return (
         <>
+              <form>
                 <div style={divStyle}>
                   <input type='text' placeholder='Company Name' className='search' value={searchName} onChange={handleNameChange}></input>
                   <input type='date' className='date' defaultValue={today} value={searchStartDate} onChange={handleStartDateChange}></input>
                   <input type='date' className='date' defaultValue={today} value={searchEndDate} onChange={handleEndDateChange}></input>
                 </div>
                 <Link to={searchLink}><button className="button" onClick={handleClick} type="submit">SEARCH</button></Link>
+              </form>
         </>
   )
 }
