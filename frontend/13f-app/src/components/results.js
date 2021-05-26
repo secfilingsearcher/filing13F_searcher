@@ -19,6 +19,7 @@ function Results () {
   return (
         <div>
             <table>
+              <tbody>
                 <tr>
                     <th>Company Name</th>
                     <th>CIK_NO</th>
@@ -29,6 +30,7 @@ function Results () {
                         <td>{result.cik_no}</td>
                     </tr>
                 ))}
+              </tbody>
             </table>
         </div>
   )
