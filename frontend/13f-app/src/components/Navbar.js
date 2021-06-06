@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SearchBar from 'SearchBar.js'
 import './Navbar.css'
 
 function Navbar () {
@@ -11,6 +12,7 @@ function Navbar () {
         <>
          <nav className="navbar">
              <div className="navbar-container">
+                <SearchBar/>
                 <Link to="/" className="navbar-logo">
                     13F   <i className="fas fa-file-archive"></i>
                 </Link>
