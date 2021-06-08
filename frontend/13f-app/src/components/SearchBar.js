@@ -11,7 +11,7 @@ function SearchBar () {
                 <form>
                   <div>
                     <input type='text' placeholder='Company Name' className='search' value={searchName} onChange={handleNameChange}></input>
-                   <Link to={searchLink}><button className="button" type="submit">SEARCH</button></Link>
+                   <Link to={searchLink}><button className="bar_button" type="submit">SEARCH</button></Link>
                   </div>
                 </form>
           </>)

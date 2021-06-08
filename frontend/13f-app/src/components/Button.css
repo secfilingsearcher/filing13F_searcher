@@ -20,3 +20,24 @@
     transition: all 0.3s ease-out;
 
 }
+
+.bar_button {
+    margin-left: 10px;
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+    color: #242424;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid;
+    transition: all 0.3s ease-out;
+    padding: 6px 13px;
+    font-size: 10px;
+}
+
+.bar_button:hover {
+    background: white;
+    color: #242424;
+    transition: all 0.3s ease-out;
+
+}

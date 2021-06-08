@@ -25,7 +25,7 @@ function SearchForm () {
                   <input type='date' className='date' value={searchEndDate} onChange={handleEndDateChange}></input>
                  <Link to={searchLink}><button className="button" type="submit">SEARCH</button></Link>
                 </div>
-                
+
               </form>
         </>
   )
