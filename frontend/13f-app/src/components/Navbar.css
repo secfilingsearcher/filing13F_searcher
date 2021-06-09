@@ -40,7 +40,7 @@
   grid-gap: 10px;
   list-style: none;
   text-align: center;
-  width: 60vw;
+  width: 40vw;
   justify-content: end;
   margin-right: 2rem;
 }
@@ -155,4 +155,13 @@
     color: #242424;
     transition: 250ms;
   }
+}
+
+.searchbar {
+  display: flex;
+  margin: 25px;
+  border: 1px dotted slategray;
+  padding: 10px 10px;
+  float: left;
+  
 }
