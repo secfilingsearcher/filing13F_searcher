@@ -15,7 +15,7 @@ function Navbar () {
                 <Link to="/" className="navbar-logo">
                     13F   <i className="fas fa-file-archive"></i>
                 </Link>
-                <span className='searchbar'><SearchBar/></span>
+                <div className='searchbar'><SearchBar/></div>
                 <div className="menu-icon" onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                 </div>

@@ -40,7 +40,7 @@
   grid-gap: 10px;
   list-style: none;
   text-align: center;
-  width: 60vw;
+  width: 40vw;
   justify-content: end;
   margin-right: 2rem;
 }
@@ -157,8 +157,11 @@
   }
 }
 
-.searchbar{
-  margin-left: 25px;
+.searchbar {
+  display: flex;
+  margin: 25px;
   border: 1px dotted slategray;
-  padding: 10px;
+  padding: 10px 10px;
+  float: left;
+  
 }
