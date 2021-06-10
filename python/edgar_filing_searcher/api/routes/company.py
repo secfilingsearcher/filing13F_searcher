@@ -24,13 +24,13 @@ def get_company():
     return jsonify([])
 
 
-@company_blueprint.route('/company/<company_id>/edgarfiling/')
-def get_filings(company_id):
+@company_blueprint.route('/company/<cik_no>/edgarfiling/')
+def get_filings(cik_no):
     """Route for results for search by company id"""
     date_format = '%Y-%m-%d'
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
-    filings = EdgarFiling.query.filter(EdgarFiling.cik_no.like(f"{company_id}%"))
+    filings = EdgarFiling.query.filter(EdgarFiling.cik_no.like(f"{cik_no}%"))
 
     if start_date:
         filings = filings.filter(
