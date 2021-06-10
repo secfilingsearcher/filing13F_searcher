@@ -24,10 +24,10 @@ def get_company():
         for company in list(companies):
             cik_no_val = company.cik_no
             cik_edgar_filings = filings(cik_no_val)
-            filing_cnt = 0
+            filing_cnt_ = 0
             for filing in cik_edgar_filings:
-                filing_cnt += 1
-            companies.filing_cnt = filing_cnt
+                filing_cnt_ += 1
+            company.filing_cnt = filing_cnt_
         return jsonify(list(companies))
 
     return jsonify([])
