@@ -2,25 +2,9 @@
 import hashlib
 from dataclasses import dataclass
 from datetime import date
-
 from edgar_filing_searcher.database import db
 
 
-# pylint: disable=too-few-public-methods
-@dataclass
-class Company(db.Model):
-    """Define CompanyInfo Table"""
-    cik_no: str
-    company_name: str
-
-    __tablename__ = 'company'
-    cik_no = db.Column(db.String, primary_key=True)
-    company_name = db.Column(db.String)
-    cik_numbers = db.relationship("EdgarFiling")
-
-    def __repr__(self):
-        return "<Company(cik_no='%s', company_name='%s')>" % (
-            self.cik_no, self.company_name)
 
 
 @dataclass
@@ -39,6 +23,26 @@ class EdgarFiling(db.Model):
     def __repr__(self):
         return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_date='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date)
+
+
+
+# pylint: disable=too-few-public-methods
+@dataclass
+class Company(db.Model):
+    """Define CompanyInfo Table"""
+    cik_no: str
+    company_name: str
+
+    __tablename__ = 'company'
+    cik_no = db.Column(db.String, primary_key=True)
+    company_name = db.Column(db.String)
+    filings = db.relationship("EdgarFiling")
+    filing_cnt = db.column_property(db.select(db.func.count(EdgarFiling.accession_no)).scalar_subquery())
+
+    def __repr__(self):
+        return "<Company(cik_no='%s', company_name='%s')>" % (
+            self.cik_no, self.company_name)
+
 
 
 # pylint: disable=too-many-instance-attributes
