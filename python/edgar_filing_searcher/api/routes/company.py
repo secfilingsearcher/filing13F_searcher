@@ -27,7 +27,7 @@ def get_company():
             filing_cnt = 0
             for filing in cik_edgar_filings:
                 filing_cnt += 1
-        # return no & COMPANIES
+            companies.filing_cnt = filing_cnt
         return jsonify(list(companies))
 
     return jsonify([])
