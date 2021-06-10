@@ -13,13 +13,22 @@ def after_request(response):
     header['Access-Control-Allow-Origin'] = '*'
     return response
 
+
+
 @company_blueprint.route('/company/search')
 def get_company():
     """Route for results for search by company name"""
     company_name = request.args.get('q')
     if company_name:
         companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
-        return jsonify(list(companies))
+        for company in list(companies):
+            cik_no_val = company.cik_no
+            cik_edgar_filings = filings(cik_no_val)
+            filing_cnt = 0
+            for filing in cik_edgar_filings:
+                filing_cnt += 1
+        # return no & COMPANIES
+        return jsonify(list(companies), list(companies))
 
     return jsonify([])
 
@@ -27,6 +36,11 @@ def get_company():
 @company_blueprint.route('/company/<cik_no>/edgarfiling/')
 def get_filings(cik_no):
     """Route for results for search by company id"""
+    return jsonify(filings(cik_no))
+
+
+def filings(cik_no):
+    """"""
     date_format = '%Y-%m-%d'
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
@@ -40,5 +54,4 @@ def get_filings(cik_no):
         filings = filings.filter(
             EdgarFiling.filing_date <= datetime.strptime(end_date, date_format)
         )
-
-    return jsonify(list(filings))
+    return list(filings)
