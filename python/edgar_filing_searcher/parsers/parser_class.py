@@ -10,7 +10,7 @@ from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 
 class Parser:
-    """This class Parser parses 13 filings"""
+    """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
         self.filing_detail_text = get_text(filing_detail_url)
@@ -98,7 +98,9 @@ class Parser:
 
         self.company = Company(
             cik_no=cik,
-            company_name=company_name)
+            company_name=company_name,
+            filing_count=1
+        )
 
         self.edgar_filing = EdgarFiling(
             accession_no=accession_no,

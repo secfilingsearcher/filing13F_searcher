@@ -33,12 +33,13 @@ class Company(db.Model):
     """Define CompanyInfo Table"""
     cik_no: str
     company_name: str
+    filing_count: int
 
     __tablename__ = 'company'
     cik_no = db.Column(db.String, primary_key=True)
     company_name = db.Column(db.String)
+    filing_count = db.Column(db.Integer)
     filings = db.relationship("EdgarFiling")
-    filing_cnt = db.column_property(db.select(db.func.count(EdgarFiling.accession_no)).scalar_subquery())
 
     def __repr__(self):
         return "<Company(cik_no='%s', company_name='%s')>" % (
