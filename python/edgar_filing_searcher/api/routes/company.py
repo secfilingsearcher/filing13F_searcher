@@ -1,10 +1,10 @@
 """APi for web back-end"""
 from datetime import datetime
-
 from flask import jsonify, Blueprint, request
 from edgar_filing_searcher.models import Company, EdgarFiling
 
 company_blueprint = Blueprint('company', __name__)
+
 
 @company_blueprint.after_request
 def after_request(response):
@@ -21,21 +21,17 @@ def get_company():
     if company_name:
         companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
         return jsonify(list(companies))
+
     return jsonify([])
 
 
-@company_blueprint.route('/company/<cik_no>/edgarfiling/')
-def get_filings(cik_no):
+@company_blueprint.route('/company/<company_id>/edgarfiling/')
+def get_filings(company_id):
     """Route for results for search by company id"""
-    return jsonify(filings(cik_no))
-
-
-def filings(cik_no):
-    """Results for filings"""
     date_format = '%Y-%m-%d'
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
-    filings = EdgarFiling.query.filter(EdgarFiling.cik_no.like(f"{cik_no}%"))
+    filings = EdgarFiling.query.filter(EdgarFiling.cik_no.like(f"{company_id}%"))
 
     if start_date:
         filings = filings.filter(
@@ -45,4 +41,5 @@ def filings(cik_no):
         filings = filings.filter(
             EdgarFiling.filing_date <= datetime.strptime(end_date, date_format)
         )
-    return list(filings)
+
+    return jsonify(list(filings))
