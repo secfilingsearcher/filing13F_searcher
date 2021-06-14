@@ -14,7 +14,6 @@ def after_request(response):
     return response
 
 
-
 @company_blueprint.route('/company/search')
 def get_company():
     """Route for results for search by company name"""
@@ -32,7 +31,7 @@ def get_filings(cik_no):
 
 
 def filings(cik_no):
-    """"""
+    """Results for filings"""
     date_format = '%Y-%m-%d'
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
