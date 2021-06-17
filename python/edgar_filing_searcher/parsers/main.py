@@ -27,7 +27,6 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
         company_row.filing_count = company_in_table.filing_count + 1
     else:
         company_row.filing_count = company_in_table.filing_count
-    print(company_row.filing_count, "check")
 
     db.session.merge(company_row)
     db.session.merge(edgar_filing_row)
