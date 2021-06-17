@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/pages/home'
 import SearchResults from './components/pages/searchResults'
@@ -14,6 +15,7 @@ function App () {
         <Route path='/' exact component= {Home} />
         <Route path='/search' exact component= {SearchResults} />
       </Switch>
+      <Footer />
     </Router>
     </>
   )
