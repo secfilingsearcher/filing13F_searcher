@@ -18,15 +18,15 @@ def create_url_list(url_edgar_current_events):
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     """This function sends data to the database"""
-    company_from_database = Company.query.filter_by(cik_no=company_row.cik_no).first()
-    filing_from_database = EdgarFiling.query\
+    company_in_table = Company.query.filter_by(cik_no=company_row.cik_no).first()
+    filing_in_table = EdgarFiling.query\
         .filter_by(accession_no=edgar_filing_row.accession_no).first()
-    if not filing_from_database and not company_from_database:
+    if not filing_in_table and not company_in_table:
         company_row.filing_count = 1
-    if not filing_from_database:
-        company_row.filing_count = company_from_database.filing_count + 1
+    if not filing_in_table:
+        company_row.filing_count = company_in_table.filing_count + 1
     else:
-        company_row.filing_count = company_from_database.filing_count
+        company_row.filing_count = company_in_table.filing_count
     print(company_row.filing_count, "check")
 
     db.session.merge(company_row)
