@@ -13,7 +13,6 @@ class EdgarFiling(db.Model):
     accession_no: str
     cik_no: str
     filing_date: date
-    data_13f_rows: int
 
     __tablename__ = 'edgar_filing'
     accession_no = db.Column(db.String, primary_key=True)
