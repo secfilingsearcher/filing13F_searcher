@@ -8,14 +8,14 @@ import pytest
 
 @pytest.fixture
 def current_events_text():
-    """This function creates an fixture with test edgar_current_events html data"""
+    """This function creates an fixture with test_edgar_current_events.html data"""
     with open("tests/fixtures/edgar_current_events.html", "rt") as file:
         return file.read()
 
 
 @pytest.fixture
 def filing_detail_text():
-    """This function creates an fixture with test EDGAR filing document html data"""
+    """This function creates an fixture with test EDGAR_filing_document.html data"""
     with open("tests/fixtures/edgar_filing_documents_for_0001852858-21-000001.html", "r") as file:
         return file.read()
 
@@ -28,7 +28,7 @@ def xml_list():
 
 
 def test_parse_13f_filing_detail_urls(current_events_text):
-    """This function tests test_parse_13f_filing_detail_urls"""
+    """This function tests parse_13f_filing_detail_urls"""
     assert parse_13f_filing_detail_urls(current_events_text) == [
         'https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html',
         'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
