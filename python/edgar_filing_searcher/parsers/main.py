@@ -18,21 +18,24 @@ def create_url_list(url_edgar_current_events):
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     """This function sends data to the database"""
+    db.session.merge(company_row)
+    db.session.merge(edgar_filing_row)
+    for data_13f_row in data_13f_table:
+        db.session.merge(data_13f_row)
+    db.session.commit()
+
+
+def update_filing_count(company_row, edgar_filing_row):
+    """This function counts the number of filings and adds it to the Company table"""
     company_in_table = Company.query.filter_by(cik_no=company_row.cik_no).first()
-    filing_in_table = EdgarFiling.query\
-        .filter_by(accession_no=edgar_filing_row.accession_no).first() is not None
+    filing_in_table = EdgarFiling.query \
+                          .filter_by(accession_no=edgar_filing_row.accession_no).first() is not None
     if not filing_in_table and not company_in_table:
         company_row.filing_count = 1
     if not filing_in_table:
         company_row.filing_count = company_in_table.filing_count + 1
     else:
         company_row.filing_count = company_in_table.filing_count
-
-    db.session.merge(company_row)
-    db.session.merge(edgar_filing_row)
-    for data_13f_row in data_13f_table:
-        db.session.merge(data_13f_row)
-    db.session.commit()
 
 
 def main():
@@ -50,6 +53,8 @@ def main():
             parser.company,
             parser.edgar_filing,
             parser.data_13f)
+        update_filing_count(parser.company,
+                            parser.edgar_filing)
 
 if __name__ == "__main__":
     main()
