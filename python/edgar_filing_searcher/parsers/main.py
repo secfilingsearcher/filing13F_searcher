@@ -17,6 +17,7 @@ def create_url_list(url_edgar_current_events):
 
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
+    """This function sends data to the database"""
     db.session.merge(company_row)
     db.session.merge(edgar_filing_row)
     for data_13f_row in data_13f_table:
@@ -25,7 +26,7 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 
 
 def count_filings(company_row, edgar_filing_row):
-    """This function sends data to the database"""
+    """This function counts the number of filings and adds it to the Company table"""
     company_in_table = Company.query.filter_by(cik_no=company_row.cik_no).first()
     filing_in_table = EdgarFiling.query \
                           .filter_by(accession_no=edgar_filing_row.accession_no).first() is not None
