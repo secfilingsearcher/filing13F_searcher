@@ -5,6 +5,7 @@ import pytest
 from parsers.main import create_url_list
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.api import create_app
+from unittest.mock import patch, MagicMock
 
 """This file contains tests for main"""
 
@@ -16,13 +17,16 @@ def current_events_text():
         return file.read()
 
 
-def test_create_url_list():
-    """This function tests create_url_list"""
-    assert create_url_list(current_events_text) == [
-        'https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html',
-        'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
-        'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
-        'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html']
+def test_create_url_list(current_events_text):
+    """This function tests test_parse_13f_filing_detail_urls"""
+    with patch('requests.get') as mock_function:
+        mock_function.return_value = MagicMock(text=current_events_text)
+        fake_url = ""
+        assert create_url_list(fake_url) == [
+            'https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html',
+            'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
+            'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
+            'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html']
 
 
 class MyTest(TestCase):
