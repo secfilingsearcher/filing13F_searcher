@@ -17,8 +17,8 @@ def create_url_list(url_edgar_current_events):
 
 
 def update_filing_count(cik_no_list):
+    """This function counts the number of filings and adds it to the Company table"""
     for cik_no in cik_no_list:
-        """This function counts the number of filings and adds it to the Company table"""
         company_in_table = Company.query.filter_by(cik_no=cik_no).first()
         filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
         company_in_table.filing_count = filing_count

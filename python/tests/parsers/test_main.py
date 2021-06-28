@@ -1,13 +1,13 @@
+"""This file contains tests for main"""
 # pylint: disable=redefined-outer-name
 from datetime import datetime
+from unittest.mock import patch, MagicMock
 from flask_testing import TestCase
 import pytest
-from unittest.mock import patch, MagicMock
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_count
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.api import create_app
-"""This file contains tests for main"""
 
 
 @pytest.fixture
@@ -30,6 +30,7 @@ def test_create_url_list(current_events_text):
 
 
 class FlaskSqlAlchemyTestConfiguration(TestCase):
+    """This class configures Flask SQL Alchemy"""
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     TESTING = True
 
@@ -43,10 +44,21 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         self.edgar_filing = EdgarFiling(accession_no="0001420506-21-000830", cik_no="509099898",
                                      filing_date=datetime.fromisoformat("1999-09-01"))
         self.data_13f_table = [
-            Data13f(equity_holdings_id = "67896567", accession_no='0001420506-21-000830', cik_no='0001171592', name_of_issuer='Agilent Technologies',
-                    title_of_class='COM', cusip='00846U101', value='22967078', ssh_prnamt='180644',
-                    ssh_prnamt_type='None', put_call='None', investment_discretion='SOLE', other_manager='None',
-                    voting_authority_sole='22967078', voting_authority_shared='0', voting_authority_none='0')]
+            Data13f(equity_holdings_id = "67896567",
+                    accession_no='0001420506-21-000830',
+                    cik_no='0001171592',
+                    name_of_issuer='Agilent Technologies',
+                    title_of_class='COM',
+                    cusip='00846U101',
+                    value='22967078',
+                    ssh_prnamt='180644',
+                    ssh_prnamt_type='None',
+                    put_call='None',
+                    investment_discretion='SOLE',
+                    other_manager='None',
+                    voting_authority_sole='22967078',
+                    voting_authority_shared='0',
+                    voting_authority_none='0')]
         update_filing_count(self.company, self.edgar_filing)
 
     def tearDown(self):
@@ -55,7 +67,9 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
+    """This class runs SQL ALchemy Tests"""
     def test_send_data_to_db_savesCompanyInDb(self):
+        """This function tests if send_data_to_db saves the Company in the database"""
         send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
         assert self.company in db.session
