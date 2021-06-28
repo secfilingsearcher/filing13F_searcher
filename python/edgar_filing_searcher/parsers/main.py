@@ -16,11 +16,11 @@ def create_url_list(url_edgar_current_events):
     return parse_13f_filing_detail_urls(text_edgar_current_events)
 
 
-def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
+def send_data_to_db(company_row, edgar_filing_row, data_13f_table_parameter):
     """This function sends data to the database"""
     db.session.merge(company_row)
     db.session.merge(edgar_filing_row)
-    for data_13f_row in data_13f_table:
+    for data_13f_row in data_13f_table_parameter:
         db.session.merge(data_13f_row)
     db.session.commit()
 

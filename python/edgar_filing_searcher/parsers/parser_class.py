@@ -5,7 +5,7 @@ from xml.etree import ElementTree
 
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
-from edgar_filing_searcher.parsers.data_13f import data_13f_row
+from edgar_filing_searcher.parsers.data_13f import data_13f_table
 from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 
@@ -107,4 +107,4 @@ class Parser:
             cik_no=cik,
             filing_date=filing_date)
 
-        self.data_13f = data_13f_row(infotable_xml_url, accession_no, cik)
+        self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)

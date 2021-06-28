@@ -4,7 +4,7 @@ from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.models import Data13f
 
 
-def data_13f_row(infotable_xml_url, accession_no_value, cik_value):
+def data_13f_table(infotable_xml_url, accession_no_value, cik_value):
     """Gets the data from infotable.xml and returns the data as a list of infotable objects"""
     infotable_root = parse_infotable_doc_root(infotable_xml_url)
     data = []
