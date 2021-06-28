@@ -99,7 +99,7 @@ class Parser:
         self.company = Company(
             cik_no=cik,
             company_name=company_name,
-            filing_count=1
+            filing_count=0
         )
 
         self.edgar_filing = EdgarFiling(

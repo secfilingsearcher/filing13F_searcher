@@ -16,6 +16,15 @@ def create_url_list(url_edgar_current_events):
     return parse_13f_filing_detail_urls(text_edgar_current_events)
 
 
+def update_filing_count(cik_no_list):
+    for cik_no in cik_no_list:
+        """This function counts the number of filings and adds it to the Company table"""
+        company_in_table = Company.query.filter_by(cik_no=cik_no).first()
+        filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
+        company_in_table.filing_count = filing_count
+        db.session.commit()
+
+
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table_parameter):
     """This function sends data to the database"""
     db.session.merge(company_row)
@@ -23,19 +32,6 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table_parameter):
     for data_13f_row in data_13f_table_parameter:
         db.session.merge(data_13f_row)
     db.session.commit()
-
-
-def update_filing_count(company_row, edgar_filing_row):
-    """This function counts the number of filings and adds it to the Company table"""
-    company_in_table = Company.query.filter_by(cik_no=company_row.cik_no).first()
-    filing_in_table = EdgarFiling.query \
-                          .filter_by(accession_no=edgar_filing_row.accession_no).first() is not None
-    if not filing_in_table and not company_in_table:
-        company_row.filing_count = 1
-    if not filing_in_table:
-        company_row.filing_count = company_in_table.filing_count + 1
-    else:
-        company_row.filing_count = company_in_table.filing_count
 
 
 def main():
@@ -46,15 +42,17 @@ def main():
         print("There are no urls on the page")
         return
 
+    list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
         setup_db_connection()
         parser = Parser(filing_detail_url)
+        list_of_cik_no.append(parser.company.cik_no)
         send_data_to_db(
             parser.company,
             parser.edgar_filing,
             parser.data_13f)
-        update_filing_count(parser.company,
-                            parser.edgar_filing)
+    update_filing_count(list_of_cik_no)
+
 
 if __name__ == "__main__":
     main()

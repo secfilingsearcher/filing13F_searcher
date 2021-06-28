@@ -41,8 +41,8 @@ class Company(db.Model):
     filings = db.relationship("EdgarFiling")
 
     def __repr__(self):
-        return "<Company(cik_no='%s', company_name='%s')>" % (
-            self.cik_no, self.company_name)
+        return "<Company(cik_no='%s', company_name='%s', filing_count='%s')>" % (
+            self.cik_no, self.company_name, self.filing_count)
 
 
 
@@ -70,7 +70,7 @@ class Data13f(db.Model):
     def __repr__(self):
         return "<Data13f(accession_no='%s', cik_no='%s', name_of_issuer='%s', " \
                "title_of_class='%s', cusip='%s', value='%s', " \
-               "ssh_prnamt='%s', ssh_prnamt_type='%s', putCall='%s', " \
+               "ssh_prnamt='%s', ssh_prnamt_type='%s', put_call='%s', " \
                "investment_discretion='%s', other_manager='%s', voting_authority_sole='%s', " \
                "voting_authority_shared='%s', voting_authority_none='%s')>" % (
                    self.accession_no, self.cik_no, self.name_of_issuer,
