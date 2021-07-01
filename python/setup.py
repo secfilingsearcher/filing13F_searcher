@@ -11,6 +11,7 @@ setup(
     url="https://github.com/eharley19/filing13F_searcher",
     packages=find_packages(),
     python_requires=">=3.6",
+    scripts=["scripts/parser_main"],
     setup_requires=[
         'pytest-runner',
     ],
