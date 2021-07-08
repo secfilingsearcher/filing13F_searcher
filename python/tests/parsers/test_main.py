@@ -89,7 +89,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
 
     def test_send_data_to_db_savesCompanyInDb(self):
-        self.company_2 = Company(cik_no="000984343", company_name="True Blue", filing_count=1)
+        self.company_2 = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         self.edgar_filing_2 = EdgarFiling(accession_no="0001420506", cik_no="000984343",
                                      filing_date=datetime.fromisoformat("2002-04-10"))
         self.data_13f_table_2 = [Data13f(equity_holdings_id="67896567",
@@ -108,9 +108,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                    voting_authority_shared='0',
                                    voting_authority_none='0')]
 
-        send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
+        send_data_to_db(self.company_2, self.edgar_filing_2, self.data_13f_table_2)
 
-        assert self.company in db.session
+        assert Company.query.filter_by(cik_no='000984343').first() == self.company_2
 
 
 
@@ -135,9 +135,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                    voting_authority_shared='0',
                                    voting_authority_none='0')]
 
-        send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
+        send_data_to_db(self.company_3, self.edgar_filing_3, self.data_13f_table_3)
 
-        assert self.edgar_filing in db.session
+        assert EdgarFiling.query.filter_by(cik_no='8673434').first() == self.edgar_filing_3
 
 
     def test_send_data_to_db_savesData13fInDb(self):
@@ -160,7 +160,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                    voting_authority_shared='0',
                                    voting_authority_none='0')]
 
-        send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
+        send_data_to_db(self.company_4, self.edgar_filing_4, self.data_13f_table_4)
 
-        assert self.data_13f_table in db.session
+        assert Data13f.query.filter_by(cik_no='009039443').first() == self.data_13f_table_4
 
