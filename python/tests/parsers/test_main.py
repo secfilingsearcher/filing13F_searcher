@@ -37,7 +37,7 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                         filing_date=datetime.fromisoformat("1999-09-01"))
         self.data_13f_table = Data13f(equity_holdings_id="67896567",
                     accession_no='0001420506-21-000830',
-                    cik_no='0001171592',
+                    cik_no='56464565767',
                     name_of_issuer='Agilent Technologies',
                     title_of_class='COM',
                     cusip='00846U101',
@@ -94,7 +94,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                      filing_date=datetime.fromisoformat("2002-04-10"))
         self.data_13f_table_2 = [Data13f(equity_holdings_id="67896567",
                                    accession_no='0001420506',
-                                   cik_no='000984343',
+                                   cik_no='00054654983',
                                    name_of_issuer='Agilent Technologies',
                                    title_of_class='COM',
                                    cusip='00846U101',
@@ -121,7 +121,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                           filing_date=datetime.fromisoformat("2000-06-11"))
         self.data_13f_table_3 = [Data13f(equity_holdings_id="67896567",
                                    accession_no='3453456',
-                                   cik_no='8673434',
+                                   cik_no='654656465',
                                    name_of_issuer='Agilent Technologies',
                                    title_of_class='COM',
                                    cusip='00846U101',
