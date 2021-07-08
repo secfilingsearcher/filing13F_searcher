@@ -16,7 +16,7 @@ def create_url_list(url_edgar_current_events):
     return parse_13f_filing_detail_urls(text_edgar_current_events)
 
 
-def update_filing_count(cik_no_list):
+def update_filing_counts(cik_no_list):
     """This function counts the number of filings and adds it to the Company table"""
     for cik_no in cik_no_list:
         company_in_table = Company.query.filter_by(cik_no=cik_no).first()
@@ -42,16 +42,16 @@ def main():
         print("There are no urls on the page")
         return
 
+    setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
-        setup_db_connection()
         parser = Parser(filing_detail_url)
         list_of_cik_no.append(parser.company.cik_no)
         send_data_to_db(
             parser.company,
             parser.edgar_filing,
             parser.data_13f)
-    update_filing_count(list_of_cik_no)
+    update_filing_counts(list_of_cik_no)
 
 
 if __name__ == "__main__":
