@@ -19,8 +19,6 @@ def current_events_text():
         return file.read()
 
 
-
-
 class FlaskSqlAlchemyTestConfiguration(TestCase):
     """This class configures Flask SQL Alchemy"""
     SQLALCHEMY_DATABASE_URI = "sqlite://"
@@ -38,25 +36,24 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         self.edgar_filing = EdgarFiling(accession_no="0001420506-21-000830", cik_no="0001171592",
                                         filing_date=datetime.fromisoformat("1999-09-01"))
         self.data_13f_table = Data13f(equity_holdings_id="67896567",
-                    accession_no='0001420506-21-000830',
-                    cik_no='56464565767',
-                    name_of_issuer='Agilent Technologies',
-                    title_of_class='COM',
-                    cusip='00846U101',
-                    value='22967078',
-                    ssh_prnamt='180644',
-                    ssh_prnamt_type='None',
-                    put_call='None',
-                    investment_discretion='SOLE',
-                    other_manager='None',
-                    voting_authority_sole='22967078',
-                    voting_authority_shared='0',
-                    voting_authority_none='0')
+                                      accession_no='0001420506-21-000830',
+                                      cik_no='56464565767',
+                                      name_of_issuer='Agilent Technologies',
+                                      title_of_class='COM',
+                                      cusip='00846U101',
+                                      value='22967078',
+                                      ssh_prnamt='180644',
+                                      ssh_prnamt_type='None',
+                                      put_call='None',
+                                      investment_discretion='SOLE',
+                                      other_manager='None',
+                                      voting_authority_sole='22967078',
+                                      voting_authority_shared='0',
+                                      voting_authority_none='0')
         db.session.merge(self.company)
         db.session.merge(self.edgar_filing)
         db.session.merge(self.data_13f_table)
         db.session.commit()
-
 
     def tearDown(self):
         """"""
@@ -82,7 +79,6 @@ def test_create_url_list(current_events_text):
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQL ALchemy Tests"""
 
-
     def test_update_filing_counts(self):
         """"""
         cik_no = '0001171592'
@@ -91,34 +87,30 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
         assert Company.query.filter_by(cik_no=cik_no).first().filing_count == 1
 
-
     def test_send_data_to_db_savesCompanyInDb(self):
         """"""
         self.company_2 = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         self.edgar_filing_2 = EdgarFiling(accession_no="0001420506", cik_no="000984343",
-                                     filing_date=datetime.fromisoformat("2002-04-10"))
+                                          filing_date=datetime.fromisoformat("2002-04-10"))
         self.data_13f_table_2 = [Data13f(equity_holdings_id="67896567",
-                                   accession_no='0001420506',
-                                   cik_no='00054654983',
-                                   name_of_issuer='Agilent Technologies',
-                                   title_of_class='COM',
-                                   cusip='00846U101',
-                                   value='22967078',
-                                   ssh_prnamt='180644',
-                                   ssh_prnamt_type='None',
-                                   put_call='None',
-                                   investment_discretion='SOLE',
-                                   other_manager='None',
-                                   voting_authority_sole='22967078',
-                                   voting_authority_shared='0',
-                                   voting_authority_none='0')]
+                                         accession_no='0001420506',
+                                         cik_no='00054654983',
+                                         name_of_issuer='Agilent Technologies',
+                                         title_of_class='COM',
+                                         cusip='00846U101',
+                                         value='22967078',
+                                         ssh_prnamt='180644',
+                                         ssh_prnamt_type='None',
+                                         put_call='None',
+                                         investment_discretion='SOLE',
+                                         other_manager='None',
+                                         voting_authority_sole='22967078',
+                                         voting_authority_shared='0',
+                                         voting_authority_none='0')]
 
         send_data_to_db(self.company_2, self.edgar_filing_2, self.data_13f_table_2)
 
         assert Company.query.filter_by(cik_no='000984343').first() == self.company_2
-
-
-
 
     def test_send_data_to_db_savesEdgarFilingInDb(self):
         """"""
@@ -126,48 +118,46 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         self.edgar_filing_3 = EdgarFiling(accession_no="3453456", cik_no="8673434",
                                           filing_date=datetime.fromisoformat("2000-06-11"))
         self.data_13f_table_3 = [Data13f(equity_holdings_id="67896567",
-                                   accession_no='3453456',
-                                   cik_no='654656465',
-                                   name_of_issuer='Agilent Technologies',
-                                   title_of_class='COM',
-                                   cusip='00846U101',
-                                   value='22967078',
-                                   ssh_prnamt='180644',
-                                   ssh_prnamt_type='None',
-                                   put_call='None',
-                                   investment_discretion='SOLE',
-                                   other_manager='None',
-                                   voting_authority_sole='22967078',
-                                   voting_authority_shared='0',
-                                   voting_authority_none='0')]
+                                         accession_no='3453456',
+                                         cik_no='654656465',
+                                         name_of_issuer='Agilent Technologies',
+                                         title_of_class='COM',
+                                         cusip='00846U101',
+                                         value='22967078',
+                                         ssh_prnamt='180644',
+                                         ssh_prnamt_type='None',
+                                         put_call='None',
+                                         investment_discretion='SOLE',
+                                         other_manager='None',
+                                         voting_authority_sole='22967078',
+                                         voting_authority_shared='0',
+                                         voting_authority_none='0')]
 
         send_data_to_db(self.company_3, self.edgar_filing_3, self.data_13f_table_3)
 
         assert EdgarFiling.query.filter_by(cik_no='8673434').first() == self.edgar_filing_3
 
-
     def test_send_data_to_db_savesData13fInDb(self):
         """"""
         self.company_4 = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
         self.edgar_filing_4 = EdgarFiling(accession_no="78945835", cik_no="009039443",
-                                     filing_date=datetime.fromisoformat("2000-06-11"))
+                                          filing_date=datetime.fromisoformat("2000-06-11"))
         self.data_13f_table_4 = [Data13f(equity_holdings_id="67896567",
-                                   accession_no='78945835',
-                                   cik_no='009039443',
-                                   name_of_issuer='Agilent Technologies',
-                                   title_of_class='COM',
-                                   cusip='00846U101',
-                                   value='22967078',
-                                   ssh_prnamt='180644',
-                                   ssh_prnamt_type='None',
-                                   put_call='None',
-                                   investment_discretion='SOLE',
-                                   other_manager='None',
-                                   voting_authority_sole='22967078',
-                                   voting_authority_shared='0',
-                                   voting_authority_none='0')]
+                                         accession_no='78945835',
+                                         cik_no='009039443',
+                                         name_of_issuer='Agilent Technologies',
+                                         title_of_class='COM',
+                                         cusip='00846U101',
+                                         value='22967078',
+                                         ssh_prnamt='180644',
+                                         ssh_prnamt_type='None',
+                                         put_call='None',
+                                         investment_discretion='SOLE',
+                                         other_manager='None',
+                                         voting_authority_sole='22967078',
+                                         voting_authority_shared='0',
+                                         voting_authority_none='0')]
 
         send_data_to_db(self.company_4, self.edgar_filing_4, self.data_13f_table_4)
 
-        assert Data13f.query.filter_by(cik_no='009039443').first() == self.data_13f_table_4
-
+        assert Data13f.query.filter_by(cik_no='009039443').first() == self.data_13f_table_4[0]
