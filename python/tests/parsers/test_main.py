@@ -27,10 +27,12 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
     TESTING = True
 
     def create_app(self):
+        """"""
         app = create_app(self)
         return app
 
     def setUp(self):
+        """"""
         db.create_all()
         self.company = Company(cik_no="0001171592", company_name="Cool Industries", filing_count=0)
         self.edgar_filing = EdgarFiling(accession_no="0001420506-21-000830", cik_no="0001171592",
@@ -57,6 +59,7 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
 
 
     def tearDown(self):
+        """"""
         db.session.remove()
         db.drop_all()
 
@@ -81,6 +84,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
 
     def test_update_filing_counts(self):
+        """"""
         cik_no = '0001171592'
 
         update_filing_counts([cik_no])
@@ -89,6 +93,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
 
     def test_send_data_to_db_savesCompanyInDb(self):
+        """"""
         self.company_2 = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         self.edgar_filing_2 = EdgarFiling(accession_no="0001420506", cik_no="000984343",
                                      filing_date=datetime.fromisoformat("2002-04-10"))
@@ -116,6 +121,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
 
     def test_send_data_to_db_savesEdgarFilingInDb(self):
+        """"""
         self.company_3 = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
         self.edgar_filing_3 = EdgarFiling(accession_no="3453456", cik_no="8673434",
                                           filing_date=datetime.fromisoformat("2000-06-11"))
@@ -141,6 +147,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
 
     def test_send_data_to_db_savesData13fInDb(self):
+        """"""
         self.company_4 = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
         self.edgar_filing_4 = EdgarFiling(accession_no="78945835", cik_no="009039443",
                                      filing_date=datetime.fromisoformat("2000-06-11"))
