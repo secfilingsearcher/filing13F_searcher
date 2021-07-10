@@ -20,17 +20,17 @@ def current_events_text():
 
 
 class FlaskSqlAlchemyTestConfiguration(TestCase):
-    """This class configures Flask SQL Alchemy"""
+    """This class configures Flask SQL Alchemy Tests"""
     SQLALCHEMY_DATABASE_URI = "sqlite://"
     TESTING = True
 
     def create_app(self):
-        """"""
+        """This function creates and pushes a context for a test"""
         app = create_app(self)
         return app
 
     def setUp(self):
-        """"""
+        """This function tests sets up test database"""
         db.create_all()
         self.company = Company(cik_no="0001171592", company_name="Cool Industries", filing_count=0)
         self.edgar_filing = EdgarFiling(accession_no="0001420506-21-000830", cik_no="0001171592",
@@ -56,7 +56,7 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         db.session.commit()
 
     def tearDown(self):
-        """"""
+        """This function tests tears down test database"""
         db.session.remove()
         db.drop_all()
 
@@ -80,7 +80,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQL ALchemy Tests"""
 
     def test_update_filing_counts(self):
-        """"""
+        """This function tests update_filing_counts"""
         cik_no = '0001171592'
 
         update_filing_counts([cik_no])
@@ -88,7 +88,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Company.query.filter_by(cik_no=cik_no).first().filing_count == 1
 
     def test_send_data_to_db_savesCompanyInDb(self):
-        """"""
+        """This function tests send_data_to_db_savesCompanyInDb"""
         self.company_2 = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         self.edgar_filing_2 = EdgarFiling(accession_no="0001420506", cik_no="000984343",
                                           filing_date=datetime.fromisoformat("2002-04-10"))
@@ -113,7 +113,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Company.query.filter_by(cik_no='000984343').first() == self.company_2
 
     def test_send_data_to_db_savesEdgarFilingInDb(self):
-        """"""
+        """This function tests send_data_to_db_savesEdgarFilingInDb"""
         self.company_3 = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
         self.edgar_filing_3 = EdgarFiling(accession_no="3453456", cik_no="8673434",
                                           filing_date=datetime.fromisoformat("2000-06-11"))
@@ -138,7 +138,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert EdgarFiling.query.filter_by(cik_no='8673434').first() == self.edgar_filing_3
 
     def test_send_data_to_db_savesData13fInDb(self):
-        """"""
+        """This function tests send_data_to_db_savesData13fInDb"""
         self.company_4 = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
         self.edgar_filing_4 = EdgarFiling(accession_no="78945835", cik_no="009039443",
                                           filing_date=datetime.fromisoformat("2000-06-11"))
