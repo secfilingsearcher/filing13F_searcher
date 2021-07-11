@@ -49,7 +49,8 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                       other_manager='None',
                                       voting_authority_sole='22967078',
                                       voting_authority_shared='0',
-                                      voting_authority_none='0')
+                                      voting_authority_none='0'
+                                      )
         db.session.merge(self.company)
         db.session.merge(self.edgar_filing)
         db.session.merge(self.data_13f_table)
@@ -107,7 +108,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     other_manager='None',
                                     voting_authority_sole='22967078',
                                     voting_authority_shared='0',
-                                    voting_authority_none='0')
+                                    voting_authority_none='0'
+                                    )
                             ]
 
         send_data_to_db(company_2, edgar_filing_2, data_13f_table_2)
@@ -133,7 +135,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     other_manager='None',
                                     voting_authority_sole='22967078',
                                     voting_authority_shared='0',
-                                    voting_authority_none='0')
+                                    voting_authority_none='0'
+                                    )
                             ]
 
         send_data_to_db(company_3, edgar_filing_3, data_13f_table_3)
@@ -159,7 +162,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     other_manager='None',
                                     voting_authority_sole='22967078',
                                     voting_authority_shared='0',
-                                    voting_authority_none='0')
+                                    voting_authority_none='0'
+                                    )
                             ]
 
         send_data_to_db(company_4, edgar_filing_4, data_13f_table_4)
