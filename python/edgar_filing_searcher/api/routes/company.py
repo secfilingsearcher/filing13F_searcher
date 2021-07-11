@@ -1,10 +1,10 @@
 """APi for web back-end"""
 from datetime import datetime
-
 from flask import jsonify, Blueprint, request
 from edgar_filing_searcher.models import Company, EdgarFiling
 
 company_blueprint = Blueprint('company', __name__)
+
 
 @company_blueprint.after_request
 def after_request(response):
@@ -12,6 +12,7 @@ def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
     return response
+
 
 @company_blueprint.route('/company/search')
 def get_company():

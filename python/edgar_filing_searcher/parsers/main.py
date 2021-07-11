@@ -5,6 +5,7 @@ from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
     parse_13f_filing_detail_urls
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
+from edgar_filing_searcher.models import Company, EdgarFiling
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
 
@@ -15,11 +16,20 @@ def create_url_list(url_edgar_current_events):
     return parse_13f_filing_detail_urls(text_edgar_current_events)
 
 
-def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
+def update_filing_counts(cik_no_list):
+    """This function counts the number of filings and adds it to the Company table"""
+    for cik_no in cik_no_list:
+        company_in_table = Company.query.filter_by(cik_no=cik_no).first()
+        filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
+        company_in_table.filing_count = filing_count
+        db.session.commit()
+
+
+def send_data_to_db(company_row, edgar_filing_row, data_13f_table_rows):
     """This function sends data to the database"""
     db.session.merge(company_row)
     db.session.merge(edgar_filing_row)
-    for data_13f_row in data_13f_table:
+    for data_13f_row in data_13f_table_rows:
         db.session.merge(data_13f_row)
     db.session.commit()
 
@@ -32,13 +42,17 @@ def main():
         print("There are no urls on the page")
         return
 
+    setup_db_connection()
+    list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
-        setup_db_connection()
         parser = Parser(filing_detail_url)
+        list_of_cik_no.append(parser.company.cik_no)
         send_data_to_db(
             parser.company,
             parser.edgar_filing,
             parser.data_13f)
+    update_filing_counts(list_of_cik_no)
+
 
 if __name__ == "__main__":
     main()
