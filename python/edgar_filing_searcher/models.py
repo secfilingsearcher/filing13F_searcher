@@ -2,25 +2,9 @@
 import hashlib
 from dataclasses import dataclass
 from datetime import date
-
 from edgar_filing_searcher.database import db
 
 
-# pylint: disable=too-few-public-methods
-@dataclass
-class Company(db.Model):
-    """Define CompanyInfo Table"""
-    cik_no: str
-    company_name: str
-
-    __tablename__ = 'company'
-    cik_no = db.Column(db.String, primary_key=True)
-    company_name = db.Column(db.String)
-    cik_numbers = db.relationship("EdgarFiling")
-
-    def __repr__(self):
-        return "<Company(cik_no='%s', company_name='%s')>" % (
-            self.cik_no, self.company_name)
 
 
 @dataclass
@@ -39,6 +23,27 @@ class EdgarFiling(db.Model):
     def __repr__(self):
         return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_date='%s')>" % (
             self.accession_no, self.cik_no, self.filing_date)
+
+
+
+# pylint: disable=too-few-public-methods
+@dataclass
+class Company(db.Model):
+    """Define CompanyInfo Table"""
+    cik_no: str
+    company_name: str
+    filing_count: int
+
+    __tablename__ = 'company'
+    cik_no = db.Column(db.String, primary_key=True)
+    company_name = db.Column(db.String)
+    filing_count = db.Column(db.Integer)
+    filings = db.relationship("EdgarFiling")
+
+    def __repr__(self):
+        return "<Company(cik_no='%s', company_name='%s', filing_count='%s')>" % (
+            self.cik_no, self.company_name, self.filing_count)
+
 
 
 # pylint: disable=too-many-instance-attributes
@@ -65,7 +70,7 @@ class Data13f(db.Model):
     def __repr__(self):
         return "<Data13f(accession_no='%s', cik_no='%s', name_of_issuer='%s', " \
                "title_of_class='%s', cusip='%s', value='%s', " \
-               "ssh_prnamt='%s', ssh_prnamt_type='%s', putCall='%s', " \
+               "ssh_prnamt='%s', ssh_prnamt_type='%s', put_call='%s', " \
                "investment_discretion='%s', other_manager='%s', voting_authority_sole='%s', " \
                "voting_authority_shared='%s', voting_authority_none='%s')>" % (
                    self.accession_no, self.cik_no, self.name_of_issuer,
