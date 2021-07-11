@@ -25,11 +25,11 @@ def update_filing_counts(cik_no_list):
         db.session.commit()
 
 
-def send_data_to_db(company_row, edgar_filing_row, data_13f_table_parameter):
+def send_data_to_db(company_row, edgar_filing_row, data_13f_table_rows):
     """This function sends data to the database"""
     db.session.merge(company_row)
     db.session.merge(edgar_filing_row)
-    for data_13f_row in data_13f_table_parameter:
+    for data_13f_row in data_13f_table_rows:
         db.session.merge(data_13f_row)
     db.session.commit()
 
