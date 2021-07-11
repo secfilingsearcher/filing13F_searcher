@@ -73,7 +73,8 @@ def test_create_url_list(current_events_text):
             'https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html',
             'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
             'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
-            'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html']
+            'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html'
+        ]
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
@@ -103,10 +104,11 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     ssh_prnamt_type='None',
                                     put_call='None',
                                     investment_discretion='SOLE',
-                                         other_manager='None',
-                                         voting_authority_sole='22967078',
-                                         voting_authority_shared='0',
-                                         voting_authority_none='0')]
+                                    other_manager='None',
+                                    voting_authority_sole='22967078',
+                                    voting_authority_shared='0',
+                                    voting_authority_none='0')
+                            ]
 
         send_data_to_db(company_2, edgar_filing_2, data_13f_table_2)
 
@@ -128,10 +130,11 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     ssh_prnamt_type='None',
                                     put_call='None',
                                     investment_discretion='SOLE',
-                                         other_manager='None',
-                                         voting_authority_sole='22967078',
-                                         voting_authority_shared='0',
-                                         voting_authority_none='0')]
+                                    other_manager='None',
+                                    voting_authority_sole='22967078',
+                                    voting_authority_shared='0',
+                                    voting_authority_none='0')
+                            ]
 
         send_data_to_db(company_3, edgar_filing_3, data_13f_table_3)
 
@@ -153,10 +156,11 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     ssh_prnamt_type='None',
                                     put_call='None',
                                     investment_discretion='SOLE',
-                                         other_manager='None',
-                                         voting_authority_sole='22967078',
-                                         voting_authority_shared='0',
-                                         voting_authority_none='0')]
+                                    other_manager='None',
+                                    voting_authority_sole='22967078',
+                                    voting_authority_shared='0',
+                                    voting_authority_none='0')
+                            ]
 
         send_data_to_db(company_4, edgar_filing_4, data_13f_table_4)
 
