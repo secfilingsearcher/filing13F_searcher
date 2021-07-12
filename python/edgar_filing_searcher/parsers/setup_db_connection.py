@@ -9,3 +9,4 @@ def setup_db_connection():
     app = create_app()
     app.app_context().push()
     logging.debug('Database connection set up')
+
