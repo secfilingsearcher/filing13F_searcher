@@ -15,7 +15,7 @@ def get_text(url):
         headers={"user-agent": "filing_13f_searcher"}
     )
     if response.status_code != 200:
-        logging.warning("unexpected status code %s", response.status_code)
+        logging.warning("Unexpected status code %s", response.status_code)
     time.sleep(1)
 
     full_text = response.text
