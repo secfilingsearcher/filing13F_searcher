@@ -24,17 +24,19 @@ def create_url_list(url_edgar_current_events):
 
 def update_filing_counts(cik_no_list):
     """This function counts the number of filings and adds it to the Company table"""
-    logging.info('Count filings')
+    logging.info('Add number of filings')
     for cik_no in cik_no_list:
+        logging.debug('Begin counting')
         company_in_table = Company.query.filter_by(cik_no=cik_no).first()
         filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
         company_in_table.filing_count = filing_count
         db.session.commit()
+        logging.debug('Committed updated count')
 
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     """This function sends data to the database"""
-    logging.info('Send Data')
+    logging.info('Send Data to Database')
     logging.debug('Start sending parser with send_data_to_db')
     logging.debug('Start merge on company_row session')
     db.session.merge(company_row)
@@ -55,6 +57,7 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 def main():
     """This function returns the cik, company name, and infotable data"""
     logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    logging.info('Begin job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
 
     if not filing_detail_urls:

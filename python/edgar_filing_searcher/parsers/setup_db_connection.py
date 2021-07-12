@@ -6,6 +6,7 @@ from edgar_filing_searcher.parsers.parser_context import create_app
 
 def setup_db_connection():
     """This function creates and pushes a context"""
+    logging.info('Connect to database')
     logging.debug('Start database connection')
     app = create_app()
     app.app_context().push()
