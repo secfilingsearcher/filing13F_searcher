@@ -16,9 +16,7 @@ URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f
 def create_url_list(url_edgar_current_events):
     """This function creates a list of URLs"""
     logging.info('Extracting URL %s', url_edgar_current_events)
-    logging.debug('Start running get_text on url %s', url_edgar_current_events)
     text_edgar_current_events = get_text(url_edgar_current_events)
-    logging.debug('Successfully ran get_text on url %s', url_edgar_current_events)
     return parse_13f_filing_detail_urls(text_edgar_current_events)
 
 
@@ -26,34 +24,23 @@ def update_filing_counts(cik_no_list):
     """This function counts the number of filings and adds it to the Company table"""
     logging.info('Add number of filings for Company table')
     for cik_no in cik_no_list:
-        logging.debug('Begin counting amount of edgarfilings for Company table')
         company_in_table = Company.query.filter_by(cik_no=cik_no).first()
         filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
         company_in_table.filing_count = filing_count
-        logging.debug('Completed counting amount of edgarfilings for Company table. Result %i', filing_count)
-        logging.debug('Start session commit')
+        logging.debug('Count amount of filings for cik no %s. Count: %i', cik_no, filing_count)
         db.session.commit()
-        logging.debug('Session committed')
 
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     """This function sends data to the database"""
     logging.info('Send data to Database')
     logging.debug('Start sending company_row, edgar_filing_row, data_13f_table')
-    logging.debug('Start session merge on company_row session')
     db.session.merge(company_row)
-    logging.debug('Company_row session merged')
-    logging.debug('Start session merge on edgar filing row')
     db.session.merge(edgar_filing_row)
-    logging.debug('Edgar_filing_row session merged')
     for data_13f_row in data_13f_table:
-        logging.debug('Start session merge on data 13f row %s', data_13f_row)
         db.session.merge(data_13f_row)
         logging.debug('Data_13f_row session merged %s', data_13f_row)
-    logging.debug('Start session commit')
     db.session.commit()
-    logging.debug('Session committed')
-    logging.debug('Sent company_row, edgar_filing_row, and data_13f_table')
 
 
 def main():
@@ -61,10 +48,8 @@ def main():
     logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
-
     if not filing_detail_urls:
         raise CantFindUrlException("There are no urls on the page")
-
     setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:

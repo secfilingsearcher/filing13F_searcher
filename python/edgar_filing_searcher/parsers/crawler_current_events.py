@@ -17,7 +17,9 @@ def get_text(url):
     if response.status_code != 200:
         logging.warning("unexpected status code %s", response.status_code)
     time.sleep(1)
+
     full_text = response.text
+    logging.debug('Successfully ran get_text on url %s', url)
     return full_text
 
 
