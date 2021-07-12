@@ -1,4 +1,6 @@
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
+import logging
+
 import re
 import time
 import requests
@@ -11,6 +13,8 @@ def get_text(url):
         url,
         headers={"user-agent": "filing_13f_searcher"}
     )
+    if response.status_code != 200:
+        logging.warning("unexpected status code %s", response.status_code)
     time.sleep(1)
     full_text = response.text
     return full_text

@@ -1,5 +1,6 @@
 # pylint: disable=too-few-public-methods
 """This file create a class Parser"""
+import logging
 import re
 from xml.etree import ElementTree
 
@@ -13,6 +14,7 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
+        logging.info('Parse data')
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -86,6 +88,7 @@ class Parser:
             return accepted_filing_date.text
 
     def _parse(self):
+        logging.debug('Start initializing parser')
         accession_no = self._parse_sec_accession_no(self.filing_detail_text)
         xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
         primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
@@ -108,3 +111,4 @@ class Parser:
             filing_date=filing_date)
 
         self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)
+        logging.debug('Parser initialized')
