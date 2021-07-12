@@ -14,7 +14,7 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Parse data')
+        logging.info('Parse data for url %s', filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -88,16 +88,24 @@ class Parser:
             return accepted_filing_date.text
 
     def _parse(self):
-        logging.debug('Start initializing parser')
+        logging.debug('Initializing parser')
         accession_no = self._parse_sec_accession_no(self.filing_detail_text)
+        logging.debug('Accession no parsed %s', accession_no)
         xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
+        logging.debug('XML Links parsed %s', xml_links)
         primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
+        logging.debug('Primary doc XML url parsed %s', primary_doc_xml_url)
         infotable_xml_url = self._parse_infotable_xml_url(xml_links)
+        logging.debug('Infotable XML url parsed %s', infotable_xml_url)
 
         root = self._parse_primary_doc_root(primary_doc_xml_url)
+        logging.debug('Root parsed %s', root)
         cik = self._parse_primary_doc_cik(root)
+        logging.debug('CIK parsed %s', cik)
         company_name = self._parse_primary_doc_company_name(root)
+        logging.debug('Company name parsed %s', company_name)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)
+        logging.debug('Filing date parsed %s', filing_date)
 
         self.company = Company(
             cik_no=cik,
@@ -111,4 +119,4 @@ class Parser:
             filing_date=filing_date)
 
         self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)
-        logging.debug('Parser initialized')
+        logging.debug('Parser completed')
