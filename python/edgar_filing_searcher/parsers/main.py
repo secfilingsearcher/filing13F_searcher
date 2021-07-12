@@ -16,7 +16,7 @@ URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f
 def create_url_list(url_edgar_current_events):
     """This function creates a list of URLs"""
     text_edgar_current_events = get_text(url_edgar_current_events)
-    logging.info('Extracted URL %s', url_edgar_current_events)
+    logging.info('Extracted URLs from %s', url_edgar_current_events)
     return parse_13f_filing_detail_urls(text_edgar_current_events)
 
 
@@ -44,7 +44,8 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 
 def main():
     """This function returns the cik, company name, and infotable data"""
-    logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
+                        level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)

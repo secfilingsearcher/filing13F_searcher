@@ -14,7 +14,7 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Parse data for url %s', filing_detail_url)
+        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s', filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
