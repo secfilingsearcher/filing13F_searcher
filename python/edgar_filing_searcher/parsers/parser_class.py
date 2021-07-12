@@ -3,7 +3,6 @@
 import logging
 import re
 from xml.etree import ElementTree
-
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
@@ -14,7 +13,8 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s', filing_detail_url)
+        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
+                     filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None

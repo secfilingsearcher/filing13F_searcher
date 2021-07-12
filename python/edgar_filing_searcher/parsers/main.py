@@ -44,8 +44,8 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 
 def main():
     """This function returns the cik, company name, and infotable data"""
-    logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p',
-                        level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
