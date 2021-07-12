@@ -1,9 +1,10 @@
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
 import logging
-
 import re
 import time
+
 import requests
+
 from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 

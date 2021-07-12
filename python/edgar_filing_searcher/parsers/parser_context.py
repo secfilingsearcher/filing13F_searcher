@@ -1,6 +1,8 @@
 """Creates a Flask SQLAlchemy app"""
 import os
+
 from flask import Flask
+
 from edgar_filing_searcher.database import db
 
 
