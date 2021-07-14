@@ -9,7 +9,7 @@ function Results () {
   const { q, startDate, endDate } = { q: params.get('q'), startDate: params.get('startDate'), endDate: params.get('endDate') }
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/company/search?q=${q}&start_date=${startDate}&end_date=${endDate}`)
+    axios.get(`/company/search?q=${q}&start_date=${startDate}&end_date=${endDate}`)
       .then(res => {
         const companies = res.data
         setResults(companies)
