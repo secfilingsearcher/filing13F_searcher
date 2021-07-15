@@ -53,6 +53,7 @@ class Parser:
     def parse_primary_doc_root(primary_doc_xml):
         """Gets the root of the primary_doc.xml file"""
         text = get_text(primary_doc_xml)
+        print("test")
         primary_doc_root = ElementTree.XML(text)
         return primary_doc_root
 

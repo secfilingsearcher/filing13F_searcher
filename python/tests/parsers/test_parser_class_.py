@@ -7,22 +7,30 @@ from unittest.mock import patch, MagicMock
 
 @pytest.fixture
 def filing_detail_text_13f():
-    """This function creates an fixture with test EDGAR_filing_document.html data"""
-    with open("tests/fixtures/edgar_filing_documents_for_0001852858-21-000001.html", "r") as file:
-        return file.read()
-
-
-@pytest.fixture
-def edgar_current_events_text():
     """This function creates an fixture with test edgar_current_events html data"""
-    with open("tests/fixtures/edgar_Filing_Documents_for_0001843111-21-000003.html", "rt") as file:
+    with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
         return file.read()
 
 
 @pytest.fixture
-def parser(edgar_current_events_text):
+def primary_doc_xml_text():
+    """This function creates an fixture with test edgar_current_events html data"""
+    with open("tests/fixtures/primary_doc.xml", "rt") as file:
+        return file.read()
+
+
+@pytest.fixture
+def infotable_xml_text():
+    """This function creates an fixture with test edgar_current_events html data"""
+    with open("tests/fixtures/infotable.xml", "rt") as file:
+        return file.read()
+
+
+
+@pytest.fixture
+def parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     with patch('requests.get') as mock_function:
-        mock_function.side_effect = [MagicMock(text=edgar_current_events_text), MagicMock(text=filing_detail_text_13f)]
+        mock_function.side_effect = [MagicMock(text=filing_detail_text_13f), MagicMock(text=primary_doc_xml_text), MagicMock(text=infotable_xml_text)]
         return Parser('')
 
 
