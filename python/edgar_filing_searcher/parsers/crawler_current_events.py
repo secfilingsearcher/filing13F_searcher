@@ -4,7 +4,7 @@ import re
 import time
 import requests
 
-from parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 
 def get_text(url):
@@ -24,7 +24,8 @@ def get_text(url):
 
 def parse_13f_filing_detail_urls(edgar_current_events_text):
     """Returns the 13f filing detail base urls"""
-    filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)', edgar_current_events_text)
+    filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
+                                            edgar_current_events_text)
     try:
         filing_detail_url_suffixes
     except CantFindUrlException:
