@@ -59,7 +59,7 @@ def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text_13f, pa
 def test_parse_primary_doc_xml_url(parser):
     """This function tests parse_primary_doc_xml_url"""
 
-    actual = parser.parse_primary_doc_xml_url(SUFFIX_XML_URLS_LIST)
+    actual = parser.ensure_primary_doc_xml_url(SUFFIX_XML_URLS_LIST)
 
     assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml'
 
@@ -67,6 +67,6 @@ def test_parse_primary_doc_xml_url(parser):
 def test_parse_infotable_xml_url(parser):
     """This function tests parse_infotable_xml_url"""
 
-    actual = parser.parse_infotable_xml_url(SUFFIX_XML_URLS_LIST)
+    actual = parser.ensure_infotable_xml_url(SUFFIX_XML_URLS_LIST)
 
     assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml'

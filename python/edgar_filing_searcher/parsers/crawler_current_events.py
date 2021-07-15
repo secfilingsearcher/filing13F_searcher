@@ -2,8 +2,10 @@
 import logging
 import re
 import time
-
 import requests
+
+from parsers.errors import CantFindUrlException
+
 
 def get_text(url):
     """Returns the html and text from the url"""
@@ -21,9 +23,19 @@ def get_text(url):
 
 
 def parse_13f_filing_detail_urls(edgar_current_events_text):
+    """Returns the 13f filing detail base urls"""
+    filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)', edgar_current_events_text)
+    try:
+        filing_detail_url_suffixes
+    except CantFindUrlException:
+        logging.exception("13f filing detail url suffix is empty.")
+    return filing_detail_url_suffixes
+
+
+def ensure_13f_filing_detail_urls(edgar_current_events_text):
     """Returns the 13f filing detail url"""
-    base_sec_url = "https://www.sec.gov"
+    sec_base_url = "https://www.sec.gov"
     url_list = []
-    for suffix_url in re.findall('(?<=<a href=")(.*)(?=">13F)', edgar_current_events_text):
-        url_list.append(base_sec_url + suffix_url)
+    for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):
+        url_list.append(sec_base_url + filing_detail_url_suffix)
     return url_list

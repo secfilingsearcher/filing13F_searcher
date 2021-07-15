@@ -34,26 +34,25 @@ class Parser:
         return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
     @staticmethod
-    def parse_primary_doc_xml_url(suffix_xml_urls):
+    def ensure_primary_doc_xml_url(primary_doc_xml_url_suffix):
         """Adds base url to suffix url for primary_doc.xml url"""
-        base_sec_url = "https://www.sec.gov"
-        if suffix_xml_urls:
-            return base_sec_url + suffix_xml_urls[0]
+        sec_base_url = "https://www.sec.gov"
+        if primary_doc_xml_url_suffix:
+            return sec_base_url + primary_doc_xml_url_suffix[0]
         raise CantFindUrlException("primary_doc_xml_url suffix is empty")
 
     @staticmethod
-    def parse_infotable_xml_url(partial_xml_url):
+    def ensure_infotable_xml_url(infotable_xml_url_suffix):
         """Adds base url to suffix url for infotable.xml url"""
-        base_sec_url = "https://www.sec.gov"
-        if partial_xml_url:
-            return base_sec_url + partial_xml_url[-1]
+        sec_base_url = "https://www.sec.gov"
+        if infotable_xml_url_suffix:
+            return sec_base_url + infotable_xml_url_suffix[-1]
         raise CantFindUrlException("infotable_xml_url suffix is empty")
 
     @staticmethod
     def parse_primary_doc_root(primary_doc_xml):
         """Gets the root of the primary_doc.xml file"""
         text = get_text(primary_doc_xml)
-        print("test")
         primary_doc_root = ElementTree.XML(text)
         return primary_doc_root
 
@@ -92,8 +91,8 @@ class Parser:
         logging.debug('Initializing parser')
         accession_no = self.parse_sec_accession_no(self._filing_detail_text)
         xml_links = self.parse_primary_doc_xml_and_infotable_xml_urls(self._filing_detail_text)
-        primary_doc_xml_url = self.parse_primary_doc_xml_url(xml_links)
-        infotable_xml_url = self.parse_infotable_xml_url(xml_links)
+        primary_doc_xml_url = self.ensure_primary_doc_xml_url(xml_links)
+        infotable_xml_url = self.ensure_infotable_xml_url(xml_links)
         root = self.parse_primary_doc_root(primary_doc_xml_url)
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
