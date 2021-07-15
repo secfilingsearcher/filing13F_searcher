@@ -13,7 +13,7 @@ from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db,
 
 
 @pytest.fixture
-def current_events_text():
+def edgar_current_events_text():
     """This function creates an fixture with test edgar_current_events html data"""
     with open("tests/fixtures/edgar_current_events.html", "rt") as file:
         return file.read()
@@ -62,12 +62,11 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         db.drop_all()
 
 
-def test_create_url_list(current_events_text):
+def test_create_url_list(edgar_current_events_text):
     """This function tests test_parse_13f_filing_detail_urls"""
     with patch('requests.get') as mock_function:
-        mock_function.return_value = MagicMock(text=current_events_text)
+        mock_function.return_value = MagicMock(text=edgar_current_events_text)
         fake_url = ""
-
         actual = create_url_list(fake_url)
 
         assert actual == [
