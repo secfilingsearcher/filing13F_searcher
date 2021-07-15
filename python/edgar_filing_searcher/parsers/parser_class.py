@@ -1,8 +1,8 @@
 # pylint: disable=too-few-public-methods
 """This file create a class Parser"""
+import logging
 import re
 from xml.etree import ElementTree
-
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
@@ -13,6 +13,8 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
+        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
+                     filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -86,15 +88,19 @@ class Parser:
             return accepted_filing_date.text
 
     def _parse(self):
+        logging.debug('Initializing parser')
         accession_no = self._parse_sec_accession_no(self.filing_detail_text)
         xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
         primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
         infotable_xml_url = self._parse_infotable_xml_url(xml_links)
-
         root = self._parse_primary_doc_root(primary_doc_xml_url)
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)
+        logging.debug('accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
+                      ' root %s, cik %s, company_name %s, and filing date %s parsed', accession_no,
+                      xml_links, primary_doc_xml_url, infotable_xml_url, root, cik, company_name,
+                      filing_date)
 
         self.company = Company(
             cik_no=cik,
@@ -108,3 +114,4 @@ class Parser:
             filing_date=filing_date)
 
         self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)
+        logging.debug('Parser completed')

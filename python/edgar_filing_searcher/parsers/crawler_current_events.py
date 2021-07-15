@@ -1,7 +1,10 @@
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
+import logging
 import re
 import time
+
 import requests
+
 from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 
@@ -11,8 +14,12 @@ def get_text(url):
         url,
         headers={"user-agent": "filing_13f_searcher"}
     )
+    if response.status_code != 200:
+        logging.warning("Unexpected status code %s", response.status_code)
     time.sleep(1)
+
     full_text = response.text
+    logging.debug('Successfully ran get_text on url %s', url)
     return full_text
 
 

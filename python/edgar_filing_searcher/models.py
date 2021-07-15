@@ -2,9 +2,8 @@
 import hashlib
 from dataclasses import dataclass
 from datetime import date
+
 from edgar_filing_searcher.database import db
-
-
 
 
 @dataclass
@@ -25,7 +24,6 @@ class EdgarFiling(db.Model):
             self.accession_no, self.cik_no, self.filing_date)
 
 
-
 # pylint: disable=too-few-public-methods
 @dataclass
 class Company(db.Model):
@@ -43,7 +41,6 @@ class Company(db.Model):
     def __repr__(self):
         return "<Company(cik_no='%s', company_name='%s', filing_count='%s')>" % (
             self.cik_no, self.company_name, self.filing_count)
-
 
 
 # pylint: disable=too-many-instance-attributes
