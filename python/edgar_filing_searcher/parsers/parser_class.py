@@ -39,7 +39,8 @@ class Parser:
         base_sec_url = "https://www.sec.gov"
         if suffix_xml_urls:
             return base_sec_url + suffix_xml_urls[0]
-        raise CantFindUrlException("primary_doc_xml_url suffix is empty")
+        logging.error("Primary_doc_xml_url suffix is empty.")
+        raise CantFindUrlException()
 
     @staticmethod
     def _parse_infotable_xml_url(partial_xml_url):
@@ -47,7 +48,8 @@ class Parser:
         base_sec_url = "https://www.sec.gov"
         if partial_xml_url:
             return base_sec_url + partial_xml_url[-1]
-        raise CantFindUrlException("infotable_xml_url suffix is empty")
+        logging.error("Infotable_xml_url suffix is empty.")
+        raise CantFindUrlException()
 
     @staticmethod
     def _parse_primary_doc_root(primary_doc_xml):

@@ -50,7 +50,8 @@ def main():
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
     if not filing_detail_urls:
-        raise CantFindUrlException("There are no urls on the page")
+        logging.error('There are no urls on the page.')
+        raise CantFindUrlException()
     setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
