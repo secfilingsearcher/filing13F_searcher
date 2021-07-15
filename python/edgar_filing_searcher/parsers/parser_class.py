@@ -13,7 +13,7 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
+        logging.info('Initialize parser for company_row, edgar_filing_row, data_13f data for url %s',
                      filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
@@ -31,25 +31,31 @@ class Parser:
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
         """Returns the primary_doc.xml and infotable.xml base urls"""
-        return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
+        xml_links = re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
+        try:
+            xml_links[0]
+        except CantFindUrlException:
+            logging.critical("Primary_doc_xml_url suffix is empty.")
+
+        try:
+            xml_links[-1]
+        except CantFindUrlException:
+            logging.critical("Infotable_xml_url suffix is empty.")
+        return xml_links
 
     @staticmethod
     def _parse_primary_doc_xml_url(suffix_xml_urls):
         """Adds base url to suffix url for primary_doc.xml url"""
         base_sec_url = "https://www.sec.gov"
-        if suffix_xml_urls:
-            return base_sec_url + suffix_xml_urls[0]
-        logging.critical("Primary_doc_xml_url suffix is empty.")
-        raise CantFindUrlException()
+        return base_sec_url + suffix_xml_urls[0]
+
 
     @staticmethod
     def _parse_infotable_xml_url(partial_xml_url):
         """Adds base url to suffix url for infotable.xml url"""
         base_sec_url = "https://www.sec.gov"
-        if partial_xml_url:
-            return base_sec_url + partial_xml_url[-1]
-        logging.critical("Infotable_xml_url suffix is empty.")
-        raise CantFindUrlException()
+        return base_sec_url + partial_xml_url[-1]
+
 
     @staticmethod
     def _parse_primary_doc_root(primary_doc_xml):
@@ -99,8 +105,8 @@ class Parser:
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)
-        logging.debug('accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
-                      ' root %s, cik %s, company_name %s, and filing date %s parsed', accession_no,
+        logging.debug('Parsed accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
+                      ' root %s, cik %s, company_name %s, and filing date %s', accession_no,
                       xml_links, primary_doc_xml_url, infotable_xml_url, root, cik, company_name,
                       filing_date)
 
