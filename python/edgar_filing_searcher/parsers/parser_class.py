@@ -90,22 +90,17 @@ class Parser:
     def _parse(self):
         logging.debug('Initializing parser')
         accession_no = self._parse_sec_accession_no(self.filing_detail_text)
-        logging.debug('Accession no parsed %s', accession_no)
         xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
-        logging.debug('XML Links parsed %s', xml_links)
         primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
-        logging.debug('Primary doc XML url parsed %s', primary_doc_xml_url)
         infotable_xml_url = self._parse_infotable_xml_url(xml_links)
-        logging.debug('Infotable XML url parsed %s', infotable_xml_url)
-
         root = self._parse_primary_doc_root(primary_doc_xml_url)
-        logging.debug('Root parsed %s', root)
         cik = self._parse_primary_doc_cik(root)
-        logging.debug('CIK parsed %s', cik)
         company_name = self._parse_primary_doc_company_name(root)
-        logging.debug('Company name parsed %s', company_name)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)
-        logging.debug('Filing date parsed %s', filing_date)
+        logging.debug('accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
+                      ' root %s, cik %s, company_name %s, and filing date %s parsed', accession_no,
+                      xml_links, primary_doc_xml_url, infotable_xml_url, root, cik, company_name,
+                      filing_date)
 
         self.company = Company(
             cik_no=cik,
