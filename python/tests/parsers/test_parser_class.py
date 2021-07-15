@@ -1,8 +1,8 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
+from unittest.mock import patch, MagicMock
 import pytest
 from edgar_filing_searcher.parsers.parser_class import Parser
-from unittest.mock import patch, MagicMock
 
 
 @pytest.fixture
@@ -26,11 +26,11 @@ def infotable_xml_text():
         return file.read()
 
 
-
 @pytest.fixture
 def parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     with patch('requests.get') as mock_function:
-        mock_function.side_effect = [MagicMock(text=filing_detail_text_13f), MagicMock(text=primary_doc_xml_text), MagicMock(text=infotable_xml_text)]
+        mock_function.side_effect = [MagicMock(text=filing_detail_text_13f), MagicMock(text=primary_doc_xml_text),
+                                     MagicMock(text=infotable_xml_text)]
         return Parser('')
 
 
@@ -56,7 +56,7 @@ def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text_13f, pa
             '/Archives/edgar/data/1852858/000185285821000001/infotable.xml']
 
 
-def test_parse_primary_doc_xml_url(parser):
+def test_ensure_primary_doc_xml_url(parser):
     """This function tests parse_primary_doc_xml_url"""
 
     actual = parser.ensure_primary_doc_xml_url(SUFFIX_XML_URLS_LIST)
@@ -64,7 +64,7 @@ def test_parse_primary_doc_xml_url(parser):
     assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml'
 
 
-def test_parse_infotable_xml_url(parser):
+def test_ensure_infotable_xml_url(parser):
     """This function tests parse_infotable_xml_url"""
 
     actual = parser.ensure_infotable_xml_url(SUFFIX_XML_URLS_LIST)

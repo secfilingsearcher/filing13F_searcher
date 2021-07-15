@@ -11,7 +11,7 @@ def edgar_current_events_text():
         return file.read()
 
 
-def test_parse_13f_filing_detail_urls(edgar_current_events_text):
+def test_ensure_13f_filing_detail_urls(edgar_current_events_text):
     """This function tests parse_13f_filing_detail_urls"""
 
     actual = ensure_13f_filing_detail_urls(edgar_current_events_text)
