@@ -32,15 +32,15 @@ class Parser:
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
         """Returns the primary_doc.xml and infotable.xml base urls"""
         xml_links = re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
-        try:
-            xml_links[0]
-        except CantFindUrlException:
-            logging.critical("Primary_doc_xml_url suffix is empty.")
 
-        try:
-            xml_links[-1]
-        except CantFindUrlException:
+        if not xml_links[0]:
+            logging.critical("Primary_doc_xml_url suffix is empty.")
+            raise CantFindUrlException()
+
+        if not xml_links[-1]:
             logging.critical("Infotable_xml_url suffix is empty.")
+            raise CantFindUrlException()
+
         return xml_links
 
     @staticmethod
