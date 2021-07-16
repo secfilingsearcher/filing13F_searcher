@@ -13,8 +13,8 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Initialize parser for company_row, edgar_filing_row, data_13f data for url %s',
-                     filing_detail_url)
+        logging.info('Initialize parser for company_row, edgar_filing_row, '
+                     'data_13f data for url %s', filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -105,10 +105,10 @@ class Parser:
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)
-        logging.debug('Parsed accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
-                      ' root %s, cik %s, company_name %s, and filing date %s', accession_no,
-                      xml_links, primary_doc_xml_url, infotable_xml_url, root, cik, company_name,
-                      filing_date)
+        logging.debug('Parsed accession_no %s, xml_links %s, primary_doc_xml_url %s, '
+                      'infotable_xml_url %s, root %s, cik %s, company_name %s, and filing date %s',
+                      accession_no, xml_links, primary_doc_xml_url, infotable_xml_url, root,
+                      cik, company_name, filing_date)
 
         self.company = Company(
             cik_no=cik,
