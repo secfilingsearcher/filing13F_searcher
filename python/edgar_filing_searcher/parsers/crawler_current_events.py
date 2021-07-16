@@ -2,6 +2,7 @@
 import logging
 import re
 import time
+
 import requests
 
 from edgar_filing_searcher.parsers.errors import CantFindUrlException
