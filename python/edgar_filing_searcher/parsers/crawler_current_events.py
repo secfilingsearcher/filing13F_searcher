@@ -27,7 +27,8 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
                                             edgar_current_events_text)
     try:
-        filing_detail_url_suffixes
+        filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
+                                            edgar_current_events_text)
     except CantFindUrlException:
         logging.exception("13f filing detail url suffix is empty.")
     return filing_detail_url_suffixes
