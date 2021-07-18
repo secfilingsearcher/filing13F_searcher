@@ -39,7 +39,7 @@ def ensure_13f_filing_detail_urls(edgar_current_events_text):
     try:
         parse_13f_filing_detail_urls(edgar_current_events_text)
     except CantFindUrlException:
-        logging.critical("Found no 13f filing detail urls.")
+        logging.critical("Found no 13f filing detail url suffixes.")
         exit(-1)
 
     for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):

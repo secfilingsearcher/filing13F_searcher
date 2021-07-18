@@ -36,18 +36,18 @@ class Parser:
     @staticmethod
     def ensure_primary_doc_xml_url(primary_doc_xml_url_suffix):
         """Adds base url to suffix url for primary_doc.xml url"""
+        if not primary_doc_xml_url_suffix:
+            raise CantFindUrlException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
-        if primary_doc_xml_url_suffix:
-            return sec_base_url + primary_doc_xml_url_suffix[0]
-        raise CantFindUrlException("primary_doc_xml_url suffix is empty")
+        return sec_base_url + primary_doc_xml_url_suffix[0]
 
     @staticmethod
     def ensure_infotable_xml_url(infotable_xml_url_suffix):
         """Adds base url to suffix url for infotable.xml url"""
+        if not infotable_xml_url_suffix:
+            raise CantFindUrlException("Found no infotable_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
-        if infotable_xml_url_suffix:
-            return sec_base_url + infotable_xml_url_suffix[-1]
-        raise CantFindUrlException("infotable_xml_url suffix is empty")
+        return sec_base_url + infotable_xml_url_suffix[-1]
 
     @staticmethod
     def parse_primary_doc_root(primary_doc_xml):

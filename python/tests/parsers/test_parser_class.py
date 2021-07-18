@@ -3,6 +3,7 @@
 from unittest.mock import patch, MagicMock
 import pytest
 from edgar_filing_searcher.parsers.parser_class import Parser
+from edgar_filing_searcher.parsers.errors import CantFindUrlException
 
 
 @pytest.fixture
@@ -64,9 +65,21 @@ def test_ensure_primary_doc_xml_url(parser):
     assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml'
 
 
+def test_ensure_primary_doc_xml_url_invalidText_raiseException(parser):
+    """This function tests parse_primary_doc_xml_url"""
+    with pytest.raises(CantFindUrlException):
+        parser.ensure_primary_doc_xml_url("")
+
+
 def test_ensure_infotable_xml_url(parser):
     """This function tests parse_infotable_xml_url"""
 
     actual = parser.ensure_infotable_xml_url(SUFFIX_XML_URLS_LIST)
 
     assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml'
+
+
+def test_ensure_infotable_xml_url_invalidText_raiseException(parser):
+    """This function tests parse_infotable_xml_url"""
+    with pytest.raises(CantFindUrlException):
+        parser.ensure_infotable_xml_url("")
