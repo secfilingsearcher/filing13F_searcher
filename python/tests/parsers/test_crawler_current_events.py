@@ -27,7 +27,7 @@ def test_parse_13f_filing_detail_urls(edgar_current_events_text):
 
 
 def test_parse_13f_filing_detail_urls_invalidText_raiseException():
-    """This function tests parse_13f_filing_detail_urls"""
+    """This function tests if parse_13f_filing_detail_urls raises the CantFindUrlException exception"""
     with pytest.raises(CantFindUrlException):
         parse_13f_filing_detail_urls("")
 

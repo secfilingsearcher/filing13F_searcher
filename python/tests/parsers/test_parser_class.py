@@ -10,21 +10,21 @@ from edgar_filing_searcher.parsers.parser_class import Parser
 
 @pytest.fixture
 def filing_detail_text_13f():
-    """This function creates an fixture with test edgar_current_events html data"""
+    """This function creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
         return file.read()
 
 
 @pytest.fixture
 def primary_doc_xml_text():
-    """This function creates an fixture with test edgar_current_events html data"""
+    """This function creates an fixture with primary_doc.xml data"""
     with open("tests/fixtures/primary_doc.xml", "rt") as file:
         return file.read()
 
 
 @pytest.fixture
 def infotable_xml_text():
-    """This function creates an fixture with test edgar_current_events html data"""
+    """This function creates an fixture with infotable.xml data"""
     with open("tests/fixtures/infotable.xml", "rt") as file:
         return file.read()
 
@@ -60,7 +60,7 @@ def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text_13f, pa
 
 
 def test_ensure_primary_doc_xml_url(parser):
-    """This function tests parse_primary_doc_xml_url"""
+    """This function tests ensure_primary_doc_xml_url"""
 
     actual = parser.ensure_primary_doc_xml_url(SUFFIX_XML_URLS_LIST)
 
@@ -68,13 +68,13 @@ def test_ensure_primary_doc_xml_url(parser):
 
 
 def test_ensure_primary_doc_xml_url_invalidText_raiseException(parser):
-    """This function tests parse_primary_doc_xml_url"""
+    """This function tests if ensure_primary_doc_xml_url raises the CantFindUrlException exception"""
     with pytest.raises(CantFindUrlException):
         parser.ensure_primary_doc_xml_url("")
 
 
 def test_ensure_infotable_xml_url(parser):
-    """This function tests parse_infotable_xml_url"""
+    """This function tests ensure_infotable_xml_url"""
 
     actual = parser.ensure_infotable_xml_url(SUFFIX_XML_URLS_LIST)
 
@@ -82,6 +82,6 @@ def test_ensure_infotable_xml_url(parser):
 
 
 def test_ensure_infotable_xml_url_invalidText_raiseException(parser):
-    """This function tests parse_infotable_xml_url"""
+    """This function tests if ensure_infotable_xml_url raises the CantFindUrlException exception"""
     with pytest.raises(CantFindUrlException):
         parser.ensure_infotable_xml_url("")
