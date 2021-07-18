@@ -1,6 +1,7 @@
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
 import logging
 import re
+import sys
 import time
 
 import requests
@@ -40,7 +41,7 @@ def ensure_13f_filing_detail_urls(edgar_current_events_text):
         parse_13f_filing_detail_urls(edgar_current_events_text)
     except CantFindUrlException:
         logging.critical("Found no 13f filing detail url suffixes.")
-        exit(-1)
+        sys.exit(-1)
 
     for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):
         url_list.append(sec_base_url + filing_detail_url_suffix)
