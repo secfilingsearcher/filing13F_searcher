@@ -27,11 +27,8 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     """Returns the 13f filing detail base urls"""
     filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
                                             edgar_current_events_text)
-    try:
-        filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
-                                            edgar_current_events_text)
-    except CantFindUrlException:
-        logging.exception("13f filing detail url suffix is empty.")
+    if not filing_detail_url_suffixes:
+        raise CantFindUrlException()
     return filing_detail_url_suffixes
 
 
@@ -39,6 +36,12 @@ def ensure_13f_filing_detail_urls(edgar_current_events_text):
     """Returns the 13f filing detail url"""
     sec_base_url = "https://www.sec.gov"
     url_list = []
+    try:
+        parse_13f_filing_detail_urls(edgar_current_events_text)
+    except CantFindUrlException:
+        logging.critical("Found no 13f filing detail urls.")
+        exit(-1)
+
     for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):
         url_list.append(sec_base_url + filing_detail_url_suffix)
     return url_list
