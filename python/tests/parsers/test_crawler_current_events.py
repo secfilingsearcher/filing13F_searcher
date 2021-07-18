@@ -1,6 +1,7 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
 import pytest
+
 from edgar_filing_searcher.parsers.crawler_current_events import ensure_13f_filing_detail_urls, \
     parse_13f_filing_detail_urls
 from edgar_filing_searcher.parsers.errors import CantFindUrlException

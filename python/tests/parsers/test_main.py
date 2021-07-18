@@ -2,8 +2,10 @@
 # pylint: disable=redefined-outer-name
 from datetime import datetime
 from unittest.mock import patch, MagicMock
+
 import pytest
 from flask_testing import TestCase
+
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f

@@ -3,6 +3,7 @@
 import logging
 import re
 from xml.etree import ElementTree
+
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table

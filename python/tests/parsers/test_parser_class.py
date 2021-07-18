@@ -1,9 +1,11 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
 from unittest.mock import patch, MagicMock
+
 import pytest
-from edgar_filing_searcher.parsers.parser_class import Parser
+
 from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.parser_class import Parser
 
 
 @pytest.fixture
