@@ -6,7 +6,7 @@ from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
     ensure_13f_filing_detail_urls
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
@@ -50,7 +50,7 @@ def main():
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
     if not filing_detail_urls:
-        raise CantFindUrlException("There are no urls on the page")
+        raise NoUrlException("There are no urls on the page")
     setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:

@@ -1,5 +1,6 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
+from _elementtree import ParseError
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -17,6 +18,11 @@ def filing_detail_text_13f():
 def filing_detail_text_13f_missing_urls():
     """This function creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
+        return file.read()
+
+def filing_detail_text_13f_missing_accession_no():
+    """This function creates an fixture with edgar_current_events.html data"""
+    with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
         return file.read()
 
 def primary_doc_xml_text():
@@ -87,17 +93,20 @@ def test_parser_setsData13f():
     assert actual == data_13f_table
 
 
-def test_parser_asectionNoInvalid_raiseException():
+def test_parser_AccessionNoInvalid_raiseException():
     """This function tests if parser raises the NoUrlException exception when"""
-    parser = new_parser(filing_detail_text_13f(), "primary_doc_xml_text()", infotable_xml_text())
+    with pytest.raises(AttributeError):
+        new_parser(filing_detail_text_13f_missing_accession_no(), primary_doc_xml_text(), infotable_xml_text())
 
 
 def test_parser_primaryDocXmlInvalid_raiseException():
-    """his function tests if ensure_primary_doc_xml_url raises the CantFindUrlException exception"""
-    parser = new_parser(filing_detail_text_13f(), "primary_doc_xml_text()", infotable_xml_text())
+    """This function tests if parser raises the ParseError exception when the primary_doc.xml file is invalid"""
+    invalid_xml = ""
+    with pytest.raises(ParseError):
+        new_parser(filing_detail_text_13f(), invalid_xml, infotable_xml_text())
 
 
 def test_parser_XmlUrlInvalid_raiseException():
-    """This function tests if parser raises the NoUrlException exception when the Xml Url is invalid"""
+    """This function tests if parser raises the NoUrlException exception when the xml Url is invalid"""
     with pytest.raises(NoUrlException):
         new_parser(filing_detail_text_13f_missing_urls(), primary_doc_xml_text(), infotable_xml_text())

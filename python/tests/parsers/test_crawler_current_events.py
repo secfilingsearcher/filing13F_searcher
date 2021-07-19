@@ -4,7 +4,7 @@ import pytest
 
 from edgar_filing_searcher.parsers.crawler_current_events import ensure_13f_filing_detail_urls, \
     parse_13f_filing_detail_urls
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException
 
 
 @pytest.fixture
@@ -27,8 +27,8 @@ def test_parse_13f_filing_detail_urls(edgar_current_events_text):
 
 
 def test_parse_13f_filing_detail_urls_invalidText_raiseException():
-    """This function tests if parse_13f_filing_detail_urls raises the CantFindUrlException exception"""
-    with pytest.raises(CantFindUrlException):
+    """This function tests if parse_13f_filing_detail_urls raises the NoUrlException exception"""
+    with pytest.raises(NoUrlException):
         parse_13f_filing_detail_urls("")
 
 
