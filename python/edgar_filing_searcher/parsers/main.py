@@ -1,6 +1,7 @@
 # pylint: disable=import-error
 """This file contains the main method"""
 import logging
+import sys
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -48,9 +49,11 @@ def main():
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
     logging.info('Initializing job')
-    filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
-    if not filing_detail_urls:
-        raise NoUrlException("There are no urls on the Edgar Current Events page")
+    try:
+        filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
+    except NoUrlException:
+        logging.critical("There are no urls on the Edgar Current Events page.")
+        sys.exit(-1)
     setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
