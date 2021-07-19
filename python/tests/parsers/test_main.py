@@ -92,24 +92,24 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the Company model in the database"""
         company = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         edgar_filing = EdgarFiling(accession_no="0001420506", cik_no="000984343",
-                                     filing_date=datetime.fromisoformat("2002-04-10"))
+                                   filing_date=datetime.fromisoformat("2002-04-10"))
         data_13f_table = [Data13f(equity_holdings_id="67896567",
-                                    accession_no='0001420506',
-                                    cik_no='00054654983',
-                                    name_of_issuer='Agilent Technologies',
-                                    title_of_class='COM',
-                                    cusip='00846U101',
-                                    value='22967078',
-                                    ssh_prnamt='180644',
-                                    ssh_prnamt_type='None',
-                                    put_call='None',
-                                    investment_discretion='SOLE',
-                                    other_manager='None',
-                                    voting_authority_sole='22967078',
-                                    voting_authority_shared='0',
-                                    voting_authority_none='0'
-                                    )
-                            ]
+                                  accession_no='0001420506',
+                                  cik_no='00054654983',
+                                  name_of_issuer='Agilent Technologies',
+                                  title_of_class='COM',
+                                  cusip='00846U101',
+                                  value='22967078',
+                                  ssh_prnamt='180644',
+                                  ssh_prnamt_type='None',
+                                  put_call='None',
+                                  investment_discretion='SOLE',
+                                  other_manager='None',
+                                  voting_authority_sole='22967078',
+                                  voting_authority_shared='0',
+                                  voting_authority_none='0'
+                                  )
+                          ]
 
         send_data_to_db(company, edgar_filing, data_13f_table)
 
@@ -119,24 +119,24 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the EdgarFiling model in the database"""
         company = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
         edgar_filing = EdgarFiling(accession_no="3453456", cik_no="8673434",
-                                     filing_date=datetime.fromisoformat("2000-06-11"))
+                                   filing_date=datetime.fromisoformat("2000-06-11"))
         data_13f_table = [Data13f(equity_holdings_id="67896567",
-                                    accession_no='3453456',
-                                    cik_no='654656465',
-                                    name_of_issuer='Agilent Technologies',
-                                    title_of_class='COM',
-                                    cusip='00846U101',
-                                    value='22967078',
-                                    ssh_prnamt='180644',
-                                    ssh_prnamt_type='None',
-                                    put_call='None',
-                                    investment_discretion='SOLE',
-                                    other_manager='None',
-                                    voting_authority_sole='22967078',
-                                    voting_authority_shared='0',
-                                    voting_authority_none='0'
-                                    )
-                            ]
+                                  accession_no='3453456',
+                                  cik_no='654656465',
+                                  name_of_issuer='Agilent Technologies',
+                                  title_of_class='COM',
+                                  cusip='00846U101',
+                                  value='22967078',
+                                  ssh_prnamt='180644',
+                                  ssh_prnamt_type='None',
+                                  put_call='None',
+                                  investment_discretion='SOLE',
+                                  other_manager='None',
+                                  voting_authority_sole='22967078',
+                                  voting_authority_shared='0',
+                                  voting_authority_none='0'
+                                  )
+                          ]
 
         send_data_to_db(company, edgar_filing, data_13f_table)
 
@@ -146,24 +146,24 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the Data13f model in the database"""
         company = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
         edgar_filing = EdgarFiling(accession_no="78945835", cik_no="009039443",
-                                     filing_date=datetime.fromisoformat("2000-06-11"))
+                                   filing_date=datetime.fromisoformat("2000-06-11"))
         data_13f_table = [Data13f(equity_holdings_id="67896567",
-                                    accession_no='78945835',
-                                    cik_no='009039443',
-                                    name_of_issuer='Agilent Technologies',
-                                    title_of_class='COM',
-                                    cusip='00846U101',
-                                    value='22967078',
-                                    ssh_prnamt='180644',
-                                    ssh_prnamt_type='None',
-                                    put_call='None',
-                                    investment_discretion='SOLE',
-                                    other_manager='None',
-                                    voting_authority_sole='22967078',
-                                    voting_authority_shared='0',
-                                    voting_authority_none='0'
-                                    )
-                            ]
+                                  accession_no='78945835',
+                                  cik_no='009039443',
+                                  name_of_issuer='Agilent Technologies',
+                                  title_of_class='COM',
+                                  cusip='00846U101',
+                                  value='22967078',
+                                  ssh_prnamt='180644',
+                                  ssh_prnamt_type='None',
+                                  put_call='None',
+                                  investment_discretion='SOLE',
+                                  other_manager='None',
+                                  voting_authority_sole='22967078',
+                                  voting_authority_shared='0',
+                                  voting_authority_none='0'
+                                  )
+                          ]
 
         send_data_to_db(company, edgar_filing, data_13f_table)
 
