@@ -9,13 +9,13 @@ from edgar_filing_searcher.parsers.errors import NoUrlException
 
 @pytest.fixture
 def edgar_current_events_text():
-    """This function creates an fixture with test_edgar_current_events.html data"""
+    """Creates an fixture with test_edgar_current_events.html data"""
     with open("tests/fixtures/edgar_current_events.html", "rt") as file:
         return file.read()
 
 
 def test_parse_13f_filing_detail_urls(edgar_current_events_text):
-    """This function tests parse_13f_filing_detail_urls"""
+    """Tests parse_13f_filing_detail_urls"""
 
     actual = ensure_13f_filing_detail_urls(edgar_current_events_text)
 
@@ -27,13 +27,13 @@ def test_parse_13f_filing_detail_urls(edgar_current_events_text):
 
 
 def test_parse_13f_filing_detail_urls_invalidText_raiseException():
-    """This function tests if parse_13f_filing_detail_urls raises the NoUrlException exception"""
+    """Tests if parse_13f_filing_detail_urls raises the NoUrlException exception"""
     with pytest.raises(NoUrlException):
         parse_13f_filing_detail_urls("")
 
 
 def test_ensure_13f_filing_detail_urls(edgar_current_events_text):
-    """This function tests ensure_13f_filing_detail_urls"""
+    """Tests ensure_13f_filing_detail_urls"""
 
     actual = ensure_13f_filing_detail_urls(edgar_current_events_text)
 

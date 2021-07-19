@@ -14,7 +14,7 @@ from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db,
 
 @pytest.fixture
 def edgar_current_events_text():
-    """This function creates an fixture with edgar_current_events.html data"""
+    """Creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/edgar_current_events.html", "rt") as file:
         return file.read()
 
@@ -25,12 +25,12 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
     TESTING = True
 
     def create_app(self):
-        """This function creates and pushes a context for a test"""
+        """Creates and pushes a context for a test"""
         app = create_app(self)
         return app
 
     def setUp(self):
-        """This function sets up a test database"""
+        """Sets up a test database"""
         db.create_all()
         self.company = Company(cik_no="0001171592", company_name="Cool Industries", filing_count=0)
         self.edgar_filing = EdgarFiling(accession_no="0001420506-21-000830", cik_no="0001171592",
@@ -57,13 +57,13 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         db.session.commit()
 
     def tearDown(self):
-        """This function tears down test database"""
+        """Tears down test database"""
         db.session.remove()
         db.drop_all()
 
 
 def test_create_url_list(edgar_current_events_text):
-    """This function tests create_url_list"""
+    """Tests create_url_list"""
     with patch('requests.get') as mock_function:
         mock_function.return_value = MagicMock(text=edgar_current_events_text)
         fake_url = ""
@@ -81,7 +81,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQLALchemy Tests"""
 
     def test_update_filing_counts(self):
-        """This function tests update_filing_counts"""
+        """Tests update_filing_counts"""
         cik_no = '0001171592'
 
         update_filing_counts([cik_no])
@@ -89,7 +89,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Company.query.filter_by(cik_no=cik_no).first().filing_count == 1
 
     def test_send_data_to_db_savesCompanyInDb(self):
-        """This function tests if send_data_to_db saves the Company model in the database"""
+        """Tests if send_data_to_db saves the Company model in the database"""
         company = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         edgar_filing = EdgarFiling(accession_no="0001420506", cik_no="000984343",
                                      filing_date=datetime.fromisoformat("2002-04-10"))
@@ -116,7 +116,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Company.query.filter_by(cik_no='000984343').first() == company
 
     def test_send_data_to_db_savesEdgarFilingInDb(self):
-        """This function tests if send_data_to_db saves the EdgarFiling model in the database"""
+        """Tests if send_data_to_db saves the EdgarFiling model in the database"""
         company = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
         edgar_filing = EdgarFiling(accession_no="3453456", cik_no="8673434",
                                      filing_date=datetime.fromisoformat("2000-06-11"))
@@ -143,7 +143,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert EdgarFiling.query.filter_by(cik_no='8673434').first() == edgar_filing
 
     def test_send_data_to_db_savesData13fInDb(self):
-        """This function tests if send_data_to_db saves the Data13f model in the database"""
+        """Tests if send_data_to_db saves the Data13f model in the database"""
         company = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
         edgar_filing = EdgarFiling(accession_no="78945835", cik_no="009039443",
                                      filing_date=datetime.fromisoformat("2000-06-11"))
