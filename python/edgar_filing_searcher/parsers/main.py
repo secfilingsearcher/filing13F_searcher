@@ -48,6 +48,12 @@ def main():
     logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
+
+    def my_handler(exc_type, exc_value, exc_traceback):
+        logging.exception("Uncaught exception: {0}".format(str(exc_value)))
+
+    sys.excepthook = my_handler
+
     logging.info('Initializing job')
     try:
         filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
