@@ -7,7 +7,7 @@ from xml.etree import ElementTree
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
-from edgar_filing_searcher.parsers.errors import NoUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException, NoAccessionNo
 
 
 class Parser:
@@ -25,9 +25,12 @@ class Parser:
     @staticmethod
     def _parse_sec_accession_no(text_13f):
         """Returns the sec accession number from the 13f filing detail page"""
-        return re \
+        accession_no = re \
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
-                    text_13f).group(0)
+                    text_13f)
+        if not accession_no:
+            raise NoAccessionNo()
+        return accession_no.group(0)
 
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):

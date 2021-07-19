@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.errors import NoUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException, NoAccessionNo
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
@@ -93,20 +93,20 @@ def test_parser_setsData13f():
     assert actual == data_13f_table
 
 
-def test_parser_AccessionNoInvalid_raiseException():
-    """This function tests if parser raises the NoUrlException exception when"""
-    with pytest.raises(AttributeError):
+def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
+    """This function tests if parser raises the NoAccessionNo exception when the accession no is not found"""
+    with pytest.raises(NoAccessionNo):
         new_parser(filing_detail_text_13f_missing_accession_no(), primary_doc_xml_text(), infotable_xml_text())
 
 
-def test_parser_primaryDocXmlInvalid_raiseException():
+def test_parser_primaryDocXmlInvalid_raisesParseError():
     """This function tests if parser raises the ParseError exception when the primary_doc.xml file is invalid"""
     invalid_xml = ""
     with pytest.raises(ParseError):
         new_parser(filing_detail_text_13f(), invalid_xml, infotable_xml_text())
 
 
-def test_parser_XmlUrlInvalid_raiseException():
-    """This function tests if parser raises the NoUrlException exception when the xml Url is invalid"""
+def test_parser_XmlUrlInvalid_raisesNoUrlException():
+    """This function tests if parser raises the NoUrlException exception when the xml url is invalid"""
     with pytest.raises(NoUrlException):
         new_parser(filing_detail_text_13f_missing_urls(), primary_doc_xml_text(), infotable_xml_text())

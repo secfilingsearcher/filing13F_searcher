@@ -38,11 +38,9 @@ def ensure_13f_filing_detail_urls(edgar_current_events_text):
     sec_base_url = "https://www.sec.gov"
     url_list = []
     try:
-        parse_13f_filing_detail_urls(edgar_current_events_text)
+        for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):
+            url_list.append(sec_base_url + filing_detail_url_suffix)
     except NoUrlException:
         logging.critical("Found no 13f filing detail url suffixes.")
         sys.exit(-1)
-
-    for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):
-        url_list.append(sec_base_url + filing_detail_url_suffix)
     return url_list
