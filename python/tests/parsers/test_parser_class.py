@@ -4,84 +4,100 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
+from edgar_filing_searcher.parsers.errors import NoUrlException
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
-@pytest.fixture
 def filing_detail_text_13f():
     """This function creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
         return file.read()
 
+def filing_detail_text_13f_missing_urls():
+    """This function creates an fixture with edgar_current_events.html data"""
+    with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
+        return file.read()
 
-@pytest.fixture
 def primary_doc_xml_text():
     """This function creates an fixture with primary_doc.xml data"""
     with open("tests/fixtures/primary_doc.xml", "rt") as file:
         return file.read()
 
 
-@pytest.fixture
 def infotable_xml_text():
     """This function creates an fixture with infotable.xml data"""
     with open("tests/fixtures/infotable.xml", "rt") as file:
         return file.read()
 
 
-@pytest.fixture
-def parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
+def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     with patch('requests.get') as mock_function:
         mock_function.side_effect = [MagicMock(text=filing_detail_text_13f), MagicMock(text=primary_doc_xml_text),
                                      MagicMock(text=infotable_xml_text)]
         return Parser('')
 
 
+PARSER = new_parser(filing_detail_text_13f(), primary_doc_xml_text(), infotable_xml_text())
+
+
 SUFFIX_XML_URLS_LIST = ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
                         '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
 
 
-def test_parse_sec_accession_no(filing_detail_text_13f, parser):
+def test_parser_setsCompany():
+    """This function tests parser"""
+
+    company_1 = Company(cik_no="0001852858", company_name="Everhart Financial Group, Inc.", filing_count=0)
+
+    assert PARSER.company == company_1
+
+
+def test_parser_setsEdgarFiling():
     """This function tests parse_sec_accession_no"""
 
-    actual = parser.parse_sec_accession_no(filing_detail_text_13f)
+    edgar_filing_1 = EdgarFiling(accession_no="0001852858-21-000001", cik_no="0001852858", filing_date='03-26-2021')
 
-    assert actual == '0001852858-21-000001'
+    actual = PARSER.edgar_filing
 
-
-def test_parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text_13f, parser):
-    """This function tests parse_primary_doc_xml_and_infotable_xml_urls"""
-
-    actual = parser.parse_primary_doc_xml_and_infotable_xml_urls(filing_detail_text_13f)
-
-    assert actual == \
-           ['/Archives/edgar/data/1852858/000185285821000001/primary_doc.xml',
-            '/Archives/edgar/data/1852858/000185285821000001/infotable.xml']
+    assert PARSER.edgar_filing == edgar_filing_1
 
 
-def test_ensure_primary_doc_xml_url(parser):
-    """This function tests ensure_primary_doc_xml_url"""
+def test_parser_setsData13f():
+    """This function tests parse_sec_accession_no"""
 
-    actual = parser.ensure_primary_doc_xml_url(SUFFIX_XML_URLS_LIST)
+    data_13f_table = [Data13f(accession_no='0001852858-21-000001',
+                                cik_no='0001852858',
+                                name_of_issuer='ALTERYX INC',
+                                title_of_class='COM CL A',
+                                cusip='02156B103',
+                                value='353',
+                                ssh_prnamt='2893',
+                                ssh_prnamt_type='None',
+                                put_call='None',
+                                investment_discretion='SOLE',
+                                other_manager='None',
+                                voting_authority_sole='0',
+                                voting_authority_shared='0',
+                                voting_authority_none='2893')
+                        ]
 
-    assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml'
+    actual = PARSER.data_13f
+
+    assert actual == data_13f_table
 
 
-def test_ensure_primary_doc_xml_url_invalidText_raiseException(parser):
-    """This function tests if ensure_primary_doc_xml_url raises the CantFindUrlException exception"""
-    with pytest.raises(CantFindUrlException):
-        parser.ensure_primary_doc_xml_url("")
+def test_parser_asectionNoInvalid_raiseException():
+    """This function tests if parser raises the NoUrlException exception when"""
+    parser = new_parser(filing_detail_text_13f(), "primary_doc_xml_text()", infotable_xml_text())
 
 
-def test_ensure_infotable_xml_url(parser):
-    """This function tests ensure_infotable_xml_url"""
-
-    actual = parser.ensure_infotable_xml_url(SUFFIX_XML_URLS_LIST)
-
-    assert actual == 'https://www.sec.gov/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml'
+def test_parser_primaryDocXmlInvalid_raiseException():
+    """his function tests if ensure_primary_doc_xml_url raises the CantFindUrlException exception"""
+    parser = new_parser(filing_detail_text_13f(), "primary_doc_xml_text()", infotable_xml_text())
 
 
-def test_ensure_infotable_xml_url_invalidText_raiseException(parser):
-    """This function tests if ensure_infotable_xml_url raises the CantFindUrlException exception"""
-    with pytest.raises(CantFindUrlException):
-        parser.ensure_infotable_xml_url("")
+def test_parser_XmlUrlInvalid_raiseException():
+    """This function tests if parser raises the NoUrlException exception when the Xml Url is invalid"""
+    with pytest.raises(NoUrlException):
+        new_parser(filing_detail_text_13f_missing_urls(), primary_doc_xml_text(), infotable_xml_text())

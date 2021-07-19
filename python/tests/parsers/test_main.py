@@ -90,10 +90,10 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
     def test_send_data_to_db_savesCompanyInDb(self):
         """This function tests if send_data_to_db saves the Company model in the database"""
-        company_2 = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
-        edgar_filing_2 = EdgarFiling(accession_no="0001420506", cik_no="000984343",
+        company = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
+        edgar_filing = EdgarFiling(accession_no="0001420506", cik_no="000984343",
                                      filing_date=datetime.fromisoformat("2002-04-10"))
-        data_13f_table_2 = [Data13f(equity_holdings_id="67896567",
+        data_13f_table = [Data13f(equity_holdings_id="67896567",
                                     accession_no='0001420506',
                                     cik_no='00054654983',
                                     name_of_issuer='Agilent Technologies',
@@ -111,16 +111,16 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     )
                             ]
 
-        send_data_to_db(company_2, edgar_filing_2, data_13f_table_2)
+        send_data_to_db(company, edgar_filing, data_13f_table)
 
-        assert Company.query.filter_by(cik_no='000984343').first() == company_2
+        assert Company.query.filter_by(cik_no='000984343').first() == company
 
     def test_send_data_to_db_savesEdgarFilingInDb(self):
         """This function tests if send_data_to_db saves the EdgarFiling model in the database"""
-        company_3 = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
-        edgar_filing_3 = EdgarFiling(accession_no="3453456", cik_no="8673434",
+        company = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
+        edgar_filing = EdgarFiling(accession_no="3453456", cik_no="8673434",
                                      filing_date=datetime.fromisoformat("2000-06-11"))
-        data_13f_table_3 = [Data13f(equity_holdings_id="67896567",
+        data_13f_table = [Data13f(equity_holdings_id="67896567",
                                     accession_no='3453456',
                                     cik_no='654656465',
                                     name_of_issuer='Agilent Technologies',
@@ -138,16 +138,16 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     )
                             ]
 
-        send_data_to_db(company_3, edgar_filing_3, data_13f_table_3)
+        send_data_to_db(company, edgar_filing, data_13f_table)
 
-        assert EdgarFiling.query.filter_by(cik_no='8673434').first() == edgar_filing_3
+        assert EdgarFiling.query.filter_by(cik_no='8673434').first() == edgar_filing
 
     def test_send_data_to_db_savesData13fInDb(self):
         """This function tests if send_data_to_db saves the Data13f model in the database"""
-        company_4 = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
-        edgar_filing_4 = EdgarFiling(accession_no="78945835", cik_no="009039443",
+        company = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
+        edgar_filing = EdgarFiling(accession_no="78945835", cik_no="009039443",
                                      filing_date=datetime.fromisoformat("2000-06-11"))
-        data_13f_table_4 = [Data13f(equity_holdings_id="67896567",
+        data_13f_table = [Data13f(equity_holdings_id="67896567",
                                     accession_no='78945835',
                                     cik_no='009039443',
                                     name_of_issuer='Agilent Technologies',
@@ -165,6 +165,6 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                     )
                             ]
 
-        send_data_to_db(company_4, edgar_filing_4, data_13f_table_4)
+        send_data_to_db(company, edgar_filing, data_13f_table)
 
-        assert Data13f.query.filter_by(cik_no='009039443').first() == data_13f_table_4[0]
+        assert Data13f.query.filter_by(cik_no='009039443').first() == data_13f_table[0]

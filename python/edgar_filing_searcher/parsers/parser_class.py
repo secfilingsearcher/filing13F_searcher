@@ -7,7 +7,7 @@ from xml.etree import ElementTree
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException
 
 
 class Parser:
@@ -23,35 +23,28 @@ class Parser:
         self._parse()
 
     @staticmethod
-    def parse_sec_accession_no(text_13f):
+    def _parse_sec_accession_no(text_13f):
         """Returns the sec accession number from the 13f filing detail page"""
         return re \
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
                     text_13f).group(0)
 
     @staticmethod
-    def parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
+    def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
         """Returns the primary_doc.xml and infotable.xml base urls"""
         return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
     @staticmethod
-    def ensure_primary_doc_xml_url(primary_doc_xml_url_suffix):
+    def _ensure_xml_urls(xml_url_suffixes):
         """Adds base url to suffix url for primary_doc.xml url"""
-        if not primary_doc_xml_url_suffix:
-            raise CantFindUrlException("Found no primary_doc_xml_url suffix.")
+        if not xml_url_suffixes:
+            raise NoUrlException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
-        return sec_base_url + primary_doc_xml_url_suffix[0]
+        return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
+
 
     @staticmethod
-    def ensure_infotable_xml_url(infotable_xml_url_suffix):
-        """Adds base url to suffix url for infotable.xml url"""
-        if not infotable_xml_url_suffix:
-            raise CantFindUrlException("Found no infotable_xml_url suffix.")
-        sec_base_url = "https://www.sec.gov"
-        return sec_base_url + infotable_xml_url_suffix[-1]
-
-    @staticmethod
-    def parse_primary_doc_root(primary_doc_xml):
+    def _parse_primary_doc_root(primary_doc_xml):
         """Gets the root of the primary_doc.xml file"""
         text = get_text(primary_doc_xml)
         primary_doc_root = ElementTree.XML(text)
@@ -90,11 +83,10 @@ class Parser:
 
     def _parse(self):
         logging.debug('Initializing parser')
-        accession_no = self.parse_sec_accession_no(self._filing_detail_text)
-        xml_links = self.parse_primary_doc_xml_and_infotable_xml_urls(self._filing_detail_text)
-        primary_doc_xml_url = self.ensure_primary_doc_xml_url(xml_links)
-        infotable_xml_url = self.ensure_infotable_xml_url(xml_links)
-        root = self.parse_primary_doc_root(primary_doc_xml_url)
+        accession_no = self._parse_sec_accession_no(self._filing_detail_text)
+        xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self._filing_detail_text)
+        primary_doc_xml_url, infotable_xml_url = self._ensure_xml_urls(xml_links)
+        root = self._parse_primary_doc_root(primary_doc_xml_url)
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)

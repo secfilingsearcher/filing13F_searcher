@@ -6,7 +6,7 @@ import time
 
 import requests
 
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException
 
 
 def get_text(url):
@@ -29,7 +29,7 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
                                             edgar_current_events_text)
     if not filing_detail_url_suffixes:
-        raise CantFindUrlException()
+        raise NoUrlException()
     return filing_detail_url_suffixes
 
 
@@ -39,7 +39,7 @@ def ensure_13f_filing_detail_urls(edgar_current_events_text):
     url_list = []
     try:
         parse_13f_filing_detail_urls(edgar_current_events_text)
-    except CantFindUrlException:
+    except NoUrlException:
         logging.critical("Found no 13f filing detail url suffixes.")
         sys.exit(-1)
 
