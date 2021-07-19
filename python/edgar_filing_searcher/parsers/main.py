@@ -50,7 +50,8 @@ def main():
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 
     def my_handler(exc_type, exc_value, exc_traceback):
-        logging.exception("Uncaught exception: {0}".format(str(exc_value)))
+        logging.exception("Uncaught exception: %s %s %s",
+                          str(exc_type), str(exc_value), str(exc_traceback))
 
     sys.excepthook = my_handler
 
