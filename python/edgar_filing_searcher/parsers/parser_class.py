@@ -3,16 +3,20 @@
 import logging
 import re
 from xml.etree import ElementTree
+
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.errors import NoUrlException, NoAccessionNo
 
 
 class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
+        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
+                     filing_detail_url)
+        self._filing_detail_text = get_text(filing_detail_url)
         logging.info('Initialize parser for company_row, edgar_filing_row, '
                      'data_13f data for url %s', filing_detail_url)
         self.filing_detail_text = get_text(filing_detail_url)
@@ -24,37 +28,25 @@ class Parser:
     @staticmethod
     def _parse_sec_accession_no(text_13f):
         """Returns the sec accession number from the 13f filing detail page"""
-        return re \
+        accession_no = re \
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
-                    text_13f).group(0)
+                    text_13f)
+        if not accession_no:
+            raise NoAccessionNo()
+        return accession_no.group(0)
 
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
         """Returns the primary_doc.xml and infotable.xml base urls"""
-        xml_links = re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
-
-        if not xml_links[0]:
-            logging.critical("Primary_doc_xml_url suffix is empty.")
-            raise CantFindUrlException()
-
-        if not xml_links[-1]:
-            logging.critical("Infotable_xml_url suffix is empty.")
-            raise CantFindUrlException()
-
-        return xml_links
+        return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
     @staticmethod
-    def _parse_primary_doc_xml_url(suffix_xml_urls):
+    def _ensure_xml_urls(xml_url_suffixes):
         """Adds base url to suffix url for primary_doc.xml url"""
-        base_sec_url = "https://www.sec.gov"
-        return base_sec_url + suffix_xml_urls[0]
-
-
-    @staticmethod
-    def _parse_infotable_xml_url(partial_xml_url):
-        """Adds base url to suffix url for infotable.xml url"""
-        base_sec_url = "https://www.sec.gov"
-        return base_sec_url + partial_xml_url[-1]
+        if not xml_url_suffixes:
+            raise NoUrlException("Found no primary_doc_xml_url suffix.")
+        sec_base_url = "https://www.sec.gov"
+        return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
 
 
     @staticmethod
@@ -97,10 +89,9 @@ class Parser:
 
     def _parse(self):
         logging.debug('Initializing parser')
-        accession_no = self._parse_sec_accession_no(self.filing_detail_text)
-        xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
-        primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
-        infotable_xml_url = self._parse_infotable_xml_url(xml_links)
+        accession_no = self._parse_sec_accession_no(self._filing_detail_text)
+        xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self._filing_detail_text)
+        primary_doc_xml_url, infotable_xml_url = self._ensure_xml_urls(xml_links)
         root = self._parse_primary_doc_root(primary_doc_xml_url)
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
