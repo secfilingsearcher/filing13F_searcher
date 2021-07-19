@@ -48,7 +48,6 @@ class Parser:
         sec_base_url = "https://www.sec.gov"
         return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
 
-
     @staticmethod
     def _parse_primary_doc_root(primary_doc_xml):
         """Gets the root of the primary_doc.xml file"""
