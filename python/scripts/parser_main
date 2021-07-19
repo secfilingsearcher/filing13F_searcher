@@ -3,6 +3,5 @@
 """This file contains the main method"""
 from edgar_filing_searcher.parsers.main import main
 
-
 if __name__ == "__main__":
     main()
