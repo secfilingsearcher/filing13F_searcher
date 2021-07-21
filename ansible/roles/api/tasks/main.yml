@@ -1,0 +1,39 @@
+--- 
+- 
+  name: "Install all required dependencies"
+  yum: 
+    name: 
+      - "@development"
+      - python3
+      - python3-setuptools
+      - python3-pip
+      - python3-virtualenv
+    state: present
+- 
+  name: "Add User"
+  user: 
+    name: robo
+- 
+  git: 
+    dest: /opt/filing13F_searcher
+    repo: "https://github.com/eharley19/filing13F_searcher"
+    version: main
+  name: "Clone Repo"
+- 
+  file: 
+    owner: robo
+    path: /opt/filing13F_searcher
+    recurse: true
+  name: "Change owner to robo"
+- 
+  become_user: robo
+  name: "Install python setup.py"
+  pip: 
+    name: /opt/filing13F_searcher/python
+    virtualenv: ~/venv
+-
+  name: "Upload env template"
+  template: 
+    src: templates/api.env.j2
+    dest: /home/robo/api.env
+    owner: robo
