@@ -1,0 +1,4 @@
+#!/bin/bash
+source /home/robo/venv/bin/activate
+export DB_CONNECTION_STRING="postgresql://{{ hostvars.database.user }}:{{ hostvars.database.password }}@{{ hostvars.database.host }}/{{ hostvars.database.name }}"
+parser_main >> /var/log/filing_parser.log 2>> /var/log/filing_parser.err.log

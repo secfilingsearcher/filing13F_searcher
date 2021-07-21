@@ -1,0 +1,105 @@
+--- 
+- 
+  become: true
+  hosts: webserver
+  name: "Deploy website"
+  roles: 
+    - role: geerlingguy.nginx
+      vars:
+        nginx_vhosts:
+          - listen: '80 default_server'
+            server_name: _
+            root: '{{ repo_path }}/frontend/13f-app/build'
+            state: 'present'
+    - role: geerlingguy.supervisor
+      vars:
+        supervisor_programs:
+          - name: 'filing_api'
+            command: dotenv -f /home/robo/api.env /home/robo/venv/bin/gunicorn -b 0.0.0.0:5000 edgar_filing_searcher.api.wsgi:app
+            state: present
+    # - role: geerlingguy.ntp
+    #   ntp_timezone: America/New_York
+  vars: 
+    repo_path: /opt/filing13F_searcher
+  tasks: 
+    - 
+      name: "Install all required dependencies"
+      yum: 
+        name: 
+          - "@development"
+          - python3
+          - python3-setuptools
+          - python3-pip
+          - python3-virtualenv
+          - npm
+        state: present
+    - 
+      name: "Add User"
+      user: 
+        name: robo
+    - 
+      git: 
+        dest: /opt/filing13F_searcher
+        repo: "https://github.com/eharley19/filing13F_searcher"
+        version: main
+      name: "Clone Repo"
+    - 
+      file: 
+        owner: robo
+        path: /opt/filing13F_searcher
+        recurse: true
+      name: "Change owner to robo"
+    - 
+      become_user: robo
+      name: "Install python setup.py"
+      pip: 
+        name: /opt/filing13F_searcher/python
+        virtualenv: ~/venv
+    -
+      become_user: robo
+      name: "Install gunicorn"
+      pip:
+        name: gunicorn
+        virtualenv: ~/venv
+    - 
+      name: "NPM Install Dependencies"
+      command: 
+        cmd: npm install
+        chdir: "{{ repo_path }}/frontend/13f-app/"
+    - 
+      name: "NPM Run Build"
+      command: 
+        cmd: npm run build
+        chdir: "{{ repo_path }}/frontend/13f-app/"
+    -
+      name: "Upload env template"
+      template: 
+        src: templates/api.env.j2
+        dest: /home/robo/api.env
+        owner: robo
+    -
+      template:
+        src: templates/runparser.sh.j2
+        dest: /home/robo/runparser.sh
+        owner: robo
+        mode: "+x"
+    -
+      name: "Setup crontab for parser"
+      cron:
+        user: "robo"
+        name: "Filing Parser"
+        minute: "0"
+        hour: "2"
+        job: "/home/robo/runparser.sh"    
+    -
+      name: "Change log file owner"
+      file:
+        path: "/var/log/filing_parser.log"
+        owner: robo
+        state: touch
+    -
+      name: "Change log file owner"
+      file:
+        path: "/var/log/filing_parser.err.log"
+        owner: robo
+        state: touch

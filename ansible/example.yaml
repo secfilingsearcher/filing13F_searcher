@@ -1,0 +1,27 @@
+--- 
+-
+  become: true
+  hosts: webserver
+  name: "Start Services in order"
+  tasks: 
+      # -
+      #   name: "Upload env template"
+      #   template: 
+      #     src: templates/api.env.j2
+      #     dest: /home/robo/api.env
+      #     owner: robo
+      # - 
+      #   name: "Install dotenv"
+      #   yum: 
+      #     name: dotenv
+  roles:
+    - role: geerlingguy.supervisor
+      vars:
+        supervisor_programs:
+          - name: 'filing_api'
+            command: /home/robo/venv/bin/gunicorn -b 0.0.0.0:5000 edgar_filing_searcher.api.wsgi:app
+            state: present
+            configuration: |
+              user=robo
+              environment=DB_CONNECTION_STRING="postgresql://{{ hostvars.database.user }}:{{ hostvars.database.password }}@{{ hostvars.database.host }}/{{ hostvars.database.name }}"
+
