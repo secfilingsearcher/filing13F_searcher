@@ -56,11 +56,10 @@ def main():
     sys.excepthook = my_handler
 
     logging.info('Initializing job')
-    try:
-        filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
-    except NoUrlException:
-        logging.critical("There are no urls on the Edgar Current Events page.")
-        sys.exit(-1)
+    filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
+    if not filing_detail_urls:
+        logging.info("There are no urls on the Edgar Current Events page")
+        sys.exit(0)
     setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
