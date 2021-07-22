@@ -1,0 +1,34 @@
+--- 
+- 
+  name: "Install all required dependencies"
+  yum: 
+    name: 
+      - "@development"
+      - npm
+    state: present
+- 
+  name: "Add User"
+  user: 
+    name: robo
+- 
+  git: 
+    dest: /opt/filing13F_searcher
+    repo: "https://github.com/eharley19/filing13F_searcher"
+    version: main
+  name: "Clone Repo"
+- 
+  file: 
+    owner: robo
+    path: /opt/filing13F_searcher
+    recurse: true
+  name: "Change owner to robo"
+- 
+  name: "NPM Install Dependencies"
+  command: 
+    cmd: npm install
+    chdir: "{{ repo_path }}/frontend/13f-app/"
+- 
+  name: "NPM Run Build"
+  command: 
+    cmd: npm run build
+    chdir: "{{ repo_path }}/frontend/13f-app/"
