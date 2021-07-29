@@ -1,19 +1,22 @@
 # pylint: disable=too-few-public-methods
 """This file create a class Parser"""
+import logging
 import re
 from xml.etree import ElementTree
 
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text
-from edgar_filing_searcher.parsers.data_13f import data_13f_row
-from edgar_filing_searcher.parsers.errors import CantFindUrlException
+from edgar_filing_searcher.parsers.data_13f import data_13f_table
+from edgar_filing_searcher.parsers.errors import NoUrlException, NoAccessionNo
 
 
 class Parser:
-    """This class Parser parses 13 filings"""
+    """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        self.filing_detail_text = get_text(filing_detail_url)
+        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
+                     filing_detail_url)
+        self._filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
         self.data_13f = None
@@ -22,9 +25,12 @@ class Parser:
     @staticmethod
     def _parse_sec_accession_no(text_13f):
         """Returns the sec accession number from the 13f filing detail page"""
-        return re \
+        accession_no = re \
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
-                    text_13f).group(0)
+                    text_13f)
+        if not accession_no:
+            raise NoAccessionNo()
+        return accession_no.group(0)
 
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
@@ -32,20 +38,13 @@ class Parser:
         return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
     @staticmethod
-    def _parse_primary_doc_xml_url(suffix_xml_urls):
+    def _ensure_xml_urls(xml_url_suffixes):
         """Adds base url to suffix url for primary_doc.xml url"""
-        base_sec_url = "https://www.sec.gov"
-        if suffix_xml_urls:
-            return base_sec_url + suffix_xml_urls[0]
-        raise CantFindUrlException("primary_doc_xml_url suffix is empty")
+        if not xml_url_suffixes:
+            raise NoUrlException("Found no primary_doc_xml_url suffix.")
+        sec_base_url = "https://www.sec.gov"
+        return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
 
-    @staticmethod
-    def _parse_infotable_xml_url(partial_xml_url):
-        """Adds base url to suffix url for infotable.xml url"""
-        base_sec_url = "https://www.sec.gov"
-        if partial_xml_url:
-            return base_sec_url + partial_xml_url[-1]
-        raise CantFindUrlException("infotable_xml_url suffix is empty")
 
     @staticmethod
     def _parse_primary_doc_root(primary_doc_xml):
@@ -86,23 +85,29 @@ class Parser:
             return accepted_filing_date.text
 
     def _parse(self):
-        accession_no = self._parse_sec_accession_no(self.filing_detail_text)
-        xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self.filing_detail_text)
-        primary_doc_xml_url = self._parse_primary_doc_xml_url(xml_links)
-        infotable_xml_url = self._parse_infotable_xml_url(xml_links)
-
+        logging.debug('Initializing parser')
+        accession_no = self._parse_sec_accession_no(self._filing_detail_text)
+        xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self._filing_detail_text)
+        primary_doc_xml_url, infotable_xml_url = self._ensure_xml_urls(xml_links)
         root = self._parse_primary_doc_root(primary_doc_xml_url)
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
         filing_date = self._parse_primary_doc_accepted_filing_date(root)
+        logging.debug('accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
+                      ' root %s, cik %s, company_name %s, and filing date %s parsed', accession_no,
+                      xml_links, primary_doc_xml_url, infotable_xml_url, root, cik, company_name,
+                      filing_date)
 
         self.company = Company(
             cik_no=cik,
-            company_name=company_name)
+            company_name=company_name,
+            filing_count=0
+        )
 
         self.edgar_filing = EdgarFiling(
             accession_no=accession_no,
             cik_no=cik,
             filing_date=filing_date)
 
-        self.data_13f = data_13f_row(infotable_xml_url, accession_no, cik)
+        self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)
+        logging.debug('Parser completed')
