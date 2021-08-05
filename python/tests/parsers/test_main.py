@@ -1,5 +1,7 @@
 """This file contains tests for main"""
 # pylint: disable=redefined-outer-name
+import logging
+import sys
 from datetime import datetime
 from unittest.mock import patch, MagicMock
 
@@ -9,7 +11,8 @@ from flask_testing import TestCase
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_counts
+from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_counts, my_handler, \
+    change_sys_excepthook
 
 
 @pytest.fixture
@@ -168,3 +171,16 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         send_data_to_db(company, edgar_filing, data_13f_table)
 
         assert Data13f.query.filter_by(cik_no='009039443').first() == data_13f_table[0]
+
+
+def test_change_sys_excepthook():
+    change_sys_excepthook()
+    assert sys.excepthook is my_handler
+
+
+def test_my_handler(caplog):
+    try:
+        1 / 0
+    except ZeroDivisionError:
+        my_handler(*sys.exc_info())
+        assert "Uncaught exception" in caplog.text

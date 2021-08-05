@@ -42,17 +42,22 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     logging.info('Sent company_row, edgar_filing_row, data_13f_table data to Database')
 
 
+def my_handler(exc_type, exc_value, exc_traceback):
+    logging.exception("Uncaught exception: %s %s %s",
+                      str(exc_type), str(exc_value), str(exc_traceback))
+
+
+def change_sys_excepthook():
+    sys.excepthook = my_handler
+
+
 def main():
     """This function returns the cik, company name, and infotable data"""
     logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 
-    def my_handler(exc_type, exc_value, exc_traceback):
-        logging.exception("Uncaught exception: %s %s %s",
-                          str(exc_type), str(exc_value), str(exc_traceback))
-
-    sys.excepthook = my_handler
+    change_sys_excepthook()
 
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
