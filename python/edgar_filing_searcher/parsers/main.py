@@ -43,11 +43,13 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 
 
 def my_handler(exc_type, exc_value, exc_traceback):
+    """Log uncaught exceptions with logger."""
     logging.exception("Uncaught exception: %s %s %s",
                       str(exc_type), str(exc_value), str(exc_traceback))
 
 
 def change_sys_excepthook():
+    """Setup an exception handler to log uncaught exceptions."""
     sys.excepthook = my_handler
 
 
