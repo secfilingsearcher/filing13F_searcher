@@ -176,6 +176,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 def test_change_sys_excepthook():
     change_sys_excepthook()
     assert sys.excepthook is my_handler
+    sys.excepthook = sys.__excepthook__
 
 
 def test_my_handler(caplog):
