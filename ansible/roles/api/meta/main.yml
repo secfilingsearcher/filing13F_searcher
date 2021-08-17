@@ -3,5 +3,5 @@ dependencies:
     vars:
       supervisor_programs:
         - name: 'filing_api'
-          command: dotenv -f /home/robo/api.env /home/robo/venv/bin/gunicorn -b 0.0.0.0:5000 edgar_filing_searcher.api.wsgi:app
+          command: /home/robo/venv/bin/gunicorn -b 0.0.0.0:5000 edgar_filing_searcher.api.wsgi:app
           state: present
