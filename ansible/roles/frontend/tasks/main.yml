@@ -32,3 +32,5 @@
   command: 
     cmd: npm run build
     chdir: "{{ repo_path }}/frontend/13f-app/"
+  environment:
+    REACT_APP_API_SERVER: "/api/"
