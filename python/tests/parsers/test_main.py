@@ -1,5 +1,7 @@
 """This file contains tests for main"""
 # pylint: disable=redefined-outer-name
+import logging
+import sys
 from datetime import datetime
 from unittest.mock import patch, MagicMock
 
@@ -9,7 +11,8 @@ from flask_testing import TestCase
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_counts
+from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_counts, my_handler, \
+    change_sys_excepthook
 
 
 @pytest.fixture
@@ -92,24 +95,24 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the Company model in the database"""
         company = Company(cik_no="000984343", company_name="True Blue", filing_count=0)
         edgar_filing = EdgarFiling(accession_no="0001420506", cik_no="000984343",
-                                     filing_date=datetime.fromisoformat("2002-04-10"))
+                                   filing_date=datetime.fromisoformat("2002-04-10"))
         data_13f_table = [Data13f(equity_holdings_id="67896567",
-                                    accession_no='0001420506',
-                                    cik_no='00054654983',
-                                    name_of_issuer='Agilent Technologies',
-                                    title_of_class='COM',
-                                    cusip='00846U101',
-                                    value='22967078',
-                                    ssh_prnamt='180644',
-                                    ssh_prnamt_type='None',
-                                    put_call='None',
-                                    investment_discretion='SOLE',
-                                    other_manager='None',
-                                    voting_authority_sole='22967078',
-                                    voting_authority_shared='0',
-                                    voting_authority_none='0'
-                                    )
-                            ]
+                                  accession_no='0001420506',
+                                  cik_no='00054654983',
+                                  name_of_issuer='Agilent Technologies',
+                                  title_of_class='COM',
+                                  cusip='00846U101',
+                                  value='22967078',
+                                  ssh_prnamt='180644',
+                                  ssh_prnamt_type='None',
+                                  put_call='None',
+                                  investment_discretion='SOLE',
+                                  other_manager='None',
+                                  voting_authority_sole='22967078',
+                                  voting_authority_shared='0',
+                                  voting_authority_none='0'
+                                  )
+                          ]
 
         send_data_to_db(company, edgar_filing, data_13f_table)
 
@@ -119,24 +122,24 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the EdgarFiling model in the database"""
         company = Company(cik_no="8673434", company_name="Purple Company", filing_count=1)
         edgar_filing = EdgarFiling(accession_no="3453456", cik_no="8673434",
-                                     filing_date=datetime.fromisoformat("2000-06-11"))
+                                   filing_date=datetime.fromisoformat("2000-06-11"))
         data_13f_table = [Data13f(equity_holdings_id="67896567",
-                                    accession_no='3453456',
-                                    cik_no='654656465',
-                                    name_of_issuer='Agilent Technologies',
-                                    title_of_class='COM',
-                                    cusip='00846U101',
-                                    value='22967078',
-                                    ssh_prnamt='180644',
-                                    ssh_prnamt_type='None',
-                                    put_call='None',
-                                    investment_discretion='SOLE',
-                                    other_manager='None',
-                                    voting_authority_sole='22967078',
-                                    voting_authority_shared='0',
-                                    voting_authority_none='0'
-                                    )
-                            ]
+                                  accession_no='3453456',
+                                  cik_no='654656465',
+                                  name_of_issuer='Agilent Technologies',
+                                  title_of_class='COM',
+                                  cusip='00846U101',
+                                  value='22967078',
+                                  ssh_prnamt='180644',
+                                  ssh_prnamt_type='None',
+                                  put_call='None',
+                                  investment_discretion='SOLE',
+                                  other_manager='None',
+                                  voting_authority_sole='22967078',
+                                  voting_authority_shared='0',
+                                  voting_authority_none='0'
+                                  )
+                          ]
 
         send_data_to_db(company, edgar_filing, data_13f_table)
 
@@ -146,25 +149,39 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the Data13f model in the database"""
         company = Company(cik_no="009039443", company_name="Apple Industries", filing_count=0)
         edgar_filing = EdgarFiling(accession_no="78945835", cik_no="009039443",
-                                     filing_date=datetime.fromisoformat("2000-06-11"))
+                                   filing_date=datetime.fromisoformat("2000-06-11"))
         data_13f_table = [Data13f(equity_holdings_id="67896567",
-                                    accession_no='78945835',
-                                    cik_no='009039443',
-                                    name_of_issuer='Agilent Technologies',
-                                    title_of_class='COM',
-                                    cusip='00846U101',
-                                    value='22967078',
-                                    ssh_prnamt='180644',
-                                    ssh_prnamt_type='None',
-                                    put_call='None',
-                                    investment_discretion='SOLE',
-                                    other_manager='None',
-                                    voting_authority_sole='22967078',
-                                    voting_authority_shared='0',
-                                    voting_authority_none='0'
-                                    )
-                            ]
+                                  accession_no='78945835',
+                                  cik_no='009039443',
+                                  name_of_issuer='Agilent Technologies',
+                                  title_of_class='COM',
+                                  cusip='00846U101',
+                                  value='22967078',
+                                  ssh_prnamt='180644',
+                                  ssh_prnamt_type='None',
+                                  put_call='None',
+                                  investment_discretion='SOLE',
+                                  other_manager='None',
+                                  voting_authority_sole='22967078',
+                                  voting_authority_shared='0',
+                                  voting_authority_none='0'
+                                  )
+                          ]
 
         send_data_to_db(company, edgar_filing, data_13f_table)
 
         assert Data13f.query.filter_by(cik_no='009039443').first() == data_13f_table[0]
+
+
+def test_change_sys_excepthook():
+    change_sys_excepthook()
+    assert sys.excepthook is my_handler
+    sys.excepthook = sys.__excepthook__
+
+
+def test_my_handler(caplog):
+    try:
+        1 / 0
+    except ZeroDivisionError:
+        my_handler(*sys.exc_info())
+        assert "Uncaught exception" in caplog.text

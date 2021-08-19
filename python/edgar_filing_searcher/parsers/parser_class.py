@@ -14,8 +14,8 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
-                     filing_detail_url)
+        logging.info('Initialize parser for company_row, edgar_filing_row, '
+                     'data_13f data for url %s', filing_detail_url)
         self._filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -44,7 +44,6 @@ class Parser:
             raise NoUrlException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
         return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
-
 
     @staticmethod
     def _parse_primary_doc_root(primary_doc_xml):
