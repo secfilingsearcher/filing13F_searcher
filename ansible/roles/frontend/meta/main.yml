@@ -1,8 +1,0 @@
-dependencies:
-  - role: geerlingguy.nginx
-    vars:
-      nginx_vhosts:
-        - listen: '80 default_server'
-          server_name: _
-          root: '{{ repo_path }}/frontend/13f-app/build'
-          state: 'present'
