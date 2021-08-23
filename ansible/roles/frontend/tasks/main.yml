@@ -3,7 +3,7 @@
   name: "Install all required dependencies"
   yum: 
     name: 
-      - "@development"
+      - git
       - npm
     state: present
 - 
@@ -33,4 +33,4 @@
     cmd: npm run build
     chdir: "{{ repo_path }}/frontend/13f-app/"
   environment:
-    REACT_APP_API_SERVER: "/api/"
+    REACT_APP_API_SERVER: "/api"

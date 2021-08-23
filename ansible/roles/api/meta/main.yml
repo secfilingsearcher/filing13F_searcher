@@ -4,4 +4,6 @@ dependencies:
       supervisor_programs:
         - name: 'filing_api'
           command: /home/robo/venv/bin/gunicorn -b 0.0.0.0:5000 edgar_filing_searcher.api.wsgi:app
+          configuration: |
+            environment=DB_CONNECTION_STRING="postgresql://{{ hostvars.database.user }}:{{ hostvars.database.password }}@{{ hostvars.database.host }}/{{ hostvars.database.name }}"
           state: present
