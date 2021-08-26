@@ -15,6 +15,3 @@ def postgres_test():
     except:
         logging.critical("Invalid Url")
         raise InvalidConnectionStringException("Invalid Database Connection String Url")
-
-
-postgres_test()
