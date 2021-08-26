@@ -10,4 +10,4 @@ class NoAccessionNo(Exception):
 
 
 class InvalidConnectionStringException(Exception):
-    ""
+    """Raised when Connection String Invalid"""
