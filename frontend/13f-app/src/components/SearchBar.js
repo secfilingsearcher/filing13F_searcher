@@ -6,7 +6,7 @@ import './Button.css'
 const date = new Date()
 const today = date.toISOString().substr(0, 10)
 
-function SearchBar (props = { startDate: today, endDate: today}) {
+function SearchBar (props = { startDate: today, endDate: today }) {
   const [searchName, setSearchName] = useState('')
   const [searchStartDate, setSearchStartDate] = useState(props.startDate)
   const [searchEndDate, setSearchEndDate] = useState(props.endDate)
