@@ -2,6 +2,7 @@
 """This file create a class Parser"""
 import logging
 import re
+from datetime import datetime
 from xml.etree import ElementTree
 
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -14,8 +15,8 @@ class Parser:
     """This class Parser parses 13f filings"""
 
     def __init__(self, filing_detail_url):
-        logging.info('Parse company_row, edgar_filing_row, data_13f data for url %s',
-                     filing_detail_url)
+        logging.info('Initialize parser for company_row, edgar_filing_row, '
+                     'data_13f data for url %s', filing_detail_url)
         self._filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -44,7 +45,6 @@ class Parser:
             raise NoUrlException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
         return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
-
 
     @staticmethod
     def _parse_primary_doc_root(primary_doc_xml):
@@ -82,7 +82,7 @@ class Parser:
         for accepted_filing_date in primary_doc_root.findall(
                 'original:formData/original:signatureBlock/original:signatureDate',
                 namespaces):
-            return accepted_filing_date.text
+            return datetime.strptime(accepted_filing_date.text, '%m-%d-%Y')
 
     def _parse(self):
         logging.debug('Initializing parser')

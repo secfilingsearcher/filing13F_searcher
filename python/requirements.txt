@@ -1,4 +1,4 @@
 Flask==1.1.2
-Flask-SQLAlchemy
-psycopg2
-requests
+Flask-SQLAlchemy==2.5.1
+psycopg2==2.8.6
+requests==2.25.1
