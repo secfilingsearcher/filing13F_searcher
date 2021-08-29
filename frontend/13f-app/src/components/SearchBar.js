@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import './Button.css'
 
 const date = new Date()
 const today = date.toISOString().substr(0, 10)
 
-function SearchBar () {
+function SearchBar (props = { startDate: today, endDate: today}) {
   const [searchName, setSearchName] = useState('')
-  const [searchStartDate, setSearchStartDate] = useState(today)
-  const [searchEndDate, setSearchEndDate] = useState(today)
+  const [searchStartDate, setSearchStartDate] = useState(props.startDate)
+  const [searchEndDate, setSearchEndDate] = useState(props.endDate)
   const handleNameChange = event => { setSearchName(event.target.value) }
   const handleStartDateChange = event => { setSearchStartDate(event.target.value) }
   const handleEndDateChange = event => { setSearchEndDate(event.target.value) }
@@ -24,6 +25,11 @@ function SearchBar () {
                   </div>
                 </form>
           </>)
+}
+
+SearchBar.propTypes = {
+  startDate: PropTypes.string,
+  endDate: PropTypes.string
 }
 
 export default SearchBar
