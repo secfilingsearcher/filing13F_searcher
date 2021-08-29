@@ -1,12 +1,12 @@
 # pylint: disable=import-error
 """This file contains the main method"""
 import logging
+import sys
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
     ensure_13f_filing_detail_urls
-from edgar_filing_searcher.parsers.errors import NoUrlException
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
@@ -42,15 +42,30 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     logging.info('Sent company_row, edgar_filing_row, data_13f_table data to Database')
 
 
+def my_handler(exc_type, exc_value, exc_traceback):
+    """Log uncaught exceptions with logger."""
+    logging.exception("Uncaught exception: %s %s %s",
+                      str(exc_type), str(exc_value), str(exc_traceback))
+
+
+def change_sys_excepthook():
+    """Setup an exception handler to log uncaught exceptions."""
+    sys.excepthook = my_handler
+
+
 def main():
     """This function returns the cik, company name, and infotable data"""
     logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p', level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
+
+    change_sys_excepthook()
+
     logging.info('Initializing job')
     filing_detail_urls = create_url_list(URL_EDGAR_CURRENT_EVENTS)
     if not filing_detail_urls:
-        raise NoUrlException("There are no urls on the Edgar Current Events page")
+        logging.info("There are no urls on the Edgar Current Events page")
+        sys.exit(0)
     setup_db_connection()
     list_of_cik_no = []
     for filing_detail_url in filing_detail_urls:
