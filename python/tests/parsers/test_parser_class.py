@@ -1,6 +1,8 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
 from _elementtree import ParseError
+from datetime import datetime
+from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -67,7 +69,9 @@ def test_parser_setsCompany():
 def test_parser_setsEdgarFiling():
     """Tests if parser sets the EdgarFiling field"""
 
-    edgar_filing = EdgarFiling(accession_no="0001852858-21-000001", cik_no="0001852858", filing_date='03-26-2021')
+    edgar_filing = EdgarFiling(accession_no="0001852858-21-000001",
+                               cik_no="0001852858",
+                               filing_date=datetime.strptime('03-26-2021', '%m-%d-%Y'))
 
     assert PARSER.edgar_filing == edgar_filing
 
@@ -80,18 +84,19 @@ def test_parser_setsData13f():
                               name_of_issuer='ALTERYX INC',
                               title_of_class='COM CL A',
                               cusip='02156B103',
-                              value='353',
-                              ssh_prnamt='2893',
+                              value=Decimal(353),
+                              ssh_prnamt=2893,
                               ssh_prnamt_type='None',
                               put_call='None',
                               investment_discretion='SOLE',
                               other_manager='None',
-                              voting_authority_sole='0',
-                              voting_authority_shared='0',
-                              voting_authority_none='2893')
+                              voting_authority_sole=0,
+                              voting_authority_shared=0,
+                              voting_authority_none=2893)
                       ]
 
-    assert PARSER.data_13f == data_13f_table
+    # ignore equity_holdings_id
+    assert repr(PARSER.data_13f) == repr(data_13f_table)
 
 
 def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
