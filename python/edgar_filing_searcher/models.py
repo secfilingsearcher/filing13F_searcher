@@ -2,6 +2,7 @@
 import hashlib
 from dataclasses import dataclass
 from datetime import date
+from decimal import Decimal
 
 from edgar_filing_searcher.database import db
 
@@ -52,7 +53,7 @@ class Data13f(db.Model):
     name_of_issuer: str
     title_of_class: str
     cusip: str
-    value: float
+    value: Decimal
     ssh_prnamt: int
     ssh_prnamt_type: str
     put_call: str
