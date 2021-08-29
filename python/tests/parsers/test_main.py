@@ -1,9 +1,7 @@
 """This file contains tests for main"""
 # pylint: disable=redefined-outer-name
-import logging
 import sys
 from datetime import datetime
-from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
 import pytest

@@ -2,6 +2,7 @@
 """This file create a class Parser"""
 import logging
 import re
+from datetime import datetime
 from xml.etree import ElementTree
 
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -81,7 +82,7 @@ class Parser:
         for accepted_filing_date in primary_doc_root.findall(
                 'original:formData/original:signatureBlock/original:signatureDate',
                 namespaces):
-            return accepted_filing_date.text
+            return datetime.strptime(accepted_filing_date.text, '%m-%d-%Y')
 
     def _parse(self):
         logging.debug('Initializing parser')
