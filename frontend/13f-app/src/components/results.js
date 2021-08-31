@@ -21,12 +21,12 @@ function Results () {
               <tbody>
                 <tr>
                     <th>Company Name</th>
-                    <th>CIK_NO</th>
+                    <th>Number of Filings</th>
                 </tr>
                 {results.map(result => (
                     <tr key={result.cik_no}>
-                        <td>{result.company_name}</td>
-                        <td>{result.cik_no}</td>
+                        <td><a href={}>{result.company_name}</a></td>
+                        <td>{result.filing_count}</td>
                     </tr>
                 ))}
               </tbody>
