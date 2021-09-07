@@ -23,8 +23,9 @@ class EdgarFiling(db.Model):
     data_13f_rows = db.relationship("Data13f")
 
     def __repr__(self):
-        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_type='%s', filing_date='%s')>" % (
-            self.accession_no, self.cik_no, self.filing_type, self.filing_date)
+        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_type='%s', " \
+               "filing_date='%s')>" % (
+                   self.accession_no, self.cik_no, self.filing_type, self.filing_date)
 
 
 # pylint: disable=too-few-public-methods
