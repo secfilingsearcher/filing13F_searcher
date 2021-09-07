@@ -70,7 +70,7 @@ class Data13f(db.Model):
     name_of_issuer = db.Column(db.String)
     title_of_class = db.Column(db.String)
     cusip = db.Column(db.String)
-    value = db.Column(db.Numeric)
+    value = db.Column(db.Numeric(asdecimal=False))
     ssh_prnamt = db.Column(db.Integer)
     ssh_prnamt_type = db.Column(db.String)
     put_call = db.Column(db.String)
