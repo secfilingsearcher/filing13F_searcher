@@ -34,6 +34,13 @@ class Parser:
         return accession_no.group(0)
 
     @staticmethod
+    def _parse_filing_type(text_13f):
+        """Returns the filing type from the 13f filing detail page"""
+        # Type: <strong>13F-HR</strong>
+        filing_name_type = re.search('Type: <strong>(.+?)</strong>', text_13f)
+        return filing_name_type.group(1)
+
+    @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
         """Returns the primary_doc.xml and infotable.xml base urls"""
         return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
@@ -87,6 +94,7 @@ class Parser:
     def _parse(self):
         logging.debug('Initializing parser')
         accession_no = self._parse_sec_accession_no(self._filing_detail_text)
+        sec_filing_type = self._parse_filing_type(self._filing_detail_text)
         xml_links = self._parse_primary_doc_xml_and_infotable_xml_urls(self._filing_detail_text)
         primary_doc_xml_url, infotable_xml_url = self._ensure_xml_urls(xml_links)
         root = self._parse_primary_doc_root(primary_doc_xml_url)
@@ -107,7 +115,7 @@ class Parser:
         self.edgar_filing = EdgarFiling(
             accession_no=accession_no,
             cik_no=cik,
-            filing_type="13F",
+            filing_type=sec_filing_type,
             filing_date=filing_date)
 
         self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)
