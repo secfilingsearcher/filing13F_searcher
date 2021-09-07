@@ -107,6 +107,7 @@ class Parser:
         self.edgar_filing = EdgarFiling(
             accession_no=accession_no,
             cik_no=cik,
+            filing_type="13F",
             filing_date=filing_date)
 
         self.data_13f = data_13f_table(infotable_xml_url, accession_no, cik)
