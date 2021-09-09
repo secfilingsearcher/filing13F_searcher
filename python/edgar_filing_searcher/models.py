@@ -12,20 +12,17 @@ class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
     accession_no: str
     cik_no: str
-    filing_type: str
     filing_date: date
 
     __tablename__ = 'edgar_filing'
     accession_no = db.Column(db.String, primary_key=True)
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
-    filing_type = db.Column(db.String)
     filing_date = db.Column(db.DateTime)
     data_13f_rows = db.relationship("Data13f")
 
     def __repr__(self):
-        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_type='%s', " \
-               "filing_date='%s')>" % (
-                   self.accession_no, self.cik_no, self.filing_type, self.filing_date)
+        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_date='%s')>" % (
+            self.accession_no, self.cik_no, self.filing_date)
 
 
 # pylint: disable=too-few-public-methods
@@ -73,7 +70,7 @@ class Data13f(db.Model):
     name_of_issuer = db.Column(db.String)
     title_of_class = db.Column(db.String)
     cusip = db.Column(db.String)
-    value = db.Column(db.Numeric(asdecimal=False))
+    value = db.Column(db.Numeric)
     ssh_prnamt = db.Column(db.Integer)
     ssh_prnamt_type = db.Column(db.String)
     put_call = db.Column(db.String)

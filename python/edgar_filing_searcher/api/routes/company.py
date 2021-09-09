@@ -3,7 +3,7 @@ from datetime import datetime
 
 from flask import jsonify, Blueprint, request
 
-from edgar_filing_searcher.models import Company, EdgarFiling, Data13f
+from edgar_filing_searcher.models import Company, EdgarFiling
 
 company_blueprint = Blueprint('company', __name__)
 
@@ -29,7 +29,7 @@ def get_company():
 
 @company_blueprint.route('/company/<company_id>/edgarfiling/')
 def get_filings(company_id):
-    """Route for results for search by company id and date"""
+    """Route for results for search by company id"""
     date_format = '%Y-%m-%d'
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
@@ -45,18 +45,3 @@ def get_filings(company_id):
         )
 
     return jsonify(list(filings))
-
-
-@company_blueprint.route('/company/<company_id>/')
-def get_filings_from_company(company_id):
-    """Route for results for search by company id"""
-    filings = EdgarFiling.query.filter(EdgarFiling.cik_no.like(f"{company_id}%"))
-    return jsonify(list(filings))
-
-
-@company_blueprint.route('/company/<company_id>/<accession_id>')
-def get_filings_from_company_(company_id, accession_id):
-    """Route for results for search by accession no"""
-    data13f = Data13f.query. \
-        filter(Data13f.cik_no == company_id, Data13f.accession_no.like(f"{accession_id}%"))
-    return jsonify(list(data13f))
