@@ -36,7 +36,6 @@ class Parser:
     @staticmethod
     def _parse_filing_type(text_13f):
         """Returns the filing type from the 13f filing detail page"""
-        # Type: <strong>13F-HR</strong>
         filing_name_type = re.search('Type: <strong>(.+?)</strong>', text_13f)
         return filing_name_type.group(1)
 
