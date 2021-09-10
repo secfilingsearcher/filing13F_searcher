@@ -14,6 +14,7 @@ function App () {
       <Switch>
         <Route path='/' exact component= {Home} />
         <Route path='/search' exact component= {SearchResults} />
+        <Route path='/company/:companyId' exact component= {SearchResults} />
       </Switch>
       <Footer />
     </Router>
