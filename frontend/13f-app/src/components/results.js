@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import axios from 'axios'
 
 function Results () {
@@ -25,7 +25,7 @@ function Results () {
                 </tr>
                 {results.map(result => (
                     <tr key={result.cik_no}>
-                        <td><a href={}>{result.company_name}</a></td>
+                        <td><Link to={`/company/${result.cik_no}`}>{result.company_name}</Link></td>
                         <td>{result.filing_count}</td>
                     </tr>
                 ))}
