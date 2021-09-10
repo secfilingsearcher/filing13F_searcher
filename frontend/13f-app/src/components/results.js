@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import axios from 'axios'
+import './resultstable.css'
 
 function Results () {
   const [results, setResults] = useState([])
@@ -17,7 +18,7 @@ function Results () {
   }, [])
   return (
         <div>
-            <table>
+            <table id="companies">
               <tbody>
                 <tr>
                     <th>Company Name</th>
@@ -25,8 +26,8 @@ function Results () {
                 </tr>
                 {results.map(result => (
                     <tr key={result.cik_no}>
-                        <td><Link to={`/company/${result.cik_no}`}>{result.company_name}</Link></td>
-                        <td>{result.filing_count}</td>
+                        <td><Link to={`/company/${result.cik_no}`} id="linkstyle">{result.company_name}</Link></td>
+                        <td id="filingcount">{result.filing_count}</td>
                     </tr>
                 ))}
               </tbody>
