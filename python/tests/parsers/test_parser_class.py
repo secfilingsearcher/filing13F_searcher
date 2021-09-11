@@ -71,6 +71,7 @@ def test_parser_setsEdgarFiling():
 
     edgar_filing = EdgarFiling(accession_no="0001852858-21-000001",
                                cik_no="0001852858",
+                               filing_type="13F-HR",
                                filing_date=datetime.strptime('03-26-2021', '%m-%d-%Y'))
 
     assert PARSER.edgar_filing == edgar_filing
