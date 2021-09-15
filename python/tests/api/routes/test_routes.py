@@ -84,13 +84,13 @@ def test_get_filings_with_date_json(client):  # add date param
                                     'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT'}]
 
 
-def test_get_filings_from_company_id_and_filing_id_responseCode(client):
-    response = client.get(f'/filing/{ACCESSION_NO}/data/')
+def test_get_filings_by_accession_no_responseCode(client):
+    response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
     assert response.status_code == 200
 
 
-def test_get_filings_from_company_id_and_filing_id_json(client):
-    response = client.get(f'/filing/{ACCESSION_NO}/data/')
+def test_get_filings_by_accession_no_json(client):
+    response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '56464565767',
                                     'cusip': '00846U101',

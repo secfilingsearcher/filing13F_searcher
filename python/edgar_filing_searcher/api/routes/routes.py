@@ -23,7 +23,7 @@ def search_company():
     companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
 
     if company_name is None:
-        abort(400, description="Resource not found")
+        abort(400, description="Bad Requests")
 
     return jsonify(list(companies))
 
@@ -48,8 +48,8 @@ def get_filings_with_date(company_id):
     return jsonify(list(filings))
 
 
-@company_blueprint.route('/filing/<accession_no>/data/')
-def get_filings_from_company_id_and_filing_id(accession_no):
+@company_blueprint.route('/edgarfiling/<accession_no>/data/')
+def get_filings_by_accession_no(accession_no):
     """Route for search results of filing by filing id"""
     data13f = Data13f.query.filter(Data13f.accession_no == accession_no)
     return jsonify(list(data13f))
