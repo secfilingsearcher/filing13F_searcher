@@ -12,6 +12,7 @@ def data_13f_table(infotable_xml_url, accession_no_value, cik_value):
     data = []
     for info in infotable_root.findall('{*}infoTable'):
         infotable_row = Data13f(
+            equity_holdings_id="",
             accession_no=accession_no_value,
             cik_no=cik_value,
             name_of_issuer=parse_xml_text(info, '{*}nameOfIssuer'),
