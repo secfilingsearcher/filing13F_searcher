@@ -51,6 +51,7 @@ class Company(db.Model):
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
+    equity_holdings_id: str
     accession_no: str
     cik_no: str
     name_of_issuer: str
@@ -84,8 +85,8 @@ class Data13f(db.Model):
     voting_authority_none = db.Column(db.Integer)
 
     def __repr__(self):
-        return "<Data13f(equity_holdings_id='%s', accession_no='%s', cik_no='%s', name_of_issuer='%s', " \
-               "title_of_class='%s', cusip='%s', value='%s', " \
+        return "<Data13f(equity_holdings_id='%s', accession_no='%s', cik_no='%s', " \
+               "name_of_issuer='%s', title_of_class='%s', cusip='%s', value='%s', " \
                "ssh_prnamt='%s', ssh_prnamt_type='%s', put_call='%s', " \
                "investment_discretion='%s', other_manager='%s', voting_authority_sole='%s', " \
                "voting_authority_shared='%s', voting_authority_none='%s')>" % (

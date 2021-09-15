@@ -79,8 +79,8 @@ def test_parser_setsEdgarFiling():
 
 def test_parser_setsData13f():
     """Tests if parser sets the Data13f field"""
-
-    data_13f_table = [Data13f(accession_no='0001852858-21-000001',
+    data_13f_table = [Data13f(equity_holdings_id='75bd7f240b2454f369ce8cf5365161e7',
+                              accession_no='0001852858-21-000001',
                               cik_no='0001852858',
                               name_of_issuer='ALTERYX INC',
                               title_of_class='COM CL A',
