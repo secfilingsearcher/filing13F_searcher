@@ -84,12 +84,12 @@ class Data13f(db.Model):
     voting_authority_none = db.Column(db.Integer)
 
     def __repr__(self):
-        return "<Data13f(accession_no='%s', cik_no='%s', name_of_issuer='%s', " \
+        return "<Data13f(equity_holdings_id='%s', accession_no='%s', cik_no='%s', name_of_issuer='%s', " \
                "title_of_class='%s', cusip='%s', value='%s', " \
                "ssh_prnamt='%s', ssh_prnamt_type='%s', put_call='%s', " \
                "investment_discretion='%s', other_manager='%s', voting_authority_sole='%s', " \
                "voting_authority_shared='%s', voting_authority_none='%s')>" % (
-                   self.accession_no, self.cik_no, self.name_of_issuer,
+                   self.equity_holdings_id, self.accession_no, self.cik_no, self.name_of_issuer,
                    self.title_of_class, self.cusip, self.value,
                    self.ssh_prnamt, self.ssh_prnamt_type, self.put_call,
                    self.investment_discretion, self.other_manager, self.voting_authority_sole,
