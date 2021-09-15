@@ -1,6 +1,5 @@
 """This file checks the connection string"""
 import logging
-import os
 import psycopg2
 
 from edgar_filing_searcher.parsers.errors import InvalidConnectionStringException
