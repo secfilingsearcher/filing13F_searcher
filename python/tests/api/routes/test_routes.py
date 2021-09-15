@@ -52,44 +52,51 @@ def client():
         yield client
 
 
-def test_search_company_HasArguments_responseCode(client):
+def test_search_company_has_arguments_responseCode(client):
     response = client.get('/company/search?q=c')
     assert response.status_code == 200
 
 
-def test_search_company_HasArguments_json(client):
+def test_search_company_has_arguments_json(client):
     response = client.get('/company/search?q=c')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
-def test_search_company_HasNoArguments_responseCode(client):
+def test_search_company_has_no_arguments_responseCode(client):
     response = client.get('/company/search')
     assert response.status_code == 400
 
 
-def test_search_company_HasNoArguments_json(client):
+def test_search_company_has_no_arguments_json(client):
     response = client.get('/company/search')
     assert response.get_json() is None
 
 
-def test_get_filings_with_date_responseCode(client):  # add date param
+def test_get_edgarfilings_with_date_responseCode(client):
     response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
     assert response.status_code == 200
 
 
-def test_get_filings_with_date_json(client):  # add date param
+def test_get_edgarfilings_with_date_json(client): 
     response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
                                     'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT'}]
 
 
-def test_get_filings_by_accession_no_responseCode(client):
+def test_get_edgarfilings_with_date_DateBehavior(client): 
+    response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
+    assert response.get_json() == [{'accession_no': '0001420506-21-000830',
+                                    'cik_no': '0001171592',
+                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT'}]
+
+
+def test_get_edgarfilings_by_accession_no_responseCode(client):
     response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
     assert response.status_code == 200
 
 
-def test_get_filings_by_accession_no_json(client):
+def test_get_edgarfilings_by_accession_no_json(client):
     response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '56464565767',
