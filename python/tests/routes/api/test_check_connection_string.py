@@ -2,7 +2,7 @@
 """This file contains tests for check connection string"""
 import os
 import pytest
-from edgar_filing_searcher.api.routes.check_connection_string import postgres_test
+from edgar_filing_searcher.api.routes.check_connection_string import check_postgres_connection_string
 from edgar_filing_searcher.parsers.errors import InvalidConnectionStringException
 
 from datetime import datetime
@@ -55,18 +55,20 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         db.drop_all()
 
 
+os.environ["DB_CONNECTION_STRING"] = "sqlite://"
+
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQLALchemy Tests"""
 
-    def test_postgres_test(self):
+    def test_check_postgres_connection_string_valid_connection_string(self):
         """Tests if parse_13f_filing_detail_urls raises the NoUrlException exception"""
-        os.environ["DB_CONNECTION_STRING"] = "sqlite://"
-        actual = postgres_test()
+        actual = check_postgres_connection_string("sqlite://")
         assert actual == \
                ['https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html']
 
-    def test_check_connection_string_invalidConnectionString_raiseException(self):
+
+    def test_check_postgres_connection_string_invalid_connection_string_raiseException(self):
         """Tests if parse_13f_filing_detail_urls raises the NoUrlException exception"""
         os.environ["DB_CONNECTION_STRING"] = ""
         with pytest.raises(InvalidConnectionStringException):
-            postgres_test()
+            check_postgres_connection_string()

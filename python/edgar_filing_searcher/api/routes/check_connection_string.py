@@ -6,7 +6,7 @@ import psycopg2
 from edgar_filing_searcher.parsers.errors import InvalidConnectionStringException
 
 
-def postgres_test(db_connection_string:str):
+def check_postgres_connection_string(db_connection_string: str):
     """This function checks the connection string"""
     try:
         conn = psycopg2.connect(db_connection_string)
