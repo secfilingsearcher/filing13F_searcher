@@ -3,7 +3,7 @@ import os
 
 from flask import Flask
 
-from edgar_filing_searcher.api.routes.company import company_blueprint
+from edgar_filing_searcher.api.routes.routes import company_blueprint
 from edgar_filing_searcher.database import db
 
 
