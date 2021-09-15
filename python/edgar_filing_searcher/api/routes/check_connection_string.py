@@ -1,3 +1,4 @@
+""""""
 import logging
 import os
 import psycopg2
@@ -6,6 +7,7 @@ from edgar_filing_searcher.parsers.errors import InvalidConnectionStringExceptio
 
 
 def postgres_test():
+    """"""
     try:
         conn = psycopg2.connect(os.environ.get('DB_CONNECTION_STRING'))
         conn.close()
