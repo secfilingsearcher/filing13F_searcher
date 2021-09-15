@@ -2,6 +2,7 @@
 import hashlib
 from dataclasses import dataclass
 from datetime import date
+from decimal import Decimal
 
 from edgar_filing_searcher.database import db
 
@@ -11,17 +12,20 @@ class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
     accession_no: str
     cik_no: str
+    filing_type: str
     filing_date: date
 
     __tablename__ = 'edgar_filing'
     accession_no = db.Column(db.String, primary_key=True)
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
+    filing_type = db.Column(db.String)
     filing_date = db.Column(db.DateTime)
     data_13f_rows = db.relationship("Data13f")
 
     def __repr__(self):
-        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_date='%s')>" % (
-            self.accession_no, self.cik_no, self.filing_date)
+        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_type='%s', " \
+               "filing_date='%s')>" % (
+                   self.accession_no, self.cik_no, self.filing_type, self.filing_date)
 
 
 # pylint: disable=too-few-public-methods
@@ -47,6 +51,21 @@ class Company(db.Model):
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
+    accession_no: str
+    cik_no: str
+    name_of_issuer: str
+    title_of_class: str
+    cusip: str
+    value: Decimal
+    ssh_prnamt: int
+    ssh_prnamt_type: str
+    put_call: str
+    investment_discretion: str
+    other_manager: str
+    voting_authority_sole: int
+    voting_authority_shared: int
+    voting_authority_none: int
+
     __tablename__ = 'data_13f'
     equity_holdings_id = db.Column(db.String, primary_key=True)
     accession_no = db.Column(db.String, db.ForeignKey('edgar_filing.accession_no'))
