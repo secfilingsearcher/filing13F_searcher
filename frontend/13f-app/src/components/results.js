@@ -18,7 +18,7 @@ function Results () {
   }, [])
   return (
         <div>
-            <table id="companies">
+            <table id="company-table">
               <tbody>
                 <tr>
                     <th>Company Name</th>
@@ -26,8 +26,8 @@ function Results () {
                 </tr>
                 {results.map(result => (
                     <tr key={result.cik_no}>
-                        <td><Link to={`/company/${result.cik_no}`} id="linkstyle">{result.company_name}</Link></td>
-                        <td id="filingcount">{result.filing_count}</td>
+                        <td><Link to={`/company/${result.cik_no}`} className="company-page-link-style">{result.company_name}</Link></td>
+                        <td class="filing-count">{result.filing_count}</td>
                     </tr>
                 ))}
               </tbody>
