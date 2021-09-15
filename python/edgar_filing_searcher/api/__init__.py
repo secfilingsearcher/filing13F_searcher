@@ -11,6 +11,7 @@ from edgar_filing_searcher.database import db
 def create_app(configuration_file_obj=None):
     """Create Flask app and create database."""
     app = Flask(__name__)
+    postgres_test()
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     if configuration_file_obj:
