@@ -48,6 +48,7 @@ class Company(db.Model):
 
 
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=unexpected-keyword-arg
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
