@@ -11,4 +11,5 @@ def check_connection_string(db_connection_string: str):
         conn = some_engine.connect()
         conn.close()
     except Exception as error:
-        raise InvalidConnectionStringException(error, "Invalid Database Connection String Url") from error
+        raise InvalidConnectionStringException(
+            error, "Invalid Database Connection String Url") from error
