@@ -77,7 +77,7 @@ def test_get_edgarfilings_with_date_responseCode(client):
     assert response.status_code == 200
 
 
-def test_get_edgarfilings_with_date_json(client): 
+def test_get_edgarfilings_with_date_json(client):
     response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
@@ -85,7 +85,7 @@ def test_get_edgarfilings_with_date_json(client):
                                     'filing_type': None}]
 
 
-def test_get_edgarfilings_with_date_DateBehavior(client): 
+def test_get_edgarfilings_with_date_DateBehavior(client):
     response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
@@ -100,7 +100,8 @@ def test_get_edgarfilings_by_filing_id_responseCode(client):
 
 def test_get_edgarfilings_by_filing_id_json(client):
     response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
-    assert response.get_json() == [{'accession_no': '0001420506-21-000830',
+    assert response.get_json() == [{'equity_holdings_id': '67896567',
+                                    'accession_no': '0001420506-21-000830',
                                     'cik_no': '56464565767',
                                     'cusip': '00846U101',
                                     'investment_discretion': 'SOLE',
