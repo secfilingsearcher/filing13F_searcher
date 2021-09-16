@@ -81,14 +81,16 @@ def test_get_edgarfilings_with_date_json(client):
     response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
-                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT'}]
+                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT',
+                                    'filing_type': None}]
 
 
 def test_get_edgarfilings_with_date_DateBehavior(client): 
     response = client.get(f'/company/{COMPANY_CIK}/edgarfiling/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
-                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT'}]
+                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT',
+                                    'filing_type': None}]
 
 
 def test_get_edgarfilings_by_filing_id_responseCode(client):

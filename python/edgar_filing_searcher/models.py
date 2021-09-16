@@ -6,7 +6,7 @@ from decimal import Decimal
 
 from edgar_filing_searcher.database import db
 
-
+# pylint: disable=unexpected-keyword-arg
 @dataclass
 class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
@@ -50,7 +50,6 @@ class Company(db.Model):
 # pylint: disable=too-many-instance-attributes
 @dataclass
 class Data13f(db.Model):
-    # pylint: disable=unexpected-keyword-arg
     """Define Data13f Table"""
     accession_no: str
     cik_no: str
