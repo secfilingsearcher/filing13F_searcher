@@ -1,12 +1,11 @@
 """Create table models for database"""
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from decimal import Decimal
 
 from edgar_filing_searcher.database import db
 
-# pylint: disable=unexpected-keyword-arg
 @dataclass
 class EdgarFiling(db.Model):
     """Define EdgarFiling Table"""
@@ -51,6 +50,7 @@ class Company(db.Model):
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
+    equity_holdings_id: str = field(repr=False)
     accession_no: str
     cik_no: str
     name_of_issuer: str
