@@ -87,17 +87,17 @@ def test_parser_setsData13f():
                               cusip='02156B103',
                               value=Decimal(353),
                               ssh_prnamt=2893,
-                              ssh_prnamt_type='None',
-                              put_call='None',
+                              ssh_prnamt_type=None,
+                              put_call=None,
                               investment_discretion='SOLE',
-                              other_manager='None',
+                              other_manager=None,
                               voting_authority_sole=0,
                               voting_authority_shared=0,
                               voting_authority_none=2893)
                       ]
 
     # ignore equity_holdings_id
-    assert repr(PARSER.data_13f) == repr(data_13f_table)
+    assert (PARSER.data_13f) == (data_13f_table)
 
 
 def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
