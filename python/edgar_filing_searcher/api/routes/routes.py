@@ -48,8 +48,8 @@ def get_edgarfilings_with_date(company_id):
     return jsonify(list(filings))
 
 
-@company_blueprint.route('/edgarfiling/<accession_no>/data/')
-def get_edgarfilings_by_accession_no(filing_id):
+@company_blueprint.route('/edgarfiling/<filing_id>/data/')
+def get_edgarfilings_by_filing_id(filing_id):
     """Route for data for specified edgar filing"""
     data13f = Data13f.query.filter(Data13f.accession_no == filing_id)
     return jsonify(list(data13f))

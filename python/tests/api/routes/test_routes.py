@@ -91,12 +91,12 @@ def test_get_edgarfilings_with_date_DateBehavior(client):
                                     'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT'}]
 
 
-def test_get_edgarfilings_by_accession_no_responseCode(client):
+def test_get_edgarfilings_by_filing_id_responseCode(client):
     response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
     assert response.status_code == 200
 
 
-def test_get_edgarfilings_by_accession_no_json(client):
+def test_get_edgarfilings_by_filing_id_json(client):
     response = client.get(f'/edgarfiling/{ACCESSION_NO}/data/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '56464565767',
