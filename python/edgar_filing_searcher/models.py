@@ -1,6 +1,6 @@
 """Create table models for database"""
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from decimal import Decimal
 
@@ -22,11 +22,6 @@ class EdgarFiling(db.Model):
     filing_date = db.Column(db.DateTime)
     data_13f_rows = db.relationship("Data13f")
 
-    def __repr__(self):
-        return "<EdgarFiling(accession_no='%s', cik_no='%s', filing_type='%s', " \
-               "filing_date='%s')>" % (
-                   self.accession_no, self.cik_no, self.filing_type, self.filing_date)
-
 
 # pylint: disable=too-few-public-methods
 @dataclass
@@ -42,15 +37,12 @@ class Company(db.Model):
     filing_count = db.Column(db.Integer)
     filings = db.relationship("EdgarFiling")
 
-    def __repr__(self):
-        return "<Company(cik_no='%s', company_name='%s', filing_count='%s')>" % (
-            self.cik_no, self.company_name, self.filing_count)
-
 
 # pylint: disable=too-many-instance-attributes
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
+    equity_holdings_id: str = field(repr=False)
     accession_no: str
     cik_no: str
     name_of_issuer: str
@@ -82,18 +74,6 @@ class Data13f(db.Model):
     voting_authority_sole = db.Column(db.Integer)
     voting_authority_shared = db.Column(db.Integer)
     voting_authority_none = db.Column(db.Integer)
-
-    def __repr__(self):
-        return "<Data13f(accession_no='%s', cik_no='%s', name_of_issuer='%s', " \
-               "title_of_class='%s', cusip='%s', value='%s', " \
-               "ssh_prnamt='%s', ssh_prnamt_type='%s', put_call='%s', " \
-               "investment_discretion='%s', other_manager='%s', voting_authority_sole='%s', " \
-               "voting_authority_shared='%s', voting_authority_none='%s')>" % (
-                   self.accession_no, self.cik_no, self.name_of_issuer,
-                   self.title_of_class, self.cusip, self.value,
-                   self.ssh_prnamt, self.ssh_prnamt_type, self.put_call,
-                   self.investment_discretion, self.other_manager, self.voting_authority_sole,
-                   self.voting_authority_shared, self.voting_authority_none)
 
     def create_data_13f_primary_key(self):
         """Uses hash to generate Primary Key based on original row data for Data13f table"""
