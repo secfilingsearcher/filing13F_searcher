@@ -79,25 +79,24 @@ def test_parser_setsEdgarFiling():
 
 def test_parser_setsData13f():
     """Tests if parser sets the Data13f field"""
-
-    data_13f_table = [Data13f(accession_no='0001852858-21-000001',
+    data_13f_table = [Data13f(equity_holdings_id='75bd7f240b2454f369ce8cf5365161e7',
+                              accession_no='0001852858-21-000001',
                               cik_no='0001852858',
                               name_of_issuer='ALTERYX INC',
                               title_of_class='COM CL A',
                               cusip='02156B103',
                               value=Decimal(353),
                               ssh_prnamt=2893,
-                              ssh_prnamt_type='None',
-                              put_call='None',
+                              ssh_prnamt_type=None,
+                              put_call=None,
                               investment_discretion='SOLE',
-                              other_manager='None',
+                              other_manager=None,
                               voting_authority_sole=0,
                               voting_authority_shared=0,
                               voting_authority_none=2893)
                       ]
 
-    # ignore equity_holdings_id
-    assert repr(PARSER.data_13f) == repr(data_13f_table)
+    assert PARSER.data_13f == data_13f_table
 
 
 def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
