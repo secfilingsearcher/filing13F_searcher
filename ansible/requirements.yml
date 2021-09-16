@@ -1,0 +1,6 @@
+# Install nginx role from the Ansible Galaxy
+- src: geerlingguy.nginx
+# Install chrontab role from the Ansible Galaxy
+- src: geerlingguy.ntp
+# Install supervisor role from the Ansible Galaxy
+- src: geerlingguy.supervisor
