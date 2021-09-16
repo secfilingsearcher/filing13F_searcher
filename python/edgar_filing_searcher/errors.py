@@ -7,3 +7,7 @@ class NoUrlException(Exception):
 
 class NoAccessionNo(Exception):
     """Raised when there is no accession no"""
+
+
+class InvalidConnectionStringException(Exception):
+    """Raised when Connection String Invalid"""

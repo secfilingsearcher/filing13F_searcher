@@ -8,7 +8,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.errors import NoUrlException, NoAccessionNo
+from edgar_filing_searcher.errors import NoUrlException, NoAccessionNo
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
