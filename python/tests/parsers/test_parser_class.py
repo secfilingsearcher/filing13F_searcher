@@ -96,8 +96,7 @@ def test_parser_setsData13f():
                               voting_authority_none=2893)
                       ]
 
-    # ignore equity_holdings_id
-    assert (PARSER.data_13f) == (data_13f_table)
+    assert PARSER.data_13f == data_13f_table
 
 
 def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
