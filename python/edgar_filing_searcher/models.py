@@ -51,7 +51,6 @@ class Company(db.Model):
 @dataclass
 class Data13f(db.Model):
     """Define Data13f Table"""
-    equity_holdings_id: str
     accession_no: str
     cik_no: str
     name_of_issuer: str
