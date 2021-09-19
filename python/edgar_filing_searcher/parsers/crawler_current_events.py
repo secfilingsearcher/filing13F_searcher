@@ -6,7 +6,7 @@ import time
 
 import requests
 
-from edgar_filing_searcher.parsers.errors import NoUrlException
+from edgar_filing_searcher.errors import NoUrlException
 
 
 def get_text(url):
