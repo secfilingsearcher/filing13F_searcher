@@ -23,8 +23,7 @@ def search_company():
         return company_by_company_name(request)
     if "name_of_issuer" in request.args:
         return company_by_invested_company(request)
-    else:
-        return abort(400, description="Bad Request")
+    return abort(400, description="Bad Request")
 
 
 def company_by_company_name(request_):
