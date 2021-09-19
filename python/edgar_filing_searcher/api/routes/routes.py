@@ -21,7 +21,7 @@ def search_company():
     """Search for companies by company name or name of issuer"""
     if "company_name" in request.args:
         return company_by_company_name(request)
-    elif "name_of_issuer" in request.args:
+    if "name_of_issuer" in request.args:
         return company_by_invested_company(request)
     else:
         return abort(400, description="Bad Request")
