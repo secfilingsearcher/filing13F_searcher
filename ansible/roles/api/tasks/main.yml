@@ -30,12 +30,4 @@
   become: ansible_common_remote_group
   become_user: robo
   name: "Install python setup.py"
-  pip:
-    name: /opt/filing13F_searcher/python
-    virtualenv: ~/venv
--
-  name: "Upload env template"
-  template: 
-    src: templates/api.env.j2
-    dest: /home/robo/api.env
-    owner: robo
+  
