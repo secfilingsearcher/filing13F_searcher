@@ -6,7 +6,7 @@ function Results () {
   const [results, setResults] = useState([])
   const location = useLocation()
   const params = new URLSearchParams(location.search)
-  const { q, startDate, endDate } = { q: params.get('company_name'), { q: params.get('name_of_issuer'), startDate: params.get('startDate'), endDate: params.get('endDate') }
+  const { q, startDate, endDate } = { companyName: params.get('company_name'), { nameOfIssuer: params.get('name_of_issuer'), startDate: params.get('startDate'), endDate: params.get('endDate') }
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_SERVER}/company/search?q=${q}&start_date=${startDate}&end_date=${endDate}`)
