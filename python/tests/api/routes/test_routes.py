@@ -52,13 +52,23 @@ def client():
         yield client
 
 
-def test_search_company_has_arguments_responseCode(client):
-    response = client.get('/company/search?q=c')
+def test_search_company_name_company_has_arguments_responseCode(client):
+    response = client.get('/company/search?company_name=Cool')
     assert response.status_code == 200
 
 
-def test_search_company_has_arguments_json(client):
-    response = client.get('/company/search?q=c')
+def test_search_company_name_company_has_arguments_json(client):
+    response = client.get('/company/search?company_name=Cool')
+    assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+
+
+def test_search_name_of_issuer_company_has_arguments_responseCode(client):
+    response = client.get('/company/search?name_of_issuer=Agilent')
+    assert response.status_code == 200
+
+
+def test_search_name_of_issuer_company_has_arguments_json(client):
+    response = client.get('/company/search?name_of_issuer=Agilent')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
