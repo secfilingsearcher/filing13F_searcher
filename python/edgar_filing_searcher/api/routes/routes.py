@@ -18,17 +18,18 @@ def after_request(response):
 
 @company_blueprint.route('/company/search')
 def search_company():
-    """Search for companies by company name"""
+    """Search for companies by company name or name of issuer"""
     if "company_name" in request.args:
         return company_by_company_name(request)
     elif "name_of_issuer" in request.args:
         return company_by_invested_company(request)
     else:
-        abort(400, description="Bad Request")
+        return abort(400, description="Bad Request")
 
 
-def company_by_company_name(request):
-    company_name = request.args.get('company_name')
+def company_by_company_name(request_):
+    """Search for companies by name of issuer"""
+    company_name = request_.args.get('company_name')
     companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
 
     if company_name is None:
@@ -36,9 +37,10 @@ def company_by_company_name(request):
 
     return jsonify(list(companies))
 
-def company_by_invested_company(request):
+
+def company_by_invested_company(request_):
     """Search for companies by company name"""
-    name_of_issuer = request.args.get('name_of_issuer')
+    name_of_issuer = request_.args.get('name_of_issuer')
     companies = Company.query \
         .join(EdgarFiling) \
         .join(Data13f) \
@@ -75,4 +77,3 @@ def get_edgarfilings_by_filing_id(filing_id):
     """Route for data for specified edgar filing"""
     data13f = Data13f.query.filter(Data13f.accession_no == filing_id)
     return jsonify(list(data13f))
-
