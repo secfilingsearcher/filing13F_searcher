@@ -22,7 +22,7 @@
     color: royalblue;
 }
   
-#company-table tr:nth-child(even){
+#company-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
   
