@@ -33,16 +33,13 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     return filing_detail_url_suffixes
 
 
-def get_specific_date_cik_no_and_accession_no(date: datetime):
-    full_date = datetime.strptime(date, '%b %d %Y')
+def get_specific_date_cik_no_and_accession_no(full_date: datetime):
     quarter = (full_date.date().month // 4) + 1
-    month_as_decimal = datetime.strptime(full_date, '%y')
-    date_as_decimal = datetime.strptime(full_date, '%d')
-    year_without_century = datetime.strptime(full_date, '%m')
+    short = full_date.strftime('%Y%m%d')
 
     base_url = "https://www.sec.gov/Archives/edgar/daily-index"
     search_url = base_url + "/" + f'{full_date.date().year}' + "/" + f'QTR{quarter}' + "/" \
-                 + f'company.{month_as_decimal}{date_as_decimal}{year_without_century}.idx'
+                 + f'company.{short}.idx'
 
     response = requests.get(
         search_url,

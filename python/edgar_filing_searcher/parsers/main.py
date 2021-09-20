@@ -4,7 +4,6 @@ import argparse
 import logging
 import sys
 from datetime import date, datetime
-import traceback
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -77,7 +76,7 @@ def main():
     for date_ in generate_dates(start_date, end_date):
         filing_detail_urls = create_url_list(date_)
         if not filing_detail_urls:
-            logging.info("There are no urls on the Edgar Current Events page")
+            logging.info("There are no urls on the Edgar Daily Index page")
             sys.exit(0)
         setup_db_connection()
         list_of_cik_no = []
