@@ -4,6 +4,8 @@ import Footer from './components/Footer'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/pages/home'
 import SearchResults from './components/pages/searchResults'
+import FilingsPage from './components/pages/filinglistpage'
+
 import './App.css'
 
 function App () {
@@ -15,6 +17,7 @@ function App () {
         <Route path='/' exact component= {Home} />
         <Route path='/search' exact component= {SearchResults} />
         <Route path='/company/:companyId' exact component= {SearchResults} />
+        <Route path='/company/:companyId/edgarfiling/' exact component= {FilingsPage} />
       </Switch>
       <Footer />
     </Router>
