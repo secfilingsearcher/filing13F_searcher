@@ -23,9 +23,9 @@
     background-color: #f2f2f2;
 }
   
-#filings-list tr:hover {
-    background-color: #ddd;
-}
+/* .filing-date td:hover {
+    background-color:;
+} */
   
 #filing-list th {
     padding-top: 12px;
