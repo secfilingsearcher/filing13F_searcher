@@ -11,3 +11,7 @@ class NoAccessionNo(Exception):
 
 class InvalidConnectionStringException(Exception):
     """Raised when Connection String Invalid"""
+
+
+class InvalidDate(Exception):
+    """Raised when Connection String Invalid"""

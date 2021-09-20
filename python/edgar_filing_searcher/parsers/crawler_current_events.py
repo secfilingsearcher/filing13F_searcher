@@ -3,10 +3,11 @@ import logging
 import re
 import sys
 import time
+from datetime import datetime, timedelta
 
 import requests
 
-from edgar_filing_searcher.errors import NoUrlException
+from edgar_filing_searcher.errors import NoUrlException, InvalidDate
 
 
 def get_text(url):
@@ -32,14 +33,47 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     return filing_detail_url_suffixes
 
 
-def ensure_13f_filing_detail_urls(edgar_current_events_text):
+def get_specific_date_cik_no_and_accession_no(date: datetime):
+    full_date = datetime.strptime(date, '%b %d %Y')
+    quarter = (full_date.date().month // 4) + 1
+    month_as_decimal = datetime.strptime(full_date, '%y')
+    date_as_decimal = datetime.strptime(full_date, '%d')
+    year_without_century = datetime.strptime(full_date, '%m')
+
+    base_url = "https://www.sec.gov/Archives/edgar/daily-index"
+    search_url = base_url + "/" + f'{full_date.date().year}' + "/" + f'QTR{quarter}' + "/" \
+                 + f'company.{month_as_decimal}{date_as_decimal}{year_without_century}.idx'
+
+    response = requests.get(
+        search_url,
+        headers={"user-agent": "filing_13f_searcher"}
+    )
+    if response.status_code != 200:
+        logging.warning("Unexpected status code %s", response.status_code)
+
+    time.sleep(1)
+    full_text = response.text
+
+    return re.findall('(?<=edgar/data/)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
+
+
+def ensure_13f_filing_detail_urls(date_filing_detail_url_cik_no_and_accession_nos):
     """Returns the 13f filing detail url"""
-    sec_base_url = "https://www.sec.gov"
-    url_list = []
+    specific_date_filing_detail_url_list = []
     try:
-        for filing_detail_url_suffix in parse_13f_filing_detail_urls(edgar_current_events_text):
-            url_list.append(sec_base_url + filing_detail_url_suffix)
+        for cik_no_and_accession_no in date_filing_detail_url_cik_no_and_accession_nos:
+            specific_date_filing_detail_url_list.append = "https://www.sec.gov/Archives/edgar/data/" \
+                                                          + cik_no_and_accession_no + "-index.html"
     except NoUrlException:
-        logging.critical("Found no 13f filing detail url suffixes.")
+        logging.critical("Found no 13f cik_no_and_accession_no.")
         sys.exit(-1)
-    return url_list
+    return specific_date_filing_detail_url_list
+
+
+def generate_dates(start_date: datetime, end_date: datetime):
+    """Returns the html and text from the url"""
+    delta = timedelta(days=1)
+
+    while start_date <= end_date:
+        yield start_date
+        start_date += delta
