@@ -1,4 +1,4 @@
-#filings-list {
+#filing-data {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 80%;
@@ -6,20 +6,20 @@
     margin-left: 25px;
 }
 
-#filings-list h1 {
+#filing-data h1 {
     padding-bottom: 50px;
 }
 
-#filings-list table {
+#filing-data table {
     align-self: center;
 }
 
-#filings-list td, #filings-list th {
+#filing-data td, #filing-data th {
     border: 5px solid #ddd;
     padding: 8px;
 }
   
-#filings-list tr:nth-child(even) {
+#filing-data tr:nth-child(even) {
     background-color: #f2f2f2;
 }
   
@@ -27,7 +27,7 @@
     background-color:;
 } */
   
-#filings-list th {
+#filing-data th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

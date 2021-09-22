@@ -1,18 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useLocation, Link } from 'react-router-dom'
+import axios from 'axios'
 import './CompanyFilingList.css'
 
 function FilingsList () {
-  const result = {
-    company_name: 'Dummy Company',
-    cik_no: 1234,
-    ascension_number: 1234,
-    endDate: '12/31/21'
-  }
-
+  const [results, setResults] = useState([])
+  const { state } = useLocation()
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_SERVER}/company/${state.cik_no}/edgarfiling/`)
+      .then(res => {
+        const filings = res.data
+        setResults(filings)
+      })
+  }, [])
   return (
         <div id='filings-list'>
-            <h1>{result.company_name}</h1>
+            <h1>{state.company_name}</h1>
 
             <table>
               <tbody>
@@ -20,10 +23,12 @@ function FilingsList () {
                     <th>Ascension Number</th>
                     <th>Date</th>
                 </tr>
-                <tr key={result.cik_no}>
-                    <td>{result.ascension_number}</td>
-                    <td className="filing-date"><Link to={result.cik_no} className="filing-link-style">{result.endDate}</Link></td>
-                </tr>
+                {results.map(result => (
+                    <tr key={result.accession_no}>
+                      <td><Link to={{ pathname: `/edgarfiling/${result.accession_no}/data/`, state: result }}>{result.accession_no}</Link></td>
+                      <td className="filing-date">{result.filing_date}</td>
+                    </tr>
+                ))}
               </tbody>
             </table>
         </div>
