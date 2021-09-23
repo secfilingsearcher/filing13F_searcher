@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import './filingdata.css'
 
 function FilingData () {
-  const [result, setResults] = useState([])
-  const { state } = useLocation()
+  const [results, setResults] = useState([])
+  const { filingId } = useParams()
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_SERVER}/edgarfiling/${state.accession_no}/data/`)
+    axios.get(`${process.env.REACT_APP_API_SERVER}/edgarfiling/${filingId}/data/`)
       .then(res => {
         const data = res.data
         setResults(data)
-        console.log(data)
       })
+    // axios.get(`${process.env.REACT_APP_API_SERVER}/company/${companyId}`)
+    //   .then(res => {
+    //     const data = res.data
+    //     setCompany(data)
+    //   })
   }, [])
   return (
         <div className='filing-data'>
-            <h1>{state.accession_no}</h1>
+            <h1>Company Name: {filingId}</h1>
 
             <table>
               <tbody>
@@ -25,11 +29,13 @@ function FilingData () {
                     <th>Title of Class</th>
                     <th>Value</th>
                 </tr>
+                {results.map(result => (
                     <tr key={result.accession_no}>
                       <td>{result.name_of_issuer}</td>
                       <td>{result.title_of_class}</td>
                       <td>{result.value}</td>
                     </tr>
+                ))}
               </tbody>
             </table>
         </div>
