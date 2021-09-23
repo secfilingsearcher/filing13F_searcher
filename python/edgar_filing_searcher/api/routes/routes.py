@@ -38,7 +38,7 @@ def company_by_company_name(company_name):
 
 
 def company_by_invested_company(request_):
-    """Search for companies by company name"""
+    """Search for companies by invested company"""
     name_of_issuer = request_.args.get('name_of_issuer')
     if name_of_issuer is None:
         abort(400, description="Bad Request")
