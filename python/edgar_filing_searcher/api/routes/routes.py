@@ -55,9 +55,9 @@ def get_edgarfilings_by_filing_id(filing_id):
     return jsonify(list(data13f))
 
 
-@company_blueprint.route('/company/<company_id>/data/')
-def get_company_by_filing_id(company_id):
-    """Route for data for specified edgar filing"""
+@company_blueprint.route('/company/<company_id>/')
+def get_company_by_company_id(company_id):
+    """Route company for company_id"""
     company = Company.query.filter(Company.cik_no == company_id).first()
     if company is None:
         return abort(404, description="Not Found")
