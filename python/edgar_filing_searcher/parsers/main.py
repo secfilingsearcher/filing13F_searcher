@@ -2,6 +2,7 @@
 """This file contains the main method"""
 import logging
 import sys
+import traceback
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -44,8 +45,8 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 
 def my_handler(exc_type, exc_value, exc_traceback):
     """Log uncaught exceptions with logger."""
-    logging.exception("Uncaught exception: %s %s %s",
-                      str(exc_type), str(exc_value), str(exc_traceback))
+    logging.exception("Uncaught exception: %s",
+                      ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback)))
 
 
 def change_sys_excepthook():

@@ -16,6 +16,7 @@ class FlaskSqlAlchemyTestConfiguration:
 
 
 COMPANY_CIK = "0001171592"
+FALSE_COMPANY_CIK = "1"
 ACCESSION_NO = '0001420506-21-000830'
 
 
@@ -52,22 +53,42 @@ def client():
         yield client
 
 
-def test_search_company_has_arguments_responseCode(client):
-    response = client.get('/company/search?q=c')
+def test_search_company_qArgument_responseCode(client):
+    response = client.get('/company/search?q=Cool')
     assert response.status_code == 200
 
 
-def test_search_company_has_arguments_json(client):
-    response = client.get('/company/search?q=c')
+def test_search_company_qArgument_json(client):
+    response = client.get('/company/search?q=Cool')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
-def test_search_company_has_no_arguments_responseCode(client):
+def test_search_company_companyNameArgument_responseCode(client):
+    response = client.get('/company/search?company_name=Cool')
+    assert response.status_code == 200
+
+
+def test_search_company_companyNameArgument_json(client):
+    response = client.get('/company/search?company_name=Cool')
+    assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+
+
+def test_search_company_nameOfIssuerArgument_responseCode(client):
+    response = client.get('/company/search?name_of_issuer=Agilent')
+    assert response.status_code == 200
+
+
+def test_search_company_nameOfIssuerArgument_json(client):
+    response = client.get('/company/search?name_of_issuer=Agilent')
+    assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+
+
+def test_search_company_noArguments_responseCode(client):
     response = client.get('/company/search')
     assert response.status_code == 400
 
 
-def test_search_company_has_no_arguments_json(client):
+def test_search_company_noArguments_json(client):
     response = client.get('/company/search')
     assert response.get_json() is None
 
@@ -115,3 +136,18 @@ def test_get_edgarfilings_by_filing_id_json(client):
                                     'voting_authority_none': 0,
                                     'voting_authority_shared': 0,
                                     'voting_authority_sole': 22967078}]
+
+
+def test_get_company_by_company_id_responseCode(client):
+    response = client.get(f'/company/{COMPANY_CIK}')
+    assert response.status_code == 200
+
+
+def test_get_company_by_company_id_json(client):
+    response = client.get(f'/company/{COMPANY_CIK}')
+    assert response.get_json() == {'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}
+
+
+def test_get_company_by_company_id_failure(client):
+    response = client.get(f'/company/{FALSE_COMPANY_CIK}')
+    assert response.status_code == 404
