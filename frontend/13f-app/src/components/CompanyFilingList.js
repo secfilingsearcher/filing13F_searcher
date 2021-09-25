@@ -21,7 +21,7 @@ function FilingsList () {
             <table>
               <tbody>
                 <tr>
-                    <th>Ascension Number</th>
+                    <th>Accession Number</th>
                     <th>Date</th>
                 </tr>
                 {results.map(result => (

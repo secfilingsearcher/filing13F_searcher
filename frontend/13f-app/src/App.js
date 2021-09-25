@@ -18,8 +18,8 @@ function App () {
         <Route path='/' exact component= {Home} />
         <Route path='/search' exact component= {SearchResults} />
         <Route path='/company/:companyId' exact component= {SearchResults} />
-        <Route path='/company/:companyId/edgarfiling/' exact component= {FilingsPage} />
-        <Route path='/company/:companyId/edgarfiling/:filingId/data/' exact component= {DataPage} />
+        <Route path='/company/:companyId/edgarfiling' exact component= {FilingsPage} />
+        <Route path='/company/:companyId/edgarfiling/:filingId/data' exact component= {DataPage} />
       </Switch>
       <Footer />
     </Router>
