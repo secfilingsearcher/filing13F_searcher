@@ -1,4 +1,4 @@
-#filing-data {
+.filing-data {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 80%;
@@ -6,24 +6,23 @@
     margin-left: 25px;
 }
 
-#filing-data h1 {
+.filing-data h1 {
     padding-bottom: 50px;
 }
 
-#filing-data table {
-    align-self: center;
+.filing-data-table {
+    resize: both;
+    overflow: auto;
+    border: 5px solid #ddd;
+    padding: 8px
 }
 
-#filing-data td, #filing-data th {
-    border: 5px solid #ddd;
-    padding: 8px;
-}
-  
-#filing-data tr:nth-child(even) {
+
+.filing-data tr:nth-child(even) {
     background-color: #f2f2f2;
 }
   
-#filing-data th {
+.filing-data th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;

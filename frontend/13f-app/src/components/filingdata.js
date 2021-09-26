@@ -23,13 +23,21 @@ function FilingData () {
         <div className='filing-data'>
             <h1>{company.company_name}: {filingId}</h1>
 
-            <table>
+            <table className='filing-data-table'>
               <tbody>
                 <tr>
                     <th>Name of Issuer</th>
                     <th>Title of Class</th>
                     <th>CUSIP</th>
                     <th>Value</th>
+                    <th>Share Principal Amount</th>
+                    <th>Share Type</th>
+                    <th>Put Call</th>
+                    <th>Investment Discretion</th>
+                    <th>Other Manager</th>
+                    <th>Voting Authority Sole</th>
+                    <th>Voting Authority Shared</th>
+                    <th>Voting Authority None</th>
                 </tr>
                 {results.map(result => (
                     <tr key={result.accession_no}>
@@ -37,6 +45,14 @@ function FilingData () {
                       <td>{result.title_of_class}</td>
                       <td>{result.cusip}</td>
                       <td>{result.value}</td>
+                      <td>{result.ssh_prnamt}</td>
+                      <td>{result.ssh_prnamt_type}</td>
+                      <td>{result.put_call}</td>
+                      <td>{result.investment_discretion}</td>
+                      <td>{result.other_manager}</td>
+                      <td>{result.voting_authority_sole}</td>
+                      <td>{result.voting_authority_shared}</td>
+                      <td>{result.voting_authority_none}</td>
                     </tr>
                 ))}
               </tbody>
