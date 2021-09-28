@@ -39,6 +39,7 @@ function FilingData () {
                     <th>Voting Authority Shared</th>
                     <th>Voting Authority None</th>
                 </tr>
+                {results.length === 0 && <tr><td colSpan='12'><h3>No Data to Display</h3></td></tr>}
                 {results.map(result => (
                     <tr key={result.accession_no}>
                       <td>{result.name_of_issuer}</td>
