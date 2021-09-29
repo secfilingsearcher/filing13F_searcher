@@ -3,9 +3,9 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/pages/home'
-import SearchResults from './components/pages/searchResults'
-import FilingsPage from './components/pages/filinglistpage'
-import DataPage from './components/pages/datapage'
+import SearchResults from './components/pages/SearchResults'
+import FilingsPage from './components/pages/FilingsListPage'
+import DataPage from './components/pages/DataPage'
 
 import './App.css'
 
