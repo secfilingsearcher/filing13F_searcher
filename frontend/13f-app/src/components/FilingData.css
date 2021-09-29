@@ -14,7 +14,7 @@
     overflow: auto;
     border: 5px solid #ddd;
     padding: 8px;
-    text-align: center
+    text-align: center  
 }
 
 
@@ -23,7 +23,7 @@
 }
   
 #filing-data th {
-    padding: 12px 0 12px 0; /* Top Right Bottom Left, TRBL! */
+    padding: 12px 0 12px 0; 
     background-color: #3d4042;
     color: white;
 }
