@@ -26,7 +26,7 @@ function FilingsList () {
                 </tr>
                 {results.map(result => (
                     <tr key={result.accession_no}>
-                      <td><Link to={{ pathname: `/company/${companyId}/edgarfiling/${result.accession_no}/data/` }}>{result.accession_no}</Link></td>
+                      <td><Link to={{ pathname: `/company/${companyId}/edgar-filing/${result.accession_no}/data/` }}>{result.accession_no}</Link></td>
                       <td className="filing-date">{result.filing_date}</td>
                     </tr>
                 ))}
