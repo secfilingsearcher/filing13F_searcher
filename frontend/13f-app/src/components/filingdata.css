@@ -1,15 +1,15 @@
-.filing-data {
+#filing-data {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 80%;
     margin: 25px 0 0 25px;
 }
 
-.filing-data h1 {
+#filing-data h1 {
     padding-bottom: 50px;
 }
 
-.filing-data-table {
+#filing-data-table {
     resize: both;
     overflow: auto;
     border: 5px solid #ddd;
@@ -18,11 +18,11 @@
 }
 
 
-.filing-data tr:nth-child(even) {
+#filing-data tr:nth-child(even) {
     background-color: #f2f2f2;
 }
   
-.filing-data th {
+#filing-data th {
     padding: 12px 0 12px 0; /* Top Right Bottom Left, TRBL! */
     background-color: #3d4042;
     color: white;

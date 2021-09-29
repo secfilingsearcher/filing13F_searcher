@@ -20,10 +20,10 @@ function FilingData () {
       })
   }, [])
   return (
-        <div className='filing-data'>
+        <div id='filing-data'>
             <h1>{company.company_name}: {filingId}</h1>
 
-            <table className='filing-data-table'>
+            <table id='filing-data-table'>
               <thead>
                 <tr>
                     <th>Name of Issuer</th>

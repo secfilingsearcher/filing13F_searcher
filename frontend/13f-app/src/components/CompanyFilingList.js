@@ -8,7 +8,7 @@ function FilingsList () {
   const { state } = useLocation()
   const { companyId } = useParams()
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_SERVER}/company/${companyId}/edgarfiling/`)
+    axios.get(`${process.env.REACT_APP_API_SERVER}/company/${companyId}/edgar-filing/`)
       .then(res => {
         const filings = res.data
         setResults(filings)
@@ -19,11 +19,13 @@ function FilingsList () {
             <h1>{state.company_name}</h1>
 
             <table>
-              <tbody>
+              <thead>
                 <tr>
                     <th>Accession Number</th>
                     <th>Date</th>
                 </tr>
+              </thead>
+              <tbody>
                 {results.map(result => (
                     <tr key={result.accession_no}>
                       <td><Link to={{ pathname: `/company/${companyId}/edgar-filing/${result.accession_no}/data/` }}>{result.accession_no}</Link></td>
