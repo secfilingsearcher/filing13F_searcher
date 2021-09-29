@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/pages/Home'
 import SearchResults from './components/pages/SearchResults'
 import FilingsPage from './components/pages/FilingsListPage'
-import DataPage from './components/pages/DataPage'
+import DataPage from './components/pages/Datapage'
 
 import './App.css'
 
