@@ -24,8 +24,7 @@
 }
   
 .filing-data th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding: 12px 0 12px 0; /* Top Right Bottom Left, TRBL! */
     background-color: #3d4042;
     color: white;
 }
