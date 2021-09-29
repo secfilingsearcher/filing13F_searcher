@@ -1,5 +1,5 @@
 import React from 'react'
-import FilingData from '../filingdata'
+import FilingData from '../FilingData'
 
 function DataPage () {
   return (
