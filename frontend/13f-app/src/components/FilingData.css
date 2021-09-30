@@ -1,8 +1,8 @@
 #filing-data {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 80%;
-    margin: 25px 0 0 25px;
+    width: 95%;
+    margin: 25px 0 0 50px;
 }
 
 #filing-data h1 {
@@ -13,8 +13,8 @@
     resize: both;
     overflow: auto;
     border: 5px solid #ddd;
-    padding: 8px;
-    text-align: center  
+    padding-bottom: 100px;
+    text-align: center;  
 }
 
 
