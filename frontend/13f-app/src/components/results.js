@@ -26,7 +26,7 @@ function Results () {
                 </tr>
                 {results.map(result => (
                     <tr key={result.cik_no}>
-                        <td><Link to={`/company/${result.cik_no}`} className="company-page-link-style">{result.company_name}</Link></td>
+                        <td><Link to={{ pathname: `/company/${result.cik_no}/edgar-filing/`, state: result }} className="company-page-link-style">{result.company_name}</Link></td>
                         <td className="filing-count">{result.filing_count}</td>
                     </tr>
                 ))}
