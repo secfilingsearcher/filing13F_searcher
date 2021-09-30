@@ -3,7 +3,7 @@
   height: 80px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   font-size: 1.2rem;
   position: sticky;
   top: 0;
@@ -12,7 +12,6 @@
 
 .navbar-container {
   display: flex;
-  justify-content: center;
   align-items: center;
   height: 80px;
   max-width: 1500px;
@@ -26,7 +25,7 @@
   text-decoration: none;
   font-size: 2rem;
   display: flex;
-  align-items: center;
+  align-items: left;
 }
 
 .fa-typo3 {
