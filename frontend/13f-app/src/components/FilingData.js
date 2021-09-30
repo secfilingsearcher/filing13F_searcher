@@ -8,7 +8,7 @@ function FilingData () {
   const [company, setCompany] = useState([])
   const { companyId, filingId } = useParams()
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_SERVER}/edgarfiling/${filingId}/data/`)
+    axios.get(`${process.env.REACT_APP_API_SERVER}/edgar-filing/${filingId}/data/`)
       .then(res => {
         const data = res.data
         setResults(data)
