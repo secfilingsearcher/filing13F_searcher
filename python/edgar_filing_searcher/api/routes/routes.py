@@ -51,7 +51,7 @@ def company_by_invested_company(request_):
     return jsonify(list(companies))
 
 
-@company_blueprint.route('/company/<company_id>/edgar-filing/')
+@company_blueprint.route('/company/<company_id>/edgarfiling/')
 def get_edgarfilings_with_date(company_id):
     """Route for filings for the specified company, optionally filtered by date"""
     date_format = '%Y-%m-%d'
@@ -71,7 +71,7 @@ def get_edgarfilings_with_date(company_id):
     return jsonify(list(filings))
 
 
-@company_blueprint.route('/edgar-filing/<filing_id>/data/')
+@company_blueprint.route('/edgarfiling/<filing_id>/data/')
 def get_edgarfilings_by_filing_id(filing_id):
     """Route for data for specified edgar filing"""
     data13f = Data13f.query.filter(Data13f.accession_no == filing_id)
