@@ -1,1 +1,1 @@
-web: gunicorn app:wsgi
+web: gunicorn edgar_filing_searcher.api.wsgi
