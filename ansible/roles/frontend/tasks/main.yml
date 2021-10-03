@@ -13,7 +13,7 @@
 - 
   git: 
     dest: /opt/filing13F_searcher
-    repo: "https://github.com/eharley19/filing13F_searcher"
+    repo: "https://github.com/secfilingsearcher/filing13F_searcher"
     version: main
   name: "Clone Repo"
 - 
