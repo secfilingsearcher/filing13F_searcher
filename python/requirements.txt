@@ -1,5 +1,4 @@
 Flask
 Flask-SQLAlchemy
-libpq-dev
 psycopg2
 requests
