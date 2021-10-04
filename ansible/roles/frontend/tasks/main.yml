@@ -1,8 +1,8 @@
 --- 
-- 
+-
   name: "Install all required dependencies"
-  yum: 
-    name: 
+  package:
+    name:
       - git
       - npm
     state: present
