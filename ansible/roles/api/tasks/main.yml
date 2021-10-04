@@ -26,8 +26,10 @@
     path: /opt/filing13F_searcher
     recurse: true
   name: "Change owner to robo"
-- 
-  become: ansible_common_remote_group
+- become: ansible_common_remote_group
   become_user: robo
   name: "Install python setup.py"
+  pip:
+    name: /opt/filing13F_searcher/python
+    virtualenv: ~/venv
   

@@ -34,12 +34,6 @@
     name: /opt/filing13F_searcher/python
     virtualenv: ~/venv
 -
-  template:
-    src: templates/runparser.sh.j2
-    dest: /home/robo/runparser.sh
-    owner: robo
-    mode: "+x"
--
   name: "Setup crontab for parser"
   cron:
     user: "robo"
