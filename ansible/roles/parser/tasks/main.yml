@@ -8,15 +8,15 @@
       - python3-setuptools
       - python3-pip
       - python3-virtualenv
-    state: present
+    state: latest
 - 
   name: "Add User"
   user: 
     name: robo
 - 
-  git: 
+  git:
     dest: /opt/filing13F_searcher
-    repo: "https://github.com/eharley19/filing13F_searcher"
+    repo: "https://github.com/secfilingsearcher/filing13F_searcher"
     version: main
     force: yes
   name: "Clone Repo"
@@ -31,7 +31,7 @@
   name: "Install python setup.py"
   pip:
     name: /opt/filing13F_searcher/python
-    virtualenv: ~/venv
+    executable: pip3
 -
   name: "Setup crontab for parser"
   cron:
