@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 import traceback
-from datetime import datetime
+from datetime import datetime, date
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -61,9 +61,9 @@ def main():
     """This function returns the cik, company name, and infotable data"""
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--start_date", help="Beginning date",
-                            type=datetime, default=datetime.today())
+                            type=date.fromisoformat, default=date.today())
     arg_parser.add_argument("--end_date", help="End date",
-                            type=datetime, default=datetime.today())
+                            type=date.fromisoformat, default=date.today())
     args = arg_parser.parse_args()
 
     start_date = args.start_date

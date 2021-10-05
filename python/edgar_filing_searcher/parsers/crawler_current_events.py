@@ -3,7 +3,7 @@ import logging
 import re
 import sys
 import time
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 
 import requests
 
@@ -33,13 +33,13 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     return filing_detail_url_suffixes
 
 
-def get_specific_date_cik_no_and_accession_no(full_date: datetime):
+def get_specific_date_cik_no_and_accession_no(full_date: date):
     """Returns the cik no and accession no for a specific date"""
-    quarter = (full_date.date().month // 4) + 1
+    quarter = (full_date.month // 4) + 1
     short = full_date.strftime('%Y%m%d')
 
     base_url = "https://www.sec.gov/Archives/edgar/daily-index"
-    search_url = base_url + "/" + f'{full_date.date().year}' + "/" + f'QTR{quarter}' + "/" \
+    search_url = base_url + "/" + f'{full_date.year}' + "/" + f'QTR{quarter}' + "/" \
                  + f'company.{short}.idx'
 
     response = requests.get(
@@ -60,16 +60,15 @@ def ensure_13f_filing_detail_urls(date_filing_detail_url_cik_no_and_accession_no
     specific_date_filing_detail_url_list = []
     try:
         for cik_no_and_accession_no in date_filing_detail_url_cik_no_and_accession_nos:
-            specific_date_filing_detail_url_list.append = \
-                "https://www.sec.gov/Archives/edgar/data/" + \
-                cik_no_and_accession_no + "-index.html"
+            specific_date_filing_detail_url_list.append(
+                "https://www.sec.gov/Archives/edgar/data/" + cik_no_and_accession_no + "-index.html")
     except NoUrlException:
         logging.critical("Found no 13f cik_no_and_accession_no.")
         sys.exit(-1)
     return specific_date_filing_detail_url_list
 
 
-def generate_dates(start_date: datetime, end_date: datetime):
+def generate_dates(start_date: date, end_date: date):
     """Returns the html and text from the url"""
     delta = timedelta(days=1)
 
