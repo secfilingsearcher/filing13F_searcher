@@ -33,7 +33,7 @@ def parse_13f_filing_detail_urls(edgar_current_events_text):
     return filing_detail_url_suffixes
 
 
-def get_specific_date_cik_no_and_accession_no(full_date: date):
+def get_cik_no_and_accession_no_for_specific_date(full_date: date):
     """Returns the cik no and accession no for a specific date"""
     quarter = (full_date.month // 4) + 1
     short = full_date.strftime('%Y%m%d')

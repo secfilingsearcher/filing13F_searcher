@@ -9,7 +9,7 @@ from datetime import datetime, date
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import \
-    ensure_13f_filing_detail_urls, generate_dates, get_specific_date_cik_no_and_accession_no
+    ensure_13f_filing_detail_urls, generate_dates, get_cik_no_and_accession_no_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 from errors import InvalidDate
@@ -19,8 +19,8 @@ URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/Archives/edgar/full-index/'
 
 def create_url_list(date_):
     """This function creates a list of URLs"""
-    cik_no_and_accession_nos = get_specific_date_cik_no_and_accession_no(date_)
-    logging.info('Extracted cik_no_and_accession_nos from %s', cik_no_and_accession_nos)
+    cik_no_and_accession_nos = get_cik_no_and_accession_no_for_specific_date(date_)
+    logging.info('Extracted cik_no_and_accession_nos for date: %s', date_)
     return ensure_13f_filing_detail_urls(cik_no_and_accession_nos)
 
 
