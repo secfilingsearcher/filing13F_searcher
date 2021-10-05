@@ -62,7 +62,8 @@ def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     try:
         for subdirectory in cik_ascension_subdirectories:
             specific_date_13f_filing_detail_urls.append(
-                "https://www.sec.gov/Archives/edgar/data/" + subdirectory + "-index.html")
+                "https://www.sec.gov/Archives/edgar/data/" +
+                subdirectory + "-index.html")
     except NoUrlException:
         logging.critical("Found no 13f cik_no_and_accession_no.")
         sys.exit(-1)
