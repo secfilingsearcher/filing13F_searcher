@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 import traceback
-from datetime import datetime, date
+from datetime import date
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
@@ -12,14 +12,14 @@ from edgar_filing_searcher.parsers.crawler_current_events import \
     ensure_13f_filing_detail_urls, generate_dates, get_cik_no_and_accession_no_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from errors import InvalidDate
-
-URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/Archives/edgar/full-index/'
 
 
 def create_url_list(date_):
     """This function creates a list of URLs"""
     cik_no_and_accession_nos = get_cik_no_and_accession_no_for_specific_date(date_)
+    if not cik_no_and_accession_nos:
+        logging.info('No cik_no_and_accession_nos for date: %s', date_)
+        return None
     logging.info('Extracted cik_no_and_accession_nos for date: %s', date_)
     return ensure_13f_filing_detail_urls(cik_no_and_accession_nos)
 
@@ -80,7 +80,7 @@ def main():
     for date_ in generate_dates(start_date, end_date):
         filing_detail_urls = create_url_list(date_)
         if not filing_detail_urls:
-            logging.info("There are no urls on the Edgar Daily Index page")
+            logging.info("There are no filing urls on the page for this date")
             continue
         setup_db_connection()
         list_of_cik_no = []
