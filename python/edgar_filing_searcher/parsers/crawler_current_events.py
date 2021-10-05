@@ -38,9 +38,6 @@ def get_specific_date_cik_no_and_accession_no(full_date: datetime):
     quarter = (full_date.date().month // 4) + 1
     short = full_date.strftime('%Y%m%d')
 
-    if not quarter or short:
-        raise InvalidDate()
-
     base_url = "https://www.sec.gov/Archives/edgar/daily-index"
     search_url = base_url + "/" + f'{full_date.date().year}' + "/" + f'QTR{quarter}' + "/" \
                  + f'company.{short}.idx'

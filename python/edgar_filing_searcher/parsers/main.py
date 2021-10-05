@@ -12,6 +12,7 @@ from edgar_filing_searcher.parsers.crawler_current_events import \
     ensure_13f_filing_detail_urls, generate_dates, get_specific_date_cik_no_and_accession_no
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
+from errors import InvalidDate
 
 URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/Archives/edgar/full-index/'
 
