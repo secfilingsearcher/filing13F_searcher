@@ -9,19 +9,19 @@ from datetime import date
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.crawler_current_events import \
-    ensure_13f_filing_detail_urls, generate_dates, get_cik_no_and_accession_no_for_specific_date
+    ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
 
 def create_url_list(date_):
-    """This function creates a list of URLs"""
-    cik_no_and_accession_nos = get_cik_no_and_accession_no_for_specific_date(date_)
-    if not cik_no_and_accession_nos:
+    """This function creates a list of 13F URLs"""
+    subdirectories = get_subdirectories_for_specific_date(date_)
+    if not subdirectories:
         logging.info('No cik_no_and_accession_nos for date: %s', date_)
         return None
     logging.info('Extracted cik_no_and_accession_nos for date: %s', date_)
-    return ensure_13f_filing_detail_urls(cik_no_and_accession_nos)
+    return ensure_13f_filing_detail_urls(subdirectories)
 
 
 def update_filing_counts(cik_no_list):
