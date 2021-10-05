@@ -3,16 +3,16 @@
 import argparse
 import logging
 import sys
-from datetime import date, datetime
+from datetime import datetime
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
-from edgar_filing_searcher.parsers.crawler_current_events import get_text, \
+from edgar_filing_searcher.parsers.crawler_current_events import \
     ensure_13f_filing_detail_urls, generate_dates, get_specific_date_cik_no_and_accession_no
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
-URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/cgi-bin/current?q1=0&q2=0&q3=13f'
+URL_EDGAR_CURRENT_EVENTS = 'https://www.sec.gov/Archives/edgar/full-index/'
 
 
 def create_url_list(date_):
@@ -58,8 +58,10 @@ def change_sys_excepthook():
 def main():
     """This function returns the cik, company name, and infotable data"""
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--start_date", help="Beginning date", type=datetime, default=datetime.today())
-    arg_parser.add_argument("--end_date", help="End date", type=datetime, default=datetime.today())
+    arg_parser.add_argument("--start_date", help="Beginning date",
+                            type=datetime, default=datetime.today())
+    arg_parser.add_argument("--end_date", help="End date",
+                            type=datetime, default=datetime.today())
     args = arg_parser.parse_args()
 
     start_date = args.start_date
