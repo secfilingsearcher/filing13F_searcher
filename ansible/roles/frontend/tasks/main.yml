@@ -5,23 +5,28 @@
       - git
       - npm
     state: present
+
 - name: "Add User"
   user:
     name: robo
+
 - name: "Clone Repo"
   git:
     dest: /opt/filing13F_searcher
     repo: "https://github.com/secfilingsearcher/filing13F_searcher"
     version: main
+
 - name: "Change owner to robo"
   file:
     owner: robo
     path: /opt/filing13F_searcher
     recurse: true
+
 - name: "NPM Install Dependencies"
   command:
     cmd: npm install
     chdir: "{{ repo_path }}/frontend/13f-app/"
+
 - name: "NPM Run Build"
   command:
     cmd: npm run build
