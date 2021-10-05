@@ -1,60 +1,53 @@
 ---
--
-  name: "Install all required dependencies"
-  yum: 
-    name: 
+- name: "Install all required dependencies"
+  package:
+    name:
       - git
       - python3
       - python3-setuptools
       - python3-pip
       - python3-virtualenv
     state: present
-- 
-  name: "Add User"
-  user: 
+
+- name: "Add User"
+  user:
     name: robo
-- 
-  git: 
+
+- name: "Clone Repo"
+  git:
     dest: /opt/filing13F_searcher
     repo: "https://github.com/eharley19/filing13F_searcher"
     version: main
     force: yes
-  name: "Clone Repo"
-- 
-  file: 
+
+- name: "Change owner to robo"
+  file:
     owner: robo
     path: /opt/filing13F_searcher
     recurse: true
-  name: "Change owner to robo"
-- 
-  become: ansible_common_remote_group
-  become_user: robo
-  name: "Install python setup.py"
-  pip: 
+
+- name: "Install python setup.py"
+  pip:
     name: /opt/filing13F_searcher/python
     virtualenv: ~/venv
--
-  template:
-    src: templates/runparser.sh.j2
-    dest: /home/robo/runparser.sh
-    owner: robo
-    mode: "+x"
--
-  name: "Setup crontab for parser"
+  become: yes
+  become_user: robo
+
+- name: "Setup crontab for parser"
   cron:
     user: "robo"
     name: "Filing Parser"
     minute: "0"
     hour: "2"
-    job: "/home/robo/runparser.sh"    
--
-  name: "Change log file owner"
+    job: "/home/robo/runparser.sh"
+
+- name: "Change log file owner"
   file:
     path: "/var/log/filing_parser.log"
     owner: robo
     state: touch
--
-  name: "Change log file owner"
+
+- name: "Change error log file owner"
   file:
     path: "/var/log/filing_parser.err.log"
     owner: robo
