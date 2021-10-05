@@ -81,7 +81,7 @@ def main():
         filing_detail_urls = create_url_list(date_)
         if not filing_detail_urls:
             logging.info("There are no urls on the Edgar Daily Index page")
-            sys.exit(0)
+            continue
         setup_db_connection()
         list_of_cik_no = []
         for filing_detail_url in filing_detail_urls:

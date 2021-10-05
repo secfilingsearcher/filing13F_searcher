@@ -7,7 +7,7 @@ from datetime import date, timedelta
 
 import requests
 
-from edgar_filing_searcher.errors import NoUrlException, InvalidDate
+from edgar_filing_searcher.errors import NoUrlException
 
 
 def get_text(url):
@@ -39,20 +39,19 @@ def get_cik_no_and_accession_no_for_specific_date(full_date: date):
     short = full_date.strftime('%Y%m%d')
 
     base_url = "https://www.sec.gov/Archives/edgar/daily-index"
-    search_url = base_url + "/" + f'{full_date.year}' + "/" + f'QTR{quarter}' + "/" \
-                 + f'company.{short}.idx'
-
+    search_url = base_url + "/" + f'{full_date.year}' + "/" + \
+                 f'QTR{quarter}' + "/" + f'company.{short}.idx'
     response = requests.get(
         search_url,
-        headers={"user-agent": "filing_13f_searcher"}
+        headers={"User-Agent": "filing_13f_searcher"}
     )
     if response.status_code != 200:
         logging.warning("Unexpected status code %s", response.status_code)
-
     time.sleep(1)
     full_text = response.text
 
-    return re.findall('(?<=edgar/data/)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
+    all_13f_filings = re.findall('(?<=13F)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
+    return [re.search(r'(?<=edgar/data/)(.*)', x).group(0) for x in all_13f_filings]
 
 
 def ensure_13f_filing_detail_urls(date_filing_detail_url_cik_no_and_accession_nos):
