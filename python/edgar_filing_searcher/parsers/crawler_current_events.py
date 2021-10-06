@@ -17,7 +17,7 @@ def get_text(url):
         headers={"user-agent": "filing_13f_searcher"}
     )
     if response.status_code != 200:
-        logging.warning("Unexpected status code %s", response.status_code)
+        logging.warning("get_text, Unexpected status code %s", response.status_code)
     time.sleep(1)
     full_text = response.text
     logging.debug('Successfully ran get_text on url %s', url)
@@ -37,7 +37,7 @@ def get_subdirectories_for_specific_date(full_date: date):
         headers={"User-Agent": "filing_13f_searcher"}
     )
     if response.status_code != 200:
-        logging.warning("Unexpected status code %s", response.status_code)
+        logging.warning("get_subdirectories_for_specific_date, Unexpected status code %s", response.status_code)
     time.sleep(1)
     full_text = response.text
 
