@@ -24,15 +24,6 @@ def get_text(url):
     return full_text
 
 
-def parse_13f_filing_detail_urls(edgar_current_events_text):
-    """Returns the 13f filing detail base urls"""
-    filing_detail_url_suffixes = re.findall('(?<=<a href=")(.*)(?=">13F)',
-                                            edgar_current_events_text)
-    if not filing_detail_url_suffixes:
-        raise NoUrlException()
-    return filing_detail_url_suffixes
-
-
 def get_subdirectories_for_specific_date(full_date: date):
     """Returns all cik number and accession number subdirectory strings for a specific date"""
     quarter = (full_date.month // 4) + 1
@@ -52,6 +43,7 @@ def get_subdirectories_for_specific_date(full_date: date):
 
     all_13f_filings = re.findall('(?<=13F)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
+        # raise NoUrlException()
         return None
     return [re.search(r'(?<=edgar/data/)(.*)', x).group(0) for x in all_13f_filings]
 
