@@ -15,7 +15,7 @@ def edgar_current_events_text():
 
 
 def test_parse_13f_filing_detail_urls(edgar_current_events_text):
-    """Tests parse_13f_filing_detail_urls"""
+    """Tests """
 
     actual = ensure_13f_filing_detail_urls(edgar_current_events_text)
 
@@ -32,6 +32,11 @@ def test_parse_13f_filing_detail_urls_invalidText_raiseException():
         parse_13f_filing_detail_urls("")
 
 
+def test_get_subdirectories_for_specific_date():
+    """Tests """
+    pass
+
+
 def test_ensure_13f_filing_detail_urls(edgar_current_events_text):
     """Tests ensure_13f_filing_detail_urls"""
 
@@ -42,3 +47,8 @@ def test_ensure_13f_filing_detail_urls(edgar_current_events_text):
             'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
             'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
             'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html']
+
+
+def test_generate_dates():
+    """Tests """
+    pass
