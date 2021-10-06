@@ -43,7 +43,6 @@ def get_subdirectories_for_specific_date(full_date: date):
 
     all_13f_filings = re.findall('(?<=13F)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
-        # raise NoUrlException()
         return None
     return [re.search(r'(?<=edgar/data/)(.*)', x).group(0) for x in all_13f_filings]
 
