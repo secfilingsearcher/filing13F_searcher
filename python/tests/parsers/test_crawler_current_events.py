@@ -7,8 +7,9 @@ import pytest
 from edgar_filing_searcher.parsers.crawler_current_events import ensure_13f_filing_detail_urls, \
     get_subdirectories_for_specific_date, generate_dates
 
-START_DATE = date(2021, 2, 5)
-END_DATE = date(2021, 2, 6)
+DATE_1 = date(2021, 1, 8)
+DATE_2 = date(2021, 1, 9)
+DATE_3 = date(2021, 1, 10)
 
 
 @pytest.fixture
@@ -22,8 +23,7 @@ def subdirectories():
 
 def test_get_subdirectories_for_specific_date():
     """Tests for get_subdirectories_for_specific_date"""
-    specific_date = date(2021, 1, 8)
-    actual = get_subdirectories_for_specific_date(specific_date)
+    actual = get_subdirectories_for_specific_date(DATE_1)
     assert actual == ['1478997/0001478997-21-000001',
                       '819864/0000819864-21-000002',
                       '1567784/0000909012-21-000002',
@@ -31,9 +31,6 @@ def test_get_subdirectories_for_specific_date():
                       '1362987/0001362987-21-000001',
                       '1542265/0001542265-21-000001',
                       '740272/0000740272-21-000002',
-                      '1577401/0001577401-21-000001',
-                      '1577929/0001577929-21-000001',
-                      '225602/0000225602-21-000003',
                       '1799284/0001799284-21-000001',
                       '1800336/0001800336-21-000001',
                       '1744348/0001754960-21-000002',
@@ -61,6 +58,6 @@ def test_ensure_13f_filing_detail_urls(subdirectories):
 def test_generate_dates():
     """Test for generate_dates"""
 
-    actual = tuple(generate_dates(START_DATE, END_DATE))
+    actual = tuple(generate_dates(DATE_1, DATE_3))
 
-    assert actual == (START_DATE, END_DATE)
+    assert actual == (DATE_1, DATE_2, DATE_3)
