@@ -26,12 +26,22 @@ def get_text(url):
 
 def get_subdirectories_for_specific_date(full_date: date):
     """Returns all cik number and accession number subdirectory strings for a specific date"""
-    quarter = (full_date.month // 4) + 1
-    short = full_date.strftime('%Y%m%d')
-
     base_url = "https://www.sec.gov/Archives/edgar/daily-index"
-    search_url = base_url + "/" + f'{full_date.year}' + "/" + \
-                 f'QTR{quarter}' + "/" + f'company.{short}.idx'
+    quarter = round((full_date.month / 4) + 1)
+    subdirectory_date_94 = full_date.strftime('%m%d%y')
+    subdirectory_date_95_97 = full_date.strftime('%y%m%d')
+    subdirectory_date_after_1998 = full_date.strftime('%Y%m%d')
+
+    if full_date.year == 1994:
+        search_url = base_url + "/" + f'{full_date.year}' + "/" + \
+                     f'QTR{quarter}' + "/" + f'company.{subdirectory_date_94}.idx'
+    elif 1995 <= full_date.year <= 1997:
+        search_url = base_url + "/" + f'{full_date.year}' + "/" + \
+                     f'QTR{quarter}' + "/" + f'company.{subdirectory_date_95_97}.idx'
+    else:
+        search_url = base_url + "/" + f'{full_date.year}' + "/" + \
+                     f'QTR{quarter}' + "/" + f'company.{subdirectory_date_after_1998}.idx'
+
     response = requests.get(
         search_url,
         headers={"User-Agent": "filing_13f_searcher"}
@@ -41,7 +51,7 @@ def get_subdirectories_for_specific_date(full_date: date):
     time.sleep(1)
     full_text = response.text
 
-    all_13f_filings = re.findall('(?<=13F)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
+    all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
         return None
     return [re.search(r'(?<=edgar/data/)(.*)', x).group(0) for x in all_13f_filings]
