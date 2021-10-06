@@ -47,7 +47,8 @@ def get_subdirectories_for_specific_date(full_date: date):
         headers={"User-Agent": "filing_13f_searcher"}
     )
     if response.status_code != 200:
-        logging.warning("get_subdirectories_for_specific_date, Unexpected status code %s", response.status_code)
+        logging.warning("get_subdirectories_for_specific_date, Unexpected status code %s",
+                        response.status_code)
     time.sleep(1)
     full_text = response.text
 
