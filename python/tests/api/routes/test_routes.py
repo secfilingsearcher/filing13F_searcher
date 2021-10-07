@@ -228,46 +228,6 @@ def test_search_company_noArguments_json(client):
     assert response.get_json() is None
 
 
-def test_filter_company_by_date_startDateAndEndDate(client):
-    """"""
-    pass
-
-
-def test_filter_company_by_date_startDate(client):
-    """"""
-    pass
-
-
-def test_filter_company_by_date_endDate(client):
-    """"""
-    pass
-
-
-def test_filter_company_by_date_noArguments(client):
-    """"""
-    pass
-
-
-def test_filter_edgar_filing_by_date_startDateAndEndDate(client):
-    """"""
-    pass
-
-
-def test_filter_edgar_filing_by_date_startDate(client):
-    """"""
-    pass
-
-
-def test_filter_edgar_filing_by_date_endDate(client):
-    """"""
-    pass
-
-
-def test_filter_edgar_filing_by_date_noArguments(client):
-    """"""
-    pass
-
-
 def test_get_edgarfilings_with_date_responseCode(client):
     """"""
     response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/')

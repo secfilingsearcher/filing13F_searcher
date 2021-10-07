@@ -33,20 +33,20 @@ def filter_company_by_date(filings, start_date, end_date):
 
     if start_date and end_date:
         filings = filings.join(EdgarFiling).filter(
-            EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
+            EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
         )
         filings = filings.filter(
-            EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
+            EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
         )
 
     elif start_date:
         filings = filings.join(EdgarFiling).filter(
-            EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
+            EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
         )
 
     elif end_date:
         filings = filings.join(EdgarFiling).filter(
-            EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
+            EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
         )
     return filings
 
