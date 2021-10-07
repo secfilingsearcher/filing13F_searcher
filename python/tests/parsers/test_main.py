@@ -1,8 +1,7 @@
 """This file contains tests for main"""
 # pylint: disable=redefined-outer-name
 import sys
-from datetime import datetime
-from unittest.mock import patch, MagicMock
+from datetime import datetime, date
 
 import pytest
 from flask_testing import TestCase
@@ -12,6 +11,8 @@ from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_counts, my_handler, \
     change_sys_excepthook
+
+DATE_1 = date(2021, 1, 8)
 
 
 @pytest.fixture
@@ -60,19 +61,28 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         db.drop_all()
 
 
-def test_create_url_list(edgar_current_events_text):
-    """Tests create_url_list"""
-    with patch('requests.get') as mock_function:
-        mock_function.return_value = MagicMock(text=edgar_current_events_text)
-        fake_url = ""
-        actual = create_url_list(fake_url)
+def test_create_url_list():
+    """Test for create_url_list"""
 
-        assert actual == [
-            'https://www.sec.gov/Archives/edgar/data/1850858/0001850858-21-000001-index.html',
-            'https://www.sec.gov/Archives/edgar/data/1852858/0001852858-21-000001-index.html',
-            'https://www.sec.gov/Archives/edgar/data/1835714/0001085146-21-001095-index.html',
-            'https://www.sec.gov/Archives/edgar/data/1446194/0001011712-21-000002-index.html'
-        ]
+    actual = create_url_list(DATE_1)
+
+    assert actual == ['https://www.sec.gov/Archives/edgar/data/1478997/0001478997-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/819864/0000819864-21-000002-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1567784/0000909012-21-000002-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1479844/0001479844-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1362987/0001362987-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1542265/0001542265-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/740272/0000740272-21-000002-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1799284/0001799284-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1800336/0001800336-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1744348/0001754960-21-000002-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1664017/0001664017-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1370102/0001370102-21-000003-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1766067/0001214659-21-000321-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1008937/0001008937-21-000001-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1761450/0001761450-21-000004-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1015308/0001015308-21-000002-index.html',
+                      'https://www.sec.gov/Archives/edgar/data/1387399/0001567619-21-000762-index.html']
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
