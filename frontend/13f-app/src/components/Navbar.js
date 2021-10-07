@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
+import Navbar from 'react-bootstrap/Navbar'
 import SearchBar from './SearchBar'
 import './Navbar.css'
 
-function Navbar () {
+function Navigation () {
   const [click, setClick] = useState(false)
   const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false)
@@ -11,8 +12,7 @@ function Navbar () {
 
   return (
         <>
-         <nav className="navbar">
-             <div className="navbar-container">
+         <Navbar bg="dark" className="navbar">
                 <Link to="/" className="navbar-logo">
                     13F   <i className="fas fa-file-archive"></i>
                 </Link>
@@ -37,12 +37,10 @@ function Navbar () {
                         </Link>
                     </li>
                 </ul>
-
-             </div>
-         </nav>
+         </Navbar>
         </>
 
   )
 }
 
-export default Navbar
+export default Navigation

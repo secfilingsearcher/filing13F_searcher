@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
+import Table from 'react-bootstrap/Table'
 import axios from 'axios'
 import './resultstable.css'
 
@@ -17,13 +18,15 @@ function Results () {
       })
   }, [])
   return (
-        <div>
-            <table id="company-table">
-              <tbody>
-                <tr>
+        <div id="table-container">
+            <Table borderless hover>
+              <thead>
+              <tr>
                     <th>Company Name</th>
                     <th>Number of Filings</th>
                 </tr>
+              </thead>
+              <tbody>
                 {results.map(result => (
                     <tr key={result.cik_no}>
                         <td><Link to={{ pathname: `/company/${result.cik_no}/edgar-filing/`, state: result }} className="company-page-link-style">{result.company_name}</Link></td>
@@ -31,7 +34,7 @@ function Results () {
                     </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
         </div>
   )
 }
