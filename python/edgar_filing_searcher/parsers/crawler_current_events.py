@@ -1,13 +1,10 @@
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
 import logging
 import re
-import sys
 import time
 from datetime import date, timedelta
 
 import requests
-
-from edgar_filing_searcher.errors import IncorrectUrlException
 
 
 def get_text(url):
@@ -60,10 +57,9 @@ def get_subdirectories_for_specific_date(full_date: date):
 
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     """Returns the 13f filing detail url"""
-    specific_date_13f_filing_detail_urls = []
-    [specific_date_13f_filing_detail_urls.append(
-        "https://www.sec.gov/Archives/edgar/data/" +
-        subdirectory + "-index.html") for subdirectory in cik_ascension_subdirectories]
+    specific_date_13f_filing_detail_urls = \
+        ["https://www.sec.gov/Archives/edgar/data/" + subdirectory +
+         "-index.html" for subdirectory in cik_ascension_subdirectories]
     return specific_date_13f_filing_detail_urls
 
 
