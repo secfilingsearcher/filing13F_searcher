@@ -49,7 +49,6 @@ def filter_by_date(filings):
         filings = filings.join(EdgarFiling).filter(
             EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
         )
-
     return filings
 
 
@@ -89,11 +88,18 @@ def get_edgarfilings_with_date(company_id):
     end_date = request.args.get('end_date')
     filings = EdgarFiling.query.filter(EdgarFiling.cik_no == company_id)
 
-    if start_date:
+    if start_date and end_date:
         filings = filings.filter(
             EdgarFiling.filing_date >= datetime.strptime(start_date, date_format)
         )
-    if end_date:
+        filings = filings.filter(
+            EdgarFiling.filing_date <= datetime.strptime(end_date, date_format)
+        )
+    elif start_date:
+        filings = filings.filter(
+            EdgarFiling.filing_date >= datetime.strptime(start_date, date_format)
+        )
+    elif end_date:
         filings = filings.filter(
             EdgarFiling.filing_date <= datetime.strptime(end_date, date_format)
         )
