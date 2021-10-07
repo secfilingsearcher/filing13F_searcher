@@ -8,7 +8,7 @@ setup(
     name="edgar_filing_searcher",
     version="0.0.1",
     description="Web backend for filing website",
-    url="https://github.com/eharley19/filing13F_searcher",
+    url="https://github.com/secfilingsearcher/filing13F_searcher",
     packages=find_packages(),
     python_requires=">=3.6",
     scripts=["scripts/parser_main"],
