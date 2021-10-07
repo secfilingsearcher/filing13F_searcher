@@ -29,6 +29,7 @@ def search_company():
 
 
 def filter_company_by_date(filings):
+    """Filter companies by edgar_filings and date"""
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
 
@@ -49,29 +50,6 @@ def filter_company_by_date(filings):
         filings = filings.join(EdgarFiling).filter(
             EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
         )
-    return filings
-
-
-def filter_edgar_filing_by_date(filings):
-    start_date = request.args.get('start_date')
-    end_date = request.args.get('end_date')
-
-    if start_date and end_date:
-        filings = filings.filter(
-            EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
-        )
-        filings = filings.filter(
-            EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
-        )
-    elif start_date:
-        filings = filings.filter(
-            EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
-        )
-    elif end_date:
-        filings = filings.filter(
-            EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
-        )
-
     return filings
 
 
@@ -85,6 +63,30 @@ def company_by_company_name(company_name):
     companies_filtered_by_date = filter_company_by_date(companies)
 
     return jsonify(list(companies_filtered_by_date))
+
+
+def filter_edgar_filing_by_date(filings):
+    """Filter edgar_filings by date"""
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+
+    if start_date and end_date:
+        filings = filings.filter(
+            EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
+        )
+        filings = filings.filter(
+            EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
+        )
+    elif start_date:
+        filings = filings.filter(
+            EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
+        )
+    elif end_date:
+        filings = filings.filter(
+            EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
+        )
+
+    return filings
 
 
 def company_by_invested_company(request_):
