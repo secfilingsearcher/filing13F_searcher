@@ -43,7 +43,7 @@ def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
     assert actual is None
 
 
-def test_ensure_13f_filing_detail_urls(subdirectories):
+def test_ensure_13f_filing_detail_urls():
     """Test for ensure_13f_filing_detail_urls"""
 
     actual = ensure_13f_filing_detail_urls(subdirectories)
