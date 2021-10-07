@@ -28,22 +28,29 @@ def search_company():
     return abort(400, description="Bad Request")
 
 
-def filter_by_date(filings_results):
-    # if "start_date" and "end_date" in request.args:
-    #     filings_results = filings_results.query.filter(
-    #         EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
-    #     ).filter(
-    #         EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
-    #     )
-    if "start_date" in request.args:
-        filings_results = filings_results.filter(
+def filter_by_date(filings):
+    start_date = request.args.get('start_date', None)
+    end_date = request.args.get('end_date', None)
+
+    if start_date:
+        filings = filings.join(EdgarFiling).filter(
             EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
         )
-    if "end_date" in request.args:
-        filings_results = filings_results.filter(
+
+    elif end_date:
+        filings = filings.join(EdgarFiling).filter(
             EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
         )
-    return filings_results
+
+    elif start_date and end_date:
+        filings = filings.join(EdgarFiling).filter(
+            EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
+        )
+    filings = filings.filter(
+        EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
+    )
+
+    return filings
 
 
 def company_by_company_name(company_name):
@@ -53,9 +60,9 @@ def company_by_company_name(company_name):
 
     companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
 
-    companies = filter_by_date(companies)
+    companies_filtered_by_date = filter_by_date(companies)
 
-    return jsonify(list(companies))
+    return jsonify(list(companies_filtered_by_date))
 
 
 def company_by_invested_company(request_):
@@ -69,7 +76,9 @@ def company_by_invested_company(request_):
         .join(Data13f) \
         .filter(Data13f.name_of_issuer.ilike(f"%{name_of_issuer}%"))
 
-    return jsonify(list(companies))
+    companies_filtered_by_date = filter_by_date(companies)
+
+    return jsonify(list(companies_filtered_by_date))
 
 
 @company_blueprint.route('/company/<company_id>/edgar-filing/')
