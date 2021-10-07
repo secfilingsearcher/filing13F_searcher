@@ -3,7 +3,6 @@
 from datetime import datetime
 
 import pytest
-from flask import session
 
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
@@ -123,6 +122,7 @@ def client():
             db.session.add(data_13f_table2)
             db.session.add(data_13f_table3)
             db.session.commit()
+            company_name = ""
         yield client
 
 
@@ -230,8 +230,6 @@ def test_search_company_noArguments_json(client):
 
 def test_filter_company_by_date_startDateAndEndDate(client):
     """"""
-    response = client.get('/company/search?name_of_issuer=Moon&start_date=1999-01-01')
-    response.get_json()
     pass
 
 
@@ -290,30 +288,31 @@ def test_get_edgarfilings_with_date_json(client):
 
 
 def test_get_edgarfilings_with_date_startDateAndEndDate(client):
-    #     """"""
-    #     response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing?start_date=1997-01-01')
-    #     assert response.get_json() == []
-    pass
+    """"""
+    response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/'
+                          f'?start_date=1999-01-01&end_date=1999-12-31')
+    assert response.get_json() == [{'accession_no': '0001420506-21-000830',
+                                    'cik_no': '0001171592',
+                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT',
+                                    'filing_type': None}]
 
 
 def test_get_edgarfilings_with_date_startDate(client):
     """"""
-    # response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/')
-    # assert response.get_json() == [{'accession_no': '0001420506-21-000830',
-    #                                 'cik_no': '0001171592',
-    #                                 'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT',
-    #                                 'filing_type': None}]
-    pass
+    response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/?start_date=1999-01-01')
+    assert response.get_json() == [{'accession_no': '0001420506-21-000830',
+                                    'cik_no': '0001171592',
+                                    'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT',
+                                    'filing_type': None}]
 
 
 def test_get_edgarfilings_with_date_endDate(client):
     """"""
-    # response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/')
-    # assert response.get_json() == [{'accession_no': '0001420506-21-000830',
-    #                                 'cik_no': '0001171592',
-    #                                 'filing_date': 'Wed, 01 Sep 1999 00:00:00 GMT',
-    #                                 'filing_type': None}]
-    pass
+    response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/?end_date=1998-12-31')
+    assert response.get_json() == [{'accession_no': '00016273506-21-000830',
+                                    'cik_no': '0001171592',
+                                    'filing_date': 'Sat, 02 May 1998 00:00:00 GMT',
+                                    'filing_type': None}]
 
 
 def test_get_edgarfilings_by_filing_id_responseCode(client):
