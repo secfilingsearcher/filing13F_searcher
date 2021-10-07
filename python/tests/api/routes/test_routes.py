@@ -122,7 +122,6 @@ def client():
             db.session.add(data_13f_table2)
             db.session.add(data_13f_table3)
             db.session.commit()
-            company_name = ""
         yield client
 
 
