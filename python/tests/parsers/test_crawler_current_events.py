@@ -6,23 +6,19 @@ import pytest
 
 from edgar_filing_searcher.parsers.crawler_current_events import ensure_13f_filing_detail_urls, \
     get_subdirectories_for_specific_date, generate_dates
+from errors import IncorrectUrlException
 
 DATE_1 = date(2021, 1, 8)
 DATE_2 = date(2021, 1, 9)
 DATE_3 = date(2021, 1, 10)
+subdirectories = ['1478997/0001478997-21-000001',
+                  '819864/0000819864-21-000002',
+                  '1567784/0000909012-21-000002',
+                  '1479844/0001479844-21-000001']
 
 
-@pytest.fixture
-def subdirectories():
-    """Creates an fixture with test_edgar_current_events.html data"""
-    return ['1478997/0001478997-21-000001',
-            '819864/0000819864-21-000002',
-            '1567784/0000909012-21-000002',
-            '1479844/0001479844-21-000001']
-
-
-def test_get_subdirectories_for_specific_date():
-    """Tests for get_subdirectories_for_specific_date"""
+def test_get_subdirectories_for_specific_date_hasSubdirectories():
+    """Tests when get_subdirectories_for_specific_date has subdirectories"""
     actual = get_subdirectories_for_specific_date(DATE_1)
     assert actual == ['1478997/0001478997-21-000001',
                       '819864/0000819864-21-000002',
@@ -43,6 +39,12 @@ def test_get_subdirectories_for_specific_date():
                       '1387399/0001567619-21-000762']
 
 
+def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
+    """Tests when get_subdirectories_for_specific_date has no subdirectories"""
+    actual = get_subdirectories_for_specific_date(DATE_2)
+    assert actual is None
+
+
 def test_ensure_13f_filing_detail_urls(subdirectories):
     """Test for ensure_13f_filing_detail_urls"""
 
@@ -55,9 +57,25 @@ def test_ensure_13f_filing_detail_urls(subdirectories):
             'https://www.sec.gov/Archives/edgar/data/1479844/0001479844-21-000001-index.html']
 
 
-def test_generate_dates():
-    """Test for generate_dates"""
+def test_ensure_13f_filing_detail_urls_no():
+    """Test for ensure_13f_filing_detail_urls"""
+
+    actual = ensure_13f_filing_detail_urls([])
+
+    assert actual == []
+
+
+def test_generate_dates_differentDates():
+    """Test when generate_dates has different dates"""
 
     actual = tuple(generate_dates(DATE_1, DATE_3))
 
     assert actual == (DATE_1, DATE_2, DATE_3)
+
+
+def test_generate_dates_sameDates():
+    """Test when generate_dates has the same dates"""
+
+    actual = tuple(generate_dates(DATE_1, DATE_1))
+
+    assert actual == (DATE_1,)

@@ -61,13 +61,9 @@ def get_subdirectories_for_specific_date(full_date: date):
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     """Returns the 13f filing detail url"""
     specific_date_13f_filing_detail_urls = []
-    try:
-        [specific_date_13f_filing_detail_urls.append(
-            "https://www.sec.gov/Archives/edgar/data/" +
-            subdirectory + "-index.html") for subdirectory in cik_ascension_subdirectories]
-    except IncorrectUrlException:
-        logging.critical("Found no 13f cik_no_and_accession_no.")
-        sys.exit(-1)
+    [specific_date_13f_filing_detail_urls.append(
+        "https://www.sec.gov/Archives/edgar/data/" +
+        subdirectory + "-index.html") for subdirectory in cik_ascension_subdirectories]
     return specific_date_13f_filing_detail_urls
 
 
