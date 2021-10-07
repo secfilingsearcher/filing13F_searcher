@@ -1,14 +1,69 @@
 #table-container {
-    padding: 0 0 10px 0;
+    padding: 0 0 125px 0;
 }
 
-#table-container tr {
-    padding-top: 20px;
-    padding-bottom: 20px;
+#table-container thead > tr > th {
+    background-color: #eff0f3;
+    color: #0d0d0d;
+    font-size: 1.25em;
+    font-family: "Lato", Arial, Helvetica, sans-serif;
 }
-#table-container thead {
-    background-color: rgb(247, 247, 248);
-    color: rgb(150, 150, 180);
+
+#table-container tbody > tr > td, #table-container tbody > tr > td > a {
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+}
+
+#table-container tbody {
+    background-color: none;
+}
+
+#table-container {
+    margin: 30px;
+}
+
+#table-container tbody > tr > td.company-name {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#table-container tbody > tr > td.company-name {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#table-container tbody > tr > td > p.company-initials {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: orange;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#table-container tbody > tr > td > div.company-initials-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+    background-color: #785589;
+    color: white;
+    text-align: center;
+}
+
+#table-container tbody > tr > td > div.company-initials-container > p { 
+    font-family: cursive;
+}
+
+#table-container tbody > tr > td.filing-count {
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .company-page-link-style {
@@ -16,8 +71,8 @@
     color: rgb(140, 140, 144);
 }
 
-#table-container .company-page-link-style tr > td > a:hover {
-    color: red;
+a.company-page-link-style:hover {
+   color: black;
 }
 
 
