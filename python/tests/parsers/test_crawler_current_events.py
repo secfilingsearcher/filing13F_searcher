@@ -9,7 +9,7 @@ from edgar_filing_searcher.parsers.crawler_current_events import ensure_13f_fili
 DATE_1 = date(2021, 1, 8)
 DATE_2 = date(2021, 1, 9)
 DATE_3 = date(2021, 1, 10)
-subdirectories = ['1478997/0001478997-21-000001',
+SUBDIRECTORIES = ['1478997/0001478997-21-000001',
                   '819864/0000819864-21-000002',
                   '1567784/0000909012-21-000002',
                   '1479844/0001479844-21-000001']
@@ -46,7 +46,7 @@ def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
 def test_ensure_13f_filing_detail_urls():
     """Test for ensure_13f_filing_detail_urls"""
 
-    actual = ensure_13f_filing_detail_urls(subdirectories)
+    actual = ensure_13f_filing_detail_urls(SUBDIRECTORIES)
 
     assert actual == \
            ['https://www.sec.gov/Archives/edgar/data/1478997/0001478997-21-000001-index.html',
