@@ -7,7 +7,7 @@ from datetime import date, timedelta
 
 import requests
 
-from edgar_filing_searcher.errors import NoUrlException
+from edgar_filing_searcher.errors import IncorrectUrlException
 
 
 def get_text(url):
@@ -62,11 +62,10 @@ def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     """Returns the 13f filing detail url"""
     specific_date_13f_filing_detail_urls = []
     try:
-        for subdirectory in cik_ascension_subdirectories:
-            specific_date_13f_filing_detail_urls.append(
-                "https://www.sec.gov/Archives/edgar/data/" +
-                subdirectory + "-index.html")
-    except NoUrlException:
+        [specific_date_13f_filing_detail_urls.append(
+            "https://www.sec.gov/Archives/edgar/data/" +
+            subdirectory + "-index.html") for subdirectory in cik_ascension_subdirectories]
+    except IncorrectUrlException:
         logging.critical("Found no 13f cik_no_and_accession_no.")
         sys.exit(-1)
     return specific_date_13f_filing_detail_urls
