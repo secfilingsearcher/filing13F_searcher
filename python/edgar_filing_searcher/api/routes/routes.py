@@ -28,12 +28,33 @@ def search_company():
     return abort(400, description="Bad Request")
 
 
+def filter_by_date(filings_results):
+    # if "start_date" and "end_date" in request.args:
+    #     filings_results = filings_results.query.filter(
+    #         EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
+    #     ).filter(
+    #         EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
+    #     )
+    if "start_date" in request.args:
+        filings_results = filings_results.filter(
+            EdgarFiling.filing_date >= datetime.strptime(request.args.get('start_date'), '%Y-%m-%d')
+        )
+    if "end_date" in request.args:
+        filings_results = filings_results.filter(
+            EdgarFiling.filing_date <= datetime.strptime(request.args.get('end_date'), '%Y-%m-%d')
+        )
+    return filings_results
+
+
 def company_by_company_name(company_name):
     """Search for companies by name of issuer"""
     if company_name is None:
         abort(400, description="Bad Request")
 
     companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
+
+    companies = filter_by_date(companies)
+
     return jsonify(list(companies))
 
 
