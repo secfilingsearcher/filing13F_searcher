@@ -1,9 +1,9 @@
 """APi for web back-end"""
 from datetime import datetime
 
-from flask import jsonify, Blueprint, request, abort
+from flask import Blueprint
 
-from edgar_filing_searcher.models import Company, EdgarFiling, Data13f
+from edgar_filing_searcher.models import EdgarFiling
 
 company_blueprint = Blueprint('company', __name__)
 
