@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table'
-import './FilingData.css'
+import './resultstable.css'
 
 function FilingData () {
   const [results, setResults] = useState([])
@@ -21,10 +21,9 @@ function FilingData () {
       })
   }, [])
   return (
-        <div id='filing-data'>
-            <h1>{company.company_name}: {filingId}</h1>
-            <div id='table-container'>
-              <Table borderless hover>
+        <div id='table-container'>
+            <h2>{company.company_name}: {filingId}</h2>
+              <Table borderless>
                 <thead>
                   <tr>
                     <th>Name of Issuer</th>
@@ -62,7 +61,6 @@ function FilingData () {
                 </tbody>
               </Table>
             </div>
-        </div>
   )
 }
 
