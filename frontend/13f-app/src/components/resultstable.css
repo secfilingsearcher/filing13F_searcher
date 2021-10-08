@@ -1,8 +1,15 @@
+#table-container {
+    margin: 25px;
+    border: silver;
+    border-width: 5px;
+}
+
 #table-container h2 {
     padding: 50px 0 50px 0;
     font-family: 'Optimist', Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 300;
 }
+
 
 #table-container tr {
     padding-top: 20px;
@@ -12,21 +19,29 @@
     font-family: 'Interstate_Light', sans-serif, Arial;
     font-size: 1.5rem;
     font-weight: 200;
+    background-color: rgb(0, 247, 255);
     color: rgb(150, 150, 180);
 }
 
-.company-page-link-style {
+#table-container tbody > tr > td, #table-container tbody > tr > td > a {
     text-decoration: none;
     color: rgb(140, 140, 144);
-}
-
-#table-container tbody > tr > td, #table-container tbody > tr > td > a {
     font-family: 'Interstate_Light', sans-serif, Arial;
 }
 
+#table-container tbody > tr > td > a:hover {
+    color: orange;
+}
 
+#table-container tbody > tr > td.company-name #table-container tbody > tr > td.filing-count  {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
 
-
+#table-container tbody > tr > td.accession-no #table-container tbody > tr > td.filing-date  {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
 
 
 
