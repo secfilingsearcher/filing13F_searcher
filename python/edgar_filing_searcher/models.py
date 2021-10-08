@@ -19,7 +19,7 @@ class EdgarFiling(db.Model):
     accession_no = db.Column(db.String, primary_key=True)
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
     filing_type = db.Column(db.String)
-    filing_date = db.Column(db.DateTime)
+    filing_date = db.Column(db.Date)
     data_13f_rows = db.relationship("Data13f")
 
 
