@@ -1,7 +1,6 @@
 #table-container {
     margin: 25px;
-    border: silver;
-    border-width: 5px;
+    padding-bottom: 50px;
 }
 
 #table-container h2 {

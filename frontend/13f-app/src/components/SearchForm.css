@@ -1,1 +1,24 @@
-.form {float: 'left', padding: '20px', margin: '20px'}
+#home-search form {
+    float: left; 
+    padding: 20px; 
+    margin: 20px;
+}
+
+#home-search input {
+    height: 57px;
+    background-color: transparent;
+    border-color: white;
+    color: white;
+
+}
+
+#home-search input:focus {
+    background-color: white;
+    border-color: black;
+    color: black;    
+}
+
+#home-search input::placeholder {
+    color: white;
+}
+

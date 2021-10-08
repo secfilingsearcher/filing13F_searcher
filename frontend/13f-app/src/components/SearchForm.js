@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import './SearchForm.css'
 import '../App.css'
 import './Button.css'
 import './MainSection.css'
@@ -18,7 +19,7 @@ function SearchForm () {
   const searchLink = `/search?q=${searchName}&startDate=${searchStartDate}&endDate=${searchEndDate}`
   return (
         <>
-              <form>
+              <form id="home-search">
                 <div style={divStyle}>
                   <input type='text' placeholder='Company Name' className='search' value={searchName} onChange={handleNameChange}></input>
                   <input type='date' className='date' value={searchStartDate} onChange={handleStartDateChange}></input>
