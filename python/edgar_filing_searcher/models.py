@@ -16,7 +16,7 @@ class EdgarFiling(db.Model):
     filing_date: date
 
     __tablename__ = 'edgar_filing'
-    accession_no = db.Column(db.String, primary_key=True)
+    accession_no = db.Column(db.String, primary_key=True)  # Primary key
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
     filing_type = db.Column(db.String)
     filing_date = db.Column(db.DateTime)
