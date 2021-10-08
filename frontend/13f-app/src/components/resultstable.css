@@ -1,13 +1,17 @@
-#table-container {
-    padding: 0 0 10px 0;
+#table-container h2 {
+    padding: 50px 0 50px 0;
+    font-family: 'Optimist', Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
 }
 
 #table-container tr {
     padding-top: 20px;
     padding-bottom: 20px;
 }
-#table-container thead {
-    background-color: rgb(247, 247, 248);
+#table-container thead > tr > th {
+    font-family: 'Interstate_Light', sans-serif, Arial;
+    font-size: 1.5rem;
+    font-weight: 200;
     color: rgb(150, 150, 180);
 }
 
@@ -16,9 +20,12 @@
     color: rgb(140, 140, 144);
 }
 
-#table-container .company-page-link-style tr > td > a:hover {
-    color: red;
+#table-container tbody > tr > td, #table-container tbody > tr > td > a {
+    font-family: 'Interstate_Light', sans-serif, Arial;
 }
+
+
+
 
 
 

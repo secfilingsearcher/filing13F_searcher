@@ -19,7 +19,8 @@ function Results () {
   }, [])
   return (
         <div id="table-container">
-            <Table borderless hover>
+          <h2>{results.length} Results Found</h2>
+            <Table borderless>
               <thead>
               <tr>
                     <th>Company Name</th>
@@ -29,7 +30,7 @@ function Results () {
               <tbody>
                 {results.map(result => (
                     <tr key={result.cik_no}>
-                        <td><Link to={{ pathname: `/company/${result.cik_no}/edgar-filing/`, state: result }} className="company-page-link-style">{result.company_name}</Link></td>
+                        <td className="company-name"><Link to={{ pathname: `/company/${result.cik_no}/edgar-filing/`, state: result }} className="company-page-link-style">{result.company_name}</Link></td>
                         <td className="filing-count">{result.filing_count}</td>
                     </tr>
                 ))}
