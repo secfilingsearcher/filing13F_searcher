@@ -5,10 +5,10 @@ from datetime import datetime
 from flask import Flask
 from flask_testing import TestCase
 
-from api.routes.routes_filters import filter_company_by_date, filter_edgar_filing_by_date
+from edgar_filing_searcher.api.routes.routes_filters import filter_company_by_date, filter_edgar_filing_by_date
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.database import db
-from parsers.main import send_data_to_db
+from edgar_filing_searcher.parsers.main import send_data_to_db
 
 COMPANY_CIK_1 = "0001171592"
 ACCESSION_NO_1a = '0001420506-21-000830'
