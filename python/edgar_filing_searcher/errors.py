@@ -1,4 +1,4 @@
-"""docstring"""
+"""This file contains Exception Classes"""
 
 
 class NoUrlException(Exception):
