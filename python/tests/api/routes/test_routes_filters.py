@@ -5,7 +5,7 @@ from datetime import datetime
 from flask import Flask
 from flask_testing import TestCase
 
-from api.routes.routes import filter_company_by_date, filter_edgar_filing_by_date
+from api.routes.routes_filters import filter_company_by_date, filter_edgar_filing_by_date
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.database import db
 from parsers.main import send_data_to_db
