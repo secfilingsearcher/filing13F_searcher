@@ -1,11 +1,7 @@
 """APi for web back-end"""
 from datetime import datetime
 
-from flask import Blueprint
-
 from edgar_filing_searcher.models import EdgarFiling
-
-company_blueprint = Blueprint('company', __name__)
 
 
 def filter_company_by_date(filings, start_date, end_date):
@@ -20,12 +16,12 @@ def filter_company_by_date(filings, start_date, end_date):
         )
         return filings
 
-    elif start_date:
+    if start_date:
         return filings.join(EdgarFiling).filter(
             EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
         )
 
-    elif end_date:
+    if end_date:
         return filings.join(EdgarFiling).filter(
             EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
         )
