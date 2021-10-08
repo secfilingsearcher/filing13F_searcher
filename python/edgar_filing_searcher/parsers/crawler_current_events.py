@@ -30,14 +30,17 @@ def get_subdirectories_for_specific_date(full_date: date):
     subdirectory_date_after_1998 = full_date.strftime('%Y%m%d')
 
     if full_date.year == 1994:
-        search_url = base_url + "/" + f'{full_date.year}' + "/" + \
-                     f'QTR{quarter}' + "/" + f'company.{subdirectory_date_94}.idx'
+        # search_url = base_url + "/" + f'{full_date.year}' + "/" + \
+        #              f'QTR{quarter}' + "/" + f'company.{subdirectory_date_94}.idx'
+        search_url = "".join([base_url, "/", f'{full_date.year}', "/",
+                              f'QTR{quarter}', "/", f'company.{subdirectory_date_94}.idx'])
+
     elif 1995 <= full_date.year <= 1997:
-        search_url = base_url + "/" + f'{full_date.year}' + "/" + \
-                     f'QTR{quarter}' + "/" + f'company.{subdirectory_date_95_97}.idx'
+        search_url = "".join([base_url, "/", f'{full_date.year}', "/",
+                              f'QTR{quarter}', "/", f'company.{subdirectory_date_95_97}.idx'])
     else:
-        search_url = base_url + "/" + f'{full_date.year}' + "/" + \
-                     f'QTR{quarter}' + "/" + f'company.{subdirectory_date_after_1998}.idx'
+        search_url = "".join([base_url, "/", f'{full_date.year}', "/",
+                              f'QTR{quarter}', "/", f'company.{subdirectory_date_after_1998}.idx'])
 
     response = requests.get(
         search_url,
@@ -58,8 +61,8 @@ def get_subdirectories_for_specific_date(full_date: date):
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     """Returns the 13f filing detail url"""
     specific_date_13f_filing_detail_urls = \
-        ["https://www.sec.gov/Archives/edgar/data/" + subdirectory +
-         "-index.html" for subdirectory in cik_ascension_subdirectories]
+        ["".join(["https://www.sec.gov/Archives/edgar/data/", subdirectory,
+                  "-index.html"]) for subdirectory in cik_ascension_subdirectories]
     return specific_date_13f_filing_detail_urls
 
 
