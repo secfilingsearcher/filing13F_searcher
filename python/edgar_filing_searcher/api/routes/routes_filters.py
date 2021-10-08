@@ -39,11 +39,11 @@ def filter_edgar_filing_by_date(filings, start_date, end_date):
             EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
         )
         return filings
-    elif start_date:
+    if start_date:
         return filings.filter(
             EdgarFiling.filing_date >= datetime.strptime(start_date, '%Y-%m-%d')
         )
-    elif end_date:
+    if end_date:
         return filings.filter(
             EdgarFiling.filing_date <= datetime.strptime(end_date, '%Y-%m-%d')
         )
