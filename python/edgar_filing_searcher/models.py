@@ -23,7 +23,7 @@ class EdgarFiling(db.Model):
     # filing_type: type of SEC filing
     filing_type = db.Column(db.String)
     # filing_date: date of filing
-    filing_date = db.Column(db.DateTime)
+    filing_date = db.Column(db.Date)
     # data_13f_rows: relationship between EdgarFiling and Data13f
     data_13f_rows = db.relationship("Data13f")
 
@@ -106,6 +106,7 @@ class Data13f(db.Model):
             self.accession_no,
             self.cik_no,
             self.name_of_issuer,
+            self.title_of_class,
             self.title_of_class,
             self.cusip,
             self.value,
