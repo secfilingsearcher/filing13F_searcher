@@ -16,10 +16,15 @@ class EdgarFiling(db.Model):
     filing_date: date
 
     __tablename__ = 'edgar_filing'
-    accession_no = db.Column(db.String, primary_key=True)  # Primary key
+    # accession_no: filing id number
+    accession_no = db.Column(db.String, primary_key=True)
+    # cik_no: central index key number
     cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
+    # filing_type: type of SEC filing
     filing_type = db.Column(db.String)
+    # filing_date: date of filing
     filing_date = db.Column(db.DateTime)
+    # data_13f_rows: relationship between EdgarFiling and Data13f
     data_13f_rows = db.relationship("Data13f")
 
 
@@ -32,9 +37,13 @@ class Company(db.Model):
     filing_count: int
 
     __tablename__ = 'company'
+    # cik_no: central index key number
     cik_no = db.Column(db.String, primary_key=True)
+    # company_name: name of company
     company_name = db.Column(db.String)
+    # filing_count: number of stored filings
     filing_count = db.Column(db.Integer)
+    # filings: relationship between Company and EdgarFiling
     filings = db.relationship("EdgarFiling")
 
 
@@ -59,20 +68,36 @@ class Data13f(db.Model):
     voting_authority_none: int
 
     __tablename__ = 'data_13f'
+    # equity_holdings_id: id of equity holdings
     equity_holdings_id = db.Column(db.String, primary_key=True)
+    # accession_no: filing id number
     accession_no = db.Column(db.String, db.ForeignKey('edgar_filing.accession_no'))
+    # cik_no: central index key number
     cik_no = db.Column(db.String)
+    # name_of_issuer: the issuer for each class of security reported
     name_of_issuer = db.Column(db.String)
+    # title_of_class: the title of the class of the security
     title_of_class = db.Column(db.String)
+    # cusip: 9 digit CUSIP number of the security
     cusip = db.Column(db.String)
+    # value: the market value of the holding of the particular class of security
     value = db.Column(db.Numeric(asdecimal=False))
+    # ssh_prnamt: shares or principal amount
     ssh_prnamt = db.Column(db.Integer)
+    # ssh_prnamt_type: shares or principal amount code (SH or PRN)
     ssh_prnamt_type = db.Column(db.String)
+    # put_call: put and call options designation following such segregated entries
     put_call = db.Column(db.String)
+    # investment_discretion: designate investment discretion as “sole” (SOLE),
+    # “shareddefined” (DEFINED), or “shared-other” (OTHER)
     investment_discretion = db.Column(db.String)
+    # other_manager: each other Manager on whose behalf this Form 13F report is being filed with
     other_manager = db.Column(db.String)
+    # voting_authority_sole: the number of shares for which the Manager exercises sole voting authority
     voting_authority_sole = db.Column(db.Integer)
+    # voting_authority_shared: the number of shares for which the Manager exercises shared voting authority
     voting_authority_shared = db.Column(db.Integer)
+    # voting_authority_none: the number of shares for which the Manager exercises no voting authority
     voting_authority_none = db.Column(db.Integer)
 
     def create_data_13f_primary_key(self):
@@ -81,7 +106,6 @@ class Data13f(db.Model):
             self.accession_no,
             self.cik_no,
             self.name_of_issuer,
-            self.title_of_class,
             self.title_of_class,
             self.cusip,
             self.value,
