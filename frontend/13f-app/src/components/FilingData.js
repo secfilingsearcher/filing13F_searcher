@@ -24,7 +24,7 @@ function FilingData () {
         <div id='table-container'>
             <h2>{company.company_name}: {filingId}</h2>
               <Table borderless>
-                <thead>
+                <thead className="filing-data">
                   <tr>
                     <th>Name of Issuer</th>
                     <th>Title of Class</th>

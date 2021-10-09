@@ -1,6 +1,6 @@
 .navbar {
   background: linear-gradient(90deg, rgb(6, 12, 15) 0%, rgb(175, 170, 170) 100%);
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: row;
   flex-grow: 1;

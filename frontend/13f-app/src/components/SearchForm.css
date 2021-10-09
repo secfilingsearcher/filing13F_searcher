@@ -7,18 +7,28 @@
 #home-search input {
     height: 57px;
     background-color: transparent;
-    border-color: white;
-    color: white;
-
+    border-color: #fff;
+    color: #fff;
 }
 
 #home-search input:focus {
-    background-color: white;
     border-color: black;
-    color: black;    
+    color:#fff;    
 }
 
 #home-search input::placeholder {
-    color: white;
+    color: #fff;
 }
 
+#bar-search form {
+    padding: 20px 0 50px 20px;
+    margin-bottom: 10px
+}
+
+#bar-search input {
+    background-color: transparent;
+    border-color: #fff;
+    width: 175px;
+    height: 30px;
+    color: #fff;
+}
