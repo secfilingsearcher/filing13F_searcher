@@ -37,7 +37,7 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         db.create_all()
         self.company = Company(cik_no="0001171592", company_name="Cool Industries", filing_count=0)
         self.edgar_filing = EdgarFiling(accession_no="0001420506-21-000830", cik_no="0001171592",
-                                        filing_date=datetime.fromisoformat("1999-09-01"))
+                                        filing_date=date.fromisoformat("1999-09-01"))
         self.data_13f_table = [Data13f(equity_holdings_id="67896567",
                                        accession_no='0001420506-21-000830',
                                        cik_no='56464565767',
