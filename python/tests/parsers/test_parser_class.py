@@ -45,7 +45,7 @@ def infotable_xml_text():
 def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions 
     as parameters. """
-    with patch('requests.get') as mock_function:
+    with patch('requests.Session.get') as mock_function:
         mock_function.side_effect = [MagicMock(text=filing_detail_text_13f),
                                      MagicMock(text=primary_doc_xml_text),
                                      MagicMock(text=infotable_xml_text)]
