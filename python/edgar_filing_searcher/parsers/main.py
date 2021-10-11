@@ -8,7 +8,7 @@ from datetime import date
 
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
-from edgar_filing_searcher.parsers.crawler_current_events import \
+from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
@@ -69,8 +69,8 @@ def main():
     start_date = args.start_date
     end_date = args.end_date
 
-    logging.basicConfig(format='%(asctime)s, %(filename)s, %(message)s',
-                        datefmt='%Y-%m-%d %I:%M:%S %p', level=logging.INFO)
+    logging.basicConfig(format='%(levelname)s: %(asctime)s, %(filename)s, %(message)s',
+                        datefmt='%Y-%m-%d %I:%M:%S %p')
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 
     change_sys_excepthook()

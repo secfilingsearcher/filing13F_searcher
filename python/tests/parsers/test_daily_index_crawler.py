@@ -3,7 +3,7 @@
 from datetime import date
 
 import pytest
-from edgar_filing_searcher.parsers.crawler_current_events import ensure_13f_filing_detail_urls, \
+from edgar_filing_searcher.parsers.daily_index_crawler import ensure_13f_filing_detail_urls, \
     get_subdirectories_for_specific_date, generate_dates
 
 DATE_1 = date(2021, 1, 8)
