@@ -87,7 +87,7 @@ def test_parser_setsData13f():
                               cusip='02156B103',
                               value=Decimal(353),
                               ssh_prnamt=2893,
-                              ssh_prnamt_type=None,
+                              ssh_prnamt_type='SH',
                               put_call=None,
                               investment_discretion='SOLE',
                               other_manager=None,
