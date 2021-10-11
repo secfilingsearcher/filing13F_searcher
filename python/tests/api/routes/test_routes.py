@@ -136,20 +136,38 @@ def test_search_company_qArgument_json(client):
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
-def test_search_company_qArgument_startDateAndEndDate(client):
-    """Test for the start date and end date for search_company function for the argument q"""
+def test_search_company_qArgument_startDateAndEndDate_responseCode(client):
+    """Test for the response code for the start date and end date for search_company function for the argument q"""
+    response = client.get('/company/search?q=&start_date=2000-04-05&end_date=2000-04-05')
+    assert response.status_code == 200
+
+
+def test_search_company_qArgument_startDateAndEndDate_json(client):
+    """Test for the json for the start date and end date for search_company function for the argument q"""
     response = client.get('/company/search?q=&start_date=2000-04-05&end_date=2000-04-05')
     assert response.get_json() == [{'cik_no': '0006734892', 'company_name': 'Nice Industries', 'filing_count': 1}]
 
 
-def test_search_company_qArgument_startDate(client):
-    """Test for the start date for search_company function for the argument q"""
+def test_search_company_qArgument_startDate_responseCode(client):
+    """Test for the response code for the start date for search_company function for the argument q"""
+    response = client.get('/company/search?q=&start_date=2001-01-01')
+    assert response.status_code == 200
+
+
+def test_search_company_qArgument_startDate_json(client):
+    """Test for the json for the start date for search_company function for the argument q"""
     response = client.get('/company/search?q=&start_date=2001-01-01')
     assert response.get_json() == [{'cik_no': '0008322302', 'company_name': 'Purple Industries', 'filing_count': 1}]
 
 
-def test_search_company_qArgument_endDate(client):
-    """Test for the end date for search_company function for the argument q"""
+def test_search_company_qArgument_endDate_responseCode(client):
+    """Test for the response code for the end date for search_company function for the argument q"""
+    response = client.get('/company/search?q=&end_date=1999-12-31')
+    assert response.status_code == 200
+
+
+def test_search_company_qArgument_endDate_json(client):
+    """Test for the json for the end date for search_company function for the argument q"""
     response = client.get('/company/search?q=&end_date=1999-12-31')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
@@ -161,55 +179,91 @@ def test_search_company_companyNameArgument_responseCode(client):
 
 
 def test_search_company_companyNameArgument_json(client):
-    """Test for the json for search_company function for the argument company name"""
+    """Test for the json for the json for search_company function for the argument company name"""
     response = client.get('/company/search?company_name=Cool')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
-def test_search_company_companyNameArgument_startDateAndEndDate(client):
-    """Test for the start date and end date for search_company function for the argument company name"""
+def test_search_company_companyNameArgument_startDateAndEndDate_responseCode(client):
+    """Test for the response code for the start date and end date for search_company function for the argument company name"""
+    response = client.get('/company/search?company_name=&start_date=2000-04-05&end_date=2000-04-05')
+    assert response.status_code == 200
+
+
+def test_search_company_companyNameArgument_startDateAndEndDate_json(client):
+    """Test for the json for the start date and end date for search_company function for the argument company name"""
     response = client.get('/company/search?company_name=&start_date=2000-04-05&end_date=2000-04-05')
     assert response.get_json() == [{'cik_no': '0006734892', 'company_name': 'Nice Industries', 'filing_count': 1}]
 
 
-def test_search_company_companyNameArgument_startDate(client):
-    """Test for the start date for search_company function for the argument company name"""
+def test_search_company_companyNameArgument_startDate_responseCode(client):
+    """Test for the response code for the start date for search_company function for the argument company name"""
+    response = client.get('/company/search?company_name=&start_date=2001-01-01')
+    assert response.status_code == 200
+
+
+def test_search_company_companyNameArgument_startDate_json(client):
+    """Test for the json for the start date for search_company function for the argument company name"""
     response = client.get('/company/search?company_name=&start_date=2001-01-01')
     assert response.get_json() == [{'cik_no': '0008322302', 'company_name': 'Purple Industries', 'filing_count': 1}]
 
 
-def test_search_company_companyNameArgument_endDate(client):
-    """Test for the end date for search_company function for the argument company name"""
+def test_search_company_companyNameArgument_endDate_responseCode(client):
+    """Test for the response code for the end date for search_company function for the argument company name"""
+    response = client.get('/company/search?company_name=&end_date=1999-12-31')
+    assert response.status_code == 200
+
+
+def test_search_company_companyNameArgument_endDate_json(client):
+    """Test for the json for the end date for search_company function for the argument company name"""
     response = client.get('/company/search?company_name=&end_date=1999-12-31')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
 def test_search_company_nameOfIssuerArgument_responseCode(client):
-    """Test for the response code for search_company function for the argument name of issuer"""
+    """Test for the response code for the response code for search_company function for the argument name of issuer"""
     response = client.get('/company/search?name_of_issuer=Agilent')
     assert response.status_code == 200
 
 
 def test_search_company_nameOfIssuerArgument_json(client):
-    """Test for the json for search_company function for the argument name of issuer"""
+    """Test for the json for the json for search_company function for the argument name of issuer"""
     response = client.get('/company/search?name_of_issuer=Agilent')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
-def test_search_company_nameOfIssuerArgument_startDateAndEndDate(client):
-    """Test for the start date and end date for search_company function for the argument name of issuer"""
+def test_search_company_nameOfIssuerArgument_startDateAndEndDate_responseCode(client):
+    """Test for the response code for the start date and end date for search_company function for the argument name of issuer"""
+    response = client.get('/company/search?name_of_issuer=Agilent&start_date=1999-01-01&end_date=1999-12-31')
+    assert response.status_code == 200
+
+
+def test_search_company_nameOfIssuerArgument_startDateAndEndDate_json(client):
+    """Test for the json for the start date and end date for search_company function for the argument name of issuer"""
     response = client.get('/company/search?name_of_issuer=Agilent&start_date=1999-01-01&end_date=1999-12-31')
     assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
 
 
-def test_search_company_nameOfIssuerArgument_startDate(client):
-    """Test for the start date for search_company function for the argument name of issuer"""
+def test_search_company_nameOfIssuerArgument_startDate_responseCode(client):
+    """Test for the response code for the start date for search_company function for the argument name of issuer"""
+    response = client.get('/company/search?name_of_issuer=Agilent&start_date=1999-01-01&end_date=1999-12-31')
+    assert response.status_code == 200
+
+
+def test_search_company_nameOfIssuerArgument_startDate_json(client):
+    """Test for the json for the start date for search_company function for the argument name of issuer"""
     response = client.get('/company/search?name_of_issuer=Moon&start_date=1999-01-01')
     assert response.get_json() == [{'cik_no': '0006734892', 'company_name': 'Nice Industries', 'filing_count': 1}]
 
 
-def test_search_company_nameOfIssuerArgument_endDate(client):
-    """Test for the end date for search_company function for the argument name of issuer"""
+def test_search_company_nameOfIssuerArgument_endDate_responseCode(client):
+    """Test for the response code for the end date for search_company function for the argument name of issuer"""
+    response = client.get('/company/search?name_of_issuer=Star&end_date=2001-12-31')
+    assert response.status_code == 200
+
+
+def test_search_company_nameOfIssuerArgument_endDate_json(client):
+    """Test for the json for the end date for search_company function for the argument name of issuer"""
     response = client.get('/company/search?name_of_issuer=Star&end_date=2001-12-31')
     assert response.get_json() == [{'cik_no': '0008322302', 'company_name': 'Purple Industries', 'filing_count': 1}]
 
@@ -221,7 +275,7 @@ def test_search_company_noArguments_responseCode(client):
 
 
 def test_search_company_noArguments_json(client):
-    """Test for json for search_company function with no argument"""
+    """Test for the json for json for search_company function with no argument"""
     response = client.get('/company/search')
     assert response.get_json() is None
 
@@ -233,7 +287,7 @@ def test_get_edgarfilings_with_date_responseCode(client):
 
 
 def test_get_edgarfilings_with_date_json(client):
-    """Test for the json for get_edgarfilings_with_date function"""
+    """Test for the json for the json for get_edgarfilings_with_date function"""
     response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
@@ -245,8 +299,14 @@ def test_get_edgarfilings_with_date_json(client):
                                     'filing_type': None}]
 
 
-def test_get_edgarfilings_with_date_startDateAndEndDate(client):
-    """Test for the start date and end date for get_edgarfilings_with_date function"""
+def test_get_edgarfilings_with_date_startDateAndEndDate_responseCode(client):
+    """Test for the response code for the start date and end date for get_edgarfilings_with_date function"""
+    response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/'
+                          f'?start_date=1999-01-01&end_date=1999-12-31')
+
+
+def test_get_edgarfilings_with_date_startDateAndEndDate_json(client):
+    """Test for the json for the start date and end date for get_edgarfilings_with_date function"""
     response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/'
                           f'?start_date=1999-01-01&end_date=1999-12-31')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
@@ -255,8 +315,13 @@ def test_get_edgarfilings_with_date_startDateAndEndDate(client):
                                     'filing_type': None}]
 
 
-def test_get_edgarfilings_with_date_startDate(client):
-    """Test for the start date for get_edgarfilings_with_date function"""
+def test_get_edgarfilings_with_date_startDate_responseCode(client):
+    """Test for the response code for the start date for get_edgarfilings_with_date function"""
+    response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/?start_date=1999-01-01')
+
+
+def test_get_edgarfilings_with_date_startDate_json(client):
+    """Test for the json for the start date for get_edgarfilings_with_date function"""
     response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/?start_date=1999-01-01')
     assert response.get_json() == [{'accession_no': '0001420506-21-000830',
                                     'cik_no': '0001171592',
@@ -264,8 +329,13 @@ def test_get_edgarfilings_with_date_startDate(client):
                                     'filing_type': None}]
 
 
-def test_get_edgarfilings_with_date_endDate(client):
-    """Test for the end date for get_edgarfilings_with_date function"""
+def test_get_edgarfilings_with_date_endDate_responseCode(client):
+    """Test for the response code for the end date for get_edgarfilings_with_date function"""
+    response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/?end_date=1998-12-31')
+
+
+def test_get_edgarfilings_with_date_endDate_json(client):
+    """Test for the json for the end date for get_edgarfilings_with_date function"""
     response = client.get(f'/company/{COMPANY_CIK_1}/edgar-filing/?end_date=1998-12-31')
     assert response.get_json() == [{'accession_no': '00016273506-21-000830',
                                     'cik_no': '0001171592',
@@ -274,13 +344,13 @@ def test_get_edgarfilings_with_date_endDate(client):
 
 
 def test_get_edgarfilings_by_filing_id_responseCode(client):
-    """Test for the response code for get_edgarfilings_with_date function"""
+    """Test for the response code for the response code for get_edgarfilings_with_date function"""
     response = client.get(f'/edgar-filing/{ACCESSION_NO_1a}/data/')
     assert response.status_code == 200
 
 
 def test_get_edgarfilings_by_filing_id_json(client):
-    """Test for the json for get_edgarfilings_with_date function"""
+    """Test for the json for the json for get_edgarfilings_with_date function"""
     response = client.get(f'/edgar-filing/{ACCESSION_NO_1a}/data/')
     assert response.get_json() == [{'equity_holdings_id': '67896567',
                                     'accession_no': '0001420506-21-000830',
@@ -300,13 +370,13 @@ def test_get_edgarfilings_by_filing_id_json(client):
 
 
 def test_get_company_by_company_id_responseCode(client):
-    """Test for the response code for get_company_by_company_id function"""
+    """Test for the response code for the response code for get_company_by_company_id function"""
     response = client.get(f'/company/{COMPANY_CIK_1}')
     assert response.status_code == 200
 
 
 def test_get_company_by_company_id_json(client):
-    """Test for the json for get_company_by_company_id function"""
+    """Test for the json for the json for get_company_by_company_id function"""
     response = client.get(f'/company/{COMPANY_CIK_1}')
     assert response.get_json() == {'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}
 
