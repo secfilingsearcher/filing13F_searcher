@@ -1,8 +1,10 @@
-"""APi for web back-end"""
+"""API for web back-end"""
 from datetime import datetime
 
 from flask import jsonify, Blueprint, request, abort
 
+from edgar_filing_searcher.api.routes.filters import \
+    filter_company_by_date, filter_edgar_filing_by_date
 from edgar_filing_searcher.models import Company, EdgarFiling, Data13f
 
 company_blueprint = Blueprint('company', __name__)
@@ -24,7 +26,7 @@ def search_company():
     if "company_name" in request.args:
         return company_by_company_name(request.args.get("company_name"))
     if "name_of_issuer" in request.args:
-        return company_by_invested_company(request)
+        return company_by_invested_company(request.args.get("name_of_issuer"))
     return abort(400, description="Bad Request")
 
 
@@ -33,42 +35,65 @@ def company_by_company_name(company_name):
     if company_name is None:
         abort(400, description="Bad Request")
 
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    start_date_datetime = None
+    end_date_datetime = None
+    if start_date:
+        start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
+    if end_date:
+        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+
     companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
-    return jsonify(list(companies))
+
+    companies_filtered_by_date = filter_company_by_date(companies,
+                                                        start_date_datetime, end_date_datetime)
+
+    return jsonify(list(companies_filtered_by_date))
 
 
-def company_by_invested_company(request_):
+def company_by_invested_company(name_of_issuer):
     """Search for companies by invested company"""
-    name_of_issuer = request_.args.get('name_of_issuer')
     if name_of_issuer is None:
         abort(400, description="Bad Request")
+
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    start_date_datetime = None
+    end_date_datetime = None
+    if start_date:
+        start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
+    if end_date:
+        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
 
     companies = Company.query \
         .join(EdgarFiling) \
         .join(Data13f) \
         .filter(Data13f.name_of_issuer.ilike(f"%{name_of_issuer}%"))
 
-    return jsonify(list(companies))
+    companies_filtered_by_date = filter_edgar_filing_by_date(companies,
+                                                             start_date_datetime, end_date_datetime)
+
+    return jsonify(list(companies_filtered_by_date))
 
 
 @company_blueprint.route('/company/<company_id>/edgar-filing/')
 def get_edgarfilings_with_date(company_id):
     """Route for filings for the specified company, optionally filtered by date"""
-    date_format = '%Y-%m-%d'
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
+    start_date_datetime = None
+    end_date_datetime = None
+    if start_date:
+        start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
+    if end_date:
+        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+
     filings = EdgarFiling.query.filter(EdgarFiling.cik_no == company_id)
 
-    if start_date:
-        filings = filings.filter(
-            EdgarFiling.filing_date >= datetime.strptime(start_date, date_format)
-        )
-    if end_date:
-        filings = filings.filter(
-            EdgarFiling.filing_date <= datetime.strptime(end_date, date_format)
-        )
+    filtered_filings = filter_edgar_filing_by_date(filings, start_date_datetime, end_date_datetime)
 
-    return jsonify(list(filings))
+    return jsonify(list(filtered_filings))
 
 
 @company_blueprint.route('/edgar-filing/<filing_id>/data/')
