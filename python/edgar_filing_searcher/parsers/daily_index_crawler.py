@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
 import logging
 import re
@@ -10,6 +11,7 @@ from urllib3.util.retry import Retry
 
 
 def get_request_response(url):
+    """Returns the response request from the url"""
     retry_strategy = Retry(
         total=3,
         status_forcelist=(429, 500, 502, 503, 504),
