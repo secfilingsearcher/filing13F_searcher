@@ -1,7 +1,7 @@
-"""APi for web back-end"""
+"""API for web back-end"""
 from flask import jsonify, Blueprint, request, abort
 
-from edgar_filing_searcher.api.routes.routes_filters import \
+from edgar_filing_searcher.api.routes.filters import \
     filter_company_by_date, filter_edgar_filing_by_date
 from edgar_filing_searcher.models import Company, EdgarFiling, Data13f
 

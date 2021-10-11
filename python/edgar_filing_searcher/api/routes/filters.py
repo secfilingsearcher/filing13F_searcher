@@ -1,4 +1,4 @@
-"""APi for web back-end"""
+"""Filters for API for web back-end"""
 from datetime import datetime
 
 from edgar_filing_searcher.models import EdgarFiling

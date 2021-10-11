@@ -1,11 +1,11 @@
-"""This file contains tests for main"""
+"""This file contains tests for routes' filters"""
 import os
 from datetime import datetime
 
 from flask import Flask
 from flask_testing import TestCase
 
-from edgar_filing_searcher.api.routes.routes_filters import filter_company_by_date, filter_edgar_filing_by_date
+from edgar_filing_searcher.api.routes.filters import filter_company_by_date, filter_edgar_filing_by_date
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.parsers.main import send_data_to_db
@@ -134,7 +134,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQLALchemy Tests"""
 
     def test_filter_company_by_date_startDateAndEndDate(self):
-        """"""
+        """Test for filter_company_by_date with start date and end date argument"""
         query = Company.query
         start_date = '1999-01-01'
         end_date = "1999-12-31"
@@ -142,7 +142,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert actual.all() == [Company(cik_no='0001171592', company_name='Cool Industries', filing_count=1)]
 
     def test_filter_company_by_date_startDate(self):
-        """"""
+        """Test for filter_company_by_date with start date argument"""
         query = Company.query
         start_date = '2000-01-01'
         actual = filter_company_by_date(query, start_date, None)
@@ -150,14 +150,14 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                 Company(cik_no='0008322302', company_name='Purple Industries', filing_count=1)]
 
     def test_filter_company_by_date_endDate(self):
-        """"""
+        """Test for filter_company_by_date with end date argument"""
         query = Company.query
         end_date = "1999-12-31"
         actual = filter_company_by_date(query, None, end_date)
         assert actual.all() == [Company(cik_no='0001171592', company_name='Cool Industries', filing_count=1)]
 
     def test_filter_company_by_date_noArguments(self):
-        """"""
+        """Test for filter_company_by_date with no argument"""
         query = Company.query.all()
         assert filter_company_by_date(query, None, None) == [
             Company(cik_no='0001171592', company_name='Cool Industries', filing_count=1),
@@ -165,7 +165,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             Company(cik_no='0008322302', company_name='Purple Industries', filing_count=1)]
 
     def test_filter_edgar_filing_by_date_startDateAndEndDate(self):
-        """"""
+        """Test for filter_edgar_filing_by_date with start date and end date argument"""
         query = EdgarFiling.query
         start_date = '1999-01-01'
         end_date = "1999-12-31"
@@ -174,7 +174,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                             filing_date=datetime(1999, 9, 1, 0, 0))]
 
     def test_filter_edgar_filing_by_date_startDate(self):
-        """"""
+        """Test for filter_edgar_filing_by_date with start date argument"""
         query = EdgarFiling.query
         start_date = '2000-01-01'
         actual = filter_edgar_filing_by_date(query, start_date, None)
@@ -184,7 +184,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                             filing_date=datetime(2001, 7, 5, 0, 0))]
 
     def test_filter_edgar_filing_by_date_endDate(self):
-        """"""
+        """Test for filter_edgar_filing_by_date with end date argument"""
         query = EdgarFiling.query
         end_date = "1999-12-31"
         actual = filter_edgar_filing_by_date(query, None, end_date)
@@ -194,7 +194,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                                             filing_date=datetime(1998, 5, 2, 0, 0))]
 
     def test_filter_edgar_filing_by_date_noArguments(self):
-        """"""
+        """Test for filter_edgar_filing_by_date with no arguments"""
         query = EdgarFiling.query.all()
         assert filter_edgar_filing_by_date(query, None, None) == [
             EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
