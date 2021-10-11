@@ -70,7 +70,7 @@ def main():
     end_date = args.end_date
 
     logging.basicConfig(format='%(levelname)s: %(asctime)s, %(filename)s, %(message)s',
-                        datefmt='%Y-%m-%d %I:%M:%S %p')
+                        datefmt='%Y-%m-%d %I:%M:%S %p', level=logging.INFO)
     logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 
     change_sys_excepthook()
