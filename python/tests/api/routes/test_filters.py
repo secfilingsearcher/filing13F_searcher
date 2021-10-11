@@ -1,13 +1,13 @@
 """This file contains tests for routes' filters"""
 import os
-from datetime import datetime
+from datetime import datetime, date
 
 from flask import Flask
 from flask_testing import TestCase
 
 from edgar_filing_searcher.api.routes.filters import filter_company_by_date, filter_edgar_filing_by_date
-from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.database import db
+from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.main import send_data_to_db
 
 COMPANY_CIK_1 = "0001171592"
@@ -182,7 +182,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         actual = filter_edgar_filing_by_date(query, start_date, end_date)
 
         assert actual.all() == [EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
-                                            filing_date=datetime(1999, 9, 1, 0, 0))]
+                                            filing_date=date(1999, 9, 1))]
 
     def test_filter_edgar_filing_by_date_startDate(self):
         """Test for filter_edgar_filing_by_date with start date argument"""
@@ -192,9 +192,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         actual = filter_edgar_filing_by_date(query, start_date, None)
 
         assert actual.all() == [EdgarFiling(accession_no='000384934-14-0034330', cik_no='0006734892', filing_type=None,
-                                            filing_date=datetime(2000, 4, 5, 0, 0)),
+                                            filing_date=date(2000, 4, 5)),
                                 EdgarFiling(accession_no='000238234-23-0238930', cik_no='0008322302', filing_type=None,
-                                            filing_date=datetime(2001, 7, 5, 0, 0))]
+                                            filing_date=date(2001, 7, 5))]
 
     def test_filter_edgar_filing_by_date_endDate(self):
         """Test for filter_edgar_filing_by_date with end date argument"""
@@ -204,9 +204,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         actual = filter_edgar_filing_by_date(query, None, end_date)
 
         assert actual.all() == [EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
-                                            filing_date=datetime(1999, 9, 1, 0, 0)),
+                                            filing_date=date(1999, 9, 1)),
                                 EdgarFiling(accession_no='00016273506-21-000830', cik_no='0001171592', filing_type=None,
-                                            filing_date=datetime(1998, 5, 2, 0, 0))]
+                                            filing_date=date(1998, 5, 2))]
 
     def test_filter_edgar_filing_by_date_noArguments(self):
         """Test for filter_edgar_filing_by_date with no arguments"""
@@ -214,12 +214,11 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
         actual = filter_edgar_filing_by_date(query, None, None)
 
-        assert actual.all() == [
-            EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
-                        filing_date=datetime(1999, 9, 1, 0, 0)),
-            EdgarFiling(accession_no='00016273506-21-000830', cik_no='0001171592', filing_type=None,
-                        filing_date=datetime(1998, 5, 2, 0, 0)),
-            EdgarFiling(accession_no='000384934-14-0034330', cik_no='0006734892', filing_type=None,
-                        filing_date=datetime(2000, 4, 5, 0, 0)),
-            EdgarFiling(accession_no='000238234-23-0238930', cik_no='0008322302', filing_type=None,
-                        filing_date=datetime(2001, 7, 5, 0, 0))]
+        assert actual.all() == [EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
+                                            filing_date=date(1999, 9, 1)),
+                                EdgarFiling(accession_no='00016273506-21-000830', cik_no='0001171592', filing_type=None,
+                                            filing_date=date(1998, 5, 2)),
+                                EdgarFiling(accession_no='000384934-14-0034330', cik_no='0006734892', filing_type=None,
+                                            filing_date=date(2000, 4, 5)),
+                                EdgarFiling(accession_no='000238234-23-0238930', cik_no='0008322302', filing_type=None,
+                                            filing_date=date(2001, 7, 5))]
