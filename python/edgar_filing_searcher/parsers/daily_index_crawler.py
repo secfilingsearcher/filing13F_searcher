@@ -9,26 +9,37 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 
-def get_text(url):
-    """Returns the html and text from the url"""
+def get_request_response(url):
     retry_strategy = Retry(
-        total=10,
-        status_forcelist=[429, 500, 502, 503, 504],
-        method_whitelist=["GET"],
-        backoff_factor=4,
+        total=5,
+        status_forcelist=(429, 500, 502, 503, 504),
+        allowed_methods=["GET"],
+        backoff_factor=6,
     )
 
     http_session = requests.Session()
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    http_session.mount("https://", adapter)
-    http_session.mount("http://", adapter)
 
-    response = http_session.get(
-        url,
-        headers={"user-agent": "filing_13f_searcher"}, timeout=3
-    )
-    if response.status_code != 200:
-        logging.warning("get_text, Unexpected status code %s", response.status_code)
+    http_session.mount("http://", HTTPAdapter(max_retries=retry_strategy))
+    http_session.mount("https://", HTTPAdapter(max_retries=retry_strategy))
+
+    response = None
+    try:
+        response = http_session.get(
+            url,
+            headers={"user-agent": "filing_13f_searcher"}, timeout=3
+        )
+    except requests.exceptions.HTTPError as e:
+        logging.error('http', exc_info=e)
+    except requests.exceptions.ConnectionError as e:
+        logging.error('connection', exc_info=e)
+    except requests.exceptions.RetryError as e:
+        logging.error('retry', exc_info=e)
+    return response
+
+
+def get_text(url):
+    """Returns the html and text from the url"""
+    response = get_request_response(url)
     time.sleep(1)
     full_text = response.text
     logging.debug('Successfully ran get_text on url %s', url)

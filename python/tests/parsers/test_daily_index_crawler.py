@@ -1,10 +1,10 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for crawler_current_events"""
 from datetime import date
+import httpretty
 
-import pytest
 from edgar_filing_searcher.parsers.daily_index_crawler import ensure_13f_filing_detail_urls, \
-    get_subdirectories_for_specific_date, generate_dates
+    get_subdirectories_for_specific_date, generate_dates, get_request_response
 
 DATE_1 = date(2021, 1, 8)
 DATE_2 = date(2021, 1, 9)
@@ -13,6 +13,62 @@ SUBDIRECTORIES = ['1478997/0001478997-21-000001',
                   '819864/0000819864-21-000002',
                   '1567784/0000909012-21-000002',
                   '1479844/0001479844-21-000001']
+
+
+@httpretty.activate(allow_net_connect=False)
+def test_get_response_noError_StatusCode():
+    test_url = "http://foo-api.com/data?page=2"
+    httpretty.register_uri(
+        httpretty.GET,
+        test_url,
+        body='{}',
+        status=200,
+        content_type="text/json",
+    )
+    actual = get_request_response(test_url)
+    assert actual.status_code == 200
+
+
+@httpretty.activate(allow_net_connect=False)
+def test_get_response_noError_NumberOfRequests():
+    test_url = "http://foo-api.com/data?page=2"
+    httpretty.register_uri(
+        httpretty.GET,
+        test_url,
+        body='{}',
+        status=200,
+        content_type="text/json",
+    )
+    get_request_response(test_url)
+    assert len(httpretty.latest_requests()) == 1
+
+
+@httpretty.activate(allow_net_connect=False)
+def test_get_response_statusError_StatusCode():
+    test_url = "http://foo-api.com/data?page=2"
+    httpretty.register_uri(
+        httpretty.GET,
+        test_url,
+        body='{}',
+        status=503,
+        content_type="text/json",
+    )
+    actual = get_request_response(test_url)
+    assert actual is None
+
+
+@httpretty.activate(allow_net_connect=False)
+def test_get_response_statusError_NumberOfRequests():
+    test_url = "http://foo-api.com/data?page=2"
+    httpretty.register_uri(
+        httpretty.GET,
+        test_url,
+        body='{}',
+        status=503,
+        content_type="text/json",
+    )
+    get_request_response(test_url)
+    assert len(httpretty.latest_requests()) == 6
 
 
 def test_get_subdirectories_for_specific_date_hasSubdirectories():
