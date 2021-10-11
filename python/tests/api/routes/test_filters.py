@@ -138,14 +138,18 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         query = Company.query
         start_date = '1999-01-01'
         end_date = "1999-12-31"
+
         actual = filter_company_by_date(query, start_date, end_date)
+
         assert actual.all() == [Company(cik_no='0001171592', company_name='Cool Industries', filing_count=1)]
 
     def test_filter_company_by_date_startDate(self):
         """Test for filter_company_by_date with start date argument"""
         query = Company.query
         start_date = '2000-01-01'
+
         actual = filter_company_by_date(query, start_date, None)
+
         assert actual.all() == [Company(cik_no='0006734892', company_name='Nice Industries', filing_count=1),
                                 Company(cik_no='0008322302', company_name='Purple Industries', filing_count=1)]
 
@@ -153,13 +157,18 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Test for filter_company_by_date with end date argument"""
         query = Company.query
         end_date = "1999-12-31"
+
         actual = filter_company_by_date(query, None, end_date)
+
         assert actual.all() == [Company(cik_no='0001171592', company_name='Cool Industries', filing_count=1)]
 
     def test_filter_company_by_date_noArguments(self):
         """Test for filter_company_by_date with no argument"""
-        query = Company.query.all()
-        assert filter_company_by_date(query, None, None) == [
+        query = Company.query
+
+        actual = filter_company_by_date(query, None, None)
+
+        assert actual.all() == [
             Company(cik_no='0001171592', company_name='Cool Industries', filing_count=1),
             Company(cik_no='0006734892', company_name='Nice Industries', filing_count=1),
             Company(cik_no='0008322302', company_name='Purple Industries', filing_count=1)]
@@ -169,7 +178,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         query = EdgarFiling.query
         start_date = '1999-01-01'
         end_date = "1999-12-31"
+
         actual = filter_edgar_filing_by_date(query, start_date, end_date)
+
         assert actual.all() == [EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
                                             filing_date=datetime(1999, 9, 1, 0, 0))]
 
@@ -177,7 +188,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Test for filter_edgar_filing_by_date with start date argument"""
         query = EdgarFiling.query
         start_date = '2000-01-01'
+
         actual = filter_edgar_filing_by_date(query, start_date, None)
+
         assert actual.all() == [EdgarFiling(accession_no='000384934-14-0034330', cik_no='0006734892', filing_type=None,
                                             filing_date=datetime(2000, 4, 5, 0, 0)),
                                 EdgarFiling(accession_no='000238234-23-0238930', cik_no='0008322302', filing_type=None,
@@ -187,7 +200,9 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Test for filter_edgar_filing_by_date with end date argument"""
         query = EdgarFiling.query
         end_date = "1999-12-31"
+
         actual = filter_edgar_filing_by_date(query, None, end_date)
+
         assert actual.all() == [EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
                                             filing_date=datetime(1999, 9, 1, 0, 0)),
                                 EdgarFiling(accession_no='00016273506-21-000830', cik_no='0001171592', filing_type=None,
@@ -195,8 +210,11 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
     def test_filter_edgar_filing_by_date_noArguments(self):
         """Test for filter_edgar_filing_by_date with no arguments"""
-        query = EdgarFiling.query.all()
-        assert filter_edgar_filing_by_date(query, None, None) == [
+        query = EdgarFiling.query
+
+        actual = filter_edgar_filing_by_date(query, None, None)
+
+        assert actual.all() == [
             EdgarFiling(accession_no='0001420506-21-000830', cik_no='0001171592', filing_type=None,
                         filing_date=datetime(1999, 9, 1, 0, 0)),
             EdgarFiling(accession_no='00016273506-21-000830', cik_no='0001171592', filing_type=None,
