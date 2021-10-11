@@ -16,8 +16,8 @@ class FlaskSqlAlchemyTestConfiguration:
 
 
 COMPANY_CIK_1 = "0001171592"
-ACCESSION_NO_TABLE_ROW1 = '0001420506-21-000830'
-ACCESSION_NO_TABLE_ROW2 = '00016273506-21-000830'
+ACCESSION_NO_TABLE1_ROW1 = '0001420506-21-000830'
+ACCESSION_NO_TABLE1_ROW2 = '00016273506-21-000830'
 COMPANY_CIK_2 = "0006734892"
 ACCESSION_NO_2 = '000384934-14-0034330'
 COMPANY_CIK_3 = "0008322302"
@@ -32,10 +32,10 @@ def client():
         with app.app_context():
             db.create_all()
             company1 = Company(cik_no=COMPANY_CIK_1, company_name="Cool Industries", filing_count=1)
-            edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO_TABLE_ROW1, cik_no=COMPANY_CIK_1,
+            edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW1, cik_no=COMPANY_CIK_1,
                                              filing_date=datetime.fromisoformat("1999-09-01"))
             data_13f_table1_row1 = Data13f(equity_holdings_id="67896567",
-                                           accession_no=ACCESSION_NO_TABLE_ROW1,
+                                           accession_no=ACCESSION_NO_TABLE1_ROW1,
                                            cik_no='56464565767',
                                            name_of_issuer='Agilent Technologies',
                                            title_of_class='COM',
@@ -50,10 +50,10 @@ def client():
                                            voting_authority_shared=0,
                                            voting_authority_none=0
                                            )
-            edgar_filing1_row2 = EdgarFiling(accession_no=ACCESSION_NO_TABLE_ROW2, cik_no=COMPANY_CIK_1,
+            edgar_filing1_row2 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW2, cik_no=COMPANY_CIK_1,
                                              filing_date=datetime.fromisoformat("1998-05-02"))
             data_13f_table1_row2 = Data13f(equity_holdings_id="673326567",
-                                           accession_no=ACCESSION_NO_TABLE_ROW2,
+                                           accession_no=ACCESSION_NO_TABLE1_ROW2,
                                            cik_no='3349665767',
                                            name_of_issuer='Flight Technologies',
                                            title_of_class='COM',
@@ -350,13 +350,13 @@ def test_get_edgarfilings_with_date_endDate_json(client):
 
 def test_get_edgarfilings_by_filing_id_responseCode(client):
     """Test for the response code for get_edgarfilings_with_date function"""
-    response = client.get(f'/edgar-filing/{ACCESSION_NO_TABLE_ROW1}/data/')
+    response = client.get(f'/edgar-filing/{ACCESSION_NO_TABLE1_ROW1}/data/')
     assert response.status_code == 200
 
 
 def test_get_edgarfilings_by_filing_id_json(client):
     """Test for the json for get_edgarfilings_with_date function"""
-    response = client.get(f'/edgar-filing/{ACCESSION_NO_TABLE_ROW1}/data/')
+    response = client.get(f'/edgar-filing/{ACCESSION_NO_TABLE1_ROW1}/data/')
     assert response.get_json() == [{'equity_holdings_id': '67896567',
                                     'accession_no': '0001420506-21-000830',
                                     'cik_no': '56464565767',
