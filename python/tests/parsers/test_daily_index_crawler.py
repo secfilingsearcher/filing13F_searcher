@@ -1,5 +1,5 @@
 # pylint: disable=redefined-outer-name
-"""This file contains tests for crawler_current_events"""
+"""This file contains tests for daily_index_crawler"""
 from datetime import date
 import httpretty
 

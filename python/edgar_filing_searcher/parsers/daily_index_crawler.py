@@ -14,7 +14,7 @@ def get_request_response(url):
         total=3,
         status_forcelist=(429, 500, 502, 503, 504),
         allowed_methods=["GET"],
-        backoff_factor=6,
+        backoff_factor=3,
     )
 
     session = requests.Session()
