@@ -68,7 +68,7 @@ def test_get_response_statusError_NumberOfRequests():
         content_type="text/json",
     )
     get_request_response(test_url)
-    assert len(httpretty.latest_requests()) == 6
+    assert len(httpretty.latest_requests()) == 4
 
 
 def test_get_subdirectories_for_specific_date_hasSubdirectories():

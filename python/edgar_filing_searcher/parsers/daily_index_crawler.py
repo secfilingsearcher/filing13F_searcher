@@ -11,7 +11,7 @@ from urllib3.util.retry import Retry
 
 def get_request_response(url):
     retry_strategy = Retry(
-        total=5,
+        total=3,
         status_forcelist=(429, 500, 502, 503, 504),
         allowed_methods=["GET"],
         backoff_factor=6,
