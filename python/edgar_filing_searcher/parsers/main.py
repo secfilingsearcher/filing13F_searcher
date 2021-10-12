@@ -6,12 +6,15 @@ import sys
 import traceback
 from datetime import date
 
+import urllib3
+
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
+from errors import BadSearchPageException
 
 
 def create_url_list(date_):
@@ -79,10 +82,13 @@ def main():
     logging.info('Initializing job')
 
     for date_ in generate_dates(start_date, end_date):
-        filing_detail_urls = create_url_list(date_)
-        if not filing_detail_urls:
+        try:
+            filing_detail_urls = create_url_list(date_)
+        except BadSearchPageException:
             logging.info("There are no filing urls on the page for date %s", date_)
             continue
+        # if not filing_detail_urls:
+        #     continue
         setup_db_connection()
         list_of_cik_no = []
         for filing_detail_url in filing_detail_urls:
