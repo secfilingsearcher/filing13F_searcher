@@ -15,3 +15,7 @@ class NoAccessionNo(Exception):
 
 class InvalidConnectionStringException(Exception):
     """Raised when Connection String Invalid"""
+
+
+class NoDataOnPageException(Exception):
+    """Raised when Connection String Invalid"""

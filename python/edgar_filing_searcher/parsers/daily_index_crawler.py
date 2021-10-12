@@ -24,19 +24,12 @@ def get_request_response(url):
     session.mount("http://", HTTPAdapter(max_retries=retry_strategy))
     session.mount("https://", HTTPAdapter(max_retries=retry_strategy))
 
-    response = None
-    try:
-        response = session.get(
-            url,
-            headers={"user-agent": "filing_13f_searcher"}, timeout=3
-        )
-    except requests.exceptions.HTTPError as e:
-        logging.error('http', exc_info=e)
-    except requests.exceptions.ConnectionError as e:
-        logging.error('connection', exc_info=e)
-    except requests.exceptions.RetryError as e:
-        logging.error('retry', exc_info=e)
+    response = session.get(
+        url,
+        headers={"user-agent": "filing_13f_searcher"}, timeout=3
+    )
     return response
+
 
 
 def get_text(url):
@@ -68,7 +61,10 @@ def get_subdirectories_for_specific_date(full_date: date):
         search_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
                      f'{subdirectory_date_after_1998}.idx'
 
-    full_text = get_text(search_url)
+    try:
+        full_text = get_text(search_url)
+    except requests.exceptions.RetryError as e:
+        raise
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
