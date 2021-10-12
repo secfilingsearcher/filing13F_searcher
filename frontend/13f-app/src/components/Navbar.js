@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
 import SearchBar from './SearchBar'
+import logo from '../images/favicon-32x32.png'
 import './Navbar.css'
 
 function Navigation () {
@@ -14,7 +15,7 @@ function Navigation () {
         <>
          <Navbar bg="dark" className="navbar">
                 <Link to="/" className="navbar-logo">
-                    13F   <i className="fas fa-file-archive"></i>
+                    <img src={logo}></img>
                 </Link>
                 {path !== '/' && <div className='searchbar'><SearchBar/></div>}
                 <div className="menu-icon" onClick={handleClick}>
