@@ -14,7 +14,7 @@ def get_request_response(url):
     """Returns the response request from the url"""
     retry_strategy = Retry(
         total=3,
-        status_forcelist=(429, 500, 502, 503, 504),
+        status_forcelist=(403, 429, 500, 502, 503, 504),
         allowed_methods=["GET"],
         backoff_factor=3,
     )
@@ -68,15 +68,7 @@ def get_subdirectories_for_specific_date(full_date: date):
         search_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
                      f'{subdirectory_date_after_1998}.idx'
 
-    response = requests.get(
-        search_url,
-        headers={"User-Agent": "filing_13f_searcher"}
-    )
-    if response.status_code != 200:
-        logging.warning("get_subdirectories_for_specific_date, Unexpected status code %s",
-                        response.status_code)
-    time.sleep(1)
-    full_text = response.text
+    full_text = get_text(search_url)
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
