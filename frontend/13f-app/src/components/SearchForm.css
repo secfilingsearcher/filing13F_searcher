@@ -9,6 +9,7 @@
     background-color: transparent;
     border-color: #fff;
     color: #fff;
+    font-family: 'Lato', sans-serif;
 }
 
 #home-search input:focus {
@@ -20,15 +21,16 @@
     color: #fff;
 }
 
-#bar-search form {
-    padding: 20px 0 50px 20px;
-    margin-bottom: 10px
-}
-
 #bar-search input {
     background-color: transparent;
     border-color: #fff;
     width: 175px;
     height: 30px;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+}
+
+
+#bar-search input::placeholder {
     color: #fff;
 }
