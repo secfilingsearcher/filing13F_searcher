@@ -3,7 +3,6 @@
 import sys
 from datetime import date
 
-import pytest
 from flask_testing import TestCase
 
 from edgar_filing_searcher.api import create_app
@@ -13,13 +12,6 @@ from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db,
     change_sys_excepthook
 
 DATE_1 = date(2021, 1, 8)
-
-
-@pytest.fixture
-def edgar_current_events_text():
-    """Creates an fixture with edgar_current_events.html data"""
-    with open("tests/fixtures/edgar_current_events.html", "rt") as file:
-        return file.read()
 
 
 class FlaskSqlAlchemyTestConfiguration(TestCase):
