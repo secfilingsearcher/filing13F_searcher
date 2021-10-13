@@ -9,7 +9,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from edgar_filing_searcher.errors import BadSearchPageException
+from edgar_filing_searcher.errors import BadWebPageException
 
 
 def get_request_response(url):
@@ -33,7 +33,6 @@ def get_request_response(url):
     return response
 
 
-
 def get_text(url):
     """Returns the html and text from the url"""
     response = get_request_response(url)
@@ -52,22 +51,22 @@ def get_subdirectories_for_specific_date(full_date: date):
     subdirectory_date_after_1998 = full_date.strftime('%Y%m%d')
 
     if full_date.year == 1994:
-        search_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
-                     f'{subdirectory_date_94}.idx'
+        full_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
+                   f'{subdirectory_date_94}.idx'
 
     elif 1995 <= full_date.year <= 1997:
-        search_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
-                     f'{subdirectory_date_95_97}.idx'
+        full_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
+                   f'{subdirectory_date_95_97}.idx'
 
     else:
-        search_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
-                     f'{subdirectory_date_after_1998}.idx'
+        full_url = f'{base_url}/{full_date.year}/QTR{quarter}/company.' \
+                   f'{subdirectory_date_after_1998}.idx'
 
     try:
-        full_text = get_text(search_url)
+        full_text = get_text(full_url)
     except requests.exceptions.RetryError as e:
-        logging.info("BadSearchPageException", e)
-        raise BadSearchPageException(e)
+        logging.info("Search Page has error", e)
+        raise BadWebPageException(e)
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:

@@ -13,5 +13,5 @@ class InvalidConnectionStringException(Exception):
     """Raised when Connection String Invalid"""
 
 
-class BadSearchPageException(Exception):
-    """Raised when Connection String Invalid"""
+class BadWebPageException(Exception):
+    """Raised when Web Page is Invalid"""
