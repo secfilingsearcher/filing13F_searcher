@@ -30,7 +30,7 @@ class Parser:
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
                     text_13f)
         if not accession_no:
-            raise NoAccessionNo()
+            raise NoAccessionNo("No accession number")
         return accession_no.group(0)
 
     @staticmethod

@@ -65,8 +65,7 @@ def get_subdirectories_for_specific_date(full_date: date):
     try:
         full_text = get_text(full_url)
     except requests.exceptions.RetryError as e:
-        logging.info("Search Page has error", e)
-        raise BadWebPageException(e)
+        raise BadWebPageException("Search Page has error", e)
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
