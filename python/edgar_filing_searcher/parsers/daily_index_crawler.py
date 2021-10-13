@@ -1,4 +1,5 @@
 # pylint: disable=invalid-name
+# pylint: disable=no-member
 """This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
 import logging
 import re
@@ -68,7 +69,7 @@ def get_subdirectories_for_specific_date(full_date: date):
         error_reason = str(e.args[0].reason)
         status_code = int((re.findall('[0-9]+', error_reason))[0])
         logging.error('Response Status Code %i', status_code)
-        if status_code == 403 or status_code == 404:
+        if status_code in (403, 404):
             raise InvalidUrlException("Invalid URL error", e) from e
         raise BadWebPageResponseException("Web Page response error", e) from e
 

@@ -27,6 +27,8 @@ def create_url_list(date_):
 
 
 def check_parser_values_align(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
+    """check_ if the parser values from Company, EdgarFiling,
+    Data13f CIK number and accession number align"""
     if company.cik_no == edgar_filing.cik_no and \
             edgar_filing.accession_no == data_13f[0].accession_no:
         return True
@@ -35,6 +37,7 @@ def check_parser_values_align(company: Company, edgar_filing: EdgarFiling, data_
 
 
 def check_if_filing_exists_in_db(accession_no):
+    """Check if the filing exists in the database"""
     company_exists_in_table = EdgarFiling.query.filter_by(accession_no=accession_no).first()
     if company_exists_in_table:
         return True
@@ -46,9 +49,11 @@ def update_filing_count(parser: Parser):
     cik_no = parser.edgar_filing.cik_no
     accession_no = parser.edgar_filing.accession_no
     current_db_filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
-    logging.debug('Counted number of filings for CIK: %s. Count: %i', cik_no, current_db_filing_count)
+    logging.debug('Counted number of filings for CIK: %s. Count: %i',
+                  cik_no, current_db_filing_count)
     if check_if_filing_exists_in_db(accession_no):
-        logging.debug('Maintain same number of filings %i for CIK: %s.', current_db_filing_count, cik_no)
+        logging.debug('Maintain same number of filings %i for CIK: %s.',
+                      current_db_filing_count, cik_no)
         parser.company.filing_count = current_db_filing_count
     else:
         new_filing = 1
