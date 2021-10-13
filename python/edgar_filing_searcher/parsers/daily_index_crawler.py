@@ -9,7 +9,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from errors import BadSearchPageException
+from edgar_filing_searcher.errors import BadSearchPageException
 
 
 def get_request_response(url):
@@ -66,7 +66,7 @@ def get_subdirectories_for_specific_date(full_date: date):
     try:
         full_text = get_text(search_url)
     except requests.exceptions.RetryError as e:
-        logging.info("BadSearchPageException", )
+        logging.info("BadSearchPageException", e)
         raise BadSearchPageException(e)
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)

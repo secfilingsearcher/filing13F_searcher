@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.daily_index_crawler import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
-from edgar_filing_searcher.errors import NoUrlException, NoAccessionNo
+from edgar_filing_searcher.errors import UrlErrorException, NoAccessionNo
 
 
 class Parser:
@@ -48,7 +48,7 @@ class Parser:
     def _ensure_xml_urls(xml_url_suffixes):
         """Adds base url to suffix url for primary_doc.xml url"""
         if not xml_url_suffixes:
-            raise NoUrlException("Found no primary_doc_xml_url suffix.")
+            raise UrlErrorException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
         return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
 

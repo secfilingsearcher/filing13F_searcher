@@ -1,7 +1,7 @@
 """This file contains tests for main"""
 # pylint: disable=redefined-outer-name
 import sys
-from datetime import datetime, date
+from datetime import date
 
 import pytest
 from flask_testing import TestCase

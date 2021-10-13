@@ -1,6 +1,5 @@
 # pylint: disable=redefined-outer-name
 """This file contains tests for daily_index_crawler"""
-import logging
 from datetime import date
 import httpretty
 import requests
