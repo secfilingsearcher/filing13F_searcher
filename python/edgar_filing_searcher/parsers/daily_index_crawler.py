@@ -13,7 +13,7 @@ from edgar_filing_searcher.errors import BadWebPageException
 
 
 def get_request_response(url):
-    """Returns the response request from the url"""
+    """Returns the response request from the URL"""
     retry_strategy = Retry(
         total=3,
         status_forcelist=(403, 429, 500, 502, 503, 504),
@@ -34,11 +34,12 @@ def get_request_response(url):
 
 
 def get_text(url):
-    """Returns the html and text from the url"""
+    """Returns the html and text from the URL"""
+
     response = get_request_response(url)
     time.sleep(1)
     full_text = response.text
-    logging.debug('Successfully ran get_text on url %s', url)
+    logging.debug('Successfully ran get_text on URL %s', url)
     return full_text
 
 
@@ -74,7 +75,7 @@ def get_subdirectories_for_specific_date(full_date: date):
 
 
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
-    """Returns the 13f filing detail url"""
+    """Returns the 13f filing detail URL"""
     specific_date_13f_filing_detail_urls = \
         [f'https://www.sec.gov/Archives/edgar/data/{subdirectory}-index.html'
          for subdirectory in cik_ascension_subdirectories]

@@ -12,7 +12,7 @@ from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.errors import BadWebPageException, UrlErrorException, NoAccessionNo
+from edgar_filing_searcher.errors import BadWebPageException, NoUrlErrorException, NoAccessionNoException
 
 
 def create_url_list(date_):
@@ -83,15 +83,18 @@ def main():
         try:
             filing_detail_urls = create_url_list(date_)
         except BadWebPageException:
-            logging.info("There are no filing urls on the page for date %s", date_)
+            logging.info("There are no filing URLs on the page for date %s", date_)
             continue
         setup_db_connection()
         list_of_cik_no = []
         for filing_detail_url in filing_detail_urls:
             try:
                 parser = Parser(filing_detail_url)
-            except (UrlErrorException, NoAccessionNo):
-                logging.info("There is no URL for filing_detail_url: %s", filing_detail_url)
+            except NoUrlErrorException:
+                logging.info("There is no XML URL on the filing detail page: %s", filing_detail_url)
+                continue
+            except NoAccessionNoException:
+                logging.info("There is no accession no on the filing detail page: %s", filing_detail_url)
                 continue
             list_of_cik_no.append(parser.company.cik_no)
             send_data_to_db(

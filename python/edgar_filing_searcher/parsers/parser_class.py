@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.daily_index_crawler import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
-from edgar_filing_searcher.errors import UrlErrorException, NoAccessionNo
+from edgar_filing_searcher.errors import NoUrlErrorException, NoAccessionNoException
 
 
 class Parser:
@@ -16,7 +16,7 @@ class Parser:
 
     def __init__(self, filing_detail_url):
         logging.info('Initialize parser for company_row, edgar_filing_row, '
-                     'data_13f data for url %s', filing_detail_url)
+                     'data_13f data for URL %s', filing_detail_url)
         self._filing_detail_text = get_text(filing_detail_url)
         self.company = None
         self.edgar_filing = None
@@ -30,7 +30,7 @@ class Parser:
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
                     text_13f)
         if not accession_no:
-            raise NoAccessionNo("No accession number")
+            raise NoAccessionNoException("No accession number")
         return accession_no.group(0)
 
     @staticmethod
@@ -41,14 +41,14 @@ class Parser:
 
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
-        """Returns the primary_doc.xml and infotable.xml base urls"""
+        """Returns the primary_doc.xml and infotable.xml base URLs"""
         return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
     @staticmethod
     def _ensure_xml_urls(xml_url_suffixes):
-        """Adds base url to suffix url for primary_doc.xml url"""
+        """Adds base URL to suffix URL for primary_doc.xml URL"""
         if not xml_url_suffixes:
-            raise UrlErrorException("Found no primary_doc_xml_url suffix.")
+            raise NoUrlErrorException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
         return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
 

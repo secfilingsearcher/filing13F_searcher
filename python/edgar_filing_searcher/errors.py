@@ -1,11 +1,11 @@
 """This file contains Exception Classes"""
 
 
-class UrlErrorException(Exception):
+class NoUrlErrorException(Exception):
     """Raised when the url can't be found"""
 
 
-class NoAccessionNo(Exception):
+class NoAccessionNoException(Exception):
     """Raised when there is no accession no"""
 
 
@@ -14,4 +14,8 @@ class InvalidConnectionStringException(Exception):
 
 
 class BadWebPageException(Exception):
-    """Raised when Web Page is Invalid"""
+    """Raised when Web Page returns no response"""
+
+
+class InvalidUrlException(Exception):
+    """Raised when URL is Invalid"""
