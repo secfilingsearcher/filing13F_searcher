@@ -81,11 +81,11 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQLALchemy Tests"""
 
     def test_check_parser_values(self):
-        """"""
+        """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
         pass
 
     def test_update_filing_counts(self):
-        """Tests update_filing_counts"""
+        """Tests if update_filing_counts counts the number of filings in EdgarFiling"""
         cik_no = '0001171592'
         send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
@@ -112,29 +112,31 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Data13f.query.filter_by(cik_no=self.data_13f_table[0].cik_no).first() == self.data_13f_table[0]
 
     def test_main_raiseInvalidUrlException(self):
-        """"""
+        """Tests if main raises an InvalidUrlException"""
         pass
 
     def test_main_raiseBadWebPageResponseException(self):
-        """"""
+        """Tests if main raises a BadWebPageResponseException"""
         pass
 
     def test_main_raiseNoUrlErrorException(self):
-        """"""
+        """Tests if main raises a NoUrlErrorException"""
         pass
 
     def test_main_raiseNoAccessionNoException(self):
-        """"""
+        """Tests if main raises a NoAccessionNoException"""
         pass
 
 
 def test_change_sys_excepthook():
+    """Tests if change_sys_excepthook updates the sys_excepthook"""
     change_sys_excepthook()
     assert sys.excepthook is my_handler
     sys.excepthook = sys.__excepthook__
 
 
 def test_my_handler(caplog):
+    """Tests if my_handler handles exceptions in caplog.text"""
     try:
         1 / 0
     except ZeroDivisionError:

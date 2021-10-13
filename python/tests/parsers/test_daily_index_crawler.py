@@ -36,6 +36,7 @@ def get_subdirectories_for_specific_date_RemovedAllFilings(filing_detail_with_no
 
 @httpretty.activate(allow_net_connect=False)
 def test_get_response_noError_StatusCode():
+    """Tests get_response status code when there is no error"""
     test_url = "http://foo-api.com/data?page=2"
     httpretty.register_uri(
         httpretty.GET,
@@ -50,6 +51,7 @@ def test_get_response_noError_StatusCode():
 
 @httpretty.activate(allow_net_connect=False)
 def test_get_response_noError_NumberOfRequests():
+    """Tests get_response number of requests code when there is no error"""
     test_url = "http://foo-api.com/data?page=2"
     httpretty.register_uri(
         httpretty.GET,
@@ -64,6 +66,7 @@ def test_get_response_noError_NumberOfRequests():
 
 @httpretty.activate(allow_net_connect=False)
 def test_get_response_statusError_StatusCode():
+    """Tests get_response status code when there is an error"""
     test_url = "http://foo-api.com/data?page=2"
     httpretty.register_uri(
         httpretty.GET,
@@ -82,6 +85,7 @@ def test_get_response_statusError_StatusCode():
 
 @httpretty.activate(allow_net_connect=False)
 def test_get_response_statusError_NumberOfRequests():
+    """Tests get_response number of requests code when there is an error"""
     test_url = "http://foo-api.com/data?page=2"
     httpretty.register_uri(
         httpretty.GET,
