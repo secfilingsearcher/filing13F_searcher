@@ -8,7 +8,7 @@ from unittest.mock import patch, MagicMock
 
 from edgar_filing_searcher.parsers.daily_index_crawler import ensure_13f_filing_detail_urls, \
     get_subdirectories_for_specific_date, generate_dates, get_request_response
-from edgar_filing_searcher.errors import BadWebPageResponseException
+from edgar_filing_searcher.errors import BadWebPageResponseException, InvalidUrlException
 
 DATE_1 = date(2021, 1, 8)
 DATE_2 = date(2021, 1, 9)
@@ -26,7 +26,7 @@ def filing_detail_with_no_urls():
         return file.read()
 
 
-def mock_function(filing_detail_with_no_urls):
+def get_subdirectories_for_specific_date_RemovedAllFilings(filing_detail_with_no_urls):
     """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
     as parameters. """
     with patch('get_text') as mock_function:
@@ -122,14 +122,20 @@ def test_get_subdirectories_for_specific_date_hasSubdirectories():
 
 def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
     """Tests when get_subdirectories_for_specific_date has no subdirectories"""
+    actual = get_subdirectories_for_specific_date_RemovedAllFilings
+    assert actual is None
+
+
+def test_get_subdirectories_for_specific_date_hasNoResponse():
+    """Tests when get_subdirectories_for_specific_date has no response"""
     with pytest.raises(BadWebPageResponseException):
         get_subdirectories_for_specific_date(DATE_2)
 
 
-def test_get_subdirectories_for_specific_date_hasNoFilings():
-    """Tests when get_subdirectories_for_specific_date has no subdirectories"""
-    actual = mock_function
-    assert actual is None
+def test_get_subdirectories_for_specific_date_hasInvalidURL():
+    """Tests when get_subdirectories_for_specific_date has an invalid URL"""
+    with pytest.raises(InvalidUrlException):
+        get_subdirectories_for_specific_date(DATE_2)
 
 
 def test_ensure_13f_filing_detail_urls():
