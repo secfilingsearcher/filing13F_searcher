@@ -1,11 +1,7 @@
 """This file contains Exception Classes"""
 
 
-class NoUrlException(Exception):
-    """Raised when the url can't be found"""
-
-
-class IncorrectUrlException(Exception):
+class UrlErrorException(Exception):
     """Raised when the url can't be found"""
 
 
