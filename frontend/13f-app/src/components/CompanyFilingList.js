@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useParams, Link } from 'react-router-dom'
 import Table from 'react-bootstrap/Table'
 import axios from 'axios'
-import './resultstable.css'
+import capitalizeWords from './helperfunctions.js'
 
 function FilingsList () {
   const [results, setResults] = useState([])
   const { state } = useLocation()
   const { companyId } = useParams()
+
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_SERVER}/company/${companyId}/edgar-filing/`)
       .then(res => {
@@ -17,8 +18,8 @@ function FilingsList () {
   }, [])
   return (
         <div id='table-container'>
-            <h2>{state.company_name}</h2>
-              <Table borderless>
+            <h2>{capitalizeWords(state.company_name)}</h2>
+              <Table>
                 <thead>
                   <tr>
                       <th>Accession Number</th>
