@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import './SearchForm.css'
+// import { Link } from 'react-router-dom'
+import './SearchBar.css'
 import './Button.css'
+import { InputGroup, FormControl, Button } from 'react-bootstrap'
 
 const date = new Date()
 const today = date.toISOString().substr(0, 10)
@@ -16,13 +17,13 @@ function SearchBar () {
   const searchLink = `/search?q=${searchName}&startDate=${searchStartDate}&endDate=${searchEndDate}`
   return (
           <>
-                <form id="bar-search">
-                  <div>
-                    <input type='text' placeholder='Company Name' className='search' value={searchName} onChange={handleNameChange}></input>
-                    <input type='date' className='date' value={searchStartDate} onChange={handleStartDateChange}></input>
-                    <input type='date' className='date' value={searchEndDate} onChange={handleEndDateChange}></input>
-                    <Link to={searchLink}><button className="bar_button" type="submit">SEARCH</button></Link>
-                  </div>
+                <form id="bar-search" onSubmit={() => { console.log('hello') }} >
+                    <InputGroup>
+                      <FormControl value={searchName} onChange={handleNameChange} placeholder='Company Name' />
+                      <FormControl type="date" value={searchStartDate} onChange={handleStartDateChange} placeholder='Company Name' />
+                      <FormControl type="date" value={searchEndDate} onChange={handleEndDateChange} placeholder='Company Name' />
+                      <Button variant="primary" href={searchLink}><i className="bi bi-search"></i></Button>
+                    </InputGroup>
                 </form>
           </>)
 }

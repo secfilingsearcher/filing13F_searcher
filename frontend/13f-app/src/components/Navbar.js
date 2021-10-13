@@ -17,7 +17,7 @@ function Navigation () {
                 <Link to="/" className="navbar-logo">
                     <img src={logo}></img>
                 </Link>
-                {path !== '/' && <div className='searchbar'><SearchBar/></div>}
+                {path !== '/' && <SearchBar className="search-bar" />}
                 <div className="menu-icon" onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                 </div>
