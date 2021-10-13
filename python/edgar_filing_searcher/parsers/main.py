@@ -12,7 +12,8 @@ from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlErrorException, NoAccessionNoException
+from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlErrorException, NoAccessionNoException, \
+    InvalidUrlException
 
 
 def create_url_list(date_):
@@ -82,6 +83,9 @@ def main():
     for date_ in generate_dates(start_date, end_date):
         try:
             filing_detail_urls = create_url_list(date_)
+        except InvalidUrlException:
+            logging.info("There is an invalid daily filings URL for date %s", date_)
+            continue
         except BadWebPageResponseException:
             logging.info("There is no data returned from the page for date %s", date_)
             continue
