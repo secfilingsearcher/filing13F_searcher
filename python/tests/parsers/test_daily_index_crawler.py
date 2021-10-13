@@ -2,11 +2,13 @@
 """This file contains tests for daily_index_crawler"""
 from datetime import date
 import httpretty
+import pytest
 import requests
+from unittest.mock import patch, MagicMock
 
 from edgar_filing_searcher.parsers.daily_index_crawler import ensure_13f_filing_detail_urls, \
     get_subdirectories_for_specific_date, generate_dates, get_request_response
-from edgar_filing_searcher.errors import BadWebPageException
+from edgar_filing_searcher.errors import BadWebPageResponseException
 
 DATE_1 = date(2021, 1, 8)
 DATE_2 = date(2021, 1, 9)
@@ -15,6 +17,21 @@ SUBDIRECTORIES = ['1478997/0001478997-21-000001',
                   '819864/0000819864-21-000002',
                   '1567784/0000909012-21-000002',
                   '1479844/0001479844-21-000001']
+
+
+@pytest.fixture
+def filing_detail_with_no_urls():
+    """Creates an fixture with edgar_current_events.html data"""
+    with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
+        return file.read()
+
+
+def mock_function(filing_detail_with_no_urls):
+    """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
+    as parameters. """
+    with patch('get_text') as mock_function:
+        mock_function.side_effect = MagicMock(text=filing_detail_with_no_urls)
+        return get_subdirectories_for_specific_date(DATE_1)
 
 
 @httpretty.activate(allow_net_connect=False)
@@ -105,12 +122,14 @@ def test_get_subdirectories_for_specific_date_hasSubdirectories():
 
 def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
     """Tests when get_subdirectories_for_specific_date has no subdirectories"""
-    actual = get_subdirectories_for_specific_date(DATE_2)
-    try:
-        assert actual is None
-    except BadWebPageException as err:
-        print(err)
-        pass
+    with pytest.raises(BadWebPageResponseException):
+        get_subdirectories_for_specific_date(DATE_2)
+
+
+def test_get_subdirectories_for_specific_date_hasNoFilings():
+    """Tests when get_subdirectories_for_specific_date has no subdirectories"""
+    actual = mock_function
+    assert actual is None
 
 
 def test_ensure_13f_filing_detail_urls():
