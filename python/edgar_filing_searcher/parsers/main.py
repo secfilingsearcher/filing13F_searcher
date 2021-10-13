@@ -26,7 +26,7 @@ def create_url_list(date_):
     return ensure_13f_filing_detail_urls(subdirectories)
 
 
-def check_parser_values(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
+def check_parser_values_align(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
     if company.cik_no == edgar_filing.cik_no and \
             edgar_filing.accession_no == data_13f[0].accession_no:
         return True
@@ -34,12 +34,28 @@ def check_parser_values(company: Company, edgar_filing: EdgarFiling, data_13f: D
     return False
 
 
-def update_filing_count(cik_no):
-    """This function counts the number of filings and adds it to the Company class"""
-    counted_filings_with_cik_no = \
-        EdgarFiling.query.filter_by(cik_no=cik_no).count()
-    logging.debug('Counted amount of filings for CIK: %s. Count: %i', cik_no, counted_filings_with_cik_no)
-    return counted_filings_with_cik_no
+def check_if_filing_exists_in_db(accession_no):
+    company_exists_in_table = EdgarFiling.query.filter_by(accession_no=accession_no).first()
+    if company_exists_in_table:
+        return True
+    return False
+
+
+def update_filing_count(parser: Parser):
+    """This function counts the number of filings and adds it to the Company table"""
+    cik_no = parser.edgar_filing.cik_no
+    accession_no = parser.edgar_filing.accession_no
+    current_db_filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
+    logging.debug('Counted number of filings for CIK: %s. Count: %i', cik_no, current_db_filing_count)
+    if check_if_filing_exists_in_db(accession_no):
+        logging.debug('Maintain same number of filings %i for CIK: %s.', current_db_filing_count, cik_no)
+        parser.company.filing_count = current_db_filing_count
+    else:
+        new_filing = 1
+        parser.company.filing_count = new_filing + current_db_filing_count
+        logging.debug('Number of filings change from %i to %i for CIK: %s',
+                      current_db_filing_count, parser.company.filing_count, cik_no)
+    logging.info('Updated number of filings for CIK: %s to Company table', cik_no)
 
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
@@ -109,9 +125,8 @@ def main():
                 logging.info("There is no accession no on the filing detail page: %s",
                              filing_detail_url)
                 continue
-            if check_parser_values(parser.company, parser.edgar_filing, parser.data_13f):
-                parser.company.filing_count = update_filing_count(parser.company.cik_no)
-                logging.info('Added number of filings for CIK: %s to Company table', parser.company.cik_no)
+            if check_parser_values_align(parser.company, parser.edgar_filing, parser.data_13f):
+                update_filing_count(parser)
                 send_data_to_db(
                     parser.company,
                     parser.edgar_filing,
