@@ -12,7 +12,7 @@ from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.errors import BadWebPageException, NoUrlErrorException, NoAccessionNoException
+from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlErrorException, NoAccessionNoException
 
 
 def create_url_list(date_):
@@ -82,8 +82,11 @@ def main():
     for date_ in generate_dates(start_date, end_date):
         try:
             filing_detail_urls = create_url_list(date_)
-        except BadWebPageException:
-            logging.info("There are no filing URLs on the page for date %s", date_)
+        except BadWebPageResponseException:
+            logging.info("There is no data returned from the page for date %s", date_)
+            continue
+        if not filing_detail_urls:
+            logging.info("There are no filing URLs on the filing detail page for date %s", date_)
             continue
         setup_db_connection()
         list_of_cik_no = []

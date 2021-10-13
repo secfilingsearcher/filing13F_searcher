@@ -13,7 +13,7 @@ class InvalidConnectionStringException(Exception):
     """Raised when Connection String Invalid"""
 
 
-class BadWebPageException(Exception):
+class BadWebPageResponseException(Exception):
     """Raised when Web Page returns no response"""
 
 

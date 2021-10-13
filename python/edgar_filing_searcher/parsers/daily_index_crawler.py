@@ -9,7 +9,7 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
-from edgar_filing_searcher.errors import BadWebPageException
+from edgar_filing_searcher.errors import BadWebPageResponseException
 
 
 def get_request_response(url):
@@ -35,7 +35,6 @@ def get_request_response(url):
 
 def get_text(url):
     """Returns the html and text from the URL"""
-
     response = get_request_response(url)
     time.sleep(1)
     full_text = response.text
@@ -66,7 +65,7 @@ def get_subdirectories_for_specific_date(full_date: date):
     try:
         full_text = get_text(full_url)
     except requests.exceptions.RetryError as e:
-        raise BadWebPageException("Search Page has error", e)
+        raise BadWebPageResponseException("Web Page has response error", e)
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
