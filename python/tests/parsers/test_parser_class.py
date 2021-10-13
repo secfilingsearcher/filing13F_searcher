@@ -8,7 +8,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.errors import NoUrlException, NoAccessionNo
+from edgar_filing_searcher.errors import UrlErrorException, NoAccessionNo
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
@@ -112,7 +112,7 @@ def test_parser_primaryDocXmlInvalid_raisesParseError():
         new_parser(filing_detail_text_13f(), invalid_xml, infotable_xml_text())
 
 
-def test_parser_XmlUrlInvalid_raisesNoUrlException():
-    """Tests if parser raises the NoUrlException exception when the xml url is invalid"""
-    with pytest.raises(NoUrlException):
+def test_parser_XmlUrlInvalid_raisesUrlErrorException():
+    """Tests if parser raises the UrlErrorException exception when the xml url is invalid"""
+    with pytest.raises(UrlErrorException):
         new_parser(filing_detail_text_13f_missing_urls(), primary_doc_xml_text(), infotable_xml_text())
