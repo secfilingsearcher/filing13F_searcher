@@ -12,8 +12,8 @@ from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlErrorException, NoAccessionNoException, \
-    InvalidUrlException
+from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlErrorException, \
+    NoAccessionNoException, InvalidUrlException
 
 
 def create_url_list(date_):
@@ -27,7 +27,8 @@ def create_url_list(date_):
 
 
 def check_parser_values(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
-    if company.cik_no == edgar_filing.cik_no and edgar_filing.accession_no == data_13f[0].accession_no:
+    if company.cik_no == edgar_filing.cik_no and \
+            edgar_filing.accession_no == data_13f[0].accession_no:
         return True
     logging.error("CIK and Accession_no do not match. Data not sent to database.")
     return False
@@ -35,7 +36,8 @@ def check_parser_values(company: Company, edgar_filing: EdgarFiling, data_13f: D
 
 def update_filing_count(cik_no):
     """This function counts the number of filings and adds it to the Company class"""
-    counted_filings_with_cik_no = EdgarFiling.query.filter_by(cik_no=cik_no).count()
+    counted_filings_with_cik_no = \
+        EdgarFiling.query.filter_by(cik_no=cik_no).count()
     logging.debug('Counted amount of filings for CIK: %s. Count: %i', cik_no, counted_filings_with_cik_no)
     return counted_filings_with_cik_no
 
@@ -100,10 +102,12 @@ def main():
             try:
                 parser = Parser(filing_detail_url)
             except NoUrlErrorException:
-                logging.info("There is no XML URL on the filing detail page: %s", filing_detail_url)
+                logging.info("There is no XML URL on the filing detail page: %s",
+                             filing_detail_url)
                 continue
             except NoAccessionNoException:
-                logging.info("There is no accession no on the filing detail page: %s", filing_detail_url)
+                logging.info("There is no accession no on the filing detail page: %s",
+                             filing_detail_url)
                 continue
             if check_parser_values(parser.company, parser.edgar_filing, parser.data_13f):
                 parser.company.filing_count = update_filing_count(parser.company.cik_no)
