@@ -7,7 +7,7 @@ import traceback
 from datetime import date
 
 from edgar_filing_searcher.database import db
-from edgar_filing_searcher.models import Company, EdgarFiling
+from edgar_filing_searcher.models import Company, EdgarFiling, Data13f
 from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
@@ -26,15 +26,18 @@ def create_url_list(date_):
     return ensure_13f_filing_detail_urls(subdirectories)
 
 
-def update_filing_counts(cik_no_list):
-    """This function counts the number of filings and adds it to the Company table"""
-    for cik_no in cik_no_list:
-        company_in_table = Company.query.filter_by(cik_no=cik_no).first()
-        filing_count = EdgarFiling.query.filter_by(cik_no=cik_no).count()
-        company_in_table.filing_count = filing_count
-        logging.debug('Counted amount of filings for CIK: %s. Count: %i', cik_no, filing_count)
-        db.session.commit()
-        logging.info('Added number of filings for CIK: %s to Company table', cik_no)
+def check_parser_values(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
+    if company.cik_no == edgar_filing.cik_no and edgar_filing.accession_no == data_13f[0].accession_no:
+        return True
+    logging.error("CIK and Accession_no do not match. Data not sent to database.")
+    return False
+
+
+def update_filing_count(cik_no):
+    """This function counts the number of filings and adds it to the Company class"""
+    counted_filings_with_cik_no = EdgarFiling.query.filter_by(cik_no=cik_no).count()
+    logging.debug('Counted amount of filings for CIK: %s. Count: %i', cik_no, counted_filings_with_cik_no)
+    return counted_filings_with_cik_no
 
 
 def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
@@ -93,7 +96,6 @@ def main():
             logging.info("There are no filing URLs on the filing detail page for date %s", date_)
             continue
         setup_db_connection()
-        list_of_cik_no = []
         for filing_detail_url in filing_detail_urls:
             try:
                 parser = Parser(filing_detail_url)
@@ -103,12 +105,13 @@ def main():
             except NoAccessionNoException:
                 logging.info("There is no accession no on the filing detail page: %s", filing_detail_url)
                 continue
-            list_of_cik_no.append(parser.company.cik_no)
-            send_data_to_db(
-                parser.company,
-                parser.edgar_filing,
-                parser.data_13f)
-        update_filing_counts(list_of_cik_no)
+            if check_parser_values(parser.company, parser.edgar_filing, parser.data_13f):
+                parser.company.filing_count = update_filing_count(parser.company.cik_no)
+                logging.info('Added number of filings for CIK: %s to Company table', parser.company.cik_no)
+                send_data_to_db(
+                    parser.company,
+                    parser.edgar_filing,
+                    parser.data_13f)
 
 
 if __name__ == "__main__":

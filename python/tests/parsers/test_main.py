@@ -8,7 +8,7 @@ from flask_testing import TestCase
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_counts, my_handler, \
+from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_count, my_handler, \
     change_sys_excepthook
 
 DATE_1 = date(2021, 1, 8)
@@ -80,12 +80,16 @@ def test_create_url_list():
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQLALchemy Tests"""
 
+    def test_check_parser_values(self):
+        """"""
+        pass
+
     def test_update_filing_counts(self):
         """Tests update_filing_counts"""
         cik_no = '0001171592'
         send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
-        update_filing_counts([cik_no])
+        update_filing_count([cik_no])
 
         assert Company.query.filter_by(cik_no=cik_no).first().filing_count == 1
 
@@ -106,6 +110,22 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
         assert Data13f.query.filter_by(cik_no=self.data_13f_table[0].cik_no).first() == self.data_13f_table[0]
+
+    def test_main_raiseInvalidUrlException(self):
+        """"""
+        pass
+
+    def test_main_raiseBadWebPageResponseException(self):
+        """"""
+        pass
+
+    def test_main_raiseNoUrlErrorException(self):
+        """"""
+        pass
+
+    def test_main_raiseNoAccessionNoException(self):
+        """"""
+        pass
 
 
 def test_change_sys_excepthook():
