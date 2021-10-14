@@ -84,8 +84,9 @@ def get_subdirectories_for_specific_date(full_date: date):
 
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     """Returns the 13f filing detail URL"""
-    specific_date_13f_filing_detail_urls = [f'https://www.sec.gov/Archives/edgar/data/{subdirectory}-index.html'
-                                            for subdirectory in cik_ascension_subdirectories]
+    specific_date_13f_filing_detail_urls = \
+        [f'https://www.sec.gov/Archives/edgar/data/{subdirectory}-index.html'
+         for subdirectory in cik_ascension_subdirectories]
     return specific_date_13f_filing_detail_urls
 
 
