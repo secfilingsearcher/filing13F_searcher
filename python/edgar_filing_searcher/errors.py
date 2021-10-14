@@ -16,7 +16,8 @@ class InvalidConnectionStringException(Exception):
 class BadWebPageResponseException(Exception):
     """Raised when Web Page returns no response"""
 
-    def __init__(self, status_code):
+    def __init__(self, status_code, message):
+        self.message = message
         self.status_code = status_code
         super().__init__()
 
@@ -24,6 +25,7 @@ class BadWebPageResponseException(Exception):
 class InvalidUrlException(Exception):
     """Raised when URL is Invalid"""
 
-    def __init__(self, status_code):
+    def __init__(self, status_code, message):
+        self.message = message
         self.status_code = status_code
-        super().__init__(excen)
+        super().__init__()
