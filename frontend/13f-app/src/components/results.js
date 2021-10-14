@@ -9,7 +9,7 @@ function Results () {
   const [results, setResults] = useState([])
   const location = useLocation()
   const params = new URLSearchParams(location.search)
-  const { q, startDate, endDate } = { q: params.get('q'), startDate: params.get('startDate'), endDate: params.get('endDate') }
+  const { q, startDate, endDate } = { q: params.get('q'), startDate: params.get('start_date'), endDate: params.get('end_date') }
 
   const resultClassName = (count) => { return count > 0 ? 'bg-primary' : 'bg-danger' }
 
