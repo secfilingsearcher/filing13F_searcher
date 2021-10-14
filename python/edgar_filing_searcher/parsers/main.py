@@ -12,8 +12,8 @@ from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlErrorException, \
-    NoAccessionNoException, InvalidUrlException
+from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlException, \
+    NoAccessionNumberException, InvalidUrlException
 
 
 def create_url_list(date_):
@@ -32,16 +32,12 @@ def check_parser_values_align(company: Company, edgar_filing: EdgarFiling, data_
     if company.cik_no == edgar_filing.cik_no and \
             edgar_filing.accession_no == data_13f[0].accession_no:
         return True
-    logging.error("CIK and Accession_no do not match. Data not sent to database.")
     return False
 
 
 def check_if_filing_exists_in_db(accession_no):
     """Check if the filing exists in the database"""
-    company_exists_in_table = EdgarFiling.query.filter_by(accession_no=accession_no).first()
-    if company_exists_in_table:
-        return True
-    return False
+    return bool(EdgarFiling.query.filter_by(accession_no=accession_no).first())
 
 
 def update_filing_count(parser: Parser):
@@ -56,8 +52,7 @@ def update_filing_count(parser: Parser):
                       current_db_filing_count, cik_no)
         parser.company.filing_count = current_db_filing_count
     else:
-        new_filing = 1
-        parser.company.filing_count = new_filing + current_db_filing_count
+        parser.company.filing_count = 1 + current_db_filing_count
         logging.debug('Number of filings change from %i to %i for CIK: %s',
                       current_db_filing_count, parser.company.filing_count, cik_no)
     logging.info('Updated number of filings for CIK: %s to Company table', cik_no)
@@ -106,6 +101,7 @@ def main():
 
     logging.info('Initializing job')
 
+    setup_db_connection()
     for date_ in generate_dates(start_date, end_date):
         try:
             filing_detail_urls = create_url_list(date_)
@@ -118,17 +114,16 @@ def main():
         if not filing_detail_urls:
             logging.info("There are no filing URLs on the filing detail page for date %s", date_)
             continue
-        setup_db_connection()
         for filing_detail_url in filing_detail_urls:
             try:
                 parser = Parser(filing_detail_url)
-            except NoUrlErrorException:
-                logging.info("There is no XML URL on the filing detail page: %s",
-                             filing_detail_url)
+            except NoUrlException:
+                logging.error("There is no XML URL on the filing detail page: %s",
+                              filing_detail_url)
                 continue
-            except NoAccessionNoException:
-                logging.info("There is no accession no on the filing detail page: %s",
-                             filing_detail_url)
+            except NoAccessionNumberException:
+                logging.error("There is no accession no on the filing detail page: %s",
+                              filing_detail_url)
                 continue
             if check_parser_values_align(parser.company, parser.edgar_filing, parser.data_13f):
                 update_filing_count(parser)
@@ -136,6 +131,8 @@ def main():
                     parser.company,
                     parser.edgar_filing,
                     parser.data_13f)
+            else:
+                logging.error("CIK and Accession_no do not match. Data not sent to database.")
 
 
 if __name__ == "__main__":

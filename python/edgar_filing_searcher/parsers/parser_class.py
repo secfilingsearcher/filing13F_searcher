@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 from edgar_filing_searcher.models import Company, EdgarFiling
 from edgar_filing_searcher.parsers.daily_index_crawler import get_text
 from edgar_filing_searcher.parsers.data_13f import data_13f_table
-from edgar_filing_searcher.errors import NoUrlErrorException, NoAccessionNoException
+from edgar_filing_searcher.errors import NoUrlException, NoAccessionNumberException
 
 
 class Parser:
@@ -30,7 +30,7 @@ class Parser:
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
                     text_13f)
         if not accession_no:
-            raise NoAccessionNoException("No accession number")
+            raise NoAccessionNumberException("No accession number")
         return accession_no.group(0)
 
     @staticmethod
@@ -48,7 +48,7 @@ class Parser:
     def _ensure_xml_urls(xml_url_suffixes):
         """Adds base URL to suffix URL for primary_doc.xml URL"""
         if not xml_url_suffixes:
-            raise NoUrlErrorException("Found no primary_doc_xml_url suffix.")
+            raise NoUrlException("Found no primary_doc_xml_url suffix.")
         sec_base_url = "https://www.sec.gov"
         return sec_base_url + xml_url_suffixes[0], sec_base_url + xml_url_suffixes[-1]
 

@@ -1,6 +1,6 @@
 # pylint: disable=invalid-name
 # pylint: disable=no-member
-"""This file crawls from the current events EDGAR page to the primary_doc and infotable xml file"""
+"""This file crawls the daily index directory pages"""
 import logging
 import re
 import time
@@ -15,11 +15,14 @@ from edgar_filing_searcher.errors import BadWebPageResponseException, InvalidUrl
 
 def get_request_response(url):
     """Returns the response request from the URL"""
+    backoff_factor_value = 3
+    timeout_value = 3
+
     retry_strategy = Retry(
         total=3,
         status_forcelist=(403, 429, 500, 502, 503, 504),
         allowed_methods=["GET"],
-        backoff_factor=3,
+        backoff_factor=backoff_factor_value,
     )
 
     session = requests.Session()
@@ -29,7 +32,7 @@ def get_request_response(url):
 
     response = session.get(
         url,
-        headers={"user-agent": "filing_13f_searcher"}, timeout=3
+        headers={"user-agent": "filing_13f_searcher"}, timeout=timeout_value
     )
     return response
 
@@ -81,9 +84,8 @@ def get_subdirectories_for_specific_date(full_date: date):
 
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
     """Returns the 13f filing detail URL"""
-    specific_date_13f_filing_detail_urls = \
-        [f'https://www.sec.gov/Archives/edgar/data/{subdirectory}-index.html'
-         for subdirectory in cik_ascension_subdirectories]
+    specific_date_13f_filing_detail_urls = [f'https://www.sec.gov/Archives/edgar/data/{subdirectory}-index.html'
+                                            for subdirectory in cik_ascension_subdirectories]
     return specific_date_13f_filing_detail_urls
 
 
