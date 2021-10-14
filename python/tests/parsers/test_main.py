@@ -8,8 +8,12 @@ from flask_testing import TestCase
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, update_filing_count, my_handler, \
-    change_sys_excepthook
+from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, my_handler, \
+    change_sys_excepthook, update_filing_count
+
+from unittest.mock import patch, MagicMock
+
+from edgar_filing_searcher.parsers.parser_class import Parser
 
 DATE_1 = date(2021, 1, 8)
 
@@ -80,16 +84,19 @@ def test_create_url_list():
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     """This class runs SQLALchemy Tests"""
 
-    def test_check_parser_values(self):
+    def test_check_parser_values_align(self):
         """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
         pass
 
-    def test_update_filing_counts(self):
-        """Tests if update_filing_counts counts the number of filings in EdgarFiling"""
-        cik_no = '0001171592'
-        send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
+    def test_check_if_filing_exists_in_db(self):
+        """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
+        pass
 
-        update_filing_count([cik_no])
+    def test_update_filing_count(self):
+        """Tests if update_filing_count updates the filing_count in the Company table"""
+        cik_no = '0001171592'
+        update_filing_count(Parser(''))
+        send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
         assert Company.query.filter_by(cik_no=cik_no).first().filing_count == 1
 

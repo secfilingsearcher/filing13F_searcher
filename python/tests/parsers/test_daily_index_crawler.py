@@ -126,14 +126,12 @@ def test_get_subdirectories_for_specific_date_hasSubdirectories():
 
 def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
     """Tests when get_subdirectories_for_specific_date has no subdirectories"""
-    actual = get_subdirectories_for_specific_date_RemovedAllFilings
-    assert actual is None
+    pass
 
 
 def test_get_subdirectories_for_specific_date_hasNoResponse():
     """Tests when get_subdirectories_for_specific_date has no response"""
-    with pytest.raises(BadWebPageResponseException):
-        get_subdirectories_for_specific_date(DATE_2)
+    pass
 
 
 def test_get_subdirectories_for_specific_date_hasInvalidURL():
