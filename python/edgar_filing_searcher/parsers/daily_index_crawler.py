@@ -73,8 +73,8 @@ def get_subdirectories_for_specific_date(full_date: date):
         status_code = int((re.findall('[0-9]+', error_reason))[0])
         logging.error('Response Status Code %i', status_code)
         if status_code in (403, 404):
-            raise InvalidUrlException("Invalid URL error", e) from e
-        raise BadWebPageResponseException("Web Page response error", e) from e
+            raise InvalidUrlException("Invalid URL error") from e
+        raise BadWebPageResponseException("Web Page response error") from e
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
     if not all_13f_filings:
