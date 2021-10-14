@@ -75,8 +75,6 @@ def get_subdirectories_for_specific_date(full_date: date):
         raise BadWebPageResponseException("Web Page response error", status_code) from e
 
     all_13f_filings = re.findall('(?<=13F-HR)(.*)(?=.txt)', full_text, flags=re.IGNORECASE)
-    if not all_13f_filings:
-        return None
     return [re.search(r'(?<=edgar/data/)(.*)', x).group(0) for x in all_13f_filings]
 
 

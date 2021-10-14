@@ -58,23 +58,24 @@ def test_create_url_list():
 
     actual = create_url_list(DATE_1)
 
-    assert actual == ['https://www.sec.gov/Archives/edgar/data/1478997/0001478997-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/819864/0000819864-21-000002-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1567784/0000909012-21-000002-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1479844/0001479844-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1362987/0001362987-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1542265/0001542265-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/740272/0000740272-21-000002-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1799284/0001799284-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1800336/0001800336-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1744348/0001754960-21-000002-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1664017/0001664017-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1370102/0001370102-21-000003-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1766067/0001214659-21-000321-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1008937/0001008937-21-000001-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1761450/0001761450-21-000004-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1015308/0001015308-21-000002-index.html',
-                      'https://www.sec.gov/Archives/edgar/data/1387399/0001567619-21-000762-index.html']
+    assert actual == [
+        'https://www.sec.gov/Archives/edgar/data/1478997/0001478997-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/819864/0000819864-21-000002-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1567784/0000909012-21-000002-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1479844/0001479844-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1362987/0001362987-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1542265/0001542265-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/740272/0000740272-21-000002-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1799284/0001799284-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1800336/0001800336-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1744348/0001754960-21-000002-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1664017/0001664017-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1370102/0001370102-21-000003-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1766067/0001214659-21-000321-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1008937/0001008937-21-000001-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1761450/0001761450-21-000004-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1015308/0001015308-21-000002-index.html',
+        'https://www.sec.gov/Archives/edgar/data/1387399/0001567619-21-000762-index.html']
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
@@ -102,29 +103,21 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         """Tests if send_data_to_db saves the EdgarFiling model in the database"""
         send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
-        assert EdgarFiling.query.filter_by(accession_no=self.edgar_filing.accession_no).first() == self.edgar_filing
+        assert EdgarFiling.query.filter_by(
+            accession_no=self.edgar_filing.accession_no).first() == self.edgar_filing
 
     def test_send_data_to_db_savesData13fInDb(self):
         """Tests if send_data_to_db saves the Data13f model in the database"""
         send_data_to_db(self.company, self.edgar_filing, self.data_13f_table)
 
-        assert Data13f.query.filter_by(cik_no=self.data_13f_table[0].cik_no).first() == self.data_13f_table[0]
+        assert Data13f.query.filter_by(cik_no=self.data_13f_table[0].cik_no).first() == \
+               self.data_13f_table[0]
 
-    def test_main_raiseInvalidUrlException(self):
-        """Tests if main raises an InvalidUrlException"""
-        pass
+    def test_process_date():
+        assert False
 
-    def test_main_raiseBadWebPageResponseException(self):
-        """Tests if main raises a BadWebPageResponseException"""
-        pass
-
-    def test_main_raiseNoUrlErrorException(self):
-        """Tests if main raises a NoUrlErrorException"""
-        pass
-
-    def test_main_raiseNoAccessionNoException(self):
-        """Tests if main raises a NoAccessionNoException"""
-        pass
+    def test_process_filing_detail_url():
+        assert False
 
 
 def test_change_sys_excepthook():

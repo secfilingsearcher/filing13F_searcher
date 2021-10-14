@@ -124,10 +124,6 @@ def test_get_subdirectories_for_specific_date_hasSubdirectories():
                       '1387399/0001567619-21-000762']
 
 
-def test_get_subdirectories_for_specific_date_hasNoSubdirectories():
-    """Tests when get_subdirectories_for_specific_date has no subdirectories"""
-    pass
-
 
 def test_get_subdirectories_for_specific_date_hasNoResponse():
     """Tests when get_subdirectories_for_specific_date has no response"""
