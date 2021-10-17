@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 const SearchForm = () => {
   const history = useHistory()
   const formik = useFormik({
-        initialValues: {
+    initialValues: {
             searchName: '',
             searchStartDate: '',
             searchEndDate: ''       
