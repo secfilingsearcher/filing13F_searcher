@@ -1,7 +1,7 @@
 import React from 'react'
 import '../App.css'
 
-import SearchForm from './SearchForm.js'
+import SearchForm from './Search.js'
 import './MainSection.css'
 
 function MainSection () {

@@ -6,16 +6,16 @@ const SearchForm = () => {
   const history = useHistory()
   const formik = useFormik({
     initialValues: {
-            searchName: '',
-            searchStartDate: '',
-            searchEndDate: ''       
-        },
-        onSubmit: values => {
-            const searchLink = `/search?q=${values.searchName}&startDate=${values.searchStartDate}&endDate=${values.searchEndDate}`
-            history.push({searchLink})
-        },
-    })
-    return (
+      searchName: '',
+      searchStartDate: '',
+      searchEndDate: ''
+    },
+    onSubmit: values => {
+      const searchLink = `/search?q=${values.searchName}&startDate=${values.searchStartDate}&endDate=${values.searchEndDate}`
+      history.push({ searchLink })
+    }
+  })
+  return (
        <form onSubmit={formik.handleSubmit}>
        <input
          id="searchName"
@@ -39,9 +39,8 @@ const SearchForm = () => {
          value={formik.values.searchEndDate}
        />
        <button type="submit">Submit</button>
-     </form>
-    )
-
+    </form>
+  )
 }
 
 export default SearchForm
