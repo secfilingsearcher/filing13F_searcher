@@ -78,7 +78,7 @@ def change_sys_excepthook():
     sys.excepthook = my_handler
 
 
-def process_date(date_):
+def _process_date(date_):
     try:
         filing_detail_urls = create_url_list(date_)
     except InvalidUrlException:
@@ -91,10 +91,10 @@ def process_date(date_):
         logging.info("There are no filing URLs on the filing detail page for date %s", date_)
         return
     for filing_detail_url in filing_detail_urls:
-        process_filing_detail_url(filing_detail_url)
+        _process_filing_detail_url(filing_detail_url)
 
 
-def process_filing_detail_url(filing_detail_url):
+def _process_filing_detail_url(filing_detail_url):
     try:
         parser = Parser(filing_detail_url)
     except NoUrlException:
@@ -138,7 +138,7 @@ def main():
 
     setup_db_connection()
     for date_ in generate_dates(start_date, end_date):
-        process_date(date_)
+        _process_date(date_)
 
 
 if __name__ == "__main__":
