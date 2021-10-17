@@ -214,7 +214,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert False
 
     def test_process_filing_detail_url(self):
-        x = process_filing_detail_url()
+        x = process_filing_detail_url("")
         assert False
 
 
@@ -234,8 +234,14 @@ def test_my_handler(caplog):
         assert "Uncaught exception" in caplog.text
 
 
-def test_check_parser_values_align():
+def test_check_parser_values_align_isSame():
+    """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
+    parser_value_1 = check_parser_values_align(PARSER_1.company, PARSER_1.edgar_filing, PARSER_1.data_13f)
+    assert parser_value_1 == parser_value_1
+
+
+def test_check_parser_values_align_isDifferent():
     """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
     parser_value_1 = check_parser_values_align(PARSER_1.company, PARSER_1.edgar_filing, PARSER_1.data_13f)
     parser_value_2 = check_parser_values_align(PARSER_2.company, PARSER_2.edgar_filing, PARSER_2.data_13f)
-    assert parser_value_1 == parser_value_2
+    assert parser_value_1 != parser_value_2
