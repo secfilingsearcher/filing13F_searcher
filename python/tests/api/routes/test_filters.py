@@ -41,45 +41,49 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
     def setUp(self):
         """Sets up a test database"""
         db.create_all()
-        self.company1 = Company(cik_no=COMPANY_CIK_1, company_name="Cool Industries", filing_count=1)
-        self.edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW1, cik_no=COMPANY_CIK_1,
+        self.company1 = Company(cik_no=COMPANY_CIK_1, company_name="Cool Industries",
+                                filing_count=1)
+        self.edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW1,
+                                              cik_no=COMPANY_CIK_1,
                                               filing_date=datetime.fromisoformat("1999-09-01"))
-        self.data_13f_table1_row1 = [Data13f(equity_holdings_id="67896567",
-                                             accession_no=ACCESSION_NO_TABLE1_ROW1,
-                                             cik_no='56464565767',
-                                             name_of_issuer='Agilent Technologies',
-                                             title_of_class='COM',
-                                             cusip='00846U101',
-                                             value=22967078.5,
-                                             ssh_prnamt=180644,
-                                             ssh_prnamt_type='None',
-                                             put_call='None',
-                                             investment_discretion='SOLE',
-                                             other_manager='None',
-                                             voting_authority_sole=22967078,
-                                             voting_authority_shared=0,
-                                             voting_authority_none=0
-                                             )]
-        self.edgar_filing1_row2 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW2, cik_no=COMPANY_CIK_1,
+        self.edgar_filing1_row2 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW2,
+                                              cik_no=COMPANY_CIK_1,
                                               filing_date=datetime.fromisoformat("1998-05-02"))
-        self.data_13f_table1_row2 = [Data13f(equity_holdings_id="673326567",
-                                             accession_no=ACCESSION_NO_TABLE1_ROW2,
-                                             cik_no='3349665767',
-                                             name_of_issuer='Flight Technologies',
-                                             title_of_class='COM',
-                                             cusip='0584GU101',
-                                             value=34967078.5,
-                                             ssh_prnamt=2670644,
-                                             ssh_prnamt_type='None',
-                                             put_call='None',
-                                             investment_discretion='SOLE',
-                                             other_manager='None',
-                                             voting_authority_sole=4257078,
-                                             voting_authority_shared=0,
-                                             voting_authority_none=0
-                                             )]
+        self.data_13f1_row1 = [Data13f(equity_holdings_id="67896567",
+                                       accession_no=ACCESSION_NO_TABLE1_ROW1,
+                                       cik_no='56464565767',
+                                       name_of_issuer='Agilent Technologies',
+                                       title_of_class='COM',
+                                       cusip='00846U101',
+                                       value=22967078.5,
+                                       ssh_prnamt=180644,
+                                       ssh_prnamt_type='None',
+                                       put_call='None',
+                                       investment_discretion='SOLE',
+                                       other_manager='None',
+                                       voting_authority_sole=22967078,
+                                       voting_authority_shared=0,
+                                       voting_authority_none=0
+                                       )]
+        self.data_13f1_row2 = [Data13f(equity_holdings_id="673326567",
+                                       accession_no=ACCESSION_NO_TABLE1_ROW2,
+                                       cik_no='3349665767',
+                                       name_of_issuer='Flight Technologies',
+                                       title_of_class='COM',
+                                       cusip='0584GU101',
+                                       value=34967078.5,
+                                       ssh_prnamt=2670644,
+                                       ssh_prnamt_type='None',
+                                       put_call='None',
+                                       investment_discretion='SOLE',
+                                       other_manager='None',
+                                       voting_authority_sole=4257078,
+                                       voting_authority_shared=0,
+                                       voting_authority_none=0
+                                       )]
 
-        self.company2 = Company(cik_no=COMPANY_CIK_2, company_name="Nice Industries", filing_count=1)
+        self.company2 = Company(cik_no=COMPANY_CIK_2, company_name="Nice Industries",
+                                filing_count=1)
         self.edgar_filing2 = EdgarFiling(accession_no=ACCESSION_NO_2, cik_no=COMPANY_CIK_2,
                                          filing_date=datetime.fromisoformat("2000-04-05"))
         self.data_13f_table2 = [Data13f(equity_holdings_id="4364347",
@@ -119,8 +123,8 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                         voting_authority_none=0
                                         )]
 
-        send_data_to_db(self.company1, self.edgar_filing1_row1, self.data_13f_table1_row1)
-        send_data_to_db(self.company1, self.edgar_filing1_row2, self.data_13f_table1_row2)
+        send_data_to_db(self.company1, self.edgar_filing1_row1, self.data_13f1_row1)
+        send_data_to_db(self.company1, self.edgar_filing1_row2, self.data_13f1_row2)
         send_data_to_db(self.company2, self.edgar_filing2, self.data_13f_table2)
         send_data_to_db(self.company3, self.edgar_filing3, self.data_13f_table3)
 
