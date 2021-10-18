@@ -263,6 +263,27 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Data13f.query.filter_by(cik_no=self.data_13f_table1[0].cik_no).first() == \
                self.data_13f_table1[0]
 
+    def test_process_filing_detail_url_returnNoUrlException(self):
+        with patch('requests.Session.get') as mock_function:
+            mock_function.side_effect = [
+                MagicMock(text=filing_detail_text_13f_missing_accession_no),
+                MagicMock(text=primary_doc_xml_text),
+                MagicMock(text=infotable_xml_text)]
+            actual = process_date(DATE_1)
+            assert actual is None
+
+    def test_process_filing_detail_url_returnNoAccessionNumberException(self):
+        with patch('edgar_filing_searcher.parsers.main.Parser') as mock_function:
+            mock_function.side_effect = MagicMock(return_value=PARSER_1)
+
+    def test_process_filing_detail_url_update_filing_countIsCalled(self):
+        with patch('edgar_filing_searcher.parsers.main.Parser') as mock_function:
+            mock_function.side_effect = MagicMock(return_value=PARSER_1)
+
+    def test_process_filing_detail_url_send_data_to_dbIsCalled(self):
+        with patch('edgar_filing_searcher.parsers.main.Parser') as mock_function:
+            mock_function.side_effect = MagicMock(return_value=PARSER_1)
+
 
 def test_process_date_raiseInvalidUrlExceptionReturnNone():
     with patch('requests.Session.get') as mock_function:
