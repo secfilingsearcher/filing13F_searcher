@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { ListGroup } from 'react-bootstrap'
-import capitalizeWords from './helperfunctions.js'
+import { capitalizeWords } from './helperfunctions.js'
 import axios from 'axios'
 import './ResultsList.css'
 

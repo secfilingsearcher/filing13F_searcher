@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table'
 import './resultstable.css'
+import { valueFormat } from './helperfunctions.js'
 
 function FilingData () {
   const [results, setResults] = useState([])
@@ -47,7 +48,7 @@ function FilingData () {
                         <td>{result.name_of_issuer}</td>
                         <td>{result.title_of_class}</td>
                         <td>{result.cusip}</td>
-                        <td>{result.value}</td>
+                        <td>{valueFormat(result.value)}</td>
                         <td>{result.ssh_prnamt}</td>
                         <td>{result.ssh_prnamt_type}</td>
                         <td>{result.put_call}</td>
