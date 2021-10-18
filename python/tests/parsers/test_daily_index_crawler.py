@@ -4,10 +4,15 @@ from datetime import date
 import httpretty
 import pytest
 import requests
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, Mock
+
+from urllib3.exceptions import ResponseError
+
 from edgar_filing_searcher.parsers.daily_index_crawler import ensure_13f_filing_detail_urls, \
     get_subdirectories_for_specific_date, generate_dates, get_request_response
 from edgar_filing_searcher.errors import BadWebPageResponseException, InvalidUrlException
+
+from requests.exceptions import RetryError
 
 DATE_1 = date(2021, 1, 8)
 DATE_2 = date(2021, 1, 9)
@@ -21,23 +26,25 @@ SUBDIRECTORIES = ['1478997/0001478997-21-000001',
 def get_subdirectories_for_specific_date_RaiseRetryErrorCode503():
     """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
     as parameters. """
-    with patch('get_text') as mock_function:
-        mock_function.side_effect = requests.exceptions.RetryError()
-        return get_subdirectories_for_specific_date(DATE_1)
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = RetryError(
+            Mock(reason=ResponseError("too many 503 error responses")))
+        return get_subdirectories_for_specific_date(DATE_2)
 
 
 @pytest.fixture
-def filing_detail_with_no_urls():
+def filing_detail_with_no_13f_filing_urls():
     """Creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
         return file.read()
 
 
-def get_subdirectories_for_specific_date_No13FHRFilings(filing_detail_with_no_urls):
+def get_subdirectories_for_specific_date_removedAll13FFilings(
+        filing_detail_with_no_13f_filing_urls):
     """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
     as parameters. """
-    with patch('get_text') as mock_function:
-        mock_function.side_effect = MagicMock(text=filing_detail_with_no_urls)
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = MagicMock(text="filing_detail_with_no_13f_filing_urls")
         return get_subdirectories_for_specific_date(DATE_1)
 
 
@@ -137,23 +144,21 @@ def test_get_subdirectories_for_specific_date_hasInvalidURL():
         get_subdirectories_for_specific_date(DATE_2)
 
 
-def test_get_subdirectories_for_specific_date_hasBadWebPageResponse(
-        get_subdirectories_for_specific_date_RaiseRetryErrorCode503):
+def test_get_subdirectories_for_specific_date_hasBadWebPageResponse():
     """Tests when get_subdirectories_for_specific_date has no response"""
     with pytest.raises(BadWebPageResponseException):
-        get_subdirectories_for_specific_date_RaiseRetryErrorCode503(DATE_2)
+        get_subdirectories_for_specific_date_RaiseRetryErrorCode503()
 
 
-def test_get_subdirectories_for_specific_date_hasNoResponse(get_subdirectories_for_specific_date_RemovedAllFilings):
+def test_get_subdirectories_for_specific_date_hasNoResponse():
     """Tests when get_subdirectories_for_specific_date has no response"""
-    actual = get_subdirectories_for_specific_date_RemovedAllFilings(DATE_1)
+    actual = get_subdirectories_for_specific_date_removedAll13FFilings(DATE_1)
 
     assert actual == []
 
 
 def test_ensure_13f_filing_detail_urls():
     """Test for ensure_13f_filing_detail_urls"""
-
     actual = ensure_13f_filing_detail_urls(SUBDIRECTORIES)
 
     assert actual == \
@@ -165,7 +170,6 @@ def test_ensure_13f_filing_detail_urls():
 
 def test_ensure_13f_filing_detail_urls_no():
     """Test for ensure_13f_filing_detail_urls"""
-
     actual = ensure_13f_filing_detail_urls([])
 
     assert actual == []
@@ -173,7 +177,6 @@ def test_ensure_13f_filing_detail_urls_no():
 
 def test_generate_dates_differentDates():
     """Test when generate_dates has different dates"""
-
     actual = tuple(generate_dates(DATE_1, DATE_3))
 
     assert actual == (DATE_1, DATE_2, DATE_3)
@@ -181,7 +184,6 @@ def test_generate_dates_differentDates():
 
 def test_generate_dates_sameDates():
     """Test when generate_dates has the same dates"""
-
     actual = tuple(generate_dates(DATE_1, DATE_1))
 
     assert actual == (DATE_1,)

@@ -11,7 +11,7 @@ from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.main import create_url_list, send_data_to_db, my_handler, \
     change_sys_excepthook, check_parser_values_align, check_if_filing_exists_in_db, \
-    update_filing_count
+    update_filing_count, main
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 DATE_1 = date(2021, 1, 8)
@@ -270,4 +270,5 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                self.data_13f_table1[0]
 
     def test_main(self):
+        main()
         pass
