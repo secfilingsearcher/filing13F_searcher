@@ -179,7 +179,7 @@ def infotable_xml_text_1():
 
 def infotable_xml_text_2():
     """Returns infotable.xml data"""
-    with open("tests/fixtures/infotable_2_shortened.xml", "rt") as file:
+    with open("tests/fixtures/infotable_2.xml", "rt") as file:
         return file.read()
 
 
