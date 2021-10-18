@@ -1,23 +1,34 @@
 """This file contains tests for main"""
 # pylint: disable=redefined-outer-name
 from datetime import date
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, Mock
 
+import pytest
 from flask_testing import TestCase
+from requests.exceptions import RetryError
+from urllib3.exceptions import ResponseError
 
 from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.parser_class import Parser
-from edgar_filing_searcher.parsers.main_parser import check_parser_values_align, send_data_to_db, \
-    update_filing_count, \
-    check_if_filing_exists_in_db, create_url_list
+from edgar_filing_searcher.parsers.parser_utils import check_parser_values_align, send_data_to_db, \
+    update_filing_count, check_if_filing_exists_in_db, create_url_list, process_date
+from edgar_filing_searcher.parsers.daily_index_crawler import get_subdirectories_for_specific_date
 
 DATE_1 = date(2021, 1, 8)
 COMPANY_CIK_1 = "0001171592"
 COMPANY_CIK_2 = "0001607863"
 ACCESSION_NO_TABLE1_ROW1 = '0001214659-18-006391'
 ACCESSION_NO_TABLE1_ROW2 = '0007635479-56-650763'
+
+
+@pytest.fixture
+def filing_detail_with_no_13f_filing_urls():
+    """Creates an fixture with edgar_current_events.html data"""
+    with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
+        test = file.read()
+        return test
 
 
 class FlaskSqlAlchemyTestConfiguration(TestCase):
@@ -251,3 +262,27 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
         assert Data13f.query.filter_by(cik_no=self.data_13f_table1[0].cik_no).first() == \
                self.data_13f_table1[0]
+
+
+def test_process_date_raiseInvalidUrlExceptionReturnNone():
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = RetryError(
+            Mock(reason=ResponseError("too many 503 error responses")))
+        actual = process_date(DATE_1)
+        assert actual is None
+
+
+def test_process_date_raiseBadWebPageResponseExceptionReturnNone():
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = RetryError(
+            Mock(reason=ResponseError("too many 403 error responses")))
+        actual = process_date(DATE_1)
+        assert actual is None
+
+
+def test_get_subdirectories_for_specific_date_hasNoResponse(filing_detail_with_no_13f_filing_urls):
+    """Tests when get_subdirectories_for_specific_date has no response"""
+    with patch('edgar_filing_searcher.parsers.daily_index_crawler.get_text') as mock_function:
+        mock_function.side_effect = MagicMock(return_value=filing_detail_with_no_13f_filing_urls)
+        actual = process_date(DATE_1)
+        assert actual is None
