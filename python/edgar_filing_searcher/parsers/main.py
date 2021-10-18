@@ -6,10 +6,10 @@ import sys
 import traceback
 from datetime import date
 
+from edgar_filing_searcher.parsers.parser_utils import process_date
 from edgar_filing_searcher.parsers.daily_index_crawler import generate_dates
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
-from parsers.parser_utils import process_date
 
 
 def my_handler(exc_type, exc_value, exc_traceback):

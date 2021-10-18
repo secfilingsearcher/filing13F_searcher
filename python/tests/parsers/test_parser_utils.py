@@ -275,7 +275,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
         assert Data13f.query.filter_by(cik_no=self.data_13f_table1[0].cik_no).first() == \
                self.data_13f_table1[0]
 
-    def test_process_filing_detail_url_returnNoUrlException(self):
+    def test_process_filing_detail_url_raisesNoUrlExceptionReturnsNone(self):
+        """Tests if process_filing_detail_url raises a NoUrlException and returns None"""
         with patch('requests.Session.get') as mock_function:
             mock_function.side_effect = [
                 MagicMock(text=filing_detail_text_13f_missing_urls()),
@@ -284,7 +285,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             actual = process_filing_detail_url("")
             assert actual is None
 
-    def test_process_filing_detail_url_returnNoAccessionNumberException(self):
+    def test_process_filing_detail_url_raisesNoAccessionNumberExceptionReturnsNone(self):
+        """Tests if process_filing_detail_url raises a NoAccessionNumberException and returns None"""
         with patch('requests.Session.get') as mock_function:
             mock_function.side_effect = [
                 MagicMock(text=filing_detail_text_13f_missing_accession_no()),
@@ -293,7 +295,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             actual = process_filing_detail_url("")
             assert actual is None
 
-    def test_process_filing_detail_url_update_filing_countIsCalled(self):
+    def test_process_filing_detail_url_callsupdate_filing_count(self):
+        """Tests if process_filing_detail_url calls update_filing_count"""
         with patch('requests.Session.get') as mock_function_1:
             mock_function_1.side_effect = [
                 MagicMock(text=filing_detail_13f_text_3()),
@@ -308,7 +311,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                 process_filing_detail_url("")
                 mock_function_2.assert_called()
 
-    def test_process_filing_detail_url_send_data_to_dbIsCalled(self):
+    def test_process_filing_detail_url_callssend_data_to_db(self):
+        """Tests if process_filing_detail_url calls send_data_to_db"""
         with patch('requests.Session.get') as mock_function_1:
             mock_function_1.side_effect = [
                 MagicMock(text=filing_detail_13f_text_3()),
@@ -327,6 +331,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
 
 def test_process_date_raiseInvalidUrlExceptionReturnNone():
+    """Tests when process_date raises InvalidUrlException and returns None"""
     with patch('requests.Session.get') as mock_function:
         mock_function.side_effect = RetryError(
             Mock(reason=ResponseError("too many 503 error responses")))
@@ -335,6 +340,7 @@ def test_process_date_raiseInvalidUrlExceptionReturnNone():
 
 
 def test_process_date_raiseBadWebPageResponseExceptionReturnNone():
+    """Tests when process_date raises BadWebPageResponseException and returns None"""
     with patch('requests.Session.get') as mock_function:
         mock_function.side_effect = RetryError(
             Mock(reason=ResponseError("too many 403 error responses")))
