@@ -52,21 +52,25 @@ def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text)
         return Parser('')
 
 
-PARSER = new_parser(filing_detail_text_13f(), primary_doc_xml_text(), infotable_xml_text())
+@pytest.fixture()
+def parser():
+    return new_parser(filing_detail_text_13f(), primary_doc_xml_text(), infotable_xml_text())
+
 
 SUFFIX_XML_URLS_LIST = ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
                         '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
 
 
-def test_parser_setsCompany():
+def test_parser_setsCompany(parser):
     """Tests if parser sets the Company field"""
 
-    company = Company(cik_no="0001852858", company_name="Everhart Financial Group, Inc.", filing_count=0)
+    company = Company(cik_no="0001852858", company_name="Everhart Financial Group, Inc.",
+                      filing_count=0)
 
-    assert PARSER.company == company
+    assert parser.company == company
 
 
-def test_parser_setsEdgarFiling():
+def test_parser_setsEdgarFiling(parser):
     """Tests if parser sets the EdgarFiling field"""
 
     edgar_filing = EdgarFiling(accession_no="0001852858-21-000001",
@@ -74,10 +78,10 @@ def test_parser_setsEdgarFiling():
                                filing_type="13F-HR",
                                filing_date=datetime.strptime('03-26-2021', '%m-%d-%Y'))
 
-    assert PARSER.edgar_filing == edgar_filing
+    assert parser.edgar_filing == edgar_filing
 
 
-def test_parser_setsData13f():
+def test_parser_setsData13f(parser):
     """Tests if parser sets the Data13f field"""
     data_13f_table = [Data13f(equity_holdings_id='a72c809fdf734348a910bbb39d2c5ac4',
                               accession_no='0001852858-21-000001',
@@ -96,7 +100,7 @@ def test_parser_setsData13f():
                               voting_authority_none=2893)
                       ]
 
-    assert PARSER.data_13f == data_13f_table
+    assert parser.data_13f == data_13f_table
 
 
 def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
