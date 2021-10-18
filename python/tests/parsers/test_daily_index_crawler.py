@@ -22,30 +22,12 @@ SUBDIRECTORIES = ['1478997/0001478997-21-000001',
                   '1567784/0000909012-21-000002',
                   '1479844/0001479844-21-000001']
 
-
-def get_subdirectories_for_specific_date_RaiseRetryErrorCode503():
-    """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
-    as parameters. """
-    with patch('requests.Session.get') as mock_function:
-        mock_function.side_effect = RetryError(
-            Mock(reason=ResponseError("too many 503 error responses")))
-        return get_subdirectories_for_specific_date(DATE_2)
-
-
 @pytest.fixture
 def filing_detail_with_no_13f_filing_urls():
     """Creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
-        return file.read()
-
-
-def get_subdirectories_for_specific_date_removedAll13FFilings(
-        filing_detail_with_no_13f_filing_urls):
-    """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
-    as parameters. """
-    with patch('requests.Session.get') as mock_function:
-        mock_function.side_effect = MagicMock(text="filing_detail_with_no_13f_filing_urls")
-        return get_subdirectories_for_specific_date(DATE_1)
+        test = file.read()
+        return test
 
 
 @httpretty.activate(allow_net_connect=False)
@@ -146,15 +128,19 @@ def test_get_subdirectories_for_specific_date_hasInvalidURL():
 
 def test_get_subdirectories_for_specific_date_hasBadWebPageResponse():
     """Tests when get_subdirectories_for_specific_date has no response"""
-    with pytest.raises(BadWebPageResponseException):
-        get_subdirectories_for_specific_date_RaiseRetryErrorCode503()
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = RetryError(
+            Mock(reason=ResponseError("too many 503 error responses")))
+        with pytest.raises(BadWebPageResponseException):
+            get_subdirectories_for_specific_date(DATE_2)
 
 
-def test_get_subdirectories_for_specific_date_hasNoResponse():
+def test_get_subdirectories_for_specific_date_hasNoResponse(filing_detail_with_no_13f_filing_urls):
     """Tests when get_subdirectories_for_specific_date has no response"""
-    actual = get_subdirectories_for_specific_date_removedAll13FFilings(DATE_1)
-
-    assert actual == []
+    with patch('edgar_filing_searcher.parsers.daily_index_crawler.get_text') as mock_function:
+        mock_function.side_effect = MagicMock(return_value=filing_detail_with_no_13f_filing_urls)
+        actual = get_subdirectories_for_specific_date(DATE_1)
+        assert actual == []
 
 
 def test_ensure_13f_filing_detail_urls():
