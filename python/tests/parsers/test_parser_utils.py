@@ -298,7 +298,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             mock_function_1.side_effect = [
                 MagicMock(text=filing_detail_13f_text_3()),
                 MagicMock(text=primary_doc_xml_text_3()),
-                MagicMock(text=infotable_xml_text_2())]
+                MagicMock(text=infotable_xml_text_3())]
             with patch('edgar_filing_searcher.parsers.parser_utils.update_filing_count') \
                     as mock_function_2:
                 mock_function_2.side_effect = [
@@ -313,7 +313,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             mock_function_1.side_effect = [
                 MagicMock(text=filing_detail_13f_text_3()),
                 MagicMock(text=primary_doc_xml_text_3()),
-                MagicMock(text=infotable_xml_text_2())]
+                MagicMock(text=infotable_xml_text_3())]
             with patch('edgar_filing_searcher.parsers.parser_utils.update_filing_count') \
                     as mock_function_2:
                 mock_function_2.side_effect = [
@@ -322,7 +322,6 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                     MagicMock(text=infotable_xml_text_3())]
                 with patch('edgar_filing_searcher.parsers.parser_utils.send_data_to_db') \
                         as mock_function_3:
-                    mock_function_3.side_effect = ""
                     process_filing_detail_url("")
                     mock_function_3.assert_called()
 
