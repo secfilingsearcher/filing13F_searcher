@@ -1,4 +1,4 @@
-"""This file contains tests for main"""
+"""This file contains tests for parser_utils"""
 # pylint: disable=redefined-outer-name
 from datetime import date
 from unittest.mock import patch, MagicMock, Mock

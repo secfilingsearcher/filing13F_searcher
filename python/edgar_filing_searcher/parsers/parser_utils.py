@@ -1,3 +1,4 @@
+"""This file contains functions used in main.py"""
 import logging
 
 from edgar_filing_searcher.database import db
@@ -61,6 +62,7 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
 
 
 def process_date(date_):
+    """This function process dates"""
     try:
         filing_detail_urls = create_url_list(date_)
     except InvalidUrlException:
@@ -77,6 +79,7 @@ def process_date(date_):
 
 
 def process_filing_detail_url(filing_detail_url):
+    """This function processes filing detail urls"""
     try:
         parser = Parser(filing_detail_url)
     except NoUrlException:
