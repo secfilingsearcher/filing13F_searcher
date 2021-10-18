@@ -12,8 +12,7 @@ from edgar_filing_searcher.parsers.daily_index_crawler import \
     ensure_13f_filing_detail_urls, generate_dates, get_subdirectories_for_specific_date
 from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
-from edgar_filing_searcher.errors import BadWebPageResponseException, NoUrlException, \
-    NoAccessionNumberException, InvalidUrlException
+from edgar_filing_searcher.parsers.main_parsers import _process_date
 
 
 def create_url_list(date_):
@@ -76,43 +75,6 @@ def my_handler(exc_type, exc_value, exc_traceback):
 def change_sys_excepthook():
     """Setup an exception handler to log uncaught exceptions."""
     sys.excepthook = my_handler
-
-
-def _process_date(date_):
-    try:
-        filing_detail_urls = create_url_list(date_)
-    except InvalidUrlException:
-        logging.info("There is an invalid daily filings URL for date %s", date_)
-        return
-    except BadWebPageResponseException:
-        logging.info("There is no data returned from the page for date %s", date_)
-        return
-    if not filing_detail_urls:
-        logging.info("There are no filing URLs on the filing detail page for date %s", date_)
-        return
-    for filing_detail_url in filing_detail_urls:
-        _process_filing_detail_url(filing_detail_url)
-
-
-def _process_filing_detail_url(filing_detail_url):
-    try:
-        parser = Parser(filing_detail_url)
-    except NoUrlException:
-        logging.error("There is no XML URL on the filing detail page: %s",
-                      filing_detail_url)
-        return
-    except NoAccessionNumberException:
-        logging.error("There is no accession no on the filing detail page: %s",
-                      filing_detail_url)
-        return
-    if check_parser_values_align(parser.company, parser.edgar_filing, parser.data_13f):
-        update_filing_count(parser)
-        send_data_to_db(
-            parser.company,
-            parser.edgar_filing,
-            parser.data_13f)
-    else:
-        logging.error("CIK and Accession_no do not match. Data not sent to database.")
 
 
 def main():
