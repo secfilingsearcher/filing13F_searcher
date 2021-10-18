@@ -48,22 +48,22 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                 filing_count=0)
         self.edgar_filing1 = EdgarFiling(accession_no="0001420506-21-000830", cik_no=COMPANY_CIK_1,
                                          filing_date=date.fromisoformat("1999-09-01"))
-        self.data_13f_table1 = [Data13f(equity_holdings_id="67896567",
-                                        accession_no='0001420506-21-000830',
-                                        cik_no=COMPANY_CIK_1,
-                                        name_of_issuer='Agilent Technologies',
-                                        title_of_class='COM',
-                                        cusip='00846U101',
-                                        value=22967078.5,
-                                        ssh_prnamt=180644,
-                                        ssh_prnamt_type='None',
-                                        put_call='None',
-                                        investment_discretion='SOLE',
-                                        other_manager='None',
-                                        voting_authority_sole=22967078,
-                                        voting_authority_shared=0,
-                                        voting_authority_none=0
-                                        )]
+        self.data_13f1_row1 = [Data13f(equity_holdings_id="67896567",
+                                       accession_no='0001420506-21-000830',
+                                       cik_no=COMPANY_CIK_1,
+                                       name_of_issuer='Agilent Technologies',
+                                       title_of_class='COM',
+                                       cusip='00846U101',
+                                       value=22967078.5,
+                                       ssh_prnamt=180644,
+                                       ssh_prnamt_type='None',
+                                       put_call='None',
+                                       investment_discretion='SOLE',
+                                       other_manager='None',
+                                       voting_authority_sole=22967078,
+                                       voting_authority_shared=0,
+                                       voting_authority_none=0
+                                       )]
 
         self.company2 = Company(cik_no=COMPANY_CIK_2,
                                 company_name='ACCURATE INVESTMENT SOLUTIONS, INC.', filing_count=2)
@@ -73,36 +73,36 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
         self.edgar_filing2_row2 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW2,
                                               cik_no=COMPANY_CIK_2, filing_type='13F-HR',
                                               filing_date=date.fromisoformat("2018-05-23"))
-        self.data_13f_table1_row1 = [Data13f(equity_holdings_id='1948ac4b72e6e2981eb9621a585c2e34',
-                                             accession_no=ACCESSION_NO_TABLE1_ROW1,
-                                             cik_no=COMPANY_CIK_2,
-                                             name_of_issuer='ACCO BRANDS CORP',
-                                             title_of_class='COM',
-                                             cusip='00081T108',
-                                             value=12,
-                                             ssh_prnamt=1095,
-                                             ssh_prnamt_type='SH',
-                                             put_call='None',
-                                             investment_discretion='SOLE',
-                                             other_manager='None',
-                                             voting_authority_sole=0,
-                                             voting_authority_shared=0,
-                                             voting_authority_none=1095)]
-        self.data_13f_table1_row2 = [Data13f(equity_holdings_id='8g586856b668j6',
-                                             accession_no=ACCESSION_NO_TABLE1_ROW2,
-                                             cik_no=COMPANY_CIK_2,
-                                             name_of_issuer='ALPS ETF TR',
-                                             title_of_class='SECTR DIV DOGS',
-                                             cusip='00162Q858',
-                                             value=2229,
-                                             ssh_prnamt=48594,
-                                             ssh_prnamt_type='SH',
-                                             put_call='None',
-                                             investment_discretion='SOLE',
-                                             other_manager='None',
-                                             voting_authority_sole=0,
-                                             voting_authority_shared=0,
-                                             voting_authority_none=48594)]
+        self.data_13f2_row1 = [Data13f(equity_holdings_id='1948ac4b72e6e2981eb9621a585c2e34',
+                                       accession_no=ACCESSION_NO_TABLE1_ROW1,
+                                       cik_no=COMPANY_CIK_2,
+                                       name_of_issuer='ACCO BRANDS CORP',
+                                       title_of_class='COM',
+                                       cusip='00081T108',
+                                       value=12,
+                                       ssh_prnamt=1095,
+                                       ssh_prnamt_type='SH',
+                                       put_call='None',
+                                       investment_discretion='SOLE',
+                                       other_manager='None',
+                                       voting_authority_sole=0,
+                                       voting_authority_shared=0,
+                                       voting_authority_none=1095)]
+        self.data_13f2_row2 = [Data13f(equity_holdings_id='8g586856b668j6',
+                                       accession_no=ACCESSION_NO_TABLE1_ROW2,
+                                       cik_no=COMPANY_CIK_2,
+                                       name_of_issuer='ALPS ETF TR',
+                                       title_of_class='SECTR DIV DOGS',
+                                       cusip='00162Q858',
+                                       value=2229,
+                                       ssh_prnamt=48594,
+                                       ssh_prnamt_type='SH',
+                                       put_call='None',
+                                       investment_discretion='SOLE',
+                                       other_manager='None',
+                                       voting_authority_sole=0,
+                                       voting_authority_shared=0,
+                                       voting_authority_none=48594)]
 
     def tearDown(self):
         """Tears down test database"""
@@ -235,7 +235,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
     def test_check_if_filing_exists_in_db(self):
         """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
-        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f_table1)
+        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f1_row1)
         actual = check_if_filing_exists_in_db('0001420506-21-000830')
 
         assert actual is True
@@ -243,8 +243,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
     def test_update_filing_count_inDatabase(self):
         """Tests if update_filing_count updates the filing_count in the
         Company table when filing is in the database"""
-        send_data_to_db(self.company2, self.edgar_filing2_row1, self.data_13f_table1_row1)
-        send_data_to_db(self.company2, self.edgar_filing2_row2, self.data_13f_table1_row2)
+        send_data_to_db(self.company2, self.edgar_filing2_row1, self.data_13f2_row1)
+        send_data_to_db(self.company2, self.edgar_filing2_row2, self.data_13f2_row2)
         update_filing_count(PARSER_2_IN_DATABASE)
         assert PARSER_2_IN_DATABASE.company.filing_count == 2
 
@@ -257,23 +257,23 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
 
     def test_send_data_to_db_savesCompanyInDb(self):
         """Tests if send_data_to_db saves the Company model in the database"""
-        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f_table1)
+        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f1_row1)
 
         assert Company.query.filter_by(cik_no=self.company1.cik_no).first() == self.company1
 
     def test_send_data_to_db_savesEdgarFilingInDb(self):
         """Tests if send_data_to_db saves the EdgarFiling model in the database"""
-        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f_table1)
+        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f1_row1)
 
         assert EdgarFiling.query.filter_by(
             accession_no=self.edgar_filing1.accession_no).first() == self.edgar_filing1
 
     def test_send_data_to_db_savesData13fInDb(self):
         """Tests if send_data_to_db saves the Data13f model in the database"""
-        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f_table1)
+        send_data_to_db(self.company1, self.edgar_filing1, self.data_13f1_row1)
 
-        assert Data13f.query.filter_by(cik_no=self.data_13f_table1[0].cik_no).first() == \
-               self.data_13f_table1[0]
+        assert Data13f.query.filter_by(cik_no=self.data_13f1_row1[0].cik_no).first() == \
+               self.data_13f1_row1[0]
 
     def test_process_filing_detail_url_raisesNoUrlExceptionReturnsNone(self):
         """Tests if process_filing_detail_url raises a NoUrlException and returns None"""
