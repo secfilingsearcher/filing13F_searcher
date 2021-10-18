@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 """This file crawls the daily index directory pages"""
 import logging
 import re
