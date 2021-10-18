@@ -275,10 +275,10 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             with patch('edgar_filing_searcher.parsers.main.update_filing_count') as mock_function_2:
                 mock_function_2.side_effect = MagicMock(parser=PARSER_1)
                 main()
-        company_query = Company.query.filter_by(cik_no=PARSER_1.edgar_filing.cik_no).first()
-        edgar_filing_query = EdgarFiling.query.filter_by(
-            accession_no=PARSER_1.edgar_filing.accession_no).first()
-        assert company_query == edgar_filing_query
+                company_query = Company.query.filter_by(cik_no=PARSER_1.edgar_filing.cik_no).first()
+                edgar_filing_query = EdgarFiling.query.filter_by(
+                    accession_no=PARSER_1.edgar_filing.accession_no).first()
+                assert company_query == edgar_filing_query
 
     def test_main_edgarfilingIsEqualToData13f(self):
         with patch('edgar_filing_searcher.parsers.main.check_parser_values_align') as mock_function:
@@ -286,8 +286,8 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
             with patch('edgar_filing_searcher.parsers.main.update_filing_count') as mock_function_2:
                 mock_function_2.side_effect = MagicMock(parser=PARSER_1)
                 main()
-        edgar_filing_query = EdgarFiling.query.filter_by(
-            accession_no=PARSER_1.edgar_filing.accession_no).first()
-        data13f_query = Data13f.query.filter_by(
-            accession_no=PARSER_1.edgar_filing.accession_no).first()
-        assert edgar_filing_query == data13f_query
+                edgar_filing_query = EdgarFiling.query.filter_by(
+                    accession_no=PARSER_1.edgar_filing.accession_no).first()
+                data13f_query = Data13f.query.filter_by(
+                    accession_no=PARSER_1.edgar_filing.accession_no).first()
+                assert edgar_filing_query == data13f_query
