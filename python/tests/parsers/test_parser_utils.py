@@ -15,7 +15,6 @@ from edgar_filing_searcher.parsers.parser_class import Parser
 from edgar_filing_searcher.parsers.parser_utils import check_parser_values_align, send_data_to_db, \
     update_filing_count, check_if_filing_exists_in_db, create_url_list, process_date, \
     process_filing_detail_url
-from edgar_filing_searcher.parsers.daily_index_crawler import get_subdirectories_for_specific_date
 
 DATE_1 = date(2021, 1, 8)
 COMPANY_CIK_1 = "0001171592"
@@ -282,7 +281,7 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                 MagicMock(text=filing_detail_text_13f_missing_urls()),
                 MagicMock(text=primary_doc_xml_text_1()),
                 MagicMock(text=infotable_xml_text_1())]
-            actual = process_filing_detail_url(DATE_1)
+            actual = process_filing_detail_url("")
             assert actual is None
 
     def test_process_filing_detail_url_returnNoAccessionNumberException(self):
@@ -291,16 +290,41 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                 MagicMock(text=filing_detail_text_13f_missing_accession_no()),
                 MagicMock(text=primary_doc_xml_text_1()),
                 MagicMock(text=infotable_xml_text_1())]
-            actual = process_filing_detail_url(DATE_1)
+            actual = process_filing_detail_url("")
             assert actual is None
 
     def test_process_filing_detail_url_update_filing_countIsCalled(self):
-        with patch('edgar_filing_searcher.parsers.main.Parser') as mock_function:
-            mock_function.side_effect = MagicMock(return_value=PARSER_1)
+        with patch('requests.Session.get') as mock_function_1:
+            mock_function_1.side_effect = [
+                MagicMock(text=filing_detail_13f_text_3()),
+                MagicMock(text=primary_doc_xml_text_3()),
+                MagicMock(text=infotable_xml_text_2())]
+            with patch('edgar_filing_searcher.parsers.parser_utils.update_filing_count') \
+                    as mock_function_2:
+                mock_function_2.side_effect = [
+                    MagicMock(text=filing_detail_13f_text_3()),
+                    MagicMock(text=primary_doc_xml_text_3()),
+                    MagicMock(text=infotable_xml_text_3())]
+                process_filing_detail_url("")
+                mock_function_2.assert_called()
 
-    # def test_process_filing_detail_url_send_data_to_dbIsCalled(self):
-    #     with patch('edgar_filing_searcher.parsers.main.Parser') as mock_function:
-    #         mock_function.side_effect = MagicMock(return_value=PARSER_1)
+    def test_process_filing_detail_url_send_data_to_dbIsCalled(self):
+        with patch('requests.Session.get') as mock_function_1:
+            mock_function_1.side_effect = [
+                MagicMock(text=filing_detail_13f_text_3()),
+                MagicMock(text=primary_doc_xml_text_3()),
+                MagicMock(text=infotable_xml_text_2())]
+            with patch('edgar_filing_searcher.parsers.parser_utils.update_filing_count') \
+                    as mock_function_2:
+                mock_function_2.side_effect = [
+                    MagicMock(text=filing_detail_13f_text_3()),
+                    MagicMock(text=primary_doc_xml_text_3()),
+                    MagicMock(text=infotable_xml_text_3())]
+                with patch('edgar_filing_searcher.parsers.parser_utils.send_data_to_db') \
+                        as mock_function_3:
+                    mock_function_3.side_effect = ""
+                    process_filing_detail_url("")
+                    mock_function_3.assert_called()
 
 
 def test_process_date_raiseInvalidUrlExceptionReturnNone():
