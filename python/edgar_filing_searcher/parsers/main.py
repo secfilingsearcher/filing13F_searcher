@@ -9,7 +9,7 @@ from datetime import date
 from edgar_filing_searcher.parsers.daily_index_crawler import generate_dates
 from edgar_filing_searcher.parsers.setup_db_connection import setup_db_connection
 
-from parsers.main_parser import _process_date
+from parsers.parser_utils import process_date
 
 
 def my_handler(exc_type, exc_value, exc_traceback):
@@ -46,7 +46,7 @@ def main():
 
     setup_db_connection()
     for date_ in generate_dates(start_date, end_date):
-        _process_date(date_)
+        process_date(date_)
 
 
 if __name__ == "__main__":

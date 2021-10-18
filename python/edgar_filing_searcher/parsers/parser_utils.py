@@ -60,7 +60,7 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
     logging.info('Sent company_row, edgar_filing_row, data_13f_table data to Database')
 
 
-def _process_date(date_):
+def process_date(date_):
     try:
         filing_detail_urls = create_url_list(date_)
     except InvalidUrlException:
@@ -73,10 +73,10 @@ def _process_date(date_):
         logging.info("There are no filing URLs on the filing detail page for date %s", date_)
         return
     for filing_detail_url in filing_detail_urls:
-        _process_filing_detail_url(filing_detail_url)
+        process_filing_detail_url(filing_detail_url)
 
 
-def _process_filing_detail_url(filing_detail_url):
+def process_filing_detail_url(filing_detail_url):
     try:
         parser = Parser(filing_detail_url)
     except NoUrlException:
