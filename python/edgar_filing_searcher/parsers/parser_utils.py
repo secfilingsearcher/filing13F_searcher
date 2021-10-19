@@ -59,7 +59,7 @@ def send_data_to_db(company_row: Company, edgar_filing_row: EdgarFiling, data_13
         logging.debug('Data_13f_row session merged %s', data_13f_row)
     db.session.commit()
     logging.info('Sent company row (CIK Number: %s), edgar filing row (Accession Number: %s), '
-                 'and data 13f table data (row count %i) to Database',
+                 'and data 13f table data (%i rows) to Database',
                  company_row.cik_no, edgar_filing_row.accession_no, len(data_13f_table))
 
 
