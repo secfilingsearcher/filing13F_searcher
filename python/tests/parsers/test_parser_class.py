@@ -12,30 +12,35 @@ from edgar_filing_searcher.errors import NoUrlException, NoAccessionNo
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
+@pytest.fixture
 def filing_detail_text_13f():
     """Returns edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
         return file.read()
 
 
+@pytest.fixture
 def filing_detail_text_13f_missing_urls():
     """Returns edgar_current_events.html data with missing urls"""
     with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
         return file.read()
 
 
+@pytest.fixture
 def filing_detail_text_13f_missing_accession_no():
     """Returns edgar_current_events.html data with a missing accession no"""
     with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
         return file.read()
 
 
+@pytest.fixture
 def primary_doc_xml_text():
     """Returns primary_doc.xml data"""
     with open("tests/fixtures/primary_doc.xml", "rt") as file:
         return file.read()
 
 
+@pytest.fixture
 def infotable_xml_text():
     """Returns infotable.xml data"""
     with open("tests/fixtures/infotable.xml", "rt") as file:
@@ -52,9 +57,9 @@ def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text)
         return Parser('')
 
 
-@pytest.fixture()
-def parser():
-    return new_parser(filing_detail_text_13f(), primary_doc_xml_text(), infotable_xml_text())
+@pytest.fixture
+def parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
+    return new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text)
 
 
 SUFFIX_XML_URLS_LIST = ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
@@ -103,20 +108,23 @@ def test_parser_setsData13f(parser):
     assert parser.data_13f == data_13f_table
 
 
-def test_parser_AccessionNoInvalid_raisesNoAccessionNo():
+def test_parser_AccessionNoInvalid_raisesNoAccessionNo(filing_detail_text_13f_missing_accession_no,
+                                                       primary_doc_xml_text, infotable_xml_text):
     """Tests if parser raises the NoAccessionNo exception when the accession no is not found"""
     with pytest.raises(NoAccessionNo):
-        new_parser(filing_detail_text_13f_missing_accession_no(), primary_doc_xml_text(), infotable_xml_text())
+        new_parser(filing_detail_text_13f_missing_accession_no, primary_doc_xml_text,
+                   infotable_xml_text)
 
 
-def test_parser_primaryDocXmlInvalid_raisesParseError():
+def test_parser_primaryDocXmlInvalid_raisesParseError(filing_detail_text_13f, infotable_xml_text):
     """Tests if parser raises the ParseError exception when the primary_doc.xml file is invalid"""
     invalid_xml = ""
     with pytest.raises(ParseError):
-        new_parser(filing_detail_text_13f(), invalid_xml, infotable_xml_text())
+        new_parser(filing_detail_text_13f, invalid_xml, infotable_xml_text)
 
 
-def test_parser_XmlUrlInvalid_raisesNoUrlException():
+def test_parser_XmlUrlInvalid_raisesNoUrlException(filing_detail_text_13f_missing_urls,
+                                                   primary_doc_xml_text, infotable_xml_text):
     """Tests if parser raises the NoUrlException exception when the xml url is invalid"""
     with pytest.raises(NoUrlException):
-        new_parser(filing_detail_text_13f_missing_urls(), primary_doc_xml_text(), infotable_xml_text())
+        new_parser(filing_detail_text_13f_missing_urls, primary_doc_xml_text, infotable_xml_text)
