@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import { ListGroup } from 'react-bootstrap'
 import { capitalizeWords } from './helperfunctions.js'
+import LoadingSpinner from './LoadingSpinner.js'
 import axios from 'axios'
 import './ResultsList.css'
 
@@ -10,7 +11,7 @@ function Results () {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const { q, startDate, endDate } = { q: params.get('q'), startDate: params.get('startDate'), endDate: params.get('endDate') }
-
+  const loading = Boolean(!results)
   const resultClassName = (count) => { return count > 0 ? 'bg-primary' : 'bg-danger' }
 
   useEffect(() => {
@@ -24,6 +25,7 @@ function Results () {
   }, [location.key])
   return (
         <div id="table-container">
+          {loading === true && <LoadingSpinner/>}
           <p className="lead">
             <i className="bi bi-search"></i>
             &nbsp;

@@ -3,11 +3,13 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table'
 import './resultstable.css'
+import LoadingSpinner from './LoadingSpinner'
 import { valueFormat } from './helperfunctions.js'
 
 function FilingData () {
   const [results, setResults] = useState([])
   const [company, setCompany] = useState([])
+  const loading = Boolean(!results && !company)
   const { companyId, filingId } = useParams()
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_SERVER}/edgar-filing/${filingId}/data/`)
@@ -23,6 +25,7 @@ function FilingData () {
   }, [])
   return (
         <div id='table-container'>
+            {loading === true && <LoadingSpinner/>}
             <h2>{company.company_name}: {filingId}</h2>
               <Table>
                 <thead className="filing-data">

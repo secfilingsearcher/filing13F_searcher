@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation, useParams, Link } from 'react-router-dom'
 import Table from 'react-bootstrap/Table'
 import axios from 'axios'
-import capitalizeWords from './helperfunctions.js'
+import { capitalizeWords } from './helperfunctions.js'
 
 function FilingsList () {
   const [results, setResults] = useState([])
