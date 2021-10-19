@@ -30,7 +30,7 @@ class Parser:
             .search('(?<=Accession <acronym title="Number">No.</acronym></strong> )(.*)',
                     text_13f)
         if not accession_no:
-            raise NoAccessionNumberException("No accession number")
+            raise NoAccessionNumberException()
         return accession_no.group(0)
 
     @staticmethod

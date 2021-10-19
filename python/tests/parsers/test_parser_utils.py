@@ -12,7 +12,7 @@ from edgar_filing_searcher.api import create_app
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.parser_class import Parser
-from edgar_filing_searcher.parsers.parser_utils import check_parser_values_align, send_data_to_db, \
+from edgar_filing_searcher.parsers.parser_utils import check_parser_values_match, send_data_to_db, \
     update_filing_count, check_if_filing_exists_in_db, create_url_list, process_date, \
     process_filing_detail_url
 
@@ -223,11 +223,18 @@ SUFFIX_XML_URLS_LIST = ['/Archives/edgar/data/1506796/000090901221000060/primary
                         '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
 
 
-def test_check_parser_values_align_isSame():
+def test_check_parser_values_match_isSame():
     """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
-    parser_value_1 = check_parser_values_align(PARSER_1.company, PARSER_1.edgar_filing,
-                                               PARSER_1.data_13f)
-    assert parser_value_1 == parser_value_1
+    matching_parser_value = check_parser_values_match(PARSER_1.company, PARSER_1.edgar_filing,
+                                                      PARSER_1.data_13f)
+    assert matching_parser_value is True
+
+
+def test_check_parser_values_match_isDifferent():
+    """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
+    differing_parser_value = check_parser_values_match(PARSER_1.company, PARSER_1.edgar_filing,
+                                                       PARSER_2_IN_DATABASE.data_13f)
+    assert differing_parser_value is False
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):

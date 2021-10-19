@@ -73,8 +73,8 @@ def test_get_response_statusError_StatusCode():
     )
 
     try:
-        actual = get_request_response(test_url)
-        assert actual is None
+        get_request_response(test_url)
+        assert False, "no error thrown"
     except requests.exceptions.RetryError:
         pass
 
@@ -93,9 +93,9 @@ def test_get_response_statusError_NumberOfRequests():
 
     try:
         get_request_response(test_url)
-        assert len(httpretty.latest_requests()) == 4
     except requests.exceptions.RetryError:
         pass
+    assert len(httpretty.latest_requests()) == 4
 
 
 def test_get_subdirectories_for_specific_date_hasSubdirectories():

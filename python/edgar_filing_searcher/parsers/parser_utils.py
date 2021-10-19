@@ -14,13 +14,13 @@ def create_url_list(date_):
     """This function creates a list of 13F URLs"""
     subdirectories = get_subdirectories_for_specific_date(date_)
     if not subdirectories:
-        logging.info('No cik_no_and_accession_nos for date: %s', date_)
+        logging.info('No CIK number and accession numbers for date %s', date_)
         return None
-    logging.info('Extracted cik_no_and_accession_nos for date: %s', date_)
+    logging.info('Extracted CIK number and accession numbers for date %s', date_)
     return ensure_13f_filing_detail_urls(subdirectories)
 
 
-def check_parser_values_align(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
+def check_parser_values_match(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
     """check_ if the parser values from Company, EdgarFiling,
     Data13f CIK number and accession number align"""
     return (company.cik_no == edgar_filing.cik_no) and \
@@ -50,7 +50,7 @@ def update_filing_count(parser: Parser):
     logging.info('Updated number of filings for CIK: %s to Company table', cik_no)
 
 
-def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
+def send_data_to_db(company_row: Company, edgar_filing_row: EdgarFiling, data_13f_table: [Data13f]):
     """This function sends data to the database"""
     db.session.merge(company_row)
     db.session.merge(edgar_filing_row)
@@ -58,7 +58,9 @@ def send_data_to_db(company_row, edgar_filing_row, data_13f_table):
         db.session.merge(data_13f_row)
         logging.debug('Data_13f_row session merged %s', data_13f_row)
     db.session.commit()
-    logging.info('Sent company_row, edgar_filing_row, data_13f_table data to Database')
+    logging.info('Sent company row (CIK Number: %s), edgar filing row (Accession Number: %s), '
+                 'and data 13f table data (row count %i) to Database',
+                 company_row.cik_no, edgar_filing_row.accession_no, len(data_13f_table))
 
 
 def process_date(date_):
@@ -66,10 +68,10 @@ def process_date(date_):
     try:
         filing_detail_urls = create_url_list(date_)
     except InvalidUrlException:
-        logging.info("There is an invalid daily filings URL for date %s", date_)
+        logging.warning("There is an invalid daily filings URL for date %s", date_)
         return
     except BadWebPageResponseException:
-        logging.info("There is no data returned from the page for date %s", date_)
+        logging.warning("There is no data returned from the page for date %s", date_)
         return
     if not filing_detail_urls:
         logging.info("There are no filing URLs on the filing detail page for date %s", date_)
@@ -90,7 +92,7 @@ def process_filing_detail_url(filing_detail_url):
         logging.error("There is no accession no on the filing detail page: %s",
                       filing_detail_url)
         return
-    if check_parser_values_align(parser.company, parser.edgar_filing, parser.data_13f):
+    if check_parser_values_match(parser.company, parser.edgar_filing, parser.data_13f):
         update_filing_count(parser)
         send_data_to_db(
             parser.company,
