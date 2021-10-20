@@ -15,21 +15,30 @@ BACKOFF_FACTOR_VALUE = 3
 TIMEOUT_VALUE = 3
 
 
-def get_text(url):
-    """Returns the html and text from the URL"""
-    retry_strategy = Retry(total=3,
-                           status_forcelist=(403, 429, 500, 502, 503, 504),
-                           allowed_methods=["GET"],
-                           backoff_factor=BACKOFF_FACTOR_VALUE)
+def get_request_response(url):
+    """Returns the response request from the URL"""
+    retry_strategy = Retry(
+        total=3,
+        status_forcelist=(403, 429, 500, 502, 503, 504),
+        allowed_methods=["GET"],
+        backoff_factor=3,
+    )
 
     session = requests.Session()
 
     session.mount("http://", HTTPAdapter(max_retries=retry_strategy))
     session.mount("https://", HTTPAdapter(max_retries=retry_strategy))
 
-    response = session.get(url,
-                           headers={"user-agent": "filing_13f_searcher"}, timeout=TIMEOUT_VALUE)
+    response = session.get(
+        url,
+        headers={"user-agent": "filing_13f_searcher"}, timeout=3
+    )
+    return response
 
+
+def get_text(url):
+    """Returns the html and text from the URL"""
+    response = get_request_response(url)
     time.sleep(1)
     full_text = response.text
     logging.debug('Successfully ran get_text on URL %s', url)
