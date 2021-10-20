@@ -67,11 +67,13 @@ def process_date(date_):
     """This function process dates"""
     try:
         filing_detail_urls = create_url_list(date_)
-    except InvalidUrlException:
-        logging.warning("There is an invalid daily filings URL for date %s", date_)
+    except InvalidUrlException as e:
+        logging.warning("Response Status Code %i'. "
+                        "There is an invalid daily filings URL for date %s", e.status_code, date_)
         return
-    except BadWebPageResponseException:
-        logging.warning("There is no data returned from the page for date %s", date_)
+    except BadWebPageResponseException as e:
+        logging.warning("Response Status Code %i'. "
+                        "There is no data returned from the page for date %s", e.status_code, date_)
         return
     if not filing_detail_urls:
         logging.info("There are no filing URLs on the filing detail page for date %s", date_)

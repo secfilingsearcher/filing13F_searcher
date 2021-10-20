@@ -71,7 +71,6 @@ def get_subdirectories_for_specific_date(full_date: date):
     except requests.exceptions.RetryError as e:
         error_reason = str(e.args[0].reason)
         status_code = int((re.search('[0-9]+', error_reason))[0])
-        logging.error('Response Status Code %i', status_code)
         if status_code in (403, 404):
             raise InvalidUrlException("Invalid URL error", status_code) from e
         raise BadWebPageResponseException("Web Page response error", status_code) from e
