@@ -12,35 +12,35 @@ from edgar_filing_searcher.errors import NoUrlException, NoAccessionNo
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def filing_detail_text_13f():
     """Returns edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
         return file.read()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def filing_detail_text_13f_missing_urls():
     """Returns edgar_current_events.html data with missing urls"""
     with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
         return file.read()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def filing_detail_text_13f_missing_accession_no():
     """Returns edgar_current_events.html data with a missing accession no"""
     with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
         return file.read()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def primary_doc_xml_text():
     """Returns primary_doc.xml data"""
     with open("tests/fixtures/primary_doc.xml", "rt") as file:
         return file.read()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def infotable_xml_text():
     """Returns infotable.xml data"""
     with open("tests/fixtures/infotable.xml", "rt") as file:
@@ -57,7 +57,7 @@ def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text)
         return Parser('')
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     return new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text)
 
