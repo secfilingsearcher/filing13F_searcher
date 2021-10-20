@@ -3,7 +3,6 @@
 from datetime import date
 from unittest.mock import patch, MagicMock, Mock
 
-import pytest
 from flask_testing import TestCase
 from requests.exceptions import RetryError
 from urllib3.exceptions import ResponseError
@@ -259,7 +258,7 @@ def test_get_subdirectories_for_specific_date_hasNoResponse():
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
-    """This class runs SQLALchemy Tests"""
+    """This class runs SQLAlchemy Tests"""
 
     def test_check_if_filing_exists_in_db(self):
         """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
