@@ -23,12 +23,95 @@ ACCESSION_NO_TABLE1_ROW1 = '0001214659-18-006391'
 ACCESSION_NO_TABLE1_ROW2 = '0007635479-56-650763'
 
 
-@pytest.fixture
 def filing_detail_with_no_13f_filing_urls():
     """Creates an fixture with edgar_current_events.html data"""
     with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
-        test = file.read()
-        return test
+        return file.read()
+
+
+def filing_detail_13f_text_1():
+    """Returns edgar_current_events.html data"""
+    with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
+        return file.read()
+
+
+def filing_detail_13f_text_2():
+    """Returns edgar_current_events.html data"""
+    with open("tests/fixtures/edgar_filing_documents_13f_2.html", "rt") as file:
+        return file.read()
+
+
+def filing_detail_13f_text_3():
+    """Returns edgar_current_events.html data"""
+    with open("tests/fixtures/edgar_filing_documents_13f_3.html", "rt") as file:
+        return file.read()
+
+
+def primary_doc_xml_text_1():
+    """Returns primary_doc.xml data"""
+    with open("tests/fixtures/primary_doc.xml", "rt") as file:
+        return file.read()
+
+
+def primary_doc_xml_text_2():
+    """Returns primary_doc.xml data"""
+    with open("tests/fixtures/primary_doc_2.xml", "rt") as file:
+        return file.read()
+
+
+def primary_doc_xml_text_3():
+    """Returns primary_doc.xml data"""
+    with open("tests/fixtures/primary_doc_3.xml", "rt") as file:
+        return file.read()
+
+
+def infotable_xml_text_1():
+    """Returns infotable.xml data"""
+    with open("tests/fixtures/infotable.xml", "rt") as file:
+        return file.read()
+
+
+def infotable_xml_text_2():
+    """Returns infotable.xml data"""
+    with open("tests/fixtures/infotable_2.xml", "rt") as file:
+        return file.read()
+
+
+def infotable_xml_text_3():
+    """Returns infotable.xml data"""
+    with open("tests/fixtures/infotable_3.xml", "rt") as file:
+        return file.read()
+
+
+def filing_detail_text_13f_missing_accession_no():
+    """Returns edgar_current_events.html data with a missing accession no"""
+    with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
+        return file.read()
+
+
+def filing_detail_text_13f_missing_urls():
+    """Returns edgar_current_events.html data with missing urls"""
+    with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
+        return file.read()
+
+
+def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
+    """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
+    as parameters. """
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = [MagicMock(text=filing_detail_text_13f),
+                                     MagicMock(text=primary_doc_xml_text),
+                                     MagicMock(text=infotable_xml_text)]
+        return Parser('')
+
+
+PARSER_1 = new_parser(filing_detail_13f_text_1(), primary_doc_xml_text_1(), infotable_xml_text_1())
+
+PARSER_2_IN_DATABASE = new_parser(filing_detail_13f_text_2(), primary_doc_xml_text_2(),
+                                  infotable_xml_text_2())
+
+PARSER_3_NOT_IN_DATABASE = new_parser(filing_detail_13f_text_3(), primary_doc_xml_text_3(),
+                                      infotable_xml_text_3())
 
 
 class FlaskSqlAlchemyTestConfiguration(TestCase):
@@ -135,94 +218,6 @@ def test_create_url_list():
         'https://www.sec.gov/Archives/edgar/data/1387399/0001567619-21-000762-index.html']
 
 
-def filing_detail_13f_text_1():
-    """Returns edgar_current_events.html data"""
-    with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
-        return file.read()
-
-
-def filing_detail_13f_text_2():
-    """Returns edgar_current_events.html data"""
-    with open("tests/fixtures/edgar_filing_documents_13f_2.html", "rt") as file:
-        return file.read()
-
-
-def filing_detail_13f_text_3():
-    """Returns edgar_current_events.html data"""
-    with open("tests/fixtures/edgar_filing_documents_13f_3.html", "rt") as file:
-        return file.read()
-
-
-def primary_doc_xml_text_1():
-    """Returns primary_doc.xml data"""
-    with open("tests/fixtures/primary_doc.xml", "rt") as file:
-        return file.read()
-
-
-def primary_doc_xml_text_2():
-    """Returns primary_doc.xml data"""
-    with open("tests/fixtures/primary_doc_2.xml", "rt") as file:
-        return file.read()
-
-
-def primary_doc_xml_text_3():
-    """Returns primary_doc.xml data"""
-    with open("tests/fixtures/primary_doc_3.xml", "rt") as file:
-        return file.read()
-
-
-def infotable_xml_text_1():
-    """Returns infotable.xml data"""
-    with open("tests/fixtures/infotable.xml", "rt") as file:
-        return file.read()
-
-
-def infotable_xml_text_2():
-    """Returns infotable.xml data"""
-    with open("tests/fixtures/infotable_2.xml", "rt") as file:
-        return file.read()
-
-
-def infotable_xml_text_3():
-    """Returns infotable.xml data"""
-    with open("tests/fixtures/infotable_3.xml", "rt") as file:
-        return file.read()
-
-
-def filing_detail_text_13f_missing_accession_no():
-    """Returns edgar_current_events.html data with a missing accession no"""
-    with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
-        return file.read()
-
-
-def filing_detail_text_13f_missing_urls():
-    """Returns edgar_current_events.html data with missing urls"""
-    with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
-        return file.read()
-
-
-def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
-    """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions
-    as parameters. """
-    with patch('requests.Session.get') as mock_function:
-        mock_function.side_effect = [MagicMock(text=filing_detail_text_13f),
-                                     MagicMock(text=primary_doc_xml_text),
-                                     MagicMock(text=infotable_xml_text)]
-        return Parser('')
-
-
-PARSER_1 = new_parser(filing_detail_13f_text_1(), primary_doc_xml_text_1(), infotable_xml_text_1())
-
-PARSER_2_IN_DATABASE = new_parser(filing_detail_13f_text_2(), primary_doc_xml_text_2(),
-                                  infotable_xml_text_2())
-
-PARSER_3_NOT_IN_DATABASE = new_parser(filing_detail_13f_text_3(), primary_doc_xml_text_3(),
-                                      infotable_xml_text_3())
-
-SUFFIX_XML_URLS_LIST = ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
-                        '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
-
-
 def test_check_parser_values_match_isSame():
     """Tests if check_parser_values checks if the parser cik_no and accession_no are the same"""
     matching_parser_value = check_parser_values_match(PARSER_1.company, PARSER_1.edgar_filing,
@@ -235,6 +230,32 @@ def test_check_parser_values_match_isDifferent():
     differing_parser_value = check_parser_values_match(PARSER_1.company, PARSER_1.edgar_filing,
                                                        PARSER_2_IN_DATABASE.data_13f)
     assert differing_parser_value is False
+
+
+def test_process_date_raiseInvalidUrlExceptionReturnNone():
+    """Tests when process_date raises InvalidUrlException and returns None"""
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = RetryError(
+            Mock(reason=ResponseError("too many 503 error responses")))
+        actual = process_date(DATE_1)
+        assert actual is None
+
+
+def test_process_date_raiseBadWebPageResponseExceptionReturnNone():
+    """Tests when process_date raises BadWebPageResponseException and returns None"""
+    with patch('requests.Session.get') as mock_function:
+        mock_function.side_effect = RetryError(
+            Mock(reason=ResponseError("too many 403 error responses")))
+        actual = process_date(DATE_1)
+        assert actual is None
+
+
+def test_get_subdirectories_for_specific_date_hasNoResponse():
+    """Tests when get_subdirectories_for_specific_date has no response"""
+    with patch('edgar_filing_searcher.parsers.daily_index_crawler.get_text') as mock_function:
+        mock_function.side_effect = MagicMock(return_value=filing_detail_with_no_13f_filing_urls())
+        actual = process_date(DATE_1)
+        assert actual is None
 
 
 class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
@@ -335,29 +356,3 @@ class FlaskSQLAlchemyTest(FlaskSqlAlchemyTestConfiguration):
                         as mock_function_3:
                     process_filing_detail_url("")
                     mock_function_3.assert_called()
-
-
-def test_process_date_raiseInvalidUrlExceptionReturnNone():
-    """Tests when process_date raises InvalidUrlException and returns None"""
-    with patch('requests.Session.get') as mock_function:
-        mock_function.side_effect = RetryError(
-            Mock(reason=ResponseError("too many 503 error responses")))
-        actual = process_date(DATE_1)
-        assert actual is None
-
-
-def test_process_date_raiseBadWebPageResponseExceptionReturnNone():
-    """Tests when process_date raises BadWebPageResponseException and returns None"""
-    with patch('requests.Session.get') as mock_function:
-        mock_function.side_effect = RetryError(
-            Mock(reason=ResponseError("too many 403 error responses")))
-        actual = process_date(DATE_1)
-        assert actual is None
-
-
-def test_get_subdirectories_for_specific_date_hasNoResponse(filing_detail_with_no_13f_filing_urls):
-    """Tests when get_subdirectories_for_specific_date has no response"""
-    with patch('edgar_filing_searcher.parsers.daily_index_crawler.get_text') as mock_function:
-        mock_function.side_effect = MagicMock(return_value=filing_detail_with_no_13f_filing_urls)
-        actual = process_date(DATE_1)
-        assert actual is None
