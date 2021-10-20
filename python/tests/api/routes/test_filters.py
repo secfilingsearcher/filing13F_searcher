@@ -11,13 +11,13 @@ from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
 from edgar_filing_searcher.parsers.main import send_data_to_db
 
-COMPANY_CIK_1 = "0001171592"
-ACCESSION_NO1_ROW1 = '0001420506-21-000830'
-ACCESSION_N1_ROW2 = '00016273506-21-000830'
-COMPANY_CIK_2 = "0006734892"
-ACCESSION_NO_2 = '000384934-14-0034330'
-COMPANY_CIK_3 = "0008322302"
-ACCESSION_NO_3 = '000238234-23-0238930'
+COMPANY_CIK_COOL = "0001171592"
+ACCESSION_NO_COOL = '0001420506-21-000830'
+OTHER_ACCESSION_NO_COOL = '00016273506-21-000830'
+COMPANY_CIK_NICE = "0006734892"
+ACCESSION_NO_NICE = '000384934-14-0034330'
+COMPANY_CIK_PURPLE = "0008322302"
+ACCESSION_NO_PURPLE = '000238234-23-0238930'
 FALSE_COMPANY_CIK = "1"
 
 
@@ -42,16 +42,16 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
     def setUp(self):
         """Sets up a test database"""
         db.create_all()
-        self.company1 = Company(cik_no=COMPANY_CIK_1, company_name="Cool Industries",
+        self.company1 = Company(cik_no=COMPANY_CIK_COOL, company_name="Cool Industries",
                                 filing_count=1)
-        self.edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO1_ROW1,
-                                              cik_no=COMPANY_CIK_1,
+        self.edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO_COOL,
+                                              cik_no=COMPANY_CIK_COOL,
                                               filing_date=datetime.fromisoformat("1999-09-01"))
-        self.edgar_filing1_row2 = EdgarFiling(accession_no=ACCESSION_N1_ROW2,
-                                              cik_no=COMPANY_CIK_1,
+        self.edgar_filing1_row2 = EdgarFiling(accession_no=OTHER_ACCESSION_NO_COOL,
+                                              cik_no=COMPANY_CIK_COOL,
                                               filing_date=datetime.fromisoformat("1998-05-02"))
         self.data_13f1_row1 = [Data13f(equity_holdings_id="67896567",
-                                       accession_no=ACCESSION_NO1_ROW1,
+                                       accession_no=ACCESSION_NO_COOL,
                                        cik_no='56464565767',
                                        name_of_issuer='Agilent Technologies',
                                        title_of_class='COM',
@@ -67,7 +67,7 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                        voting_authority_none=0
                                        )]
         self.data_13f1_row2 = [Data13f(equity_holdings_id="673326567",
-                                       accession_no=ACCESSION_N1_ROW2,
+                                       accession_no=OTHER_ACCESSION_NO_COOL,
                                        cik_no='3349665767',
                                        name_of_issuer='Flight Technologies',
                                        title_of_class='COM',
@@ -83,12 +83,12 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                        voting_authority_none=0
                                        )]
 
-        self.company2 = Company(cik_no=COMPANY_CIK_2, company_name="Nice Industries",
+        self.company2 = Company(cik_no=COMPANY_CIK_NICE, company_name="Nice Industries",
                                 filing_count=1)
-        self.edgar_filing2 = EdgarFiling(accession_no=ACCESSION_NO_2, cik_no=COMPANY_CIK_2,
+        self.edgar_filing2 = EdgarFiling(accession_no=ACCESSION_NO_NICE, cik_no=COMPANY_CIK_NICE,
                                          filing_date=datetime.fromisoformat("2000-04-05"))
         self.data_13f_table2 = [Data13f(equity_holdings_id="4364347",
-                                        accession_no=ACCESSION_NO_2,
+                                        accession_no=ACCESSION_NO_NICE,
                                         cik_no='56443437',
                                         name_of_issuer='Moon Labs',
                                         title_of_class='COM',
@@ -104,11 +104,13 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                         voting_authority_none=0
                                         )]
 
-        self.company3 = Company(cik_no=COMPANY_CIK_3, company_name="Purple Industries", filing_count=1)
-        self.edgar_filing3 = EdgarFiling(accession_no=ACCESSION_NO_3, cik_no=COMPANY_CIK_3,
+        self.company3 = Company(cik_no=COMPANY_CIK_PURPLE, company_name="Purple Industries",
+                                filing_count=1)
+        self.edgar_filing3 = EdgarFiling(accession_no=ACCESSION_NO_PURPLE,
+                                         cik_no=COMPANY_CIK_PURPLE,
                                          filing_date=datetime.fromisoformat("2001-07-05"))
         self.data_13f_table3 = [Data13f(equity_holdings_id="39023347",
-                                        accession_no=ACCESSION_NO_3,
+                                        accession_no=ACCESSION_NO_PURPLE,
                                         cik_no='823902437',
                                         name_of_issuer='Star Companies',
                                         title_of_class='COM',
