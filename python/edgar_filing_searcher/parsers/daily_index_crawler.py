@@ -11,6 +11,7 @@ from urllib3.util.retry import Retry
 
 from edgar_filing_searcher.errors import BadWebPageResponseException, InvalidUrlException
 
+TOTAL_RETRIES = 3
 BACKOFF_FACTOR_VALUE = 3
 TIMEOUT_VALUE = 3
 
@@ -18,10 +19,10 @@ TIMEOUT_VALUE = 3
 def get_request_response(url):
     """Returns the response request from the URL"""
     retry_strategy = Retry(
-        total=3,
+        total=TOTAL_RETRIES,
         status_forcelist=(403, 429, 500, 502, 503, 504),
         allowed_methods=["GET"],
-        backoff_factor=3,
+        backoff_factor=BACKOFF_FACTOR_VALUE,
     )
 
     session = requests.Session()
@@ -31,7 +32,7 @@ def get_request_response(url):
 
     response = session.get(
         url,
-        headers={"user-agent": "filing_13f_searcher"}, timeout=3
+        headers={"user-agent": "filing_13f_searcher"}, timeout=TIMEOUT_VALUE
     )
     return response
 
