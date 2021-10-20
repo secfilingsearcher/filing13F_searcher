@@ -22,12 +22,6 @@ ACCESSION_NO_TABLE1_ROW1 = '0001214659-18-006391'
 ACCESSION_NO_TABLE1_ROW2 = '0007635479-56-650763'
 
 
-def filing_detail_with_no_13f_filing_urls():
-    """Creates an fixture with edgar_current_events.html data"""
-    with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
-        return file.read()
-
-
 def filing_detail_13f_text_1():
     """Returns edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f.html", "rt") as file:
@@ -43,6 +37,24 @@ def filing_detail_13f_text_2():
 def filing_detail_13f_text_3():
     """Returns edgar_current_events.html data"""
     with open("tests/fixtures/edgar_filing_documents_13f_3.html", "rt") as file:
+        return file.read()
+
+
+def filing_detail_with_no_13f_filing_urls():
+    """Creates an fixture with edgar_current_events.html data"""
+    with open("tests/fixtures/company.20210108_RemovedAllFilings.idx", "rt") as file:
+        return file.read()
+
+
+def filing_detail_text_13f_missing_accession_no():
+    """Returns edgar_current_events.html data with a missing accession no"""
+    with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
+        return file.read()
+
+
+def filing_detail_text_13f_missing_urls():
+    """Returns edgar_current_events.html data with missing urls"""
+    with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
         return file.read()
 
 
@@ -79,18 +91,6 @@ def infotable_xml_text_2():
 def infotable_xml_text_3():
     """Returns infotable.xml data"""
     with open("tests/fixtures/infotable_3.xml", "rt") as file:
-        return file.read()
-
-
-def filing_detail_text_13f_missing_accession_no():
-    """Returns edgar_current_events.html data with a missing accession no"""
-    with open("tests/fixtures/edgar_filing_documents_13f_missing_accession_no.html", "rt") as file:
-        return file.read()
-
-
-def filing_detail_text_13f_missing_urls():
-    """Returns edgar_current_events.html data with missing urls"""
-    with open("tests/fixtures/edgar_filing_documents_13f_missing_urls.html", "rt") as file:
         return file.read()
 
 
