@@ -31,95 +31,85 @@ def client():
     with app.test_client() as client:
         with app.app_context():
             db.create_all()
-            company1 = Company(cik_no=COMPANY_CIK_1, company_name="Cool Industries", filing_count=1)
-            edgar_filing1_row1 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW1, cik_no=COMPANY_CIK_1,
-                                             filing_date=datetime.fromisoformat("1999-09-01"))
-            data_13f_table1_row1 = Data13f(equity_holdings_id="67896567",
-                                           accession_no=ACCESSION_NO_TABLE1_ROW1,
-                                           cik_no='56464565767',
-                                           name_of_issuer='Agilent Technologies',
-                                           title_of_class='COM',
-                                           cusip='00846U101',
-                                           value=22967078.5,
-                                           ssh_prnamt=180644,
-                                           ssh_prnamt_type='None',
-                                           put_call='None',
-                                           investment_discretion='SOLE',
-                                           other_manager='None',
-                                           voting_authority_sole=22967078,
-                                           voting_authority_shared=0,
-                                           voting_authority_none=0
-                                           )
-            edgar_filing1_row2 = EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW2, cik_no=COMPANY_CIK_1,
-                                             filing_date=datetime.fromisoformat("1998-05-02"))
-            data_13f_table1_row2 = Data13f(equity_holdings_id="673326567",
-                                           accession_no=ACCESSION_NO_TABLE1_ROW2,
-                                           cik_no='3349665767',
-                                           name_of_issuer='Flight Technologies',
-                                           title_of_class='COM',
-                                           cusip='0584GU101',
-                                           value=34967078.5,
-                                           ssh_prnamt=2670644,
-                                           ssh_prnamt_type='None',
-                                           put_call='None',
-                                           investment_discretion='SOLE',
-                                           other_manager='None',
-                                           voting_authority_sole=4257078,
-                                           voting_authority_shared=0,
-                                           voting_authority_none=0
-                                           )
+            db.session.add(Company(cik_no=COMPANY_CIK_1, company_name="Cool Industries", filing_count=1))
+            db.session.add(EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW1,
+                                       cik_no=COMPANY_CIK_1,
+                                       filing_date=datetime.fromisoformat("1999-09-01")))
+            db.session.add(EdgarFiling(accession_no=ACCESSION_NO_TABLE1_ROW2,
+                                       cik_no=COMPANY_CIK_1,
+                                       filing_date=datetime.fromisoformat("1998-05-02")))
+            db.session.add(Data13f(equity_holdings_id="67896567",
+                                   accession_no=ACCESSION_NO_TABLE1_ROW1,
+                                   cik_no='56464565767',
+                                   name_of_issuer='Agilent Technologies',
+                                   title_of_class='COM',
+                                   cusip='00846U101',
+                                   value=22967078.5,
+                                   ssh_prnamt=180644,
+                                   ssh_prnamt_type='None',
+                                   put_call='None',
+                                   investment_discretion='SOLE',
+                                   other_manager='None',
+                                   voting_authority_sole=22967078,
+                                   voting_authority_shared=0,
+                                   voting_authority_none=0
+                                   ))
+            db.session.add(Data13f(equity_holdings_id="673326567",
+                                   accession_no=ACCESSION_NO_TABLE1_ROW2,
+                                   cik_no='3349665767',
+                                   name_of_issuer='Flight Technologies',
+                                   title_of_class='COM',
+                                   cusip='0584GU101',
+                                   value=34967078.5,
+                                   ssh_prnamt=2670644,
+                                   ssh_prnamt_type='None',
+                                   put_call='None',
+                                   investment_discretion='SOLE',
+                                   other_manager='None',
+                                   voting_authority_sole=4257078,
+                                   voting_authority_shared=0,
+                                   voting_authority_none=0
+                                   ))
 
-            company2 = Company(cik_no=COMPANY_CIK_2, company_name="Nice Industries", filing_count=1)
-            edgar_filing2 = EdgarFiling(accession_no=ACCESSION_NO_2, cik_no=COMPANY_CIK_2,
-                                        filing_date=datetime.fromisoformat("2000-04-05"))
-            data_13f_table2 = Data13f(equity_holdings_id="4364347",
-                                      accession_no=ACCESSION_NO_2,
-                                      cik_no='56443437',
-                                      name_of_issuer='Moon Labs',
-                                      title_of_class='COM',
-                                      cusip='008346101',
-                                      value=6599834078.5,
-                                      ssh_prnamt=1804594,
-                                      ssh_prnamt_type='None',
-                                      put_call='None',
-                                      investment_discretion='SOLE',
-                                      other_manager='None',
-                                      voting_authority_sole=54522278,
-                                      voting_authority_shared=0,
-                                      voting_authority_none=0
-                                      )
+            db.session.add(Company(cik_no=COMPANY_CIK_2, company_name="Nice Industries", filing_count=1))
+            db.session.add(EdgarFiling(accession_no=ACCESSION_NO_2, cik_no=COMPANY_CIK_2,
+                                       filing_date=datetime.fromisoformat("2000-04-05")))
+            db.session.add(Data13f(equity_holdings_id="4364347",
+                                   accession_no=ACCESSION_NO_2,
+                                   cik_no='56443437',
+                                   name_of_issuer='Moon Labs',
+                                   title_of_class='COM',
+                                   cusip='008346101',
+                                   value=6599834078.5,
+                                   ssh_prnamt=1804594,
+                                   ssh_prnamt_type='None',
+                                   put_call='None',
+                                   investment_discretion='SOLE',
+                                   other_manager='None',
+                                   voting_authority_sole=54522278,
+                                   voting_authority_shared=0,
+                                   voting_authority_none=0
+                                   ))
 
-            company3 = Company(cik_no=COMPANY_CIK_3, company_name="Purple Industries", filing_count=1)
-            edgar_filing3 = EdgarFiling(accession_no=ACCESSION_NO_3, cik_no=COMPANY_CIK_3,
-                                        filing_date=datetime.fromisoformat("2001-07-05"))
-            data_13f_table3 = Data13f(equity_holdings_id="39023347",
-                                      accession_no=ACCESSION_NO_3,
-                                      cik_no='823902437',
-                                      name_of_issuer='Star Companies',
-                                      title_of_class='COM',
-                                      cusip='00923801',
-                                      value=9023734078.5,
-                                      ssh_prnamt=389594,
-                                      ssh_prnamt_type='None',
-                                      put_call='None',
-                                      investment_discretion='SOLE',
-                                      other_manager='None',
-                                      voting_authority_sole=9823278,
-                                      voting_authority_shared=0,
-                                      voting_authority_none=0
-                                      )
-
-            db.session.add(company1)
-            db.session.add(company2)
-            db.session.add(company3)
-            db.session.add(edgar_filing1_row1)
-            db.session.add(edgar_filing1_row2)
-            db.session.add(edgar_filing2)
-            db.session.add(edgar_filing3)
-            db.session.add(data_13f_table1_row1)
-            db.session.add(data_13f_table1_row2)
-            db.session.add(data_13f_table2)
-            db.session.add(data_13f_table3)
+            db.session.add(Company(cik_no=COMPANY_CIK_3, company_name="Purple Industries", filing_count=1))
+            db.session.add(EdgarFiling(accession_no=ACCESSION_NO_3, cik_no=COMPANY_CIK_3,
+                                       filing_date=datetime.fromisoformat("2001-07-05")))
+            db.session.add(Data13f(equity_holdings_id="39023347",
+                                   accession_no=ACCESSION_NO_3,
+                                   cik_no='823902437',
+                                   name_of_issuer='Star Companies',
+                                   title_of_class='COM',
+                                   cusip='00923801',
+                                   value=9023734078.5,
+                                   ssh_prnamt=389594,
+                                   ssh_prnamt_type='None',
+                                   put_call='None',
+                                   investment_discretion='SOLE',
+                                   other_manager='None',
+                                   voting_authority_sole=9823278,
+                                   voting_authority_shared=0,
+                                   voting_authority_none=0
+                                   ))
             db.session.commit()
         yield client
 
