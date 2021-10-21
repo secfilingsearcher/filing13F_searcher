@@ -15,6 +15,7 @@ const SearchForm = () => {
     if (!values.searchEndDate) {
       errors.searchEndDate = 'Required'
     }
+    return errors
   }
 
   const history = useHistory()
