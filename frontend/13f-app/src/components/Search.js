@@ -3,7 +3,21 @@ import { useFormik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { InputGroup, Form, Button } from 'react-bootstrap'
 
+
 const SearchForm = () => {
+  validate = (values) => {
+    const errors = {};
+    if (!values.searchName) {
+      errors.searchName = "Required";
+    }
+    if (!values.searchStartDate) {
+      errors.searchStartDate = "Required";
+    }
+    if (!values.searchEndDate) {
+      errors.searchEndDate = "Required";
+    }
+  }
+  
   const history = useHistory()
   const formik = useFormik({
     initialValues: {
@@ -11,6 +25,7 @@ const SearchForm = () => {
       searchStartDate: '',
       searchEndDate: ''
     },
+    validate,
     onSubmit: (values, { setSubmitting }) => {
       const searchLink = `/search?q=${values.searchName}&start_date=${values.searchStartDate}&end_date=${values.searchEndDate}`
       history.push(searchLink, { replace: true })
