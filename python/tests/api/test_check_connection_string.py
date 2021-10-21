@@ -10,7 +10,7 @@ INVALID_CONNECTION_STRING = ""
 
 
 def test_check_connection_string_valid_connection_string_NoError():
-    """Tests if parse_13f_filing_detail_urls raises the NoUrlException exception"""
+    """Tests if parse_13f_filing_detail_urls raises the UrlErrorException exception"""
     try:
         check_connection_string(VALID_CONNECTION_STRING)
     except:

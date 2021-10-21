@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edgarSubmission xmlns="http://www.sec.gov/edgar/thirteenffiler"
+                 xmlns:com="http://www.sec.gov/edgar/common">
+  <headerData>
+    <submissionType>13F-HR</submissionType>
+    <filerInfo>
+      <liveTestFlag>LIVE</liveTestFlag>
+      <flags>
+        <confirmingCopyFlag>false</confirmingCopyFlag>
+        <returnCopyFlag>false</returnCopyFlag>
+        <overrideInternetFlag>false</overrideInternetFlag>
+      </flags>
+      <filer>
+        <credentials>
+          <cik>0001850858</cik>
+          <ccc>XXXXXXXX</ccc>
+        </credentials>
+      </filer>
+      <periodOfReport>09-30-2021</periodOfReport>
+    </filerInfo>
+  </headerData>
+  <formData>
+    <coverPage>
+      <reportCalendarOrQuarter>09-30-2021</reportCalendarOrQuarter>
+      <filingManager>
+        <name>Bard Financial Services, Inc.</name>
+        <address>
+          <com:street1>388 EAST MAIN STREET</com:street1>
+          <com:city>BRANFORD</com:city>
+          <com:stateOrCountry>CT</com:stateOrCountry>
+          <com:zipCode>06405</com:zipCode>
+        </address>
+      </filingManager>
+      <reportType>13F HOLDINGS REPORT</reportType>
+      <form13FFileNumber>028-21128</form13FFileNumber>
+      <provideInfoForInstruction5>N</provideInfoForInstruction5>
+    </coverPage>
+    <signatureBlock>
+      <name>Jeff Welsh</name>
+      <title>Partner</title>
+      <phone>203-481-7676</phone>
+      <signature>Jeff Welsh</signature>
+      <city>Branford</city>
+      <stateOrCountry>CT</stateOrCountry>
+      <signatureDate>10-15-2021</signatureDate>
+    </signatureBlock>
+    <summaryPage>
+      <otherIncludedManagersCount>0</otherIncludedManagersCount>
+      <tableEntryTotal>278</tableEntryTotal>
+      <tableValueTotal>1129298</tableValueTotal>
+      <isConfidentialOmitted>false</isConfidentialOmitted>
+    </summaryPage>
+  </formData>
+</edgarSubmission>

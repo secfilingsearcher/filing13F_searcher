@@ -9,7 +9,7 @@ from edgar_filing_searcher.api.routes.filters import filter_company_by_date, \
     filter_edgar_filing_by_date
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.main import send_data_to_db
+from edgar_filing_searcher.parsers.parser_utils import send_data_to_db
 
 COMPANY_CIK_COOL = "0001171592"
 ACCESSION_NO_COOL = '0001420506-21-000830'
