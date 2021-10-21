@@ -127,10 +127,24 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                               voting_authority_none=0
                                               )]
 
-        send_data_to_db(self.company_cool, self.edgar_filing_cool, self.data_13f_cool)
-        send_data_to_db(self.company_cool, self.other_edgar_filing_cool, self.other_data_13f_cool)
-        send_data_to_db(self.company_nice, self.edgar_filing_nice, self.data_13f_table_nice)
-        send_data_to_db(self.company_purple, self.edgar_filing_purple, self.data_13f_table_purple)
+        db.session.merge(self.company_cool)
+        db.session.merge(self.edgar_filing_cool)
+        db.session.merge(self.other_edgar_filing_cool)
+        for data_13f_row in self.data_13f_cool:
+            db.session.merge(data_13f_row)
+        for data_13f_row in self.other_data_13f_cool:
+            db.session.merge(data_13f_row)
+
+        db.session.merge(self.company_nice)
+        db.session.merge(self.edgar_filing_nice)
+        for data_13f_row in self.data_13f_table_nice:
+            db.session.merge(data_13f_row)
+
+        db.session.merge(self.company_purple)
+        db.session.merge(self.edgar_filing_purple)
+        for data_13f_row in self.data_13f_table_purple:
+            db.session.merge(data_13f_row)
+        db.session.commit()
 
     def tearDown(self):
         """Tears down test database"""
