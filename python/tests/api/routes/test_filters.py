@@ -9,7 +9,6 @@ from edgar_filing_searcher.api.routes.filters import filter_company_by_date, \
     filter_edgar_filing_by_date
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.parsers.parser_utils import send_data_to_db
 
 COMPANY_CIK_COOL = "0001171592"
 ACCESSION_NO_COOL = '0001420506-21-000830'
@@ -127,23 +126,23 @@ class FlaskSqlAlchemyTestConfiguration(TestCase):
                                               voting_authority_none=0
                                               )]
 
-        db.session.merge(self.company_cool)
-        db.session.merge(self.edgar_filing_cool)
-        db.session.merge(self.other_edgar_filing_cool)
+        db.session.add(self.company_cool)
+        db.session.add(self.edgar_filing_cool)
+        db.session.add(self.other_edgar_filing_cool)
         for data_13f_row in self.data_13f_cool:
-            db.session.merge(data_13f_row)
+            db.session.add(data_13f_row)
         for data_13f_row in self.other_data_13f_cool:
-            db.session.merge(data_13f_row)
+            db.session.add(data_13f_row)
 
-        db.session.merge(self.company_nice)
-        db.session.merge(self.edgar_filing_nice)
+        db.session.add(self.company_nice)
+        db.session.add(self.edgar_filing_nice)
         for data_13f_row in self.data_13f_table_nice:
-            db.session.merge(data_13f_row)
+            db.session.add(data_13f_row)
 
-        db.session.merge(self.company_purple)
-        db.session.merge(self.edgar_filing_purple)
+        db.session.add(self.company_purple)
+        db.session.add(self.edgar_filing_purple)
         for data_13f_row in self.data_13f_table_purple:
-            db.session.merge(data_13f_row)
+            db.session.add(data_13f_row)
         db.session.commit()
 
     def tearDown(self):
