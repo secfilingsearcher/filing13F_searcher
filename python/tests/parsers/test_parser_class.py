@@ -1,5 +1,5 @@
 # pylint: disable=redefined-outer-name
-"""This file contains tests for crawler_current_events"""
+"""This file contains tests for daily_index_crawler"""
 from _elementtree import ParseError
 from datetime import datetime
 from decimal import Decimal
@@ -8,7 +8,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from edgar_filing_searcher.models import EdgarFiling, Company, Data13f
-from edgar_filing_searcher.errors import NoUrlException, NoAccessionNo
+from edgar_filing_searcher.errors import NoUrlException, NoAccessionNumberException
 from edgar_filing_searcher.parsers.parser_class import Parser
 
 
@@ -50,7 +50,7 @@ def infotable_xml_text():
 def new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     """Returns a new parser class with the filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text functions 
     as parameters. """
-    with patch('requests.get') as mock_function:
+    with patch('requests.Session.get') as mock_function:
         mock_function.side_effect = [MagicMock(text=filing_detail_text_13f),
                                      MagicMock(text=primary_doc_xml_text),
                                      MagicMock(text=infotable_xml_text)]
@@ -111,7 +111,7 @@ def test_parser_setsData13f(parser):
 def test_parser_AccessionNoInvalid_raisesNoAccessionNo(filing_detail_text_13f_missing_accession_no,
                                                        primary_doc_xml_text, infotable_xml_text):
     """Tests if parser raises the NoAccessionNo exception when the accession no is not found"""
-    with pytest.raises(NoAccessionNo):
+    with pytest.raises(NoAccessionNumberException):
         new_parser(filing_detail_text_13f_missing_accession_no, primary_doc_xml_text,
                    infotable_xml_text)
 
