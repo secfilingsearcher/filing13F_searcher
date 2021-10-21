@@ -62,10 +62,6 @@ def parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text):
     return new_parser(filing_detail_text_13f, primary_doc_xml_text, infotable_xml_text)
 
 
-SUFFIX_XML_URLS_LIST = ['/Archives/edgar/data/1506796/000090901221000060/primary_doc.xml',
-                        '/Archives/edgar/data/1506796/000090901221000060/aci_13f.xml']
-
-
 def test_parser_setsCompany(parser):
     """Tests if parser sets the Company field"""
 
