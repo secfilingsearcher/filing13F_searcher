@@ -4,7 +4,7 @@ import axios from 'axios'
 import Table from 'react-bootstrap/Table'
 import './resultstable.css'
 import LoadingSpinner from './LoadingSpinner'
-import { valueFormat } from './helperfunctions.js'
+import { valueFormat } from './HelperFunctions.js'
 
 function FilingData () {
   const [results, setResults] = useState([])
