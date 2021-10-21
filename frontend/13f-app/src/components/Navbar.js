@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
-import SearchBar from './SearchBar'
+import Navbar from 'react-bootstrap/Navbar'
+import SearchForm from './SearchForm'
+import logo from '../images/favicon-32x32.png'
 import './Navbar.css'
 
-function Navbar () {
+function Navigation () {
   const [click, setClick] = useState(false)
   const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false)
@@ -11,12 +13,11 @@ function Navbar () {
 
   return (
         <>
-         <nav className="navbar">
-             <div className="navbar-container">
+         <Navbar bg="dark" className="navbar">
                 <Link to="/" className="navbar-logo">
-                    13F   <i className="fas fa-file-archive"></i>
+                    <img src={logo}></img>
                 </Link>
-                {path !== '/' && <div className='searchbar'><SearchBar/></div>}
+                {path !== '/' && <div className='searchbar'><SearchForm/></div>}
                 <div className="menu-icon" onClick={handleClick}>
                     <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                 </div>
@@ -37,12 +38,10 @@ function Navbar () {
                         </Link>
                     </li>
                 </ul>
-
-             </div>
-         </nav>
+         </Navbar>
         </>
 
   )
 }
 
-export default Navbar
+export default Navigation
