@@ -3,21 +3,20 @@ import { useFormik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { InputGroup, Form, Button } from 'react-bootstrap'
 
-
 const SearchForm = () => {
-  validate = (values) => {
-    const errors = {};
+  function validate (values) {
+    const errors = {}
     if (!values.searchName) {
-      errors.searchName = "Required";
+      errors.searchName = 'Required'
     }
     if (!values.searchStartDate) {
-      errors.searchStartDate = "Required";
+      errors.searchStartDate = 'Required'
     }
     if (!values.searchEndDate) {
-      errors.searchEndDate = "Required";
+      errors.searchEndDate = 'Required'
     }
   }
-  
+
   const history = useHistory()
   const formik = useFormik({
     initialValues: {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useLocation, Link } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
-import SearchForm from './Search'
+import SearchForm from './SearchForm'
 import logo from '../images/favicon-32x32.png'
 import './Navbar.css'
 
