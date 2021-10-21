@@ -8,10 +8,10 @@ import './ResultsList.css'
 
 function Results () {
   const [results, setResults] = useState([])
+  const [done, setDone] = useState(undefined)
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const { q, startDate, endDate } = { q: params.get('q'), startDate: params.get('startDate'), endDate: params.get('endDate') }
-  const loading = Boolean(!results)
   const resultClassName = (count) => { return count > 0 ? 'bg-primary' : 'bg-danger' }
 
   useEffect(() => {
@@ -21,11 +21,12 @@ function Results () {
           return companyA.filing_count < companyB.filing_count
         })
         setResults(companies)
+        setDone(true)
       })
   }, [location.key])
   return (
         <div id="table-container">
-          {loading === true && <LoadingSpinner/>}
+          {!done && <LoadingSpinner/>}
           <p className="lead">
             <i className="bi bi-search"></i>
             &nbsp;

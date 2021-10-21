@@ -8,14 +8,15 @@ import { valueFormat } from './HelperFunctions.js'
 
 function FilingData () {
   const [results, setResults] = useState([])
+  const [done, setDone] = useState(undefined)
   const [company, setCompany] = useState([])
-  const loading = Boolean(!results && !company)
   const { companyId, filingId } = useParams()
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_SERVER}/edgar-filing/${filingId}/data/`)
       .then(res => {
         const data = res.data
         setResults(data)
+        setDone(true)
       })
     axios.get(`${process.env.REACT_APP_API_SERVER}/company/${companyId}`)
       .then(res => {
@@ -25,7 +26,7 @@ function FilingData () {
   }, [])
   return (
         <div id='table-container'>
-            {loading === true && <LoadingSpinner/>}
+            {!done && <LoadingSpinner/>}
             <h2>{company.company_name}: {filingId}</h2>
               <Table>
                 <thead className="filing-data">
