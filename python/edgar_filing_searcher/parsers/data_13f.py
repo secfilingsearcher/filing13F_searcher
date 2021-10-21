@@ -3,7 +3,7 @@ from decimal import Decimal
 from xml.etree import ElementTree
 
 from edgar_filing_searcher.models import Data13f
-from edgar_filing_searcher.parsers.crawler_current_events import get_text
+from edgar_filing_searcher.parsers.daily_index_crawler import get_text
 
 
 def data_13f_table(infotable_xml_url, accession_no_value, cik_value):
