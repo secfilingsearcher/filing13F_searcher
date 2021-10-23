@@ -1,39 +1,52 @@
-#company-table {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 80%;
-    margin-top: 25px;
-    margin-left: 25px;
-}
-  
-#company-table td, #company-table th {
-    border: 1px solid #ddd;
-    padding: 8px;
+#table-container {
+    margin: 25px;
+    padding-bottom: 50px;
 }
 
-.filing-count {
-    text-align: center;
-    font-size: large;
-    width: 150px;    
+#table-container h2 {
+    padding: 50px 0 50px 0;
+    font-family: 'Optimist', Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
 }
 
-.company-page-link-style {
+
+#table-container tr {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+#table-container thead > tr > th {
+    font-family: 'Interstate_Light', sans-serif, Arial;
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: #222;
+}
+
+#table-container thead > tr > th.filing-data {
+    font-family: 'Interstate_Light', sans-serif, Arial;
+    font-size: 1rem;
+    font-weight: 200;
+    color: #222;
+}
+
+#table-container tbody > tr > td, #table-container tbody > tr > td > a {
     text-decoration: none;
-    color: royalblue;
+    color: rgb(140, 140, 144);
+    font-family: 'Interstate_Light', sans-serif, Arial;
 }
-  
-#company-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+
+#table-container tbody > tr > td > a:hover {
+    color: orange;
 }
-  
-#company-table tr:hover {
-    background-color: #ddd;
+
+#table-container tbody > tr > td.company-name #table-container tbody > tr > td.filing-count  {
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
-  
-#company-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #3d4042;
-    color: white;
+
+#table-container tbody > tr > td.accession-no #table-container tbody > tr > td.filing-date  {
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
+
+
+

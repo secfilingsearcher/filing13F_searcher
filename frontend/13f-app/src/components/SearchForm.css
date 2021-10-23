@@ -1,1 +1,36 @@
-.form {float: 'left', padding: '20px', margin: '20px'}
+#home-search form {
+    float: left; 
+    padding: 20px; 
+    margin: 20px;
+}
+
+#home-search input {
+    height: 57px;
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+}
+
+#home-search input:focus {
+    border-color: black;
+    color:#fff;    
+}
+
+#home-search input::placeholder {
+    color: #fff;
+}
+
+#bar-search input {
+    background-color: transparent;
+    border-color: #fff;
+    width: 175px;
+    height: 30px;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+}
+
+
+#bar-search input::placeholder {
+    color: #fff;
+}

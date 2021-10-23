@@ -1,32 +1,65 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import '../App.css'
-import './Button.css'
-import './MainSection.css'
+import React from 'react'
+import { useFormik } from 'formik'
+import { useHistory } from 'react-router-dom'
+import { InputGroup, Form, Button } from 'react-bootstrap'
 
-const divStyle = { float: 'left', padding: '20px', margin: '20px' }
-const date = new Date()
-const today = date.toISOString().substr(0, 10)
+const SearchForm = () => {
+  function validate (values) {
+    const errors = {}
+    if (!values.searchName) {
+      errors.searchName = 'Required'
+    }
+    if (!values.searchStartDate) {
+      errors.searchStartDate = 'Required'
+    }
+    if (!values.searchEndDate) {
+      errors.searchEndDate = 'Required'
+    }
+    return errors
+  }
 
-function SearchForm () {
-  const [searchName, setSearchName] = useState('')
-  const [searchStartDate, setSearchStartDate] = useState(today)
-  const [searchEndDate, setSearchEndDate] = useState(today)
-  const handleNameChange = event => { setSearchName(event.target.value) }
-  const handleStartDateChange = event => { setSearchStartDate(event.target.value) }
-  const handleEndDateChange = event => { setSearchEndDate(event.target.value) }
-  const searchLink = `/search?q=${searchName}&startDate=${searchStartDate}&endDate=${searchEndDate}`
+  const history = useHistory()
+  const formik = useFormik({
+    initialValues: {
+      searchName: '',
+      searchStartDate: '',
+      searchEndDate: ''
+    },
+    validate,
+    onSubmit: (values, { setSubmitting }) => {
+      const searchLink = `/search?q=${values.searchName}&start_date=${values.searchStartDate}&end_date=${values.searchEndDate}`
+      history.push(searchLink, { replace: true })
+      setSubmitting(true)
+    }
+  })
   return (
-        <>
-              <form>
-                <div style={divStyle}>
-                  <input type='text' placeholder='Company Name' className='search' value={searchName} onChange={handleNameChange}></input>
-                  <input type='date' className='date' value={searchStartDate} onChange={handleStartDateChange}></input>
-                  <input type='date' className='date' value={searchEndDate} onChange={handleEndDateChange}></input>
-                  <Link to={searchLink}><button className="button" type="submit">SEARCH</button></Link>
-                </div>
-              </form>
-        </>
+       <Form onSubmit={formik.handleSubmit}>
+         <InputGroup>
+          <Form.Control
+            id="searchName"
+            name="searchName"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.searchName}
+            placeholder="Company Name"
+          />
+          <Form.Control
+            id="searchStartDate"
+            name="searchStartDate"
+            type="date"
+            onChange={formik.handleChange}
+            value={formik.values.searchStartDate}
+          />
+          <Form.Control
+            id="searchEndDate"
+            name="searchEndDate"
+            type="date"
+            onChange={formik.handleChange}
+            value={formik.values.searchEndDate}
+          />
+       <Button type="submit"><i className="bi bi-search"></i></Button>
+       </InputGroup>
+    </Form>
   )
 }
 

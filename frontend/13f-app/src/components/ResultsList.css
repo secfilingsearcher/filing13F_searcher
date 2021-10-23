@@ -1,0 +1,13 @@
+.list-group .list-group-item.result-item-link {
+	text-decoration: none;
+	font-size: 1.3em;
+	color:#4B576A;
+}
+
+.result-item-count {
+	font-size: 0.95em;
+}
+
+.list-group .result-item {
+	cursor: pointer;
+}

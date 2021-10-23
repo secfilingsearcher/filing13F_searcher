@@ -1,30 +1,29 @@
---- 
-- 
-  become: true
+---
+- become: true
   hosts: webserver
   name: "Deploy website"
-  roles: 
-    - role: geerlingguy.nginx
-      vars:
-        repo_path: /opt/filing13F_searcher
-        nginx_vhosts:
-          - listen: '80 default_server'
-            server_name: frontend
-            root: '{{ repo_path }}/frontend/13f-app/build'
-            state: 'present'
-            extra_parameters: |
-              location /api/ {
-                  proxy_pass http://127.0.0.1:5000//;
-              }
-          - server_name: default
-            state: 'absent'
-          - server_name: api
-            extra_parameters: |
-              location /api/ {
-                  proxy_pass http://127.0.0.1:5000//;
-              }
-            listen: '80 default_server'
-            state: 'absent'
+  roles:
+    #    - role: geerlingguy.nginx
+    #      vars:
+    #        repo_path: /opt/filing13F_searcher
+    #        nginx_vhosts:
+    #          - listen: '80 default_server'
+    #            server_name: frontend
+    #            root: '{{ repo_path }}/frontend/13f-app/build'
+    #            state: 'present'
+    #            extra_parameters: |
+    #              location /api/ {
+    #                  proxy_pass http://127.0.0.1:5000//;
+    #              }
+    #          - server_name: default
+    #            state: 'absent'
+    #          - server_name: api
+    #            extra_parameters: |
+    #              location /api/ {
+    #                  proxy_pass http://127.0.0.1:5000//;
+    #              }
+    #            listen: '80 default_server'
+    #            state: 'absent'
     - role: frontend
     - role: api
-    - role: parser  
+    - role: parser

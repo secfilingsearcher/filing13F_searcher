@@ -3,7 +3,7 @@ from decimal import Decimal
 from xml.etree import ElementTree
 
 from edgar_filing_searcher.models import Data13f
-from edgar_filing_searcher.parsers.crawler_current_events import get_text
+from edgar_filing_searcher.parsers.daily_index_crawler import get_text
 
 
 def data_13f_table(infotable_xml_url, accession_no_value, cik_value):
@@ -20,7 +20,7 @@ def data_13f_table(infotable_xml_url, accession_no_value, cik_value):
             cusip=parse_xml_text(info, '{*}cusip'),
             value=Decimal(parse_xml_text(info, '{*}value')),
             ssh_prnamt=int(parse_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamt')),
-            ssh_prnamt_type=parse_xml_text(info, '{*}sshPrnamtType'),
+            ssh_prnamt_type=parse_xml_text(info, '{*}shrsOrPrnAmt/{*}sshPrnamtType'),
             put_call=parse_xml_text(info, '{*}putCall'),
             investment_discretion=parse_xml_text(info, '{*}investmentDiscretion'),
             other_manager=parse_xml_text(info, '{*}otherManager'),
