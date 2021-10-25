@@ -4,11 +4,10 @@ import { useHistory } from 'react-router-dom'
 import { InputGroup, Form, Button } from 'react-bootstrap'
 import * as Yup from 'yup'
 
-
 const validationSchema = Yup.object().shape({
-    searchname: Yup.string().required('Required'),
-    searchStartDate: Yup.date().required('Required'),
-    searchEndDate: Yup.date().required('Required')
+  searchname: Yup.string(),
+  searchStartDate: Yup.date(),
+  searchEndDate: Yup.date()
 })
 
 const SearchForm = () => {
@@ -24,6 +23,7 @@ const SearchForm = () => {
       const searchLink = `/search?q=${values.searchName}&start_date=${values.searchStartDate}&end_date=${values.searchEndDate}`
       history.push(searchLink, { replace: true })
       setSubmitting(true)
+      console.log(formik.errors)
     }
   })
   return (
