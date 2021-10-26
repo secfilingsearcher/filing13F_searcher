@@ -167,7 +167,15 @@ def test_search_company_qArgument_endDate_json(client):
     """Test for the json  for search_company function for the q and end date argument"""
     response = client.get('/company/search?q=&end_date=1999-12-31')
 
-    assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+    assert response.get_json() == [
+        {'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+
+
+def test_search_company_qArgument_return400(client):
+    """Test for the json  for search_company function for the q and end date argument"""
+    response = client.get('/company/search?q=&start_date=null&end_date=null')
+
+    assert response.status_code == 400
 
 
 def test_search_company_companyNameArgument_responseCode(client):
@@ -223,7 +231,15 @@ def test_search_company_companyNameArgument_endDate_json(client):
     """Test for the json for search_company function for the company name and end date argument"""
     response = client.get('/company/search?company_name=&end_date=1999-12-31')
 
-    assert response.get_json() == [{'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+    assert response.get_json() == [
+        {'cik_no': '0001171592', 'company_name': 'Cool Industries', 'filing_count': 1}]
+
+
+def test_search_company_companyNameArgument_return400(client):
+    """Test for the json  for search_company function for the q and end date argument"""
+    response = client.get('/company/search?company_name=&start_date=null&end_date=null')
+
+    assert response.status_code == 400
 
 
 def test_search_company_nameOfIssuerArgument_responseCode(client):
@@ -281,7 +297,15 @@ def test_search_company_nameOfIssuerArgument_endDate_json(client):
     """Test for the json for search_company function for the name of issuer and end date argument"""
     response = client.get('/company/search?name_of_issuer=Star&end_date=2001-12-31')
 
-    assert response.get_json() == [{'cik_no': '0008322302', 'company_name': 'Purple Industries', 'filing_count': 1}]
+    assert response.get_json() == [
+        {'cik_no': '0008322302', 'company_name': 'Purple Industries', 'filing_count': 1}]
+
+
+def test_search_company_nameOfIssuerArgument_return400(client):
+    """Test for the json  for search_company function for the q and end date argument"""
+    response = client.get('/company/search?name_of_issuer=&start_date=null&end_date=null')
+
+    assert response.status_code == 400
 
 
 def test_search_company_noArguments_responseCode(client):
