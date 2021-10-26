@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 
 setup(
     name="edgar_filing_searcher",
-    version="1.1.0",
+    version="1.2.0",
     description="Web backend for filing website",
     url="https://github.com/secfilingsearcher/filing13F_searcher",
     packages=find_packages(),
