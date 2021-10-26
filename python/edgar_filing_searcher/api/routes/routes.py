@@ -39,10 +39,13 @@ def company_by_company_name(company_name):
     end_date = request.args.get('end_date')
     start_date_datetime = None
     end_date_datetime = None
-    if start_date:
-        start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
-    if end_date:
-        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+    try:
+        if start_date:
+            start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
+        if end_date:
+            end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+    except ValueError:
+        abort(400, description="Bad Request")
 
     companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
 
@@ -61,10 +64,13 @@ def company_by_invested_company(name_of_issuer):
     end_date = request.args.get('end_date')
     start_date_datetime = None
     end_date_datetime = None
-    if start_date:
-        start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
-    if end_date:
-        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+    try:
+        if start_date:
+            start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
+        if end_date:
+            end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+    except ValueError:
+        abort(400, description="Bad Request")
 
     companies = Company.query \
         .join(EdgarFiling) \
@@ -84,10 +90,13 @@ def get_edgarfilings_with_date(company_id):
     end_date = request.args.get('end_date')
     start_date_datetime = None
     end_date_datetime = None
-    if start_date:
-        start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
-    if end_date:
-        end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+    try:
+        if start_date:
+            start_date_datetime = datetime.strptime(start_date, '%Y-%m-%d').date()
+        if end_date:
+            end_date_datetime = datetime.strptime(end_date, '%Y-%m-%d').date()
+    except ValueError:
+        abort(400, description="Bad Request")
 
     filings = EdgarFiling.query.filter(EdgarFiling.cik_no == company_id)
 
