@@ -99,8 +99,18 @@ def test_get_response_statusError_NumberOfRequests():
     assert len(httpretty.latest_requests()) == 4
 
 
-@pytest.mark.parametrize("test_input,expected", [(date(2020, 2, 1), 1), (date(2020, 5, 1), 2),
-                                                 (date(2020, 8, 1), 3), (date(2020, 11, 1), 4)])
+@pytest.mark.parametrize("test_input,expected", [(date(2020, 1, 1), 1),
+                                                 (date(2020, 2, 1), 1),
+                                                 (date(2020, 3, 1), 1),
+                                                 (date(2020, 4, 1), 2),
+                                                 (date(2020, 5, 1), 2),
+                                                 (date(2020, 6, 1), 2),
+                                                 (date(2020, 7, 1), 3),
+                                                 (date(2020, 8, 1), 3),
+                                                 (date(2020, 9, 1), 3),
+                                                 (date(2020, 10, 1), 4),
+                                                 (date(2020, 11, 1), 4),
+                                                 (date(2020, 12, 1), 4)])
 def test_get_quarter(test_input, expected):
     """Tests the get_quarter function for each quarter"""
     assert get_quarter(test_input) == expected
