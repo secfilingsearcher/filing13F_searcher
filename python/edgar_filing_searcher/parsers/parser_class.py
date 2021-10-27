@@ -47,8 +47,8 @@ class Parser:
     @staticmethod
     def _parse_date_from_filing_detail(text_13f):
         """Returns the filing date from the 13f filing detail page"""
-        filing_date = re.search('(?<=<div class="info">)(.*)(?=</div>)', text_13f,
-                                flags=re.IGNORECASE).group(0)
+        filing_date = re.search('Filing Date</div>\n.*\"\>(.*)(?=</div>)', text_13f,
+                                flags=re.IGNORECASE).group(1)
         return datetime.strptime(filing_date, '%Y-%m-%d').date()
 
     @staticmethod
