@@ -5,6 +5,7 @@ from flask import Flask
 
 from edgar_filing_searcher.api.utils import check_connection_string
 from edgar_filing_searcher.api.routes.routes import company_blueprint
+from edgar_filing_searcher.api.routes.deployment_route import deployment_route_blueprint
 from edgar_filing_searcher.database import db
 
 
@@ -18,4 +19,5 @@ def create_app(configuration_file_obj=None):
     check_connection_string(app.config['SQLALCHEMY_DATABASE_URI'])
     db.init_app(app)
     app.register_blueprint(company_blueprint)
+    app.register_blueprint(deployment_route_blueprint)
     return app

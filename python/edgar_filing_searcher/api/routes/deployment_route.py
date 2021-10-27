@@ -4,10 +4,10 @@ from datetime import date
 
 from flask import Blueprint
 
-company_blueprint = Blueprint('company', __name__)
+deployment_route_blueprint = Blueprint('company', __name__)
 
 
-@company_blueprint.route('/update')
+@deployment_route_blueprint.route('/update')
 def deploy_main():
     """Deploy main"""
     today = date.today()
