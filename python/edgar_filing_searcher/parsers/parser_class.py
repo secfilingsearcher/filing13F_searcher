@@ -47,9 +47,9 @@ class Parser:
     @staticmethod
     def _parse_date_from_filing_detail(text_13f):
         """Returns the filing date from the 13f filing detail page"""
-        filing_date = re.match('(?<=<div class="info">)(.*)(?=</div>)', text_13f,
-                               flags=re.IGNORECASE)
-        return datetime.strptime(filing_date, '%Y-%m-%d')
+        filing_date = re.search('(?<=<div class="info">)(.*)(?=</div>)', text_13f,
+                                flags=re.IGNORECASE).group(0)
+        return datetime.strptime(filing_date, '%Y-%m-%d').date()
 
     @staticmethod
     def _ensure_xml_urls(xml_url_suffixes):
@@ -86,17 +86,6 @@ class Parser:
                 'original:formData/original:coverPage/original:filingManager/original:name',
                 namespaces):
             return company_name.text
-
-    #
-    # @staticmethod
-    # def _parse_primary_doc_accepted_filing_date(primary_doc_root):
-    #     """Returns the filing date from the signatureDate tag on the primary_doc.xml file"""
-    #     namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
-    #                   'ns1': 'http://www.sec.gov/edgar/common'}
-    #     for accepted_filing_date in primary_doc_root.findall(
-    #             'original:formData/original:signatureBlock/original:signatureDate',
-    #             namespaces):
-    #         return datetime.strptime(accepted_filing_date.text, '%m-%d-%Y')
 
     def _parse(self):
         logging.debug('Initializing parser')
