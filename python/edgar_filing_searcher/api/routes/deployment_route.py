@@ -4,7 +4,7 @@ from datetime import date
 
 from flask import Blueprint
 
-deployment_route_blueprint = Blueprint('company', __name__)
+deployment_route_blueprint = Blueprint('deployment_route', __name__)
 
 
 @deployment_route_blueprint.route('/update')
