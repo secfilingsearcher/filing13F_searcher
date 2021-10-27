@@ -120,12 +120,3 @@ def get_company_by_company_id(company_id):
     if company is None:
         return abort(404, description="Not Found")
     return jsonify(company)
-
-
-@company_blueprint.route('/update')
-def deploy_main():
-    """Deploy main"""
-    today = date.today()
-    d1 = today.strftime("%y_%m_%d")
-    os.system(f'/home/robo/update_script.sh &>> /home/robo/install_{d1}.log')
-    return 'Deployed Main'
