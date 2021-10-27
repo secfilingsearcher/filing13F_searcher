@@ -48,6 +48,7 @@ def get_text(url):
 
 
 def get_quarter(date_: date):
+    """Calculate the quarter for each date using the month"""
     return math.ceil(date_.month / 3)
 
 

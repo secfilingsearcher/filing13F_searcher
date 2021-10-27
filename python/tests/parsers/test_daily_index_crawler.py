@@ -100,24 +100,28 @@ def test_get_response_statusError_NumberOfRequests():
 
 
 def test_get_quarter_first():
+    """Tests the get_quarter function for the first quarter"""
     actual = get_quarter(date(2020, 2, 1))
 
     assert actual == 1
 
 
 def test_get_quarter_second():
+    """Tests the get_quarter function for the second quarter"""
     actual = get_quarter(date(2020, 5, 1))
 
     assert actual == 2
 
 
 def test_get_quarter_third():
+    """Tests the get_quarter function for the third quarter"""
     actual = get_quarter(date(2020, 8, 1))
 
     assert actual == 3
 
 
 def test_get_quarter_fourth():
+    """Tests the get_quarter function for the fourth quarter"""
     actual = get_quarter(date(2020, 11, 1))
 
     assert actual == 4
