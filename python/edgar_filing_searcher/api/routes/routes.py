@@ -1,6 +1,5 @@
 """API for web back-end"""
-import os
-from datetime import datetime, date
+from datetime import datetime
 
 from flask import jsonify, Blueprint, request, abort
 
