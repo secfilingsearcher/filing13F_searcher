@@ -1,4 +1,4 @@
-"""API for web back-end"""
+"""Route for deployment"""
 import os
 from datetime import date
 
