@@ -95,7 +95,8 @@ def process_filing_detail_url(filing_detail_url):
                       filing_detail_url)
         return
     except ElementTree.ParseError:
-        logging.error("There is a missing tag on one of the XML files from the filing detail page: %s",
+        logging.error("There is a missing tag on one of the XML files "
+                      "from the filing detail page: %s",
                       filing_detail_url)
         return
     if check_parser_values_match(parser.company, parser.edgar_filing, parser.data_13f):
