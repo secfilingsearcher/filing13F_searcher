@@ -83,7 +83,8 @@ def get_subdirectories_for_specific_date(full_date: date):
 
     split_full_text = full_text.splitlines()
     return [(re.search(r'(?<=edgar/data/)(.*)(?=.txt)', filing).group(0))
-            for filing in split_full_text if filing[62:74].strip() == '13F-HR']
+            for filing in split_full_text if filing[62:74].strip() == '13F-HR' or
+            filing[62:74].strip() == '13F-HR/A']
 
 
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
