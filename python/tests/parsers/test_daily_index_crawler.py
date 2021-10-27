@@ -9,7 +9,7 @@ from unittest.mock import patch, MagicMock, Mock
 from urllib3.exceptions import ResponseError
 
 from edgar_filing_searcher.parsers.daily_index_crawler import ensure_13f_filing_detail_urls, \
-    get_subdirectories_for_specific_date, generate_dates, get_request_response
+    get_subdirectories_for_specific_date, generate_dates, get_request_response, get_quarter
 from edgar_filing_searcher.errors import BadWebPageResponseException, InvalidUrlException
 
 from requests.exceptions import RetryError
@@ -21,6 +21,7 @@ SUBDIRECTORIES = ['1478997/0001478997-21-000001',
                   '819864/0000819864-21-000002',
                   '1567784/0000909012-21-000002',
                   '1479844/0001479844-21-000001']
+
 
 @pytest.fixture
 def filing_detail_with_no_13f_filing_urls():
@@ -96,6 +97,30 @@ def test_get_response_statusError_NumberOfRequests():
     except requests.exceptions.RetryError:
         pass
     assert len(httpretty.latest_requests()) == 4
+
+
+def test_get_quarter_first():
+    actual = get_quarter(date(2020, 2, 1))
+
+    assert actual == 1
+
+
+def test_get_quarter_second():
+    actual = get_quarter(date(2020, 5, 1))
+
+    assert actual == 2
+
+
+def test_get_quarter_third():
+    actual = get_quarter(date(2020, 8, 1))
+
+    assert actual == 3
+
+
+def test_get_quarter_fourth():
+    actual = get_quarter(date(2020, 11, 1))
+
+    assert actual == 4
 
 
 def test_get_subdirectories_for_specific_date_hasSubdirectories():
