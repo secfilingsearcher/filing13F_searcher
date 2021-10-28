@@ -34,8 +34,8 @@ for dates_with_matching_data in sorted_dates_with_matching_data:
     print("Dates with matching data:",
           dates_with_matching_data.strftime("%B %d,%Y"),
           " -> ",
-          dates_with_matching_data.strftime("%Y-%m-%d"),
-          "\n")
+          dates_with_matching_data.strftime("%Y-%m-%d"))
+print("\n")
 
 list_of_dates_and_accession_no_with_matching_data = []
 for accession_no in intersection:
@@ -52,8 +52,8 @@ for dates_with_matching_data in sorted_list_of_dates_with_matching_data:
           " -> ",
           dates_with_matching_data[0].strftime("%Y-%m-%d"),
           ": ",
-          dates_with_matching_data[1],
-          "\n")
+          dates_with_matching_data[1])
+print("\n")
 
 print("Number of rows in data13f with matching data:",
       len(sorted_list_of_dates_with_matching_data))

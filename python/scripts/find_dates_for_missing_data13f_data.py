@@ -34,8 +34,8 @@ for dates_with_missing_data in sorted_dates_with_missing_data:
     print("Dates with missing data:",
           dates_with_missing_data.strftime("%B %d,%Y"),
           " -> ",
-          dates_with_missing_data.strftime("%Y-%m-%d"),
-          "\n")
+          dates_with_missing_data.strftime("%Y-%m-%d"))
+print("\n")
 
 list_of_dates_and_accession_no_with_missing_data = []
 for accession_no in difference:
@@ -52,8 +52,8 @@ for dates_with_missing_data in sorted_list_of_dates_with_missing_data:
           " -> ",
           dates_with_missing_data[0].strftime("%Y-%m-%d"),
           ": ",
-          dates_with_missing_data[1],
-          "\n")
+          dates_with_missing_data[1])
+print("\n")
 
 print("Number of rows in data13f with missing data:",
       len(sorted_list_of_dates_with_missing_data))
