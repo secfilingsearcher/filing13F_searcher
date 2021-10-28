@@ -5,9 +5,7 @@ import { InputGroup, Form, Button, Overlay, Tooltip } from 'react-bootstrap'
 import * as Yup from 'yup'
 
 const validationSchema = Yup.object().shape({
-  searchName: Yup.string().required(),
-  searchStartDate: Yup.date().required(),
-  searchEndDate: Yup.date().required()
+  searchName: Yup.string().required()
 })
 
 const SearchForm = () => {
@@ -23,13 +21,11 @@ const SearchForm = () => {
   }
   const formik = useFormik({
     initialValues: {
-      searchName: '',
-      searchStartDate: '',
-      searchEndDate: ''
+      searchName: ''
     },
     validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      const searchLink = `/search?q=${values.searchName}&start_date=${values.searchStartDate}&end_date=${values.searchEndDate}`
+      const searchLink = `/search?q=${values.searchName}`
       history.push(searchLink, { replace: true })
       setSubmitting(true)
       if (formik.errors.searchName) { setShow(!show) }
@@ -47,23 +43,9 @@ const SearchForm = () => {
             placeholder="Company Name"
             ref={target}
           />
-          <Overlay target={target.current} show={show} placement='right'>
+          <Overlay target={target.current} show={show} placement='bottom'>
             <Tooltip>Required</Tooltip>
           </Overlay>
-          <Form.Control
-            id="searchStartDate"
-            name="searchStartDate"
-            type="date"
-            onChange={formik.handleChange}
-            value={formik.values.searchStartDate}
-          />
-          <Form.Control
-            id="searchEndDate"
-            name="searchEndDate"
-            type="date"
-            onChange={formik.handleChange}
-            value={formik.values.searchEndDate}
-          />
        <Button type="submit" onClick={showTooltip}><i className="bi bi-search"></i></Button>
        </InputGroup>
     </Form>
