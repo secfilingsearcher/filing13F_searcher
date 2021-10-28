@@ -1,4 +1,4 @@
-"""Checks for mismatched in edgarfiling and data13f and prints data"""
+"""Checks for matching in edgarfiling and data13f and prints data"""
 from models import EdgarFiling, Data13f
 from parsers.setup_db_connection import setup_db_connection
 
