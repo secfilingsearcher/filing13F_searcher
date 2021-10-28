@@ -11,11 +11,11 @@ function Results () {
   const [done, setDone] = useState(undefined)
   const location = useLocation()
   const params = new URLSearchParams(location.search)
-  const { q, startDate, endDate } = { q: params.get('q'), startDate: params.get('startDate'), endDate: params.get('endDate') }
+  const q = params.get('q')
   const resultClassName = (count) => { return count > 0 ? 'bg-primary' : 'bg-danger' }
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_SERVER}/company/search?q=${q}&start_date=${startDate}&end_date=${endDate}`)
+    axios.get(`${process.env.REACT_APP_API_SERVER}/company/search?q=${q}`)
       .then(res => {
         const companies = res.data.sort((companyA, companyB) => {
           return companyA.filing_count < companyB.filing_count

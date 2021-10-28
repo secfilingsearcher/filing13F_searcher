@@ -1,33 +1,31 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import { useHistory } from 'react-router-dom'
-import { InputGroup, Form, Button } from 'react-bootstrap'
+import { InputGroup, Form, Button, Overlay, Tooltip } from 'react-bootstrap'
+import * as Yup from 'yup'
+
+const validationSchema = Yup.object().shape({
+  searchName: Yup.string().required()
+})
 
 const SearchForm = () => {
-  function validate (values) {
-    const errors = {}
-    if (!values.searchName) {
-      errors.searchName = 'Required'
-    }
-    if (!values.searchStartDate) {
-      errors.searchStartDate = 'Required'
-    }
-    if (!values.searchEndDate) {
-      errors.searchEndDate = 'Required'
-    }
-    return errors
-  }
-
   const history = useHistory()
+  const [show, setShow] = useState(false)
+  const target = useRef(null)
+  const showTooltip = () => {
+    if (formik.errors.searchName) {
+      setShow(false)
+    } else {
+      setShow(true)
+    }
+  }
   const formik = useFormik({
     initialValues: {
-      searchName: '',
-      searchStartDate: '',
-      searchEndDate: ''
+      searchName: ''
     },
-    validate,
+    validationSchema,
     onSubmit: (values, { setSubmitting }) => {
-      const searchLink = `/search?q=${values.searchName}&start_date=${values.searchStartDate}&end_date=${values.searchEndDate}`
+      const searchLink = `/search?q=${values.searchName}`
       history.push(searchLink, { replace: true })
       setSubmitting(true)
     }
@@ -42,22 +40,12 @@ const SearchForm = () => {
             onChange={formik.handleChange}
             value={formik.values.searchName}
             placeholder="Company Name"
+            ref={target}
           />
-          <Form.Control
-            id="searchStartDate"
-            name="searchStartDate"
-            type="date"
-            onChange={formik.handleChange}
-            value={formik.values.searchStartDate}
-          />
-          <Form.Control
-            id="searchEndDate"
-            name="searchEndDate"
-            type="date"
-            onChange={formik.handleChange}
-            value={formik.values.searchEndDate}
-          />
-       <Button type="submit"><i className="bi bi-search"></i></Button>
+          <Overlay target={target.current} show={show} placement='bottom'>
+            <Tooltip>Required</Tooltip>
+          </Overlay>
+       <Button type="submit" onClick={showTooltip}><i className="bi bi-search"></i></Button>
        </InputGroup>
     </Form>
   )
