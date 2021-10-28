@@ -45,7 +45,7 @@ class Parser:
         return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
 
     @staticmethod
-    def _parse_date_from_filing_detail(text_13f):
+    def _parse_filing_date_from_filing_detail(text_13f):
         """Returns the filing date from the 13f filing detail page"""
         filing_date = re.search('Filing Date</div>\n.*\">(.*)(?=</div>)', text_13f,
                                 flags=re.IGNORECASE).group(1)
@@ -88,7 +88,7 @@ class Parser:
             return company_name.text
 
     @staticmethod
-    def _parse_primary_doc_accepted_filing_date(primary_doc_root):
+    def _parse_primary_doc_signature_date(primary_doc_root):
         """Returns the filing date from the signatureDate tag on the primary_doc.xml file"""
         namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
                       'ns1': 'http://www.sec.gov/edgar/common'}
@@ -106,7 +106,7 @@ class Parser:
         root = self._parse_primary_doc_root(primary_doc_xml_url)
         cik = self._parse_primary_doc_cik(root)
         company_name = self._parse_primary_doc_company_name(root)
-        filing_date = self._parse_date_from_filing_detail(self._filing_detail_text)
+        filing_date = self._parse_filing_date_from_filing_detail(self._filing_detail_text)
         logging.debug('accession_no %s, xml_links %s, primary_doc_xml_url %s, infotable_xml_url %s,'
                       ' root %s, cik %s, company_name %s, and filing date %s parsed', accession_no,
                       xml_links, primary_doc_xml_url, infotable_xml_url, root, cik, company_name,
