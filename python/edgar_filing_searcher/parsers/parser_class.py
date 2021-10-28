@@ -87,6 +87,16 @@ class Parser:
                 namespaces):
             return company_name.text
 
+    @staticmethod
+    def _parse_primary_doc_accepted_filing_date(primary_doc_root):
+        """Returns the filing date from the signatureDate tag on the primary_doc.xml file"""
+        namespaces = {'original': 'http://www.sec.gov/edgar/thirteenffiler',
+                      'ns1': 'http://www.sec.gov/edgar/common'}
+        for accepted_filing_date in primary_doc_root.findall(
+                'original:formData/original:signatureBlock/original:signatureDate',
+                namespaces):
+            return datetime.strptime(accepted_filing_date.text, '%m-%d-%Y')
+
     def _parse(self):
         logging.debug('Initializing parser')
         accession_no = self._parse_sec_accession_no(self._filing_detail_text)
