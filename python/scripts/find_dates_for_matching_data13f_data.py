@@ -30,9 +30,9 @@ for accession_no in intersection:
             set_of_dates_with_matching_data.add(date)
 
 sorted_dates_with_matching_data = sorted(set_of_dates_with_matching_data)
+print("Dates with matching data: ")
 for dates_with_matching_data in sorted_dates_with_matching_data:
-    print("Dates with matching data:",
-          dates_with_matching_data.strftime("%B %d,%Y"),
+    print(dates_with_matching_data.strftime("%B %d,%Y"),
           " -> ",
           dates_with_matching_data.strftime("%Y-%m-%d"))
 print("\n")
@@ -46,9 +46,9 @@ for accession_no in intersection:
             list_of_dates_and_accession_no_with_matching_data.append([date, accession_no])
 
 sorted_list_of_dates_with_matching_data = sorted(list_of_dates_and_accession_no_with_matching_data)
+print("Dates and accession_no with matching data:")
 for dates_with_matching_data in sorted_list_of_dates_with_matching_data:
-    print("Dates and accession_no with matching data:",
-          dates_with_matching_data[0].strftime("%B %d,%Y"),
+    print(dates_with_matching_data[0].strftime("%B %d,%Y"),
           " -> ",
           dates_with_matching_data[0].strftime("%Y-%m-%d"),
           ": ",

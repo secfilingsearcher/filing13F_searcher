@@ -30,9 +30,9 @@ for accession_no in difference:
             set_of_dates_with_missing_data.add(date)
 
 sorted_dates_with_missing_data = sorted(set_of_dates_with_missing_data)
+print("Dates with missing data: ")
 for dates_with_missing_data in sorted_dates_with_missing_data:
-    print("Dates with missing data:",
-          dates_with_missing_data.strftime("%B %d,%Y"),
+    print(dates_with_missing_data.strftime("%B %d,%Y"),
           " -> ",
           dates_with_missing_data.strftime("%Y-%m-%d"))
 print("\n")
@@ -46,9 +46,9 @@ for accession_no in difference:
             list_of_dates_and_accession_no_with_missing_data.append([date, accession_no])
 
 sorted_list_of_dates_with_missing_data = sorted(list_of_dates_and_accession_no_with_missing_data)
+print("Dates and accession_no with missing data: ")
 for dates_with_missing_data in sorted_list_of_dates_with_missing_data:
-    print("Dates and accession_no with missing data:",
-          dates_with_missing_data[0].strftime("%B %d,%Y"),
+    print(dates_with_missing_data[0].strftime("%B %d,%Y"),
           " -> ",
           dates_with_missing_data[0].strftime("%Y-%m-%d"),
           ": ",
