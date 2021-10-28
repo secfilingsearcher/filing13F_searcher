@@ -1,4 +1,4 @@
-"""Checks for matching in edgarfiling and data13f and prints data"""
+"""Checks for matching edgarfiling and data13f data and prints date and accession_no"""
 from models import EdgarFiling, Data13f
 from parsers.setup_db_connection import setup_db_connection
 
