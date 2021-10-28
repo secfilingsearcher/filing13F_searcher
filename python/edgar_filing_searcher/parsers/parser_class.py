@@ -95,7 +95,7 @@ class Parser:
         for accepted_filing_date in primary_doc_root.findall(
                 'original:formData/original:signatureBlock/original:signatureDate',
                 namespaces):
-            return datetime.strptime(accepted_filing_date.text, '%m-%d-%Y')
+            return datetime.strptime(accepted_filing_date.text, '%m-%d-%Y').date()
 
     def _parse(self):
         logging.debug('Initializing parser')
