@@ -11,7 +11,7 @@ function Results () {
   const [done, setDone] = useState(undefined)
   const location = useLocation()
   const params = new URLSearchParams(location.search)
-  const { q } = { q: params.get('q') }
+  const q = params.get('q')
   const resultClassName = (count) => { return count > 0 ? 'bg-primary' : 'bg-danger' }
 
   useEffect(() => {

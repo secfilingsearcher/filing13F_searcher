@@ -28,7 +28,6 @@ const SearchForm = () => {
       const searchLink = `/search?q=${values.searchName}`
       history.push(searchLink, { replace: true })
       setSubmitting(true)
-      if (formik.errors.searchName) { setShow(!show) }
     }
   })
   return (
