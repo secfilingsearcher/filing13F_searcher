@@ -1,6 +1,6 @@
 """This file contains functions used in main.py"""
 import logging
-
+from xml.etree import ElementTree
 from edgar_filing_searcher.database import db
 from edgar_filing_searcher.models import Company, EdgarFiling, Data13f
 from edgar_filing_searcher.parsers.daily_index_crawler import \
@@ -21,8 +21,8 @@ def create_url_list(date_):
 
 
 def check_parser_values_match(company: Company, edgar_filing: EdgarFiling, data_13f: Data13f):
-    """check_ if the parser values from Company, EdgarFiling,
-    Data13f CIK number and accession number align"""
+    """Check if the CIK number and accession number from Company, EdgarFiling,
+    and Data13f align"""
     return (company.cik_no == edgar_filing.cik_no) and \
            (edgar_filing.accession_no == data_13f[0].accession_no)
 
@@ -92,6 +92,11 @@ def process_filing_detail_url(filing_detail_url):
         return
     except NoAccessionNumberException:
         logging.error("There is no accession no on the filing detail page: %s",
+                      filing_detail_url)
+        return
+    except ElementTree.ParseError:
+        logging.error("There is a missing tag on one of the XML files "
+                      "from the filing detail page: %s",
                       filing_detail_url)
         return
     if check_parser_values_match(parser.company, parser.edgar_filing, parser.data_13f):

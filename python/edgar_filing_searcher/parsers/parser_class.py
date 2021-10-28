@@ -42,7 +42,10 @@ class Parser:
     @staticmethod
     def _parse_primary_doc_xml_and_infotable_xml_urls(text_13f):
         """Returns the primary_doc.xml and infotable.xml base URLs"""
-        return re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
+        xml_urls = re.findall('(?<=<a href=")(.*)(?=">.*.xml)', text_13f, flags=re.IGNORECASE)
+        if len(xml_urls) != 2:
+            raise NoUrlException("Missing XML URL on Filing Page")
+        return xml_urls
 
     @staticmethod
     def _parse_filing_date_from_filing_detail(text_13f):
