@@ -9,7 +9,7 @@ function MainSection () {
         <>
             <div className='main-container'>
                 <h1>COMPANY FINANCIAL HOLDINGS</h1>
-                <p>Search 13F Filings by Company Name and Date</p>
+                <p>Search 13F Filings by Company Name</p>
                 <SearchForm />
             </div>
 

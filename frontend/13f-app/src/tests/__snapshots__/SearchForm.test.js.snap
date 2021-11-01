@@ -17,25 +17,10 @@ exports[`SearchForm renders 1`] = `
       type="text"
       value=""
     />
-    <input
-      className="form-control"
-      id="searchStartDate"
-      name="searchStartDate"
-      onChange={[Function]}
-      type="date"
-      value=""
-    />
-    <input
-      className="form-control"
-      id="searchEndDate"
-      name="searchEndDate"
-      onChange={[Function]}
-      type="date"
-      value=""
-    />
     <button
       className="btn btn-primary"
       disabled={false}
+      onClick={[Function]}
       type="submit"
     >
       <i

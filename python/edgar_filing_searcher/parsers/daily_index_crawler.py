@@ -1,6 +1,7 @@
 # pylint: disable=no-member
 """This file crawls the daily index directory pages"""
 import logging
+import math
 import re
 import time
 from datetime import date, timedelta
@@ -46,10 +47,15 @@ def get_text(url):
     return full_text
 
 
+def get_quarter(date_: date):
+    """Calculate the quarter for each date using the month"""
+    return math.ceil(date_.month / 3)
+
+
 def get_subdirectories_for_specific_date(full_date: date):
     """Returns all cik number and accession number subdirectory strings for a specific date"""
     base_url = "https://www.sec.gov/Archives/edgar/daily-index"
-    quarter = round((full_date.month / 4) + 1)
+    quarter = get_quarter(full_date)
 
     if full_date.year == 1994:
         subdirectory_date_94 = full_date.strftime('%m%d%y')
@@ -77,7 +83,8 @@ def get_subdirectories_for_specific_date(full_date: date):
 
     split_full_text = full_text.splitlines()
     return [(re.search(r'(?<=edgar/data/)(.*)(?=.txt)', filing).group(0))
-            for filing in split_full_text if filing[62:74].strip() == '13F-HR']
+            for filing in split_full_text if filing[62:74].strip() == '13F-HR' or
+            filing[62:74].strip() == '13F-HR/A']
 
 
 def ensure_13f_filing_detail_urls(cik_ascension_subdirectories):
