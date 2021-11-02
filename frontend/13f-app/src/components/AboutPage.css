@@ -31,7 +31,6 @@ div#story-panel > p {
 div#image-panel {
     float: right;
     background: url('../images/img-1.jpg') center center/cover no-repeat;
-    opacity: 0.80;
     background-size: contain;
     margin: -200px 25px 25px 25px;
     padding: 0px 10px 10px 10px;
