@@ -1,32 +1,15 @@
 import React from 'react'
+import '../AboutPage.css'
 
 function About () {
   return (
         <>
-            <h1>About 13F Filing Searcher</h1>
-            <div className="profile">
-                <img src="https://via.placeholder.com/250"/>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, minima? Quod laboriosam, earum veritatis beatae ut nulla mollitia! Corporis debitis ea consequuntur sint recusandae minima omnis dolores, dignissimos illum non!</p>
-                <h4>github: <a>www.github.com</a></h4>
-                <h4>linkedin: <a>www.linkedin</a></h4>
-            </div>
-            <div className="profile">
-                <img src="https://via.placeholder.com/250"/>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, minima? Quod laboriosam, earum veritatis beatae ut nulla mollitia! Corporis debitis ea consequuntur sint recusandae minima omnis dolores, dignissimos illum non!</p>
-                <h4>github: <a>www.github.com</a></h4>
-                <h4>linkedin: <a>www.linkedin</a></h4>
-            </div>
-            <div className="profile">
-                <img src="https://via.placeholder.com/250"/>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, minima? Quod laboriosam, earum veritatis beatae ut nulla mollitia! Corporis debitis ea consequuntur sint recusandae minima omnis dolores, dignissimos illum non!</p>
-                <h4>github: <a>www.github.com</a></h4>
-                <h4>linkedin: <a>www.linkedin</a></h4>
-            </div>
-                <div className="profile">
-                <img src="https://via.placeholder.com/250"/>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero, minima? Quod laboriosam, earum veritatis beatae ut nulla mollitia! Corporis debitis ea consequuntur sint recusandae minima omnis dolores, dignissimos illum non!</p>
-                <h4>github: <a>www.github.com</a></h4>
-                <h4>linkedin: <a>www.linkedin</a></h4>
+            <div className='container' id='about-main'>
+                <br></br>
+                <div className='bg-dark text-white col-md-8' id='story-panel'>
+                    <h3>About 13F Filing Searcher</h3>
+                    <p>This site was created through the collaboration of two aspiring software engineers, Rose Altianas(<a>www.github.com</a>) and Edward Harley(<a>www.github.com</a>), under the mentorship and supervision of two industry professionals.</p>
+                </div>
             </div>
         </>
   )

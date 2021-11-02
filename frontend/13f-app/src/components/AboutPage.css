@@ -1,0 +1,17 @@
+div#about-main.container     {
+    position: absolute;
+    max-width: inherit;
+    height: 100%;
+    background-color: rgb(229, 228,226);
+}
+
+
+div#story-panel {
+    margin: 25px 25px 25px 25px;
+    width: 66%;
+    height: 50%;
+    
+}
+
+
+
