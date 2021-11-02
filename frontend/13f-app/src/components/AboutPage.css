@@ -5,13 +5,26 @@ div#about-main.container     {
     background-color: rgb(229, 228,226);
 }
 
-
 div#story-panel {
-    margin: 25px 25px 25px 25px;
+    margin: 25px 25px -125px 25px;
+    padding: 10px 10px 0px 10px;
     width: 66%;
-    height: 50%;
-    
+    height: 50%;  
 }
 
+div#story-panel > h3 {
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+}
+
+div#image-panel {
+    float: right;
+    background: url('../images/img-1.jpg') center center/cover no-repeat        ;
+    background-size: contain;
+    margin: 0px 25px 25px 25px;
+    padding: 0px 10px 10px 10px;
+    width: 75%;
+    height: 85%;
+}
 
 
