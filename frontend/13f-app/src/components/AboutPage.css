@@ -8,19 +8,24 @@ div#about-main.container     {
 
 div#story-panel {
     margin: 25px 25px 0px 25px;
-    padding: 10px 10px 0px 10px;
-    width: 66%;
-    height: 50%;  
+    padding: 25px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
-div#story-panel > h3::after {
-    text-transform: uppercase;
-    font-family: 'Lato', sans-serif;
-    content: "";
-    display: block;
-    width: 10%;
-    padding-top: 15px;
-    border-bottom: 2px solid #fff; 
+div#story-panel a {
+    font-weight: bold;
+}
+
+div#story-panel .list-group li { 
+    color: white;
+    background-color: transparent;
+    border-bottom-color: white;
+    border-bottom-style: none;
+    max-width: 200px;
 }
 
 div#story-panel > p {
@@ -28,14 +33,9 @@ div#story-panel > p {
     font-size: 1.10em;
 }
 
-div#image-panel {
-    float: right;
-    background: url('../images/img-1.jpg') center center/cover no-repeat;
-    background-size: contain;
-    margin: -200px 25px 25px 25px;
-    padding: 0px 10px 10px 10px;
-    width: 85%;
-    height: 75%;
+#bowling-green-image {
+    border-radius: 50%;
+    height: 256px;
+    width: 256px;
+    object-fit:cover;
 }
-
-
