@@ -47,7 +47,7 @@ def company_by_company_name(company_name):
     except ValueError:
         abort(400, description="Bad Request")
 
-    companies = Company.query.filter(Company.company_name.ilike(f"%{company_name}%"))
+    companies = Company.query.filter(Company.company_name.ilike(f"{company_name}%"))
 
     companies_filtered_by_date = filter_company_by_date(companies,
                                                         start_date_datetime, end_date_datetime)
@@ -75,7 +75,7 @@ def company_by_invested_company(name_of_issuer):
     companies = Company.query \
         .join(EdgarFiling) \
         .join(Data13f) \
-        .filter(Data13f.name_of_issuer.ilike(f"%{name_of_issuer}%"))
+        .filter(Data13f.name_of_issuer.ilike(f"{name_of_issuer}%"))
 
     companies_filtered_by_date = filter_edgar_filing_by_date(companies,
                                                              start_date_datetime, end_date_datetime)
