@@ -45,12 +45,12 @@ class Company(db.Model):
     filings = db.relationship("EdgarFiling")
 
     __table_args__ = (
-        db.Index('company_company_name_cover_idx',
+        db.Index('company_company_name_cover_index',
                  company_name,
                  cik_no,
                  filing_count),
         db.Index('company_company_name_gin_index',
-                 "company_name",
+                 company_name,
                  postgresql_ops={"company_name": "gin_trgm_ops"},
                  postgresql_using='gin'),
     )
@@ -111,8 +111,8 @@ class Data13f(db.Model):
 
     __table_args__ = (
         db.Index('data_13f_name_of_issuer_gin_index',
-                 "name_of_issuer",
-                 postgresql_ops={"name_of_issuer ": "gin_trgm_ops"},
+                 name_of_issuer,
+                 postgresql_ops={"name_of_issuer": "gin_trgm_ops"},
                  postgresql_using='gin'),
     )
 
