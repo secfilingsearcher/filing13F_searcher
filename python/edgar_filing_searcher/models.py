@@ -37,7 +37,7 @@ class Company(db.Model):
 
     __tablename__ = 'company'
     # cik_no: central index key number
-    cik_no = db.Column(db.String, primary_key=True, index=True)
+    cik_no = db.Column(db.String, primary_key=True)
     # company_name: name of company
     company_name = db.Column(db.String, index=True)
     # filing_count: number of stored filings
