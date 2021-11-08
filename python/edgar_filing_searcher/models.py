@@ -19,7 +19,7 @@ class EdgarFiling(db.Model):
     # accession_no: filing id number
     accession_no = db.Column(db.String, primary_key=True)
     # cik_no: central index key number
-    cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'))
+    cik_no = db.Column(db.String, db.ForeignKey('company.cik_no'), index=True)
     # filing_type: type of SEC filing
     filing_type = db.Column(db.String)
     # filing_date: date of filing
