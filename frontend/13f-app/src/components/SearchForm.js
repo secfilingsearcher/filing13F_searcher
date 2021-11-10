@@ -20,7 +20,6 @@ const SearchForm = () => {
     validate: () => {
       if (!formik.values.searchName) {
         setShow(true)
-        console.log(formik.errors.searchName)
       } else {
         setShow(false)
       }
