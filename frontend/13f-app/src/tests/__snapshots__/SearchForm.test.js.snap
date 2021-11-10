@@ -20,7 +20,6 @@ exports[`SearchForm renders 1`] = `
     <button
       className="btn btn-primary"
       disabled={false}
-      onClick={[Function]}
       type="submit"
     >
       <i
