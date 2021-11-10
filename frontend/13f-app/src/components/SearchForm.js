@@ -7,7 +7,6 @@ import * as Yup from 'yup'
 const validationSchema = Yup.object().shape({
   searchName: Yup.string().required()
 })
-
 const SearchForm = () => {
   const history = useHistory()
   const [show, setShow] = useState(false)
