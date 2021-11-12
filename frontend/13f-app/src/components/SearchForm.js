@@ -7,23 +7,22 @@ import * as Yup from 'yup'
 const validationSchema = Yup.object().shape({
   searchName: Yup.string().required()
 })
-
 const SearchForm = () => {
   const history = useHistory()
   const [show, setShow] = useState(false)
   const target = useRef(null)
-  const showTooltip = () => {
-    if (formik.errors.searchName) {
-      setShow(false)
-    } else {
-      setShow(true)
-    }
-  }
   const formik = useFormik({
     initialValues: {
       searchName: ''
     },
     validationSchema,
+    validate: () => {
+      if (!formik.values.searchName) {
+        setShow(true)
+      } else {
+        setShow(false)
+      }
+    },
     onSubmit: (values, { setSubmitting }) => {
       const searchLink = `/search?q=${values.searchName}`
       history.push(searchLink, { replace: true })
@@ -45,7 +44,7 @@ const SearchForm = () => {
           <Overlay target={target.current} show={show} placement='bottom'>
             <Tooltip>Required</Tooltip>
           </Overlay>
-       <Button type="submit" onClick={showTooltip}><i className="bi bi-search"></i></Button>
+       <Button type="submit"><i className="bi bi-search"></i></Button>
        </InputGroup>
     </Form>
   )
