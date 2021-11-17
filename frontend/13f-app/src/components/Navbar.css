@@ -63,7 +63,7 @@
   display: none;
 }
 
-/* @media screen and (max-width: 960px) {
+@media screen and (max-width: 960px) {
   .NavbarItems {
     position: relative;
   }
@@ -102,8 +102,9 @@
   }
 
   .navbar-logo {
+    margin-bottom: 25px;
     position: left;
-    top: 0;
+    top: inherit;
     left: 0;
     transform: translate(25%, 50%);
   }
@@ -118,7 +119,7 @@
     cursor: pointer;
   }
 
-  .fa-times {
+  .fa-bars {
     color: #fff;
     font-size: 2rem;
   }
@@ -143,7 +144,7 @@
     color: #242424;
     transition: 250ms;
   }
-} */
+}
 
 .searchbar {
   margin: auto;
