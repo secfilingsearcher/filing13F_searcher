@@ -29,7 +29,36 @@
 
 }
 
-.date {
-    padding: 5px;
-    margin: 5px;
+@media screen and (max-width:480px) {
+    .main-container {
+        background: none;
+        background-color: rgba(132, 136, 138, 0.6);
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        object-fit: contain;
+    }
+    
+    .main-container > h1 {
+        color: white;
+        font-family: 'Lato', sans-serif;
+        font-size: 50px;
+        margin-top: -100px;
+
+    }
+    
+    .main-container > p {
+        margin: 8px;
+        color: white;
+        font-family: 'Lato', sans-serif;
+        font-weight: 100;
+        font-size: 16px;
+        padding-top: 0.5em;
+    
+    }
+       
+    
 }
