@@ -11,3 +11,11 @@
   left: 0;
   width: 100%;
 }
+
+
+@media screen and (max-width) {
+  .footer {
+    height: 25px;
+  }
+  
+}

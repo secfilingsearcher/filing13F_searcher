@@ -39,3 +39,36 @@ div#story-panel > p {
     width: 256px;
     object-fit:cover;
 }
+
+@media screen and (max-width:480px) {
+    div#about-main.container     {
+        position: absolute;
+        max-width: inherit;
+        max-height: max-content;
+        height: 100%;
+        background-color: rgba(132, 136, 138, 0.6);
+    }
+    div#story-panel {
+        max-width:max-content;      
+        margin: 10px 0px 10px 7px;
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+    div#story-panel > p {
+        font-size: .75em;
+    }
+    div#story-panel .list-group li { 
+        max-width: 150px;
+    }
+    #wall-street-image {
+        border-radius: 50%;
+        height: 115px;
+        width: 115px;
+        object-fit:cover;
+    }
+
+}
