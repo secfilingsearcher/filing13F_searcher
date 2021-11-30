@@ -63,16 +63,21 @@
   display: none;
 }
 
+.searchbar {
+  margin: auto;
+
+
+}
+
 @media screen and (max-width: 960px) {
   .NavbarItems {
     position: relative;
   }
-
+  
   .nav-menu {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
     position: absolute; 
     top: 75px;
     left: -100%;
@@ -90,7 +95,7 @@
 
   .nav-links {
     text-align: center;
-    padding: 2rem;
+    padding: 2  rem;
     width: 100%;
     display: table;
   }
@@ -139,13 +144,15 @@
     transition: all 0.3s ease-out;
   }
 
-    .nav-links-mobile:hover {
+  .nav-links-mobile:hover {
     background: #fff;
     color: #242424;
     transition: 250ms;
   }
+  
+  .searchbar {
+    margin-left: 15px;
+    margin-right: 75px;
+  }
 }
 
-.searchbar {
-  margin: auto;
-}
