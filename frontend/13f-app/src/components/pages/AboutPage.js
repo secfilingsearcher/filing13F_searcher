@@ -1,6 +1,6 @@
 import React from 'react'
 import '../AboutPage.css'
-import wallStreetImage from 'images/chris-li-6Y6OnwBKk-o-unsplash.jpg'
+import wallStreetImage from '../../images/chris-li-6Y6OnwBKk-o-unsplash.jpg'
 
 function About () {
   return (
